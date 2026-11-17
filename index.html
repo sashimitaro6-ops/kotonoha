@@ -330,9 +330,19 @@ const CONFIG = {
   points: { particleRight: 2, particleWrong: 1, writing: 5, diaryFirst: 15, diaryMore: 5 },
   // ご褒美カタログ（あとで相談して決める。例：{ id:"r1", name:"…", pt:"…", cost:100, icon:"🎬" }）
   // 1週間で約300ポイントたまる（週5〜6日やった場合）
+  // 安い順にならべる。id は交換の記録にひもづくので、あとから変えない。
   rewards: [
     { id:"r1", icon:"💌", cost:300, name:"ジャスから 日本語の てがみ", pt:"Uma carta do Jas em japonês (com tradução)" },
+    { id:"r4", icon:"🎨", cost:300, name:"ジャスが あなたの にがおえを かいて おくる", pt:"O Jas desenha um retrato seu e te envia" },
+    { id:"r10", icon:"☔", cost:300, name:"ジャスが あめの日の おうちデートを けいかくする（日本に 来てから）", pt:"O Jas planeja um encontro em casa para um dia de chuva (depois que você chegar ao Japão)" },
+    { id:"r6", icon:"🍳", cost:400, name:"ジャスの てりょうり（メニューは あなたが きめる・日本に 来てから）", pt:"Uma refeição feita pelo Jas: você escolhe o cardápio (depois que você chegar ao Japão)" },
+    { id:"r7", icon:"🥐", cost:400, name:"あさごはんを ベッドまで はこぶ（日本に 来てから）", pt:"Café da manhã na cama (depois que você chegar ao Japão)" },
+    { id:"r8", icon:"💆", cost:400, name:"マッサージ 30ぷん（日本に 来てから）", pt:"Massagem de 30 minutos (depois que você chegar ao Japão)" },
+    { id:"r9", icon:"🌃", cost:400, name:"いっしょに やけいを 見に いく（日本に 来てから）", pt:"Ver a cidade à noite juntos (depois que você chegar ao Japão)" },
+    { id:"r5", icon:"💃", cost:600, name:"ジャスが あなたの ために ダンスどうがを おくる", pt:"O Jas grava um vídeo dançando para você" },
     { id:"r2", icon:"🧹", cost:600, name:"ジャスが 3日間 かじを ぜんぶ する（日本に 来てから）", pt:"O Jas faz todas as tarefas de casa por 3 dias (depois que você chegar ao Japão)" },
+    { id:"r11", icon:"🧺", cost:600, name:"ピクニック（おべんとうは ジャスが つくる・日本に 来てから）", pt:"Um piquenique com bentô feito pelo Jas (depois que você chegar ao Japão)" },
+    { id:"r12", icon:"🚗", cost:800, name:"ドライブ（いきさきは あなたが きめる・日本に 来てから）", pt:"Um passeio de carro: você escolhe o destino (depois que você chegar ao Japão)" },
     { id:"r3", icon:"🗺️", cost:900, name:"ジャスが プランを きめる デート（日本に 来てから）", pt:"Um encontro planejado pelo Jas (depois que você chegar ao Japão)" }
   ]
 };
