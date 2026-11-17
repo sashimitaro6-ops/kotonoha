@@ -828,7 +828,7 @@ function sendMail(m, opt){
 }
 /* レポートの下につけるバックアップ（送る瞬間の最新データ） */
 function backupText(){
-  return "\n\n――――――――――――\n💾 バックアップ（読まなくてOK）\nデータが消えたときは、下の1行を kotonoha.json という名前で保存して彼女に送り、「成長 → もどす」で選んでもらいます。\n" + JSON.stringify(snapshot());
+  return "\n\n――――――――――――\n💾 バックアップ（読まなくてOK）\nデータが消えたときは、下の1行を kotonoha.json という名前で保存して彼女に送り、「成長 → 戻す」で選んでもらいます。\n" + JSON.stringify(snapshot());
 }
 /* サーバーが「ok」と返したときだけ、送信待ちから消す。失敗したら残して、あとでもう一度送る。 */
 let flushing = false;
