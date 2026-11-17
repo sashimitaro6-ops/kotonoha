@@ -72,6 +72,9 @@ body:not(.furi) rt{display:none}
 rt{font-size:.45em;font-weight:500;color:var(--muted);letter-spacing:0}
 .spk{padding:4px 12px;font-size:15px;background:#fff;color:var(--ink);box-shadow:0 2px 0 var(--line);border:2px solid var(--line);margin-left:6px;vertical-align:middle}
 .spk.wide{margin:12px 0 0}
+.df-ng{background:var(--pink-s);color:var(--pink-d);border-radius:4px;text-decoration:underline wavy}
+.df-add{background:var(--mint-s);color:var(--mint-d);border-radius:4px;text-decoration:underline}
+.kana{letter-spacing:.08em}
 .bigbtn{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;text-align:left;background:var(--card);color:var(--ink);
   border:2px solid #fff;padding:14px 16px;margin:10px 0;border-radius:24px;box-shadow:0 5px 14px rgba(184,164,244,.18)}
 .bigbtn .ic{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:24px;flex:none}
@@ -541,8 +544,24 @@ const FURI = [
   ["行","い"],["先","さき"],["語","ご"],["晩","ばん"]
 ].map((e, i) => ({b:e[0], r:e[1], next:e[2] || "", prev:e[3] || "", i})).sort((x, y) => y.b.length - x.b.length || x.i - y.i);
 const isKanji = c => c >= "一" && c <= "鿿";
-function furi(s){
-  let out = "";
+function furi(s){ return furiTokens(s).map(([b, r]) => r ? `<ruby>${b}<rt>${r}</rt></ruby>` : b).join(""); }
+/* 作文の くらべ用：よみ（ひらがな）に して、空白や 「。、」などを とる */
+function norm(s){
+  s = String(s).replace(/([一-鿿])（([ぁ-んー]+)）/g, "$2");
+  s = furiTokens(s).map(([b, r]) => r || b).join("");
+  return s.replace(/[ァ-ヶ]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x60)).replace(/[\s　、。，．,.!！?？「」『』・〜~…]/g, "");
+}
+/* 2つの文の おなじ ところ（いちばん長い 共通部分）を しらべる */
+function lcsMask(a, b){
+  const n = a.length, m = b.length, dp = Array.from({length:n + 1}, () => new Uint16Array(m + 1));
+  for(let i = n - 1; i >= 0; i--) for(let j = m - 1; j >= 0; j--) dp[i][j] = a[i] === b[j] ? dp[i+1][j+1] + 1 : Math.max(dp[i+1][j], dp[i][j+1]);
+  const ma = new Array(n).fill(false), mb = new Array(m).fill(false);
+  for(let i = 0, j = 0; i < n && j < m;){ if(a[i] === b[j]){ ma[i] = mb[j] = true; i++; j++; } else if(dp[i+1][j] >= dp[i][j+1]) i++; else j++; }
+  return {len:dp[0][0], ma, mb};
+}
+const markDiff = (s, mask, cls) => [...s].map((c, i) => mask[i] ? esc(c) : `<span class="${cls}">${esc(c)}</span>`).join("");
+function furiTokens(s){
+  const out = [];
   for(let i = 0; i < s.length;){
     let hit = null;
     if(isKanji(s[i])) for(const e of FURI){
@@ -553,8 +572,8 @@ function furi(s){
       if(e.prev && !(pv && e.prev.includes(pv))) continue;
       hit = e; break;
     }
-    if(hit){ out += `<ruby>${hit.b}<rt>${hit.r}</rt></ruby>`; i += hit.b.length; }
-    else out += s[i++];
+    if(hit){ out.push([hit.b, hit.r]); i += hit.b.length; }
+    else out.push([s[i++], null]);
   }
   return out;
 }
@@ -753,7 +772,7 @@ function dailyReport(title, k){
   d.pwq.forEach(w => { const q = PQ.find(x => x.id === w.id); if(q) L.push(`  ✕ ${q.jp.replace("＿", "［"+w.chose+"］")}（正解：${q.a}）`); });
   L.push("", `■ 作文：${d.tr.length}文`);
   d.tr.forEach(t => { const q = TR.find(x => x.id === t.id); if(!q) return;
-    L.push(`  「${q.pt}」`, `    彼女の答え：${t.ans}`, `    模範解答：${q.a[0]}`, `    自己評価：${GRADE[t.grade]}`); });
+    L.push(`  「${q.pt}」`, `    彼女の答え：${t.ans}`, `    模範解答：${q.a[0]}`, t.auto ? "    自動判定：◎ 模範解答と一致" : `    自己評価：${GRADE[t.grade]}`); });
   L.push("", `■ 日記：${d.diary}件`);
   S.diaries.filter(x => x.date === k).forEach(x => { L.push(`  ${x.jp}`); if(x.pt) L.push(`  （${x.pt}）`); });
   return {subject:`${past ? "📘" : "✅"} ${CONFIG.studentNameMail} の学習レポート（${k}）`, body:L.join("\n")};
@@ -870,20 +889,33 @@ function refresh(){
   renderDiaryList(); renderPrizes(); renderProgress(); applyPt();
 }
 
+/* ---------- ふくしゅうの間隔（日付で管理） ----------
+   問題ごとに box（0〜6）と due（つぎに出す日）を pstats / tstats に足す（もとの形はそのまま、項目を足すだけ）。
+   せいかい → box が1つ上がり、出る間隔がのびる（その日・1日・3日・7日・14日・30日・60日）。まちがい → box 0。 */
+const GAPS = [0, 1, 3, 7, 14, 30, 60];
+function srsSet(s, box){ s.box = Math.max(0, Math.min(GAPS.length - 1, box)); s.due = ymd(addDays(new Date(), GAPS[s.box])); }
+function srsWeight(s, legacy){
+  if(!s) return 2;                       // まだ 出ていない問題
+  if(s.due === undefined) return legacy;  // 前の版で 答えた問題（日付がまだない）
+  if(s.due <= todayKey()) return s.box === 0 ? 8 : 6;
+  return 0.2;                             // まだ 出す日では ない
+}
+
 /* ---------- じょし ---------- */
 let P = null;
 function startParticles(){
-  const qs = pickWeighted(PQ, q => { const s = S.pstats[q.id]; if(!s) return 3; return Math.max(0.5, 1 + 2*s.w - 0.5*s.c); }, CONFIG.particlesPerSession);
-  P = {qs, i:0, res:[], earned:0};
+  const qs = pickWeighted(PQ, q => { const s = S.pstats[q.id]; return srsWeight(s, s ? Math.max(1, 1 + 2*s.w - 0.5*s.c) + 2 : 0); }, CONFIG.particlesPerSession);
+  P = {qs, i:0, res:[], earned:0, main:qs.length, wrong:[], retried:false};
   $("practice-menu").style.display = "none"; $("practice-run").style.display = "";
   renderP();
 }
 function dots(res, n, i){ let h = '<div class="progress-dots">'; for(let k=0;k<n;k++){ h += `<span class="${res[k]===true?"ok":res[k]===false?"ng":k===i?"cur":""}"></span>`; } return h + "</div>"; }
 function renderP(){
-  const q = P.qs[P.i];
+  const q = P.qs[P.i], retry = P.i >= P.main, ri = P.i - P.main, rn = P.qs.length - P.main;
   $("practice-run").innerHTML = `
-    <div class="top"><button class="ghost" onclick="go('practice')">✕</button><span class="muted">${P.i+1} / ${P.qs.length}</span>${topBtns()}</div>
-    <div class="card">${dots(P.res, P.qs.length, P.i)}
+    <div class="top"><button class="ghost" onclick="go('practice')">✕</button><span class="muted">${retry ? `🔁 ${ri+1} / ${rn}` : `${P.i+1} / ${P.main}`}</span>${topBtns()}</div>
+    <div class="card">${retry ? dots(P.res.slice(P.main), rn, ri) : dots(P.res, P.main, P.i)}
+      ${retry ? `<div class="explain" style="margin:0 0 10px">${T("🔁 まちがえた もんだいを もう一度！（ポイントは つかないよ）","Vamos tentar de novo as que você errou! (sem pontos)")}</div>` : ""}
       <div class="muted small">${T("＿に はいる じょしは？","Qual partícula completa a frase?")}</div>
       <div class="sentence">${furi(esc(q.jp)).replace("＿", '<span class="blank" id="blank">？</span>')}</div>
       <button class="linkbtn" id="m-btn" onclick="this.style.display='none';$('meaning').style.display='block'">${T("いみを 見る","ver o significado")}</button>
@@ -894,32 +926,43 @@ function renderP(){
   applyPt();
 }
 function answerP(btn, o){
-  const q = P.qs[P.i], ok = o === q.a;
+  const q = P.qs[P.i], ok = o === q.a, retry = P.i >= P.main;
   document.querySelectorAll(".opts button").forEach(b => { b.disabled = true; if(b.textContent === q.a) b.classList.add("right"); });
   if(!ok) btn.classList.add("wrong");
   const bl = $("blank"); bl.textContent = q.a; bl.classList.add("ok");
-  const s = S.pstats[q.id] || (S.pstats[q.id] = {c:0,w:0}); ok ? s.c++ : s.w++;
-  const ps = S.partStats[q.a] || (S.partStats[q.a] = {c:0,w:0}); ok ? ps.c++ : ps.w++;
-  const d = day(); ok ? d.pc++ : (d.pw++, d.pwq.push({id:q.id, chose:o}));
   P.res[P.i] = ok;
-  const pts = ok ? CONFIG.points.particleRight : CONFIG.points.particleWrong; P.earned += pts;
-  addPoints(pts);
+  if(!retry){   // もう一度の ときは、きろく・ポイント・日課に 入れない
+    const s = S.pstats[q.id] || (S.pstats[q.id] = {c:0,w:0}); ok ? s.c++ : s.w++;
+    const prev = s.box !== undefined ? s.box : Math.max(0, Math.min(2, s.c - s.w - (ok ? 1 : 0)));
+    srsSet(s, ok ? prev + 1 : 0);
+    const ps = S.partStats[q.a] || (S.partStats[q.a] = {c:0,w:0}); ok ? ps.c++ : ps.w++;
+    const d = day(); ok ? d.pc++ : (d.pw++, d.pwq.push({id:q.id, chose:o}));
+    if(!ok) P.wrong.push({q, chose:o});
+    const pts = ok ? CONFIG.points.particleRight : CONFIG.points.particleWrong; P.earned += pts;
+    addPoints(pts);
+  } else save();
+  const willRetry = !retry && P.i + 1 === P.main && P.wrong.length && !P.retried;
   $("p-after").innerHTML = `${canSpeak ? `<button class="spk wide" onclick="speakP()">${T("🔊 きく","Ouvir a frase")}</button>` : ""}
     <div class="explain"><div class="hd">${ok ? T("🌸 せいかい！","Certo!") : T(`🌧️ おしい！こたえは「${q.a}」`, `Quase! A resposta é ${q.a}`)}</div>${T(furi(esc(q.exj)), esc(q.ex), true)}</div>
-    <button class="block" style="margin-top:12px" onclick="nextP()">${P.i+1 < P.qs.length ? T("つぎへ →","Próxima") : T("けっかを 見る","Ver resultado")}</button>`;
+    <button class="block" style="margin-top:12px" onclick="nextP()">${P.i+1 < P.qs.length ? T("つぎへ →","Próxima")
+      : willRetry ? T("まちがえた もんだいを もう一度 →","Tentar de novo as que errei") : T("けっかを 見る","Ver resultado")}</button>`;
   $("meaning").style.display = "block"; $("m-btn").style.display = "none";
   applyPt();
 }
 function nextP(){
   P.i++;
+  if(P.i === P.main && P.wrong.length && !P.retried){ P.retried = true; P.qs = P.qs.concat(P.wrong.map(w => w.q)); }
   if(P.i < P.qs.length){ renderP(); return; }
-  const right = P.res.filter(Boolean).length;
-  if(right >= 8) sparkles();
+  const n = P.main, right = P.res.slice(0, n).filter(Boolean).length;
+  if(right >= n * 0.8) sparkles();
+  const list = P.wrong.map(w => `<div class="item"><div class="jpx">${furi(esc(w.q.jp)).replace("＿", `<span class="blank ok">${w.q.a}</span>`)}</div>
+      <div class="muted small">${T(`あなたの こたえ：「${w.chose}」→ ただしくは「${w.q.a}」`, `Você escolheu ${w.chose}; o certo é ${w.q.a}.`)}</div></div>`).join("");
   $("practice-run").innerHTML = `<div class="card" style="text-align:center">
-      <div style="font-size:52px">${right >= 8 ? "🌟" : right >= 5 ? "🌷" : "🌱"}</div>
-      <h2>${T(`${P.qs.length}もん中 ${right}もん せいかい`, `${right} de ${P.qs.length} certas`)}</h2>
+      <div style="font-size:52px">${right >= n * 0.8 ? "🌟" : right >= n * 0.5 ? "🌷" : "🌱"}</div>
+      <h2>${T(`${n}もん中 ${right}もん せいかい`, `${right} de ${n} certas`)}</h2>
       <p>${T(`<b>${P.earned}</b> ポイント ゲット！`, `Você ganhou ${P.earned} pontos.`)}</p>
-      <p class="muted">${T("まちがえた もんだいは、かんたんに なるまで また でるよ。","As que você errou vão aparecer de novo até ficarem fáceis.")}</p>
+      ${list ? `<div style="text-align:left;margin-top:14px"><div class="muted small" style="font-weight:700">${T("まちがえた もんだい","As que você errou")}</div>${list}</div>` : ""}
+      <p class="muted">${T("まちがえた もんだいは、おぼえるまで また でるよ。","As que você errou vão aparecer de novo até você aprender.")}</p>
       <div class="grid2" style="margin-top:16px"><button class="ghost" onclick="go('home')">${T("ホーム","Início")}</button><button onclick="startParticles()">${T("もう10もん","Mais 10")}</button></div>
     </div>`;
   applyPt();
@@ -928,7 +971,7 @@ function nextP(){
 /* ---------- さくぶん ---------- */
 let W = null;
 function startWriting(){
-  const qs = pickWeighted(TR, q => { const s = S.tstats[q.id]; if(!s) return 3; return {3:1, 2:2.5, 1:4}[s.grade] || 3; }, CONFIG.writingPerSession);
+  const qs = pickWeighted(TR, q => { const s = S.tstats[q.id]; return srsWeight(s, s ? ({3:1, 2:2.5, 1:4}[s.grade] || 3) + 1 : 0); }, CONFIG.writingPerSession);
   W = {qs, i:0, earned:0};
   $("practice-menu").style.display = "none"; $("practice-run").style.display = "";
   renderW();
@@ -952,23 +995,40 @@ function showHint(){ const q = W.qs[W.i]; $("hint-btn").style.display = "none"; 
 function showW(){
   const q = W.qs[W.i], ans = $("w-ans").value.trim();
   $("w-ans").disabled = true; $("w-show").style.display = "none";
+  // よみ（ひらがな）に そろえて くらべる。漢字でも ひらがなでも、こたえの れいと おなじなら「ぴったり」。
+  const na = norm(ans), cands = q.a.map(a => ({n:norm(a)}));
+  const exact = na.length > 0 && cands.some(c => c.n === na);
+  let cmp = "";
+  if(!exact){
+    const best = cands.map(c => ({c, m:lcsMask(na, c.n)})).map(x => ({...x, r:2 * x.m.len / (na.length + x.c.n.length || 1)})).sort((a, b) => b.r - a.r)[0];
+    if(best && best.r >= 0.4) cmp = `
+    <label>${T("よみで くらべると","Comparando a leitura")}</label>
+    <div class="yours kana">${markDiff(na, best.m.ma, "df-ng")}</div>
+    <div class="model kana">${markDiff(best.c.n, best.m.mb, "df-add")}</div>
+    <p class="muted small">${T('<span class="df-ng">ピンク</span>＝ちがう ところ・<span class="df-add">みどり</span>＝たりない ところ',"Rosa = diferente · verde = faltou")}</p>`;
+  }
   $("w-after").innerHTML = `
     <label>${T("あなたが 書いた 文","Você escreveu")}</label><div class="yours">${esc(ans)}</div>
     <label>${T("こたえの れい","Exemplo de resposta")}</label>${q.a.map((a, i) => `<div class="model">${furi(esc(a))}${canSpeak ? `<button class="spk" onclick="speakW(${i})" aria-label="Ouvir">🔊</button>` : ""}</div>`).join("")}
+    ${exact ? `<div class="explain" style="background:var(--mint-s)"><div class="hd">${T("🌸 ぴったり！","Perfeito!")}</div>${T("こたえの れいと おなじだよ。","Igual ao exemplo de resposta.")}</div>
+    <button class="block" style="margin-top:12px" onclick="gradeW(3,true)">${T("つぎへ →","Próxima")}</button>` : `${cmp}
     <p class="muted small">${T("おなじ でなくても だいじょうぶ。ほかの 言い方も あるよ。ジャスも 見てくれるよ。","Não precisa ser igual: outras formas podem estar certas. O Jas também vai ver.")}</p>
     <p style="margin-top:12px;font-weight:900">${T("どうだった？","Como foi?")}</p>
     <div class="grades">
       <button class="g3" onclick="gradeW(3)">${T("◎ できた","Acertei")}</button>
       <button class="g2" onclick="gradeW(2)">${T("○ おしい","Quase")}</button>
       <button class="g1" onclick="gradeW(1)">${T("△ まちがえた","Errei")}</button>
-    </div>`;
+    </div>`}`;
   applyPt();
 }
-function gradeW(g){
+function gradeW(g, auto){
   const q = W.qs[W.i], ans = $("w-ans").value.trim();
-  S.tstats[q.id] = {grade:g, n:((S.tstats[q.id]||{}).n||0)+1};
-  day().tr.push({id:q.id, ans, grade:g});
-  S.writings.push({date:todayKey(), id:q.id, ans, grade:g});
+  const old = S.tstats[q.id] || {}, prev = old.box !== undefined ? old.box : (old.grade === 3 ? 1 : 0);
+  const s = {grade:g, n:(old.n || 0) + 1}; srsSet(s, g === 3 ? prev + 1 : g === 2 ? Math.min(prev, 1) : 0);
+  S.tstats[q.id] = s;
+  const rec = {id:q.id, ans, grade:g}; if(auto) rec.auto = true;
+  day().tr.push(rec);
+  S.writings.push(Object.assign({date:todayKey()}, rec));
   W.earned += CONFIG.points.writing;
   addPoints(CONFIG.points.writing);
   W.i++;
