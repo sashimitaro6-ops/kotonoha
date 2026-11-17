@@ -577,7 +577,7 @@ const FURI = [
   ["換","か"],["座","すわ"],["払","はら"],["合","あ"],["卵","たまご"],["袋","ふくろ"],["断","ことわ"],["始","はじ"],["初","はじ"],["背","せ"],["猫","ねこ"],
   ["涼","すず"],["暇","ひま"],["塩","しお"],["向","む"],["速","はや"],["森","もり"],["音","おと"],["数","かず"],["問","もん"],["文","ぶん"],["件","けん"],
   ["回","かい"],["変","か"],["正","ただ"],
-  ["彼氏","かれし"],["財布","さいふ"],["撮","と"],["傘","かさ"],["疲","つか"],["寝","ね"],["後","あと"],["遅","おそ"],["閉","し"],["急","いそ"]
+  ["保存","ほぞん"],["容量","ようりょう"],["彼氏","かれし"],["財布","さいふ"],["撮","と"],["傘","かさ"],["疲","つか"],["寝","ね"],["後","あと"],["遅","おそ"],["閉","し"],["急","いそ"]
 ].map((e, i) => ({b:e[0], r:e[1], next:e[2] || "", prev:e[3] || "", i})).sort((x, y) => y.b.length - x.b.length || x.i - y.i);
 const isKanji = c => c >= "一" && c <= "鿿";
 /* ふりがなを つける。タグと、すでに ふりがなが ついた ところは そのまま。 */
@@ -586,8 +586,15 @@ function furi(s){ return String(s).split(/(<ruby>.*?<\/ruby>|<[^>]*>)/).map((p, 
 const DAYR = {2:"ふつか",3:"みっか",4:"よっか",5:"いつか",6:"むいか",7:"なのか",8:"ようか",9:"ここのか",10:"とおか",14:"じゅうよっか",20:"はつか",24:"にじゅうよっか"};
 const dayR = n => DAYR[n] ? `<ruby>${n}日<rt>${DAYR[n]}</rt></ruby>` : `${n}<ruby>日<rt>にち</rt></ruby>`;
 /* 作文の くらべ用：よみ（ひらがな）に して、空白や 「。、」などを とる */
+/* 数字を漢数字に（7 → 七、10 → 十、25 → 二十五）。「7時」と打っても「七時」と同じ よみで くらべられる。 */
+function kanjiNum(n){
+  const D = "〇一二三四五六七八九"; n = Number(n);
+  if(!(n >= 0 && n < 10000)) return null; if(n === 0) return "〇";
+  return [[1000,"千"],[100,"百"],[10,"十"],[1,""]].map(([u, k]) => { const x = Math.floor(n / u) % 10; return !x ? "" : (x === 1 && k ? "" : D[x]) + k; }).join("");
+}
 function norm(s){
-  s = String(s).replace(/([一-鿿])（([ぁ-んー]+)）/g, "$2");
+  s = String(s).replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0)).replace(/\d+/g, m => kanjiNum(m) || m);
+  s = s.replace(/([一-鿿])（([ぁ-んー]+)）/g, "$2");
   s = furiTokens(s).map(([b, r]) => r || b).join("");
   return s.replace(/[ァ-ヶ]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x60)).replace(/[\s　、。，．,.!！?？「」『』・〜~…]/g, "");
 }
@@ -729,7 +736,13 @@ function furiDefault(){ if(!S.furiV){ S.furi = true; S.furiV = 1; } }
 furiDefault();
 /* バックアップ用の中身（送信待ちメールは入れない） */
 function snapshot(){ const c = Object.assign({}, S); delete c.outbox; return c; }
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+/* 保存に失敗したら（端末の容量がいっぱい・プライベートモードなど）、1回だけ知らせる */
+let saveWarned = false;
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(S)); }
+  catch(e){ if(!saveWarned){ saveWarned = true; setTimeout(() => modal(`<div class="big">⚠️</div><h2>${T("保存できなかったよ","Não foi possível salvar")}</h2>
+    <p>${T("スマホの容量がいっぱいかもしれません。ジャスに伝えてね。","Talvez a memória do celular esteja cheia. Avise o Jas.")}</p><button class="block" onclick="closeModal()">OK</button>`), 0); } }
+}
 
 const pad = n => String(n).padStart(2,"0");
 const ymd = d => d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
@@ -828,8 +841,29 @@ function sendMail(m, opt){
   save(); flush();
 }
 /* レポートの下につけるバックアップ（送る瞬間の最新データ） */
-function backupText(){
-  return "\n\n――――――――――――\n💾 バックアップ（読まなくてOK）\nデータが消えたときは、下の1行を kotonoha.json という名前で保存して彼女に送り、「成長 → 戻す」で選んでもらいます。\n" + JSON.stringify(snapshot());
+/* GAS は本文を 200,000字で切るので、データが増えると（1年で約30万字）バックアップが途中で切れて戻せなくなる。
+   そこで gzip で圧縮して「KTZ1:」＋base64 の1行にする（1年分でも数万字）。圧縮できない端末では、そのままの JSON。 */
+const ZTAG = "KTZ1:";
+async function packSnap(){
+  const json = JSON.stringify(snapshot());
+  if(typeof CompressionStream === "undefined") return json;
+  try{
+    const buf = new Uint8Array(await new Response(new Blob([json]).stream().pipeThrough(new CompressionStream("gzip"))).arrayBuffer());
+    let bin = ""; for(let i = 0; i < buf.length; i += 0x8000) bin += String.fromCharCode.apply(null, buf.subarray(i, i + 0x8000));
+    return ZTAG + btoa(bin);
+  }catch(e){ return json; }
+}
+/* 戻すときに読む：圧縮した1行（KTZ1:…）でも、ふつうの JSON でもよい */
+async function unpackSnap(text){
+  text = String(text).trim();
+  const at = text.indexOf(ZTAG);
+  if(at < 0) return text;
+  const bin = atob(text.slice(at + ZTAG.length).replace(/[^A-Za-z0-9+/=]/g, ""));
+  const buf = Uint8Array.from(bin, c => c.charCodeAt(0));
+  return await new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream("gzip"))).text();
+}
+async function backupText(){
+  return "\n\n――――――――――――\n💾 バックアップ（読まなくてOK）\nデータが消えたときは、下の1行（KTZ1: から最後まで）を kotonoha.json という名前で保存して彼女に送り、「成長 → 戻す」で選んでもらいます。\n" + await packSnap();
 }
 /* サーバーが「ok」と返したときだけ、送信待ちから消す。失敗したら残して、あとでもう一度送る。 */
 let flushing = false;
@@ -841,8 +875,9 @@ async function flush(){
     while(S.outbox.length){
       const it = S.outbox[0]; let ok = false;
       try{
+        const body = it.body + (it.snap ? await backupText() : "");
         const res = await fetch(CONFIG.scriptUrl, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"},
-          body: JSON.stringify({token:CONFIG.token, id:it.id || String(it.ts), subject:it.subject, body:it.body + (it.snap ? backupText() : ""), replyTo:CONFIG.studentEmail})});
+          body: JSON.stringify({token:CONFIG.token, id:it.id || String(it.ts), subject:it.subject, body, replyTo:CONFIG.studentEmail})});
         const txt = (await res.text()).trim();
         ok = res.ok && (txt === "ok" || txt === "dup");
       }catch(e){}
@@ -1202,9 +1237,24 @@ function submitDiary(){
   save();
   sendMail({subject:`📓 ${CONFIG.studentNameMail} の日記（${todayKey()}）`,
     body:`${CONFIG.studentNameMail} が日記を書きました（${todayKey()}）\n\n【画面に出ていたお題（参考）】\n${dq[0]}\n\n【日本語】\n${jp}\n\n【言いたかったこと】\n${pt || "（記入なし）"}\n\n${CONFIG.studentEmail ? "このメールに返信すると、そのまま彼女に添削が届きます。" : ""}`});
-  $("d-jp").value = ""; $("d-pt").value = "";
-  modal(`<div class="big">💌</div><h2>${T("送ったよ！","Enviado!")}</h2><p>${CONFIG.studentEmail ? T(`${CONFIG.teacherName}が読んで、メールで返事するね。`,"O Jas vai ler e responder por e-mail com as correções.") : T(`${CONFIG.teacherName}が読んで、返事するね。`,"O Jas vai ler e responder com as correções.")}</p><button class="block" onclick="closeModal()">OK</button>`);
+  $("d-jp").value = ""; $("d-pt").value = ""; saveDraft();
+  // 日記で目標達成になったときは、達成の画面を出す（「送ったよ」はトーストで伝える）
+  const wasMet = d.goalMet;
   addPoints(first ? CONFIG.points.diaryFirst : CONFIG.points.diaryMore);
+  if(!wasMet && d.goalMet){ setTimeout(() => toast("送ったよ ✉️"), 1400); return; }
+  modal(`<div class="big">💌</div><h2>${T("送ったよ！","Enviado!")}</h2><p>${CONFIG.studentEmail ? T(`${CONFIG.teacherName}が読んで、メールで返事するね。`,"O Jas vai ler e responder por e-mail com as correções.") : T(`${CONFIG.teacherName}が読んで、返事するね。`,"O Jas vai ler e responder com as correções.")}</p><button class="block" onclick="closeModal()">OK</button>`);
+  applyPt();
+}
+/* 日記の下書き（ほかのアプリに切りかえて iPhone が読みこみ直しても、書いた文が消えないように）。
+   本体のキー（kotonoha-v1）には入れず、別のキーに置く。 */
+const DRAFT = KEY + "-draft";
+function saveDraft(){
+  try{ const jp = $("d-jp").value, pt = $("d-pt").value;
+    if(jp.trim() || pt.trim()) localStorage.setItem(DRAFT, JSON.stringify({jp, pt})); else localStorage.removeItem(DRAFT); }catch(e){}
+}
+function loadDraft(){
+  try{ const d = JSON.parse(localStorage.getItem(DRAFT) || "null"); if(d){ $("d-jp").value = d.jp || ""; $("d-pt").value = d.pt || ""; } }catch(e){}
+  ["d-jp","d-pt"].forEach(id => $(id).addEventListener("input", saveDraft));
 }
 /* きょうの お題（日替わり。「べつの おだい」で つぎへ） */
 let dqShift = 0;
@@ -1350,9 +1400,9 @@ let pendingImport = null;
 function importData(inp){
   const f = inp.files[0]; if(!f) return;
   const r = new FileReader();
-  r.onload = () => {
+  r.onload = async () => {
     try{
-      const s = JSON.parse(r.result); if(!s || typeof s.total !== "number" || !s.days || typeof s.days !== "object") throw 0;
+      const s = JSON.parse(await unpackSnap(r.result)); if(!s || typeof s.total !== "number" || !s.days || typeof s.days !== "object") throw 0;
       pendingImport = s;
       const last = Object.keys(s.days).sort().pop() || "—";
       modal(`<div class="big">📦</div><h2>${T("このデータに戻す？","Restaurar estes dados?")}</h2>
@@ -1376,6 +1426,7 @@ function confirmImport(){
 
 $("overlay").addEventListener("click", e => { if(e.target.id === "overlay") closeModal(); });
 staticTexts();
+loadDraft();
 applyRestTicket();
 catchUpReports();
 refresh();
