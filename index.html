@@ -159,6 +159,12 @@ button .tr .p{color:inherit;opacity:.8}
 .opts button:disabled{opacity:1}
 .explain .hd{font-weight:900;margin-bottom:6px}
 .tip{font-size:13px;color:var(--muted);text-align:center;margin:10px 0 0}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
+.tabs button{padding:10px 4px;font-size:14px;background:#fff;color:var(--ink);border:2px solid var(--line);box-shadow:0 3px 0 var(--line)}
+.tabs button.on{background:var(--pink-s);border-color:var(--pink);color:var(--pink-d)}
+.hl{color:var(--pink-d);font-weight:900}
+.rule-k{font-size:24px;font-weight:900;color:var(--pink-d);min-width:2.2em;text-align:center}
+.item .model,.item .yours{font-size:17px}
 </style>
 </head>
 <body>
@@ -235,15 +241,23 @@ button .tr .p{color:inherit;opacity:.8}
     <button class="bigbtn" onclick="startWriting()">
       <span class="ic lv">✏️</span><span class="txt" id="m-write"></span><span class="go">›</span>
     </button>
+    <button class="bigbtn" onclick="openNote()">
+      <span class="ic mt">📒</span><span class="txt" id="m-note"></span><span class="go">›</span>
+    </button>
   </div>
   <div id="practice-run" style="display:none"></div>
 </section>
 
 <!-- ============ にっき ============ -->
 <section id="diary">
-  <div class="top"><h1 id="d-title"></h1><button class="ptbtn" onclick="togglePt()">🇧🇷</button></div>
+  <div class="top"><h1 id="d-title"></h1><span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" onclick="togglePt()">🇧🇷</button></span></div>
   <p class="muted" id="d-sub"></p>
   <div class="card">
+    <div class="explain" style="margin:0 0 4px">
+      <div class="hd" id="d-q-h"></div>
+      <div id="d-q" style="font-size:17px"></div>
+      <button class="linkbtn" onclick="nextDiaryQ()" id="d-q-next"></button>
+    </div>
     <label for="d-jp" id="d-l1"></label>
     <textarea id="d-jp" rows="4" placeholder="きょうは しごとが いそがしかったです。"></textarea>
     <label for="d-pt" id="d-l2"></label>
@@ -597,6 +611,62 @@ function speakW(i){ const q = W.qs[W.i]; if(q && q.a[i]) speak(q.a[i]); }
 const tipLine = () => `<p class="tip">${T(`「あ」＝ かんじの よみかた${canSpeak ? "・🔊 ＝ おとを きく" : ""}`, `「あ」= leitura dos kanji${canSpeak ? " · 🔊 = ouvir a frase" : ""}`)}</p>`;
 const topBtns = () => `<span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" onclick="togglePt()" aria-label="Mostrar português">🇧🇷</button></span>`;
 
+/* にっきの お題 [日本語, ポルトガル語]（日替わり）。漢字は FURI に ある ものだけ 使う。 */
+const DIARY_Q = [
+  ["きょう、なにを 食べましたか。おいしかったですか。","O que você comeu hoje? Estava gostoso?"],
+  ["きょうの てんきは どうでしたか。","Como estava o tempo hoje?"],
+  ["きょう、いちばん たのしかった ことは なんですか。","Qual foi a coisa mais divertida de hoje?"],
+  ["きょうの 仕事は どうでしたか。","Como foi o trabalho hoje?"],
+  ["こんどの しゅうまつ、なにを したいですか。","O que você quer fazer no próximo fim de semana?"],
+  ["日本に 来てから、なにを したいですか。","O que você quer fazer depois de chegar ao Japão?"],
+  ["日本で 食べてみたい ものは なんですか。","O que você quer experimentar comer no Japão?"],
+  ["いま、なにが ほしいですか。どうしてですか。","O que você quer ter agora? Por quê?"],
+  ["きのうの よる、なにを しましたか。","O que você fez ontem à noite?"],
+  ["好きな 音楽は なんですか。いつ 聞きますか。","De que música você gosta? Quando você ouve?"],
+  ["かぞくは いま なにを していますか。","O que a sua família está fazendo agora?"],
+  ["きょう、だれと 話しましたか。なにを 話しましたか。","Com quem você conversou hoje? Sobre o quê?"],
+  ["けさ、なんじに 起きましたか。それから なにを しましたか。","A que horas você acordou hoje? O que fez depois?"],
+  ["さいきん 見た 映画や ドラマは どうでしたか。","Como foi o último filme ou série que você viu?"],
+  ["ジャスに 言いたい ことは なんですか。","O que você quer dizer para o Jas?"],
+  ["いま、どんな きもちですか。どうしてですか。","Como você está se sentindo agora? Por quê?"],
+  ["好きな 場所は どこですか。そこで なにを しますか。","Qual é o seu lugar favorito? O que você faz lá?"],
+  ["きょう、なにか 買いましたか。","Você comprou alguma coisa hoje?"],
+  ["あした、なにを しますか。","O que você vai fazer amanhã?"],
+  ["ブラジルの 好きな 食べ物を おしえて ください。","Conte sobre uma comida brasileira de que você gosta."],
+  ["日本語の 勉強は どうですか。なにが むずかしいですか。","Como vão os estudos de japonês? O que é difícil?"],
+  ["こどもの とき、なにが 好きでしたか。","Do que você gostava quando era criança?"],
+  ["広島で 行きたい ところは ありますか。","Tem algum lugar em Hiroshima aonde você quer ir?"],
+  ["きょう、うれしかった ことを 一つ 書いて ください。","Escreva uma coisa que te deixou feliz hoje."]
+];
+
+/* じょしの ルールの まとめ（ノート用） [じょし, [[せつめい, ポルトガル語, れい文（[ ]＝その じょし）], …]] */
+const RULES = [
+  ["は", [["話の テーマ（〜に ついて 言うと）","Tópico da frase: “quanto a…”","わたし[は] ブラジル人です。"],
+          ["2つを くらべる とき","Contraste entre duas coisas","肉[は] 食べますが、魚[は] 食べません。"]]],
+  ["が", [["「好き・じょうず・ほしい・わかる・ある・いる」の まえ","Antes de 好き, じょうず, ほしい, わかる, ある, いる","ねこ[が] 好きです。"],
+          ["「だれが？」「なにが？」の こたえ","Resposta a “quem?” / “o quê?” (informação nova)","ジャス[が] 作りました。"]]],
+  ["を", [["「なにを？」の こたえ（飲む・食べる・見る もの）","Objeto direto: o que você bebe, come, vê…","コーヒー[を] 飲みます。"],
+          ["とおる 場所・出る 場所","Lugar por onde se passa ou de onde se sai","公園[を] 歩きます。"]]],
+  ["に", [["「いる・ある・住む」の 場所","Lugar com いる, ある, 住む (existir, morar)","日本[に] 住みます。"],
+          ["はっきりした 時間","Horário ou data exata","七時[に] 起きます。"],
+          ["行く・来る・帰る ところ（ゴール）","Destino com ir, vir, voltar","駅[に] 行きます。"],
+          ["あいての 人","A pessoa a quem a ação se dirige","友だち[に] 会います。"]]],
+  ["で", [["なにかを する 場所","Lugar onde uma ação acontece","図書館[で] 勉強します。"],
+          ["のりもの・どうぐ","Meio de transporte ou instrumento","バス[で] 行きます。"]]],
+  ["へ", [["むかう ほうこう（「に」と ほとんど おなじ）","Direção (quase igual a に)","日本[へ] 行きます。"]]],
+  ["と", [["いっしょに する 人","Companhia: “com” alguém","ジャス[と] 映画を 見ます。"],
+          ["AとB（ぜんぶ 言う）","A e B (lista completa)","肉[と] 魚を 買います。"]]],
+  ["や", [["れいを あげる（ほかにも ある）","A, B e outras coisas (lista incompleta)","肉[や] 魚を 買います。"]]],
+  ["か", [["AかB（どちらか 一つ）","A ou B","紅茶[か] コーヒーを 飲みます。"]]],
+  ["も", [["〜も おなじ","“Também”","わたし[も] 行きます。"]]],
+  ["の", [["だれの？ どこの？ なんの？","“De”: posse ou descrição","ジャス[の] 車です。"]]],
+  ["から", [["スタート（場所・時間）","Início: de / a partir de","九時[から] 働きます。"]]],
+  ["まで", [["おわり・ゴール（場所・時間）","Fim: até","五時[まで] 働きます。"]]],
+  ["より", [["くらべる（AよりBの ほうが…）","Comparação: “do que”","バス[より] 電車の ほうが はやいです。"]]],
+  ["だけ", [["それ だけ（ほかは ない）","“Só / apenas”","一つ[だけ] 買います。"]]],
+  ["しか", [["「しか」＋「〜ません」＝ それ だけ（すくない きもち）","しか + negativo = “só” (sensação de pouco)","百円[しか] ありません。"]]]
+];
+
 /* マスコットのひとこと [日本語, ポルトガル語] */
 const CHEER = [
   ["きょうも いっしょに がんばろうね！","Vamos estudar juntas hoje!"],
@@ -772,9 +842,12 @@ function dailyReport(title, k){
   d.pwq.forEach(w => { const q = PQ.find(x => x.id === w.id); if(q) L.push(`  ✕ ${q.jp.replace("＿", "［"+w.chose+"］")}（正解：${q.a}）`); });
   L.push("", `■ 作文：${d.tr.length}文`);
   d.tr.forEach(t => { const q = TR.find(x => x.id === t.id); if(!q) return;
-    L.push(`  「${q.pt}」`, `    彼女の答え：${t.ans}`, `    模範解答：${q.a[0]}`, t.auto ? "    自動判定：◎ 模範解答と一致" : `    自己評価：${GRADE[t.grade]}`); });
+    L.push(`  「${q.pt}」`, `    彼女の答え：${t.ans}`, `    模範解答：${q.a[0]}`, t.auto ? "    自動判定：◎ 模範解答と一致" : `    自己評価：${GRADE[t.grade]}`);
+    if(t.re) L.push("    書き直し：✓ 模範解答を見ないで打ち直した"); });
   L.push("", `■ 日記：${d.diary}件`);
   S.diaries.filter(x => x.date === k).forEach(x => { L.push(`  ${x.jp}`); if(x.pt) L.push(`  （${x.pt}）`); });
+  const cf = confusions().filter(x => x.n >= 2).slice(0, 5);
+  if(cf.length) L.push("", "■ 助詞のよくある取り違え（これまでの合計）", ...cf.map(x => `  正解「${x.a}」のところで「${x.c}」を選んだ：${x.n}回`));
   return {subject:`${past ? "📘" : "✅"} ${CONFIG.studentNameMail} の学習レポート（${k}）`, body:L.join("\n")};
 }
 /* きのうまでの日で、レポートに入っていない練習があれば「1日のまとめ」を送る
@@ -802,6 +875,7 @@ function manualReport(){
    ========================================================= */
 const $ = id => document.getElementById(id);
 function go(id){
+  settleW();
   document.querySelectorAll("section").forEach(s => s.classList.toggle("on", s.id === id));
   document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.go === id));
   if(id === "practice"){ $("practice-menu").style.display = ""; $("practice-run").style.display = "none"; }
@@ -831,11 +905,14 @@ function staticTexts(){
   setT("pr-sub","どれを する？","Qual exercício você quer fazer?");
   $("m-part").innerHTML = `<b>じょし（は・が・を・に・で など）</b>${T("まちがえた もんだいは よく でるよ","As que você erra aparecem mais vezes.")}`;
   $("m-write").innerHTML = `<b>さくぶん</b>${T("ポルトガル語 → 日本語。こたえは ジャスにも とどくよ","Português → japonês. O Jas recebe suas respostas.")}`;
+  $("m-note").innerHTML = `<b>ノート</b>${T("まちがえた もんだい・書いた 文・じょしの ルール","Caderno: seus erros, suas frases e as regras das partículas.")}`;
   // にっき
   setT("d-title","にっき 📔","Diário");
   if(CONFIG.studentEmail) setT("d-sub","きょうの ことを 日本語で 1〜3文 書いてね。ジャスが よんで、メールで なおしてくれるよ。","Escreva 1 a 3 frases em japonês sobre o seu dia. O Jas vai ler e corrigir por e-mail.");
   else setT("d-sub","きょうの ことを 日本語で 1〜3文 書いてね。ジャスが よんで、なおしてくれるよ。","Escreva 1 a 3 frases em japonês sobre o seu dia. O Jas vai ler e corrigir.");
   setT("d-l1","日本語で","Em japonês");
+  setT("d-q-h","💡 きょうの おだい（ちがう ことを 書いても OK）","Tema de hoje (pode escrever sobre outra coisa)");
+  $("d-q-next").innerHTML = T("🔄 べつの おだい","Outro tema");
   setT("d-l2","言いたかったこと（ポルトガル語・なくても OK）","O que você queria dizer (em português, opcional)");
   setT("d-tip","💗 まちがえても だいじょうぶ！書くことが いちばんの れんしゅうだよ。","Tudo bem errar! Escrever é o melhor treino.");
   $("d-send").innerHTML = T("ジャスに おくる 💌","Enviar para o Jas");
@@ -992,24 +1069,27 @@ function renderW(){
   applyPt();
 }
 function showHint(){ const q = W.qs[W.i]; $("hint-btn").style.display = "none"; $("hint-box").innerHTML = `<div class="explain">💡 ${T(furi(esc(q.h)), esc(q.hp), true)}</div>`; applyPt(); }
+/* よみを ならべて、ちがう ところに 色を つける */
+function cmpHtml(na, cands){
+  const best = cands.map(n => ({n, m:lcsMask(na, n)})).map(x => ({...x, r:2 * x.m.len / (na.length + x.n.length || 1)})).sort((a, b) => b.r - a.r)[0];
+  if(!best || best.r < 0.4) return "";
+  return `
+    <label>${T("よみで くらべると","Comparando a leitura")}</label>
+    <div class="yours kana">${markDiff(na, best.m.ma, "df-ng")}</div>
+    <div class="model kana">${markDiff(best.n, best.m.mb, "df-add")}</div>
+    <p class="muted small">${T('<span class="df-ng">ピンク</span>＝ちがう ところ・<span class="df-add">みどり</span>＝たりない ところ',"Rosa = diferente · verde = faltou")}</p>`;
+}
+const modelsHtml = q => q.a.map((a, i) => `<div class="model">${furi(esc(a))}${canSpeak ? `<button class="spk" onclick="speakW(${i})" aria-label="Ouvir">🔊</button>` : ""}</div>`).join("");
 function showW(){
   const q = W.qs[W.i], ans = $("w-ans").value.trim();
   $("w-ans").disabled = true; $("w-show").style.display = "none";
   // よみ（ひらがな）に そろえて くらべる。漢字でも ひらがなでも、こたえの れいと おなじなら「ぴったり」。
-  const na = norm(ans), cands = q.a.map(a => ({n:norm(a)}));
-  const exact = na.length > 0 && cands.some(c => c.n === na);
-  let cmp = "";
-  if(!exact){
-    const best = cands.map(c => ({c, m:lcsMask(na, c.n)})).map(x => ({...x, r:2 * x.m.len / (na.length + x.c.n.length || 1)})).sort((a, b) => b.r - a.r)[0];
-    if(best && best.r >= 0.4) cmp = `
-    <label>${T("よみで くらべると","Comparando a leitura")}</label>
-    <div class="yours kana">${markDiff(na, best.m.ma, "df-ng")}</div>
-    <div class="model kana">${markDiff(best.c.n, best.m.mb, "df-add")}</div>
-    <p class="muted small">${T('<span class="df-ng">ピンク</span>＝ちがう ところ・<span class="df-add">みどり</span>＝たりない ところ',"Rosa = diferente · verde = faltou")}</p>`;
-  }
+  const na = norm(ans), cands = q.a.map(norm);
+  const exact = na.length > 0 && cands.includes(na);
+  const cmp = exact ? "" : cmpHtml(na, cands);
   $("w-after").innerHTML = `
     <label>${T("あなたが 書いた 文","Você escreveu")}</label><div class="yours">${esc(ans)}</div>
-    <label>${T("こたえの れい","Exemplo de resposta")}</label>${q.a.map((a, i) => `<div class="model">${furi(esc(a))}${canSpeak ? `<button class="spk" onclick="speakW(${i})" aria-label="Ouvir">🔊</button>` : ""}</div>`).join("")}
+    <label>${T("こたえの れい","Exemplo de resposta")}</label>${modelsHtml(q)}
     ${exact ? `<div class="explain" style="background:var(--mint-s)"><div class="hd">${T("🌸 ぴったり！","Perfeito!")}</div>${T("こたえの れいと おなじだよ。","Igual ao exemplo de resposta.")}</div>
     <button class="block" style="margin-top:12px" onclick="gradeW(3,true)">${T("つぎへ →","Próxima")}</button>` : `${cmp}
     <p class="muted small">${T("おなじ でなくても だいじょうぶ。ほかの 言い方も あるよ。ジャスも 見てくれるよ。","Não precisa ser igual: outras formas podem estar certas. O Jas também vai ver.")}</p>
@@ -1027,10 +1107,50 @@ function gradeW(g, auto){
   const s = {grade:g, n:(old.n || 0) + 1}; srsSet(s, g === 3 ? prev + 1 : g === 2 ? Math.min(prev, 1) : 0);
   S.tstats[q.id] = s;
   const rec = {id:q.id, ans, grade:g}; if(auto) rec.auto = true;
-  day().tr.push(rec);
-  S.writings.push(Object.assign({date:todayKey()}, rec));
-  W.earned += CONFIG.points.writing;
+  const wrec = Object.assign({date:todayKey()}, rec);
+  day().tr.push(rec); S.writings.push(wrec);
+  W.recs = [rec, wrec]; W.pend = true; save();
+  // ○・△ の ときは、こたえの れいを 見ないで もう一度 書く（ポイントは そのあとで 入る）
+  if(!auto && g < 3) renderRedo(); else doneW();
+}
+/* 書いた 文の ポイントを 入れる（書きなおしの とちゅうで やめても 入る） */
+function settleW(){
+  if(!W || !W.pend) return;
+  W.pend = false; W.earned += CONFIG.points.writing;
   addPoints(CONFIG.points.writing);
+}
+function renderRedo(){
+  const q = W.qs[W.i];
+  $("practice-run").innerHTML = `
+    <div class="top"><button class="ghost" onclick="go('practice')">✕</button><span class="muted">${W.i+1} / ${W.qs.length}</span>${topBtns()}</div>
+    <div class="card">
+      <div class="explain" style="margin:0 0 10px">${T("✍️ こたえの れいを 見ないで、もう一度 書いてみよう。書けたら ジャスにも つたわるよ。","Agora escreva de novo, sem olhar o exemplo. Se conseguir, o Jas fica sabendo.")}</div>
+      <div class="pt-prompt">${esc(q.pt)}</div>
+      <button class="soft" id="peek-btn" onclick="const b=$('peek-box');b.style.display=b.style.display?'':'none'">👀 ${T("こたえの れいを ちょっと 見る","Espiar o exemplo")}</button>
+      <div id="peek-box" style="display:none">${modelsHtml(q)}</div>
+      <label for="r-ans">${T("もう一度 書く","Escreva de novo")}</label>
+      <textarea id="r-ans" rows="2" placeholder="ここに 日本語で…" oninput="$('r-check').disabled = this.value.trim().length < 2"></textarea>
+      <button class="block" id="r-check" style="margin-top:12px" disabled onclick="checkRedo()">${T("たしかめる","Conferir")}</button>
+      <div id="r-after"></div>
+      <button class="linkbtn" id="r-skip" style="display:block;margin:12px auto 0" onclick="doneW()">${T("とばして つぎへ","Pular e continuar")}</button>
+    </div>${tipLine()}`;
+  applyPt();
+}
+function checkRedo(){
+  const q = W.qs[W.i], na = norm($("r-ans").value), cands = q.a.map(norm);
+  if(na && cands.includes(na)){
+    W.recs.forEach(r => r.re = true); save();
+    $("r-ans").disabled = true; ["r-check","r-skip","peek-btn"].forEach(id => $(id).style.display = "none");
+    $("peek-box").style.display = "";
+    $("r-after").innerHTML = `<div class="explain" style="background:var(--mint-s)"><div class="hd">${T("🌸 書けた！","Conseguiu!")}</div>${T("こたえの れいと おなじだよ。","Igual ao exemplo de resposta.")}</div>
+      <button class="block" style="margin-top:12px" onclick="doneW()">${T("つぎへ →","Próxima")}</button>`;
+  } else {
+    $("r-after").innerHTML = `${cmpHtml(na, cands)}<p class="muted small">${T("なおして、もう一度「たしかめる」を おしてね。","Corrija e toque em “Conferir” de novo.")}</p>`;
+  }
+  applyPt();
+}
+function doneW(){
+  settleW();
   W.i++;
   if(W.i < W.qs.length){ renderW(); return; }
   $("practice-run").innerHTML = `<div class="card" style="text-align:center">
@@ -1047,15 +1167,22 @@ function submitDiary(){
   if(jp.length < 6 || !/[ぁ-んァ-ヶ一-龥]/.test(jp)){ toast("もう すこし 書いてみよう 🙂"); return; }
   const d = day(), first = d.diary === 0;
   d.diary++;
-  S.diaries.unshift({date:todayKey(), jp, pt, ts:Date.now()});
+  const dq = diaryQ();
+  S.diaries.unshift({date:todayKey(), jp, pt, ts:Date.now(), q:dq[0]});
   save();
   sendMail({subject:`📓 ${CONFIG.studentNameMail} の日記（${todayKey()}）`,
-    body:`${CONFIG.studentNameMail} が日記を書きました（${todayKey()}）\n\n【日本語】\n${jp}\n\n【言いたかったこと】\n${pt || "（記入なし）"}\n\n${CONFIG.studentEmail ? "このメールに返信すると、そのまま彼女に添削が届きます。" : ""}`});
+    body:`${CONFIG.studentNameMail} が日記を書きました（${todayKey()}）\n\n【画面に出ていたお題（参考）】\n${dq[0]}\n\n【日本語】\n${jp}\n\n【言いたかったこと】\n${pt || "（記入なし）"}\n\n${CONFIG.studentEmail ? "このメールに返信すると、そのまま彼女に添削が届きます。" : ""}`});
   $("d-jp").value = ""; $("d-pt").value = "";
   modal(`<div class="big">💌</div><h2>${T("おくったよ！","Enviado!")}</h2><p>${CONFIG.studentEmail ? T(`${CONFIG.teacherName}が よんで、メールで へんじ するね。`,"O Jas vai ler e responder por e-mail com as correções.") : T(`${CONFIG.teacherName}が よんで、へんじ するね。`,"O Jas vai ler e responder com as correções.")}</p><button class="block" onclick="closeModal()">OK</button>`);
   addPoints(first ? CONFIG.points.diaryFirst : CONFIG.points.diaryMore);
 }
+/* きょうの お題（日替わり。「べつの おだい」で つぎへ） */
+let dqShift = 0;
+function diaryQ(){ const n = new Date(); return DIARY_Q[(n.getFullYear()*372 + n.getMonth()*31 + n.getDate() + dqShift) % DIARY_Q.length]; }
+function nextDiaryQ(){ dqShift++; renderDiaryQ(); applyPt(); }
+function renderDiaryQ(){ const q = diaryQ(); $("d-q").innerHTML = T(furi(esc(q[0])), esc(q[1]), true); }
 function renderDiaryList(){
+  renderDiaryQ();
   const el = $("diary-list");
   if(!S.diaries.length){ el.innerHTML = `<div class="empty"><div class="big">🌱</div>${T("まだ ないよ。きょう はじめての にっきを 書いてみよう！","Ainda não há diários. Que tal escrever o primeiro hoje?")}</div>`; return; }
   el.innerHTML = S.diaries.slice(0, 20).map(x => `<div class="item"><div class="muted small">${x.date}</div><div class="jpx">${esc(x.jp)}</div>${x.pt ? `<div class="muted small">${esc(x.pt)}</div>` : ""}</div>`).join("");
@@ -1118,13 +1245,64 @@ function renderProgress(){
   const parts = ["は","が","を","に","で","へ","と","や","か","も","の","から","まで","より","だけ","しか"];
   const rows = parts.filter(p => S.partStats[p]).map(p => { const s = S.partStats[p], n = s.c+s.w, pct = Math.round(100*s.c/n);
     return `<div class="pbar"><span class="k">${p}</span><div class="bar ${pct>=80?"g":""}"><div style="width:${pct}%"></div></div><span class="muted">${pct}% <span class="small">(${n})</span></span></div>`; });
-  $("pstats").innerHTML = rows.length ? rows.join("") + `<p class="muted small">${T("みどり ＝ 80% いじょう。（ ）は こたえた かず。","Verde = 80% ou mais. Entre parênteses: quantas vezes respondeu.")}</p>`
+  $("pstats").innerHTML = rows.length ? rows.join("") + `<p class="muted small">${T("みどり ＝ 80% いじょう。（ ）は こたえた かず。","Verde = 80% ou mais. Entre parênteses: quantas vezes respondeu.")}</p>` + confHtml(3)
     : `<div class="empty"><div class="big">🎀</div>${T("じょしの れんしゅうを すると ここに でるよ","Faça um exercício de partículas para ver aqui.")}</div>`;
   const seen = Object.keys(S.tstats).length, good = Object.values(S.tstats).filter(s => s.grade === 3).length;
   $("wstats").innerHTML = `<p>${T(`れんしゅうした 文：<b>${seen} / ${TR.length}</b>`, "Frases diferentes já praticadas")}</p><p>${T(`さいごに ◎ だった 文：<b>${good}</b>`, "Marcadas como ◎ na última vez")}</p>
     <div class="bar g" style="margin-top:8px"><div style="width:${Math.round(100*good/TR.length)}%"></div></div>`;
   $("outbox-status").innerHTML = !CONFIG.scriptUrl ? T("メール：まだ せってい されていません","E-mail: ainda não configurado.")
     : S.outbox.length ? T(`${S.outbox.length}けん、インターネットに つながったら おくるよ`, "Mensagens esperando internet para enviar.") : T("メールは ぜんぶ おくったよ ✓","Todas as mensagens foram enviadas.");
+}
+
+/* ---------- ノート（見かえす） ---------- */
+/* じょしの とりちがえ：「ただしくは a」の ところで「c」を えらんだ 回数（days の pwq から 数える） */
+function confusions(){
+  const m = {};
+  Object.values(S.days).forEach(d => (d.pwq || []).forEach(w => {
+    const q = PQ.find(x => x.id === w.id); if(!q || !w.chose || w.chose === q.a) return;
+    const k = q.a + "→" + w.chose; m[k] = (m[k] || 0) + 1; }));
+  return Object.entries(m).map(([k, n]) => { const [a, c] = k.split("→"); return {a, c, n}; }).sort((x, y) => y.n - x.n);
+}
+function confHtml(max){
+  const cf = confusions().slice(0, max); if(!cf.length) return "";
+  return `<div class="muted small" style="font-weight:700;margin-top:12px">${T("よく とりちがえる じょし（✕ えらんだ → ○ ただしい）","Trocas mais comuns (✕ escolhida → ○ certa)")}</div>` + cf.map(x =>
+    `<div class="item" style="padding:8px 0">${T(`✕「<b>${esc(x.c)}</b>」→ ○「<b class="hl">${esc(x.a)}</b>」 <span class="muted small">${x.n}かい</span>`, `Você escolheu ${esc(x.c)}; o certo era ${esc(x.a)} (${x.n}×)`)}</div>`).join("");
+}
+function speakQ(id){ const q = PQ.find(x => x.id === id); if(q) speak(q.jp.replace("＿", q.a)); }
+function speakT(id){ const q = TR.find(x => x.id === id); if(q) speak(q.a[0]); }
+function speakR(i, j){ speak(RULES[i][1][j][2].replace(/[\[\]]/g, "")); }
+const spkBtn = call => canSpeak ? `<button class="spk" onclick="${call}" aria-label="Ouvir">🔊</button>` : "";
+let noteTab = "m";
+function openNote(tab){
+  if(tab) noteTab = tab;
+  $("practice-menu").style.display = "none"; $("practice-run").style.display = "";
+  const tabs = [["m","🌧️ まちがい","Erros"],["w","✏️ 書いた 文","Frases"],["r","🎀 ルール","Regras"]];
+  let body = "";
+  if(noteTab === "m"){
+    const bx = q => S.pstats[q.id].box || 0;
+    const ms = PQ.filter(q => S.pstats[q.id] && S.pstats[q.id].w > 0).sort((a, b) => bx(a) - bx(b) || S.pstats[b.id].w - S.pstats[a.id].w).slice(0, 40);
+    const cf = confHtml(5);
+    body = (cf ? `<div class="card">${cf}</div>` : "") + `<div class="card">` + (ms.length ? `<p class="muted small">${T("まちがえた ことが ある もんだい。文を おすと いみが でるよ。","Perguntas que você já errou. Toque na frase para ver o significado.")}</p>` + ms.map(q => { const s = S.pstats[q.id];
+        return `<div class="item"><div class="jpx">${T(furi(esc(q.jp)).replace("＿", `<span class="blank ok">${q.a}</span>`), esc(q.pt), true)}${spkBtn(`speakQ('${q.id}')`)}</div>
+          <div class="explain" style="margin-top:8px;font-size:14px">${T(furi(esc(q.exj)), esc(q.ex), true)}</div>
+          <div class="muted small" style="margin-top:4px">✕ ${s.w}・○ ${s.c}${bx(q) >= 3 ? `・${T("🌸 おぼえて きたよ","Você está aprendendo!")}` : ""}</div></div>`; }).join("")
+      : `<div class="empty"><div class="big">🌸</div>${T("まちがえた もんだいは まだ ないよ","Você ainda não errou nenhuma pergunta.")}</div>`) + `</div>`;
+  } else if(noteTab === "w"){
+    const ws = S.writings.slice(-40).reverse().map(w => { const q = TR.find(x => x.id === w.id); if(!q) return "";
+      const g = w.auto ? T("🌸 ぴったり","Perfeito") : T(GRADE[w.grade] || "", {3:"Acertei", 2:"Quase", 1:"Errei"}[w.grade] || "");
+      return `<div class="item"><div class="muted small">${esc(w.date)}・${g}${w.re ? `・${T("✍️ 書きなおした","Reescrita")}` : ""}</div>
+        <div class="meaning">🇧🇷 ${esc(q.pt)}</div><div class="yours">${esc(w.ans)}</div>
+        <div class="model">${furi(esc(q.a[0]))}${spkBtn(`speakT('${q.id}')`)}</div></div>`; }).join("");
+    body = `<div class="card">` + (ws ? `<p class="muted small">${T("むらさき ＝ あなたが 書いた 文・みどり ＝ こたえの れい","Lilás = o que você escreveu · verde = exemplo de resposta")}</p>` + ws
+      : `<div class="empty"><div class="big">✏️</div>${T("さくぶんを すると ここに でるよ","Faça um exercício de escrita para ver aqui.")}</div>`) + `</div>`;
+  } else {
+    body = `<div class="card"><p class="muted small">${T("せつめいを おすと ポルトガル語が でるよ。％ は あなたの せいかいりつ。","Toque na explicação para ver em português. % = seus acertos.")}</p>` + RULES.map((r, i) => { const s = S.partStats[r[0]];
+      return `<div class="item row" style="align-items:flex-start"><div class="rule-k">${r[0]}${s ? `<div class="muted small" style="font-weight:500">${Math.round(100*s.c/(s.c+s.w))}%</div>` : ""}</div><div style="flex:1">` + r[1].map((u, j) =>
+        `<div style="margin-bottom:10px"><div style="font-size:14px">${T(furi(esc(u[0])), esc(u[1]), true)}</div><div class="jpx">${furi(esc(u[2])).replace(/\[(.+?)\]/g, '<b class="hl">$1</b>')}${spkBtn(`speakR(${i},${j})`)}</div></div>`).join("") + `</div></div>`; }).join("") + `</div>`;
+  }
+  $("practice-run").innerHTML = `<div class="top"><button class="ghost" onclick="go('practice')">✕</button><b>📒 ノート</b>${topBtns()}</div>
+    <div class="tabs">${tabs.map(t => `<button class="${t[0] === noteTab ? "on" : ""}" onclick="openNote('${t[0]}')">${T(t[1], t[2])}</button>`).join("")}</div>${body}${tipLine()}`;
+  applyPt();
 }
 
 /* ---------- バックアップ ---------- */
