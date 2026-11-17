@@ -65,8 +65,13 @@ button.ghost{background:#fff;color:var(--ink);box-shadow:0 3px 0 var(--line);bor
 button.soft{background:var(--butter-s);color:#b8860b;box-shadow:0 3px 0 #f3e2a9}
 button:disabled{opacity:.45;cursor:default}
 button.block{width:100%;display:block}
-.ptbtn{width:44px;height:44px;padding:0;border-radius:50%;font-size:20px;background:#fff;box-shadow:0 3px 0 var(--line);border:2px solid var(--line);flex:none}
-.ptbtn.on{background:var(--mint-s);border-color:var(--mint)}
+.ptbtn,.fbtn{width:44px;height:44px;padding:0;border-radius:50%;font-size:20px;background:#fff;box-shadow:0 3px 0 var(--line);border:2px solid var(--line);flex:none}
+.ptbtn.on,.fbtn.on{background:var(--mint-s);border-color:var(--mint)}
+.fbtn{color:var(--ink);font-size:18px;font-weight:900}
+body:not(.furi) rt{display:none}
+rt{font-size:.45em;font-weight:500;color:var(--muted);letter-spacing:0}
+.spk{padding:4px 12px;font-size:15px;background:#fff;color:var(--ink);box-shadow:0 2px 0 var(--line);border:2px solid var(--line);margin-left:6px;vertical-align:middle}
+.spk.wide{margin:12px 0 0}
 .bigbtn{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;text-align:left;background:var(--card);color:var(--ink);
   border:2px solid #fff;padding:14px 16px;margin:10px 0;border-radius:24px;box-shadow:0 5px 14px rgba(184,164,244,.18)}
 .bigbtn .ic{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:24px;flex:none}
@@ -419,6 +424,64 @@ const TR = [
   {id:"t30", pt:"Quando eu chegar ao Japão, quero comer ramen.", a:["日本に着いたら、ラーメンを食べたいです。"], h:"〜たら", hp:"quando… / se…"}
 ];
 
+/* =========================================================
+   ふりがな：[漢字, よみ, つぎの文字（あれば）, まえの文字（あれば）]
+   問題文・解説・模範解答・ヒントに自動でつける。長いことばが先に当たる。
+   問題を足して新しい漢字を使ったら、ここにも足す（足りないと、その漢字だけふりがなが出ない）。
+   文の中に「降（お）ります」のように読みを書いた漢字には、つけない。
+   ========================================================= */
+const FURI = [
+  ["日本料理","にほんりょうり"],["新幹線","しんかんせん"],["図書館","としょかん"],["日本語","にほんご"],["日曜日","にちようび"],["月曜日","げつようび"],
+  ["日本","にほん"],["勉強","べんきょう"],["公園","こうえん"],["大学","だいがく"],["電車","でんしゃ"],["映画","えいが"],["京都","きょうと"],["広島","ひろしま"],
+  ["七月","しちがつ"],["七時","しちじ"],["九時","くじ"],["五時","ごじ"],["時間","じかん"],["場所","ばしょ"],["主語","しゅご"],["上手","じょうず"],
+  ["先生","せんせい"],["部屋","へや"],["名前","なまえ"],["一人","ひとり"],["二人","ふたり"],["夏休","なつやす"],["紅茶","こうちゃ"],["十分","じゅっぷん"],
+  ["運転","うんてん"],["仕事","しごと"],["病院","びょういん"],["料理","りょうり"],["来年","らいねん"],["写真","しゃしん"],["毎日","まいにち"],["心配","しんぱい"],
+  ["明日","あした"],["手伝","てつだ"],["手紙","てがみ"],
+  ["人","じん","","ル"],["人","ひと"],["話","はなし","の"],["話","はな"],["時","じ","","0123456789０１２３４５６７８９"],["時","とき"],["月","がつ","","0123456789０１２３４５６７８９"],
+  ["来","き","まて"],["来","く","る"],["出","だ","し"],["出","で"],
+  ["言","い"],["飲","の"],["食","た"],["見","み"],["住","す"],["働","はたら"],["犬","いぬ"],["起","お"],["車","くるま"],["好","す"],["頭","あたま"],["雨","あめ"],
+  ["目","め"],["窓","まど"],["母","はは"],["書","か"],["入","はい"],["中","なか"],["買","か"],["物","もの"],["今","いま"],["帰","かえ"],["駅","えき"],["歩","ある"],
+  ["新","あたら"],["前","まえ"],["待","ま"],["作","つく"],["気","き"],["少","すこ"],["終","お"],["持","も"],["暑","あつ"],["思","おも"],["早","はや"],["着","つ"],
+  ["行","い"],["先","さき"],["語","ご"],["晩","ばん"]
+].map((e, i) => ({b:e[0], r:e[1], next:e[2] || "", prev:e[3] || "", i})).sort((x, y) => y.b.length - x.b.length || x.i - y.i);
+const isKanji = c => c >= "一" && c <= "鿿";
+function furi(s){
+  let out = "";
+  for(let i = 0; i < s.length;){
+    let hit = null;
+    if(isKanji(s[i])) for(const e of FURI){
+      if(!s.startsWith(e.b, i)) continue;
+      const nx = s[i + e.b.length] || "", pv = i > 0 ? s[i-1] : "";
+      if(/^（[ぁ-んー]+）/.test(s.slice(i + e.b.length, i + e.b.length + 10))) continue;   // 文の中に読みが書いてある
+      if(e.next && !(nx && e.next.includes(nx))) continue;
+      if(e.prev && !(pv && e.prev.includes(pv))) continue;
+      hit = e; break;
+    }
+    if(hit){ out += `<ruby>${hit.b}<rt>${hit.r}</rt></ruby>`; i += hit.b.length; }
+    else out += s[i++];
+  }
+  return out;
+}
+function toggleFuri(){ S.furi = !S.furi; save(); applyPt(); }
+
+/* 読み上げ（スマホに入っている日本語の声を使う。0円・オフラインでも動く） */
+const canSpeak = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+function speak(text){
+  if(!canSpeak) return;
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(String(text).replace(/（[^）]*）/g, "").replace(/[ 　]/g, ""));
+    u.lang = "ja-JP"; u.rate = 0.85;
+    const vs = speechSynthesis.getVoices().filter(v => /^ja/i.test(v.lang));
+    if(vs.length) u.voice = vs.find(v => v.localService) || vs[0];
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+function speakP(){ const q = P.qs[P.i]; if(q) speak(q.jp.replace("＿", q.a)); }
+function speakW(i){ const q = W.qs[W.i]; if(q && q.a[i]) speak(q.a[i]); }
+const tipLine = () => `<p class="tip">${T(`「あ」＝ かんじの よみかた${canSpeak ? "・🔊 ＝ おとを きく" : ""}`, `「あ」= leitura dos kanji${canSpeak ? " · 🔊 = ouvir a frase" : ""}`)}</p>`;
+const topBtns = () => `<span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" onclick="togglePt()" aria-label="Mostrar português">🇧🇷</button></span>`;
+
 /* マスコットのひとこと [日本語, ポルトガル語] */
 const CHEER = [
   ["きょうも いっしょに がんばろうね！","Vamos estudar juntas hoje!"],
@@ -432,7 +495,7 @@ const CHEER = [
    データ
    ========================================================= */
 const KEY = "kotonoha-v1";
-function blank(){ return {total:0,balance:0,days:{},rest:{},restWeeks:{},weeklyBonus:{},pstats:{},partStats:{},tstats:{},writings:[],diaries:[],redemptions:[],bestStreak:0,outbox:[],showPt:false}; }
+function blank(){ return {total:0,balance:0,days:{},rest:{},restWeeks:{},weeklyBonus:{},pstats:{},partStats:{},tstats:{},writings:[],diaries:[],redemptions:[],bestStreak:0,outbox:[],showPt:false,furi:false}; }
 /* 読みこみ。こわれていたら、こわれたデータを別のキーに残して、予備（1日1回の控え）から戻す。
    キー kotonoha-v1 の形は変えない。予備は別のキーに置く。 */
 const BAK = KEY + "-bak";
@@ -481,7 +544,10 @@ function pickWeighted(arr, wf, n){
 const T = (jp, pt, tap) => `<span class="tr${tap ? " tap" : ""}"><span class="j">${jp}</span><span class="p">${pt}</span></span>`;
 function setT(id, jp, pt, tap){ const el = document.getElementById(id); if(el) el.innerHTML = T(jp, pt, tap); }
 function togglePt(){ S.showPt = !S.showPt; save(); applyPt(); }
-function applyPt(){ document.body.classList.toggle("showpt", S.showPt); document.querySelectorAll(".ptbtn").forEach(b => b.classList.toggle("on", S.showPt)); }
+function applyPt(){
+  document.body.classList.toggle("showpt", S.showPt); document.querySelectorAll(".ptbtn").forEach(b => b.classList.toggle("on", S.showPt));
+  document.body.classList.toggle("furi", !!S.furi); document.querySelectorAll(".fbtn").forEach(b => b.classList.toggle("on", !!S.furi));
+}
 document.addEventListener("click", e => { const t = e.target.closest(".tr.tap"); if(t && !e.target.closest("button")) t.classList.toggle("open"); });
 
 /* おやすみチケット */
@@ -702,15 +768,15 @@ function dots(res, n, i){ let h = '<div class="progress-dots">'; for(let k=0;k<n
 function renderP(){
   const q = P.qs[P.i];
   $("practice-run").innerHTML = `
-    <div class="top"><button class="ghost" onclick="go('practice')">✕</button><span class="muted">${P.i+1} / ${P.qs.length}</span><button class="ptbtn" onclick="togglePt()">🇧🇷</button></div>
+    <div class="top"><button class="ghost" onclick="go('practice')">✕</button><span class="muted">${P.i+1} / ${P.qs.length}</span>${topBtns()}</div>
     <div class="card">${dots(P.res, P.qs.length, P.i)}
       <div class="muted small">${T("＿に はいる じょしは？","Qual partícula completa a frase?")}</div>
-      <div class="sentence">${esc(q.jp).replace("＿", '<span class="blank" id="blank">？</span>')}</div>
+      <div class="sentence">${furi(esc(q.jp)).replace("＿", '<span class="blank" id="blank">？</span>')}</div>
       <button class="linkbtn" id="m-btn" onclick="this.style.display='none';$('meaning').style.display='block'">${T("いみを 見る","ver o significado")}</button>
       <div class="meaning" id="meaning" style="display:none">🇧🇷 ${esc(q.pt)}</div>
       <div class="opts">${shuffle(q.o).map(o => `<button onclick="answerP(this,'${o}')">${o}</button>`).join("")}</div>
       <div id="p-after"></div>
-    </div>`;
+    </div>${tipLine()}`;
   applyPt();
 }
 function answerP(btn, o){
@@ -724,7 +790,8 @@ function answerP(btn, o){
   P.res[P.i] = ok;
   const pts = ok ? CONFIG.points.particleRight : CONFIG.points.particleWrong; P.earned += pts;
   addPoints(pts);
-  $("p-after").innerHTML = `<div class="explain"><div class="hd">${ok ? T("🌸 せいかい！","Certo!") : T(`🌧️ おしい！こたえは「${q.a}」`, `Quase! A resposta é ${q.a}`)}</div>${T(esc(q.exj), esc(q.ex), true)}</div>
+  $("p-after").innerHTML = `${canSpeak ? `<button class="spk wide" onclick="speakP()">${T("🔊 きく","Ouvir a frase")}</button>` : ""}
+    <div class="explain"><div class="hd">${ok ? T("🌸 せいかい！","Certo!") : T(`🌧️ おしい！こたえは「${q.a}」`, `Quase! A resposta é ${q.a}`)}</div>${T(furi(esc(q.exj)), esc(q.ex), true)}</div>
     <button class="block" style="margin-top:12px" onclick="nextP()">${P.i+1 < P.qs.length ? T("つぎへ →","Próxima") : T("けっかを 見る","Ver resultado")}</button>`;
   $("meaning").style.display = "block"; $("m-btn").style.display = "none";
   applyPt();
@@ -755,7 +822,7 @@ function startWriting(){
 function renderW(){
   const q = W.qs[W.i];
   $("practice-run").innerHTML = `
-    <div class="top"><button class="ghost" onclick="go('practice')">✕</button><span class="muted">${W.i+1} / ${W.qs.length}</span><button class="ptbtn" onclick="togglePt()">🇧🇷</button></div>
+    <div class="top"><button class="ghost" onclick="go('practice')">✕</button><span class="muted">${W.i+1} / ${W.qs.length}</span>${topBtns()}</div>
     <div class="card">
       <div class="muted">${T("この 文を 日本語で 書いてね","Escreva esta frase em japonês")}</div>
       <div class="pt-prompt">${esc(q.pt)}</div>
@@ -764,16 +831,16 @@ function renderW(){
       <textarea id="w-ans" rows="2" placeholder="ここに 日本語で…" oninput="$('w-show').disabled = this.value.trim().length < 2"></textarea>
       <button class="block" id="w-show" style="margin-top:12px" disabled onclick="showW()">${T("こたえを 見る","Ver resposta")}</button>
       <div id="w-after"></div>
-    </div>`;
+    </div>${tipLine()}`;
   applyPt();
 }
-function showHint(){ const q = W.qs[W.i]; $("hint-btn").style.display = "none"; $("hint-box").innerHTML = `<div class="explain">💡 ${T(esc(q.h), esc(q.hp), true)}</div>`; applyPt(); }
+function showHint(){ const q = W.qs[W.i]; $("hint-btn").style.display = "none"; $("hint-box").innerHTML = `<div class="explain">💡 ${T(furi(esc(q.h)), esc(q.hp), true)}</div>`; applyPt(); }
 function showW(){
   const q = W.qs[W.i], ans = $("w-ans").value.trim();
   $("w-ans").disabled = true; $("w-show").style.display = "none";
   $("w-after").innerHTML = `
     <label>${T("あなたが 書いた 文","Você escreveu")}</label><div class="yours">${esc(ans)}</div>
-    <label>${T("こたえの れい","Exemplo de resposta")}</label>${q.a.map(a => `<div class="model">${esc(a)}</div>`).join("")}
+    <label>${T("こたえの れい","Exemplo de resposta")}</label>${q.a.map((a, i) => `<div class="model">${furi(esc(a))}${canSpeak ? `<button class="spk" onclick="speakW(${i})" aria-label="Ouvir">🔊</button>` : ""}</div>`).join("")}
     <p class="muted small">${T("おなじ でなくても だいじょうぶ。ほかの 言い方も あるよ。ジャスも 見てくれるよ。","Não precisa ser igual: outras formas podem estar certas. O Jas também vai ver.")}</p>
     <p style="margin-top:12px;font-weight:900">${T("どうだった？","Como foi?")}</p>
     <div class="grades">
