@@ -336,7 +336,8 @@ const CONFIG = {
   // Google Apps Script をデプロイしたURL（README の手順1）。空のままだとメールは送られません。
   scriptUrl: "https://script.google.com/macros/s/AKfycbzGuUl0xa9DeYtsMAZbk4kJ1qPJ6sHDcZikEgR0FM0QSmWSc-ycKnTpUzP82wIp9Ii2UQ/exec",
   token: "kt-d9331a3365e60098",   // gas/Code.gs の TOKEN と同じ（変更不要）
-  studentEmail: "",               // 彼女のメール（任意）。入れると日記メールへの返信で添削を返せます
+  studentEmail: "",               // 彼女のメール。index.html は公開されるので、ここには書かない（gas/Code.gs の STUDENT_EMAIL に書く）
+  replyByMail: true,              // true：日記メールに返信すると彼女に届く（宛先は gas/Code.gs の STUDENT_EMAIL）
   // 1日の日課（これを全部やると「きょうの もくひょう たっせい」）。0 にすると、その練習は日課から外れます。
   daily: { particles: 10, writing: 3, diary: 1 },
   weeklyGoalDays: 5,
@@ -973,7 +974,7 @@ function staticTexts(){
   $("m-note").innerHTML = `<b>ノート</b>${T("間違えた問題・書いた文・助詞のルール","Caderno: seus erros, suas frases e as regras das partículas.")}`;
   // 日記
   setT("d-title","日記 📔","Diário");
-  if(CONFIG.studentEmail) setT("d-sub","今日のことを日本語で1〜3文書いてね。ジャスが読んで、メールで直してくれるよ。","Escreva 1 a 3 frases em japonês sobre o seu dia. O Jas vai ler e corrigir por e-mail.");
+  if(CONFIG.studentEmail || CONFIG.replyByMail) setT("d-sub","今日のことを日本語で1〜3文書いてね。ジャスが読んで、メールで直してくれるよ。","Escreva 1 a 3 frases em japonês sobre o seu dia. O Jas vai ler e corrigir por e-mail.");
   else setT("d-sub","今日のことを日本語で1〜3文書いてね。ジャスが読んで、直してくれるよ。","Escreva 1 a 3 frases em japonês sobre o seu dia. O Jas vai ler e corrigir.");
   setT("d-l1","日本語で","Em japonês");
   setT("d-q-h","💡 今日のお題（違うことを書いても OK）","Tema de hoje (pode escrever sobre outra coisa)");
@@ -1236,13 +1237,13 @@ function submitDiary(){
   S.diaries.unshift({date:todayKey(), jp, pt, ts:Date.now(), q:dq[0]});
   save();
   sendMail({subject:`📓 ${CONFIG.studentNameMail} の日記（${todayKey()}）`,
-    body:`${CONFIG.studentNameMail} が日記を書きました（${todayKey()}）\n\n【画面に出ていたお題（参考）】\n${dq[0]}\n\n【日本語】\n${jp}\n\n【言いたかったこと】\n${pt || "（記入なし）"}\n\n${CONFIG.studentEmail ? "このメールに返信すると、そのまま彼女に添削が届きます。" : ""}`});
+    body:`${CONFIG.studentNameMail} が日記を書きました（${todayKey()}）\n\n【画面に出ていたお題（参考）】\n${dq[0]}\n\n【日本語】\n${jp}\n\n【言いたかったこと】\n${pt || "（記入なし）"}\n\n${(CONFIG.studentEmail || CONFIG.replyByMail) ? "このメールに返信すると、そのまま彼女に添削が届きます。" : ""}`});
   $("d-jp").value = ""; $("d-pt").value = ""; saveDraft();
   // 日記で目標達成になったときは、達成の画面を出す（「送ったよ」はトーストで伝える）
   const wasMet = d.goalMet;
   addPoints(first ? CONFIG.points.diaryFirst : CONFIG.points.diaryMore);
   if(!wasMet && d.goalMet){ setTimeout(() => toast("送ったよ ✉️"), 1400); return; }
-  modal(`<div class="big">💌</div><h2>${T("送ったよ！","Enviado!")}</h2><p>${CONFIG.studentEmail ? T(`${CONFIG.teacherName}が読んで、メールで返事するね。`,"O Jas vai ler e responder por e-mail com as correções.") : T(`${CONFIG.teacherName}が読んで、返事するね。`,"O Jas vai ler e responder com as correções.")}</p><button class="block" onclick="closeModal()">OK</button>`);
+  modal(`<div class="big">💌</div><h2>${T("送ったよ！","Enviado!")}</h2><p>${(CONFIG.studentEmail || CONFIG.replyByMail) ? T(`${CONFIG.teacherName}が読んで、メールで返事するね。`,"O Jas vai ler e responder por e-mail com as correções.") : T(`${CONFIG.teacherName}が読んで、返事するね。`,"O Jas vai ler e responder com as correções.")}</p><button class="block" onclick="closeModal()">OK</button>`);
   applyPt();
 }
 /* 日記の下書き（ほかのアプリに切りかえて iPhone が読みこみ直しても、書いた文が消えないように）。
