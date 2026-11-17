@@ -165,6 +165,14 @@ button .tr .p{color:inherit;opacity:.8}
 .hl{color:var(--pink-d);font-weight:900}
 .rule-k{font-size:24px;font-weight:900;color:var(--pink-d);min-width:2.2em;text-align:center}
 .item .model,.item .yours{font-size:17px}
+/* チュートリアル */
+.modal{max-height:calc(100vh - 48px);max-height:calc(100dvh - 48px);overflow-y:auto}
+.tut{text-align:left;margin:6px 0 4px}
+.tut p{font-size:15px;margin:10px 0;padding:10px 12px;background:var(--lav-s);border-radius:16px}
+.tut .tr .p{font-size:.85em}
+.tdots{display:flex;justify-content:center;gap:6px;margin:12px 0 4px}
+.tdots span{width:8px;height:8px;border-radius:50%;background:var(--line)}
+.tdots span.on{background:var(--pink);width:20px;border-radius:5px}
 </style>
 </head>
 <body>
@@ -302,6 +310,7 @@ button .tr .p{color:inherit;opacity:.8}
   <div class="card" id="wstats"></div>
   <h3 id="g-h-set"></h3>
   <div class="card">
+    <button class="ghost block" onclick="tutorial(0)" id="g-tut" style="margin-bottom:12px"></button>
     <button class="ghost block" onclick="manualReport()" id="g-report"></button>
     <p class="muted small" id="outbox-status" style="margin:8px 4px 0"></p>
     <div class="grid2" style="margin-top:12px">
@@ -626,7 +635,7 @@ const TR = [
    文の中に「降（お）ります」のように読みを書いた漢字には、つけない。
    ========================================================= */
 const FURI = [
-  ["消","き","え"],["少","すく","な"],["腹","なか","","お"],["中","ちゅう","","問"],["分","ぷん","","0０"],["何","なん","でとの"],["降","お","り"],["日","にち","","0123456789０１２３４５６７８９"],
+  ["消","き","え"],["分","わ","か"],["少","すく","な"],["腹","なか","","お"],["中","ちゅう","","問"],["分","ぷん","","0０"],["何","なん","でとの"],["降","お","り"],["日","にち","","0123456789０１２３４５６７８９"],
   ["日本料理","にほんりょうり"],["新幹線","しんかんせん"],["図書館","としょかん"],["日本語","にほんご"],["日曜日","にちようび"],["月曜日","げつようび"],
   ["日本","にほん"],["勉強","べんきょう"],["公園","こうえん"],["大学","だいがく"],["電車","でんしゃ"],["映画","えいが"],["京都","きょうと"],["広島","ひろしま"],
   ["七月","しちがつ"],["七時","しちじ"],["九時","くじ"],["五時","ごじ"],["時間","じかん"],["場所","ばしょ"],["主語","しゅご"],["上手","じょうず"],
@@ -639,7 +648,7 @@ const FURI = [
   ["紙","かみ"],["休","やす"],["高","たか"],["肉","にく"],["魚","さかな"],["友","とも"],["会","あ"],["店","みせ"],["大","おお"],["願","ねが"],["近","ちか"],
   ["熱","ねつ"],["薬","くすり"],["使","つか"],["方","かた"],["教","おし"],["本","ほん"],["読","よ"],["聞","き"],["家","いえ"],["安","やす"],
   ["人","じん","","ル"],["人","ひと"],["話","はなし","の"],["話","はな"],["時","じ","","0123456789０１２３４５６７８９"],["時","とき"],["月","がつ","","0123456789０１２３４５６７８９"],
-  ["来","き","まて"],["来","く","る"],["出","だ","し"],["出","で"],
+  ["来","き","まて"],["来","く","る"],["出","だ","しすさせそ"],["出","で"],
   ["言","い"],["飲","の"],["食","た"],["見","み"],["住","す"],["働","はたら"],["犬","いぬ"],["起","お"],["車","くるま"],["好","す"],["頭","あたま"],["雨","あめ"],
   ["目","め"],["窓","まど"],["母","はは"],["書","か"],["入","はい"],["中","なか"],["買","か"],["物","もの"],["今","いま"],["帰","かえ"],["駅","えき"],["歩","ある"],
   ["新","あたら"],["前","まえ"],["待","ま"],["作","つく"],["気","き"],["少","すこ"],["終","お"],["持","も"],["暑","あつ"],["思","おも"],["早","はや"],
@@ -669,7 +678,7 @@ const FURI = [
   ["何分","なんぷん"],["何回","なんかい"],["上司","じょうし"],["下手","へた"],["両親","りょうしん"],["牛乳","ぎゅうにゅう"],["郵便局","ゆうびんきょく"],
   ["冷蔵庫","れいぞうこ"],["領収書","りょうしゅうしょ"],["口座","こうざ"],["台所","だいどころ"],["風呂","ふろ"],["外国人","がいこくじん"],["結婚","けっこん"],
   ["学校","がっこう"],["市役所","しやくしょ"],["手続","てつづ"],["曜日","ようび"],["毎晩","まいばん"],["洗濯","せんたく"],["目的","もくてき"],["鉛筆","えんぴつ"],
-  ["会議","かいぎ"],["先週","せんしゅう"],["銀行","ぎんこう"],["電気","でんき"],["書類","しょるい"],["住所","じゅうしょ"],
+  ["会議","かいぎ"],["先週","せんしゅう"],["銀行","ぎんこう"],["電気","でんき"],["書類","しょるい"],["画面","がめん"],["追加","ついか"],["共有","きょうゆう"],["安心","あんしん"],["自分","じぶん"],["見返","みかえ"],["準備","じゅんび"],["上","うえ"],["訳","やく"],["続","つづ"],["切","き"],["住所","じゅうしょ"],
   ["停","てい"],["優","やさ"],["冬","ふゆ"],["夏","なつ"],["咳","せき"],["多","おお"],["妹","いもうと"],["寒","さむ"],["忘","わす"],["慣","な"],["止","と"],
   ["歯","は"],["浴","あ"],["消","け"],["磨","みが"],["空","そら"],["習","なら"],["貸","か"],["迷","まよ"],["遊","あそ"],["遠","とお"],["隣","となり"]
 ].map((e, i) => ({b:e[0], r:e[1], next:e[2] || "", prev:e[3] || "", i})).sort((x, y) => y.b.length - x.b.length || x.i - y.i);
@@ -891,6 +900,7 @@ function applyRestTicket(){
   const wk = weekKey(y);
   if(S.restWeeks[wk]) return;
   S.rest[yk] = true; S.restWeeks[wk] = true; save();
+  if(!S.tutV) return;   // 初めての日はチュートリアルを優先
   setTimeout(() => modal(`<div class="big">🎫</div><h2>${T("お休みチケットを使ったよ","Folga usada")}</h2>
     <p>${T(`昨日はお休み。でも <b>${dayR(streak())}</b> の連続は守られたよ！`, `Ontem você descansou, mas a sequência de ${streak()} dias foi salva!`)}</p>
     <button class="block" onclick="closeModal()">${T("今日も頑張る！","Vamos lá!")}</button>`), 400);
@@ -1096,6 +1106,7 @@ function staticTexts(){
   $("g-report").innerHTML = T("📧 今日のレポートをジャスに送る","Enviar o relatório de hoje para o Jas");
   $("g-backup").innerHTML = T("バックアップ","Backup");
   $("g-restore").innerHTML = T("戻す","Restaurar");
+  $("g-tut").innerHTML = T("📖 使い方を見る","Ver como usar o app");
   $("lv-path").innerHTML = T(LEVELS.map(l => l[0]).join(" → "), LEVELS.map(l => l[2]).join(" → "));
 }
 function refresh(){
@@ -1538,9 +1549,65 @@ function confirmImport(){
   save(); refresh(); toast("戻したよ ✓");
 }
 
-$("overlay").addEventListener("click", e => { if(e.target.id === "overlay") closeModal(); });
+/* ---------- チュートリアル（初めて開いたときに1回。「成長 → 使い方を見る」でもう一度見られる） ----------
+   読めないと困るので、ポルトガル語の訳を最初から出しておく。見終わったら S.tutV = 1。 */
+const standalone = () => !!(navigator.standalone || (window.matchMedia && matchMedia("(display-mode: standalone)").matches));
+function tutSteps(){
+  const ios = /iPhone|iPad|iPod/.test(navigator.userAgent), mail = CONFIG.studentEmail || CONFIG.replyByMail;
+  const prep = [];
+  if(!standalone()) prep.push(ios ? ["Safariの共有ボタン（□に↑）→「ホーム画面に追加」を押すと、アプリのように使えるよ","No Safari, toque em Compartilhar (□↑) → “Adicionar à Tela de Início” para usar como um app."]
+    : ["Chromeのメニュー（⋮）→「ホーム画面に追加」を押すと、アプリのように使えるよ","No Chrome, toque no menu (⋮) → “Adicionar à tela inicial” para usar como um app."]);
+  prep.push(["作文と日記では日本語のキーボードを使うよ。スマホの設定で追加してね","Na escrita e no diário você vai usar o teclado japonês. Adicione nas configurações do celular."],
+    ["データはこのスマホの中に保存されるよ。ジャスにもバックアップが届くから安心してね","Seus dados ficam salvos neste celular, e o Jas também recebe um backup. Pode ficar tranquila."]);
+  return [
+    {ic:"🌷", h:["ことのはの森へようこそ！","Bem-vinda à Floresta das Palavras!"], b:[
+      ["ジャスが、あなたのために作った日本語の練習アプリだよ","O Jas fez este app de japonês especialmente para você."],
+      ["毎日少しずつ練習して、日本に来る日の準備をしよう 🌸","Vamos praticar um pouquinho todo dia e nos preparar para a sua chegada ao Japão."]]},
+    {ic:"あ 🇧🇷", h:["二つのボタン","Dois botões"], b:[
+      ["「あ」：漢字の上の読み方を出す・消す","「あ」: mostra ou esconde a leitura em cima dos kanji."],
+      ["🇧🇷：ポルトガル語の訳を出す・消す","🇧🇷: mostra ou esconde a tradução em português."],
+      ["文を押すと、その文だけ訳が出ることもあるよ","Em algumas frases, é só tocar para ver a tradução."]]},
+    {ic:"🎯", h:["毎日の目標","A meta de cada dia"], b:[
+      ["助詞10問・作文3文・日記1件。三つ全部やったら目標達成！","10 partículas, 3 frases e 1 diário. Fez os três? Meta concluída!"],
+      ["毎日続けると 🔥 連続記録がのびるよ","Praticando todo dia, a sua sequência 🔥 vai crescendo."],
+      ["🎫 お休みチケット：1週間に1回、休んでも連続が切れないよ","🎫 Folga: uma vez por semana, você pode descansar sem perder a sequência."]]},
+    {ic:"🎀 ✏️", h:["練習","Os exercícios"], b:[
+      ["🎀 助詞：＿に入る助詞を選ぶ。間違えた問題は、覚えるまでまた出るよ","🎀 Partículas: escolha a partícula certa. As que você errar voltam até você aprender."],
+      ["✏️ 作文：ポルトガル語の文を日本語で書く。答えの例と比べて、自分で ◎○△ をつけてね","✏️ Escrita: escreva a frase em japonês, compare com o exemplo e se avalie com ◎ ○ △."],
+      ["📒 ノート：間違えた問題・書いた文・助詞のルールを見返せるよ","📒 Caderno: reveja seus erros, as frases que escreveu e as regras das partículas."]]},
+    {ic:"📔", h:["日記","O diário"], b:[
+      ["今日のことを日本語で1〜3文書いてね。お題もあるよ","Escreva de 1 a 3 frases em japonês sobre o seu dia. Tem sugestão de tema também."],
+      mail ? ["ジャスが読んで、メールで直して返事するよ 💌","O Jas vai ler e responder por e-mail com as correções."] : ["ジャスが読んで、直して返事するよ 💌","O Jas vai ler e responder com as correções."],
+      ["間違えても大丈夫！書くことが一番の練習だよ","Tudo bem errar! Escrever é o melhor treino."]]},
+    {ic:"🎁", h:["ポイントとご褒美","Pontos e prêmios"], b:[
+      ["練習するとポイントがたまるよ。ポイントで、ジャスからのご褒美と交換できるよ","Praticando você ganha pontos e pode trocá-los por prêmios do Jas."],
+      ["ご褒美をもらったら、「🎁 もらった」を押してね","Quando receber o prêmio, toque em “🎁 もらった”."],
+      ["ポイントがたまるとレベルアップ：🌰 種 → 🔮 魔法使い","Com os pontos você sobe de nível: 🌰 semente → 🔮 maga das palavras."]]},
+    {ic:"📱", h:["準備","Preparação"], b:prep},
+    {ic:"🐰", h:["準備OK！","Tudo pronto!"], b:[
+      ["分からないときは「成長」→「使い方を見る」で、この説明をもう一度見られるよ","Se tiver dúvida, veja esta explicação de novo em 成長 (Progresso) → 使い方を見る."],
+      ["さあ、今日の練習を始めよう 🌷","Vamos começar a prática de hoje!"]]}
+  ];
+}
+let tutI = -1;
+function tutorial(i){
+  const st = tutSteps(); tutI = Math.max(0, Math.min(st.length - 1, i || 0));
+  const s = st[tutI], last = tutI === st.length - 1;
+  modal(`<div class="big" style="font-size:44px">${s.ic}</div><h2>${T(s.h[0], s.h[1])}</h2>
+    <div class="tut">${s.b.map(b => `<p>${T(b[0], b[1])}</p>`).join("")}</div>
+    <div class="tdots">${st.map((_, k) => `<span class="${k === tutI ? "on" : ""}"></span>`).join("")}</div>
+    ${last ? `<button class="block" style="margin-top:10px" onclick="endTutorial()">${T("始める！","Começar!")}</button>`
+      : `<div class="grid2" style="margin-top:10px">${tutI ? `<button class="ghost" onclick="tutorial(${tutI - 1})">${T("← 戻る","Voltar")}</button>`
+        : `<button class="ghost" onclick="endTutorial()">${T("飛ばす","Pular")}</button>`}<button onclick="tutorial(${tutI + 1})">${T("次へ →","Próximo")}</button></div>`}`);
+  $("modal").querySelectorAll(".tr").forEach(e => e.classList.add("open"));
+  applyPt();
+}
+function endTutorial(){ tutI = -1; S.tutV = 1; save(); closeModal(); go("home"); }
+
+$("overlay").addEventListener("click", e => { if(e.target.id === "overlay" && tutI < 0) closeModal(); });
 staticTexts();
 loadDraft();
+if(!S.tutV) setTimeout(() => tutorial(0), 300);
 applyRestTicket();
 catchUpReports();
 refresh();
