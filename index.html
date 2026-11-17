@@ -329,7 +329,12 @@ const CONFIG = {
   writingPerSession: 3,
   points: { particleRight: 2, particleWrong: 1, writing: 5, diaryFirst: 15, diaryMore: 5 },
   // ご褒美カタログ（あとで相談して決める。例：{ id:"r1", name:"…", pt:"…", cost:100, icon:"🎬" }）
-  rewards: []
+  // 1週間で約300ポイントたまる（週5〜6日やった場合）
+  rewards: [
+    { id:"r1", icon:"💌", cost:300, name:"ジャスから 日本語の てがみ", pt:"Uma carta do Jas em japonês (com tradução)" },
+    { id:"r2", icon:"🧹", cost:600, name:"ジャスが 3日間 かじを ぜんぶ する（日本に 来てから）", pt:"O Jas faz todas as tarefas de casa por 3 dias (depois que você chegar ao Japão)" },
+    { id:"r3", icon:"🗺️", cost:900, name:"ジャスが プランを きめる デート（日本に 来てから）", pt:"Um encontro planejado pelo Jas (depois que você chegar ao Japão)" }
+  ]
 };
 
 /* レベル（メルヘンな成長） */
