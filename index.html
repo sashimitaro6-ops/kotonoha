@@ -320,7 +320,8 @@ const CONFIG = {
   scriptUrl: "https://script.google.com/macros/s/AKfycbzGuUl0xa9DeYtsMAZbk4kJ1qPJ6sHDcZikEgR0FM0QSmWSc-ycKnTpUzP82wIp9Ii2UQ/exec",
   token: "kt-d9331a3365e60098",   // gas/Code.gs の TOKEN と同じ（変更不要）
   studentEmail: "",               // 彼女のメール（任意）。入れると日記メールへの返信で添削を返せます
-  dailyGoal: 30,
+  // 1日の日課（これを全部やると「きょうの もくひょう たっせい」）。0 にすると、その練習は日課から外れます。
+  daily: { particles: 10, writing: 3, diary: 1 },
   weeklyGoalDays: 5,
   weeklyBonus: 30,
   surpriseChance: 0.15,
@@ -385,7 +386,51 @@ const PQ = [
   {id:"p41", jp:"この電車は広島＿行きます。", pt:"Este trem vai para Hiroshima.", a:"に", o:["に","を","で","が"], exj:"「行く・来る・帰る」の 行き先は「に」（「へ」も OK）。", ex:"Destino de 行く/来る/帰る leva に (ou へ)."},
   {id:"p42", jp:"日本料理＿作れます。", pt:"Sei fazer comida japonesa.", a:"が", o:["が","に","で","と"], exj:"「できる」の かたち（作れる・話せる）は「が」が ふつう。", ex:"Com a forma potencial, o objeto costuma levar が."},
   {id:"p43", jp:"からだ＿気をつけてね。", pt:"Cuide da saúde, tá?", a:"に", o:["に","を","で","が"], exj:"「気をつける」は「に」。", ex:"気をつける usa に."},
-  {id:"p44", jp:"映画＿見に行きませんか。", pt:"Vamos ver um filme?", a:"を", o:["を","が","に","で"], exj:"映画は「見る」もの →「を」。", ex:"O filme é o objeto de 見る → を."}
+  {id:"p44", jp:"映画＿見に行きませんか。", pt:"Vamos ver um filme?", a:"を", o:["を","が","に","で"], exj:"映画は「見る」もの →「を」。", ex:"O filme é o objeto de 見る → を."},
+  /* ---- 来日してからの場面（空港・買い物・病院・役所・仕事・家族）と、は／が・へ・や・か・だけ・しか ---- */
+  {id:"p45", jp:"いま 空港＿着きました。", pt:"Acabei de chegar ao aeroporto.", a:"に", o:["に","を","で","と"], exj:"「着く」ところは「に」。", ex:"Com 着く (chegar), o lugar leva に."},
+  {id:"p46", jp:"パスポート＿見せてください。", pt:"Mostre o passaporte, por favor.", a:"を", o:["を","が","に","で"], exj:"見せる ものは「を」。", ex:"O que você mostra é o objeto → を."},
+  {id:"p47", jp:"わたしは ブラジル＿来ました。", pt:"Eu vim do Brasil.", a:"から", o:["から","を","で","が"], exj:"「どこから 来ましたか」→「〜から 来ました」。", ex:"De onde você veio → [lugar] から 来ました."},
+  {id:"p48", jp:"東京＿のりかえます。", pt:"Faço baldeação em Tóquio.", a:"で", o:["で","を","が","と"], exj:"のりかえは「すること」なので、場所は「で」。", ex:"Fazer baldeação é uma ação → o lugar leva で."},
+  {id:"p49", jp:"タクシー＿のります。", pt:"Vou pegar um táxi.", a:"に", o:["に","を","で","と"], exj:"「のる」は「に」：電車に のる、バスに のる。「を」は ×。", ex:"のる (pegar um veículo) usa に, não を."},
+  {id:"p50", jp:"ここ＿すわってもいいですか。", pt:"Posso sentar aqui?", a:"に", o:["に","を","が","と"], exj:"「すわる」ところは「に」。", ex:"O lugar onde você se senta leva に."},
+  {id:"p51", jp:"これ＿ください。", pt:"Me dá este, por favor.", a:"を", o:["を","が","に","と"], exj:"ほしい ものは「を」：これを ください。", ex:"O que você pede leva を: これをください."},
+  {id:"p52", jp:"カード＿はらえますか。", pt:"Posso pagar com cartão?", a:"で", o:["で","に","と","へ"], exj:"はらう ほうほうは「で」：カードで、げんきんで。", ex:"O meio de pagamento leva で: com cartão, em dinheiro."},
+  {id:"p53", jp:"ぜんぶ＿いくらですか。", pt:"Quanto fica tudo junto?", a:"で", o:["で","を","に","と"], exj:"「ぜんぶで」＝ あわせて。", ex:"ぜんぶで = no total, tudo junto."},
+  {id:"p54", jp:"パン＿たまごなどを買いました。", pt:"Comprei pão, ovos e outras coisas.", a:"や", o:["や","を","に","で"], exj:"「AやB（など）」＝ AとBと、ほかにも ある。", ex:"AやB = A, B e outras coisas (lista incompleta)."},
+  {id:"p55", jp:"ふくろ＿いりません。", pt:"Não preciso de sacola.", a:"は", o:["は","を","に","で"], exj:"ことわる ときは「〜は いりません」。", ex:"Para recusar algo: 〜は いりません."},
+  {id:"p56", jp:"百円＿ありません。", pt:"Só tenho cem ienes.", a:"しか", o:["しか","を","に","で"], exj:"「〜しか ＋ ない」＝ それだけ。すくないと 思う きもち。", ex:"〜しか + negativo = só (e você acha pouco)."},
+  {id:"p57", jp:"一つ＿ください。", pt:"Só um, por favor.", a:"だけ", o:["だけ","しか","に","が"], exj:"「だけ」＝ それ いがいは ない。「しか」は「〜ない」と いっしょに つかいます。", ex:"だけ = só. しか só aparece com verbo negativo."},
+  {id:"p58", jp:"かぜ＿ひきました。", pt:"Peguei um resfriado.", a:"を", o:["を","が","に","で"], exj:"「かぜを ひく」で おぼえよう。", ex:"Decore a expressão: かぜをひく."},
+  {id:"p59", jp:"ねつ＿あります。", pt:"Estou com febre.", a:"が", o:["が","を","に","で"], exj:"「ある」ものは「が」：ねつが ある、時間が ある。", ex:"Com ある, aquilo que existe (ou que você tem) leva が."},
+  {id:"p60", jp:"これは 母＿の手紙です。", pt:"Esta é uma carta para a minha mãe.", a:"へ", o:["へ","に","で","を"], exj:"「〜への ＋ もの」。「に」と「の」は いっしょに つかえません。「へ」は「え」と 読みます。", ex:"〜への + substantivo = “para…”. Não se usa にの. Aqui へ se lê “e”."},
+  {id:"p61", jp:"日本＿ようこそ。", pt:"Bem-vinda ao Japão.", a:"へ", o:["へ","を","が","で"], exj:"「〜へ ようこそ」：行き先の「へ」。", ex:"〜へ ようこそ = bem-vindo(a) a…"},
+  {id:"p62", jp:"ここ＿名前を書いてください。", pt:"Escreva o seu nome aqui, por favor.", a:"に", o:["に","を","が","と"], exj:"書く ところ（紙など）は「に」。", ex:"O lugar onde se escreve (o papel, o campo) leva に."},
+  {id:"p63", jp:"ボールペン＿書いてください。", pt:"Escreva com caneta, por favor.", a:"で", o:["で","に","が","と"], exj:"つかう どうぐは「で」。", ex:"O instrumento usado leva で."},
+  {id:"p64", jp:"この紙＿なんですか。", pt:"O que é este papel?", a:"は", o:["は","を","に","で"], exj:"「〜は なんですか」：聞きたい ものが テーマ。", ex:"〜は なんですか: a coisa sobre a qual você pergunta é o tópico."},
+  {id:"p65", jp:"三番＿まどぐちへ どうぞ。", pt:"Dirija-se ao guichê número três, por favor.", a:"の", o:["の","を","が","で"], exj:"「三番の まどぐち」：「の」で ことばを つなぎます。", ex:"の liga 三番 (número três) a まどぐち (guichê)."},
+  {id:"p66", jp:"九時＿仕事がはじまります。", pt:"O trabalho começa às nove.", a:"に", o:["に","を","が","と"], exj:"はじまる 時間は「に」。", ex:"O horário em que algo começa leva に."},
+  {id:"p67", jp:"わたしは あとで 会社＿電話します。", pt:"Eu vou ligar para a empresa depois.", a:"に", o:["に","を","と","の"], exj:"電話する あいては「に」。", ex:"Para quem você liga leva に."},
+  {id:"p68", jp:"どようび＿日曜日は休みです。", pt:"Sábado e domingo são folga.", a:"と", o:["と","を","に","で"], exj:"「AとB」：ふたつを ならべます。", ex:"AとB = A e B."},
+  {id:"p69", jp:"仕事＿終わりました。", pt:"O trabalho terminou.", a:"が", o:["が","に","と","へ"], exj:"「終わる」は「が」。「終える」は「を」。", ex:"終わる (terminar, por si) → が. 終える (terminar algo) → を."},
+  {id:"p70", jp:"どれ＿あなたのですか。", pt:"Qual é o seu?", a:"が", o:["が","は","を","で"], exj:"「どれ・どこ・だれ」が 主語の ときは「が」。「は」は ×。", ex:"Palavra interrogativa como sujeito leva が, nunca は."},
+  {id:"p71", jp:"A：だれが 作りましたか。　B：わたし＿作りました。", pt:"A: Quem fez? B: Fui eu que fiz.", a:"が", o:["が","を","に","で"], exj:"「だれが？」の こたえも「が」：わたしが 作りました。", ex:"A resposta a だれが também leva が."},
+  {id:"p72", jp:"ジャスは せ＿高いです。", pt:"O Jas é alto.", a:"が", o:["が","を","に","で"], exj:"「AはBが〜」：ジャス（テーマ）は、せ（からだの ぶぶん）が 高い。", ex:"Padrão AはBが〜: o Jas (tópico) tem a estatura (が) alta."},
+  {id:"p73", jp:"わたしは ねこ＿ほしいです。", pt:"Eu quero um gato.", a:"が", o:["が","に","で","と"], exj:"「ほしい」も「が」。", ex:"ほしい (querer ter) também usa が."},
+  {id:"p74", jp:"肉は食べますが、魚＿食べません。", pt:"Carne eu como, mas peixe não.", a:"は", o:["は","に","で","と"], exj:"くらべる ときの「は」：肉は 食べる、魚は 食べない。", ex:"は de contraste: carne sim, peixe não."},
+  {id:"p75", jp:"きのう＿あつかったですが、きょうは すずしいです。", pt:"Ontem estava quente, mas hoje está fresco.", a:"は", o:["は","を","に","で"], exj:"くらべる ときの「は」：きのうは…、きょうは…。", ex:"は de contraste: ontem…, hoje…"},
+  {id:"p76", jp:"あした わたしは 友だち＿会います。", pt:"Amanhã vou encontrar uma amiga.", a:"に", o:["に","を","で","の"], exj:"「会う」あいては「に」（「と」も OK）。「を」は ×。", ex:"会う (encontrar alguém) usa に (ou と), nunca を."},
+  {id:"p77", jp:"日本語＿むずかしいですが、たのしいです。", pt:"Japonês é difícil, mas é divertido.", a:"は", o:["は","を","に","で"], exj:"「は」で テーマを 出して、そのあと せつめい。", ex:"は apresenta o assunto e depois vem o comentário."},
+  {id:"p78", jp:"この店は 十時＿あいています。", pt:"Esta loja fica aberta até as dez.", a:"まで", o:["まで","を","が","と"], exj:"「まで」は おわりの 時間。", ex:"まで = até (horário final)."},
+  {id:"p79", jp:"あした＿あさって、ひまですか。", pt:"Você está livre amanhã ou depois de amanhã?", a:"か", o:["か","を","に","で"], exj:"「AかB」＝ A または B。", ex:"AかB = A ou B."},
+  {id:"p80", jp:"わたしは コーヒー＿します。", pt:"Eu vou querer café.", a:"に", o:["に","が","で","と"], exj:"「〜に する」＝ えらぶ。", ex:"〜に する = escolher, “vou querer…”."},
+  {id:"p81", jp:"大きい＿をください。", pt:"Me dá o grande, por favor.", a:"の", o:["の","と","に","で"], exj:"「大きいの」＝ 大きい もの。", ex:"大きいの = o grande (の substitui o substantivo)."},
+  {id:"p82", jp:"ひらがな＿書いてもいいですか。", pt:"Posso escrever em hiragana?", a:"で", o:["で","に","が","と"], exj:"どんな もじで 書くか も「で」。", ex:"O tipo de escrita usado também leva で."},
+  {id:"p83", jp:"部屋＿そうじします。", pt:"Vou limpar o quarto.", a:"を", o:["を","が","に","と"], exj:"そうじする ところは「を」。", ex:"O que você limpa é o objeto → を."},
+  {id:"p84", jp:"これは 日本語＿なんと言いますか。", pt:"Como se diz isto em japonês?", a:"で", o:["で","を","に","が"], exj:"なにご で 言うか は「で」。", ex:"A língua usada leva で."},
+  {id:"p85", jp:"しお＿とってください。", pt:"Me passa o sal, por favor.", a:"を", o:["を","に","で","と"], exj:"とる ものは「を」。", ex:"O que você pega ou passa é o objeto → を."},
+  {id:"p86", jp:"ジャスのお母さん＿あいさつします。", pt:"Cumprimento a mãe do Jas.", a:"に", o:["に","を","で","の"], exj:"あいさつする あいては「に」。", ex:"A pessoa que você cumprimenta leva に."},
+  {id:"p87", jp:"これ、ブラジル＿おみやげです。", pt:"Isto é uma lembrança do Brasil.", a:"の", o:["の","を","に","で"], exj:"「ブラジルの おみやげ」：どこの ものかを「の」で 言います。", ex:"の indica a origem: lembrança do Brasil."}
 ];
 
 /* =========================================================
@@ -421,7 +466,38 @@ const TR = [
   {id:"t27", pt:"Você pode me ajudar, por favor?", a:["手伝ってくれませんか。","手伝ってください。"], h:"〜てくれませんか", hp:"pedido gentil"},
   {id:"t28", pt:"Quero ficar boa em japonês.", a:["日本語が上手になりたいです。"], h:"〜が 上手に なりたい", hp:"quero ficar boa em…"},
   {id:"t29", pt:"Eu estava cansada, então dormi cedo.", a:["つかれていたので、早くねました。"], h:"〜ので ＋ 早く", hp:"porque… + cedo"},
-  {id:"t30", pt:"Quando eu chegar ao Japão, quero comer ramen.", a:["日本に着いたら、ラーメンを食べたいです。"], h:"〜たら", hp:"quando… / se…"}
+  {id:"t30", pt:"Quando eu chegar ao Japão, quero comer ramen.", a:["日本に着いたら、ラーメンを食べたいです。"], h:"〜たら", hp:"quando… / se…"},
+  /* ---- 来日してからの場面と、文をつなぐ言い方 ---- */
+  {id:"t31", pt:"Muito prazer. Eu sou a Letícia.", a:["はじめまして。レティシアです。"], h:"はじめまして。〜です", hp:"muito prazer + seu nome"},
+  {id:"t32", pt:"Eu vim do Brasil.", a:["ブラジルから来ました。"], h:"〜から 来ました", hp:"vim de…"},
+  {id:"t33", pt:"Eu ainda não consigo falar bem japonês.", a:["まだ日本語が上手に話せません。"], h:"まだ 〜ません", hp:"ainda não…"},
+  {id:"t34", pt:"Pode repetir, por favor?", a:["もう一度言ってください。","もう一度お願いします。"], h:"もう一度", hp:"mais uma vez"},
+  {id:"t35", pt:"Como se diz isto em japonês?", a:["これは日本語でなんと言いますか。"], h:"〜で なんと 言いますか", hp:"como se diz em…?"},
+  {id:"t36", pt:"O que isto significa?", a:["これはどういう意味ですか。"], h:"どういう 意味", hp:"que significado"},
+  {id:"t37", pt:"Tem um supermercado aqui perto?", a:["この近くにスーパーがありますか。"], h:"〜に 〜が ありますか", hp:"tem… em…?"},
+  {id:"t38", pt:"Como eu faço para ir até a estação?", a:["駅までどうやって行きますか。"], h:"〜まで どうやって", hp:"como… até…"},
+  {id:"t39", pt:"Posso experimentar esta roupa?", a:["これを着てみてもいいですか。"], h:"〜てみても いいですか", hp:"posso experimentar…?"},
+  {id:"t40", pt:"Não preciso de sacola.", a:["ふくろはいりません。"], h:"〜は いりません", hp:"não preciso de…"},
+  {id:"t41", pt:"Vou querer este.", a:["これにします。","これをください。"], h:"〜に します", hp:"vou querer…"},
+  {id:"t42", pt:"Estou com febre desde ontem.", a:["きのうから熱があります。"], h:"〜から 〜が あります", hp:"desde… tenho…"},
+  {id:"t43", pt:"Estou com dor de barriga.", a:["おなかがいたいです。"], h:"〜が いたいです", hp:"estou com dor de…"},
+  {id:"t44", pt:"Tomo este remédio depois de comer.", a:["ごはんを食べたあとで、この薬を飲みます。"], h:"〜たあとで", hp:"depois de…"},
+  {id:"t45", pt:"Trabalho de segunda a sexta.", a:["月曜日から金曜日まで働きます。","月曜日から金曜日まで働いています。"], h:"〜から 〜まで", hp:"de… a…"},
+  {id:"t46", pt:"Amanhã eu estou de folga.", a:["明日は休みです。"], h:"〜は 休みです", hp:"… é folga"},
+  {id:"t47", pt:"Desculpe o atraso.", a:["おそくなってすみません。"], h:"〜て すみません", hp:"desculpe por…"},
+  {id:"t48", pt:"Não sei como usar. Pode me ensinar, por favor?", a:["使い方がわかりません。教えてください。"], h:"つかいかた ＋ 教えてください", hp:"modo de usar + me ensine"},
+  {id:"t49", pt:"Obrigada pela refeição. Estava muito gostoso.", a:["ごちそうさまでした。とてもおいしかったです。"], h:"ごちそうさまでした ＋ 〜かったです", hp:"agradecer a comida + estava…"},
+  {id:"t50", pt:"Você cozinha muito bem!", a:["料理がとても上手ですね。"], h:"〜が 上手ですね", hp:"você é bom/boa em…"},
+  {id:"t51", pt:"Estou feliz por ter vindo ao Japão.", a:["日本に来てうれしいです。"], h:"〜て うれしいです", hp:"estou feliz por…"},
+  {id:"t52", pt:"Quando tenho tempo, leio livros.", a:["時間があるとき、本を読みます。"], h:"〜とき", hp:"quando…"},
+  {id:"t53", pt:"Estudo japonês ouvindo música.", a:["音楽を聞きながら、日本語を勉強します。"], h:"〜ながら", hp:"fazendo… (ao mesmo tempo)"},
+  {id:"t54", pt:"Fui ao supermercado, mas estava fechado.", a:["スーパーに行きましたが、しまっていました。","スーパーに行ったけど、しまっていました。"], h:"〜が、〜 ／ 〜けど、〜", hp:"…, mas…"},
+  {id:"t55", pt:"Se chover amanhã, vou ficar em casa.", a:["明日雨がふったら、家にいます。"], h:"〜たら", hp:"se…"},
+  {id:"t56", pt:"Tenho que acordar cedo amanhã.", a:["明日は早く起きなければなりません。","明日は早く起きないといけません。"], h:"〜なければ なりません", hp:"tenho que…"},
+  {id:"t57", pt:"Não precisa ter pressa.", a:["いそがなくてもいいです。"], h:"〜なくても いいです", hp:"não precisa…"},
+  {id:"t58", pt:"É melhor descansar um pouco.", a:["少し休んだほうがいいです。"], h:"〜たほうが いいです", hp:"é melhor…"},
+  {id:"t59", pt:"Estou procurando a minha carteira.", a:["さいふをさがしています。"], h:"〜を さがしています", hp:"estou procurando…"},
+  {id:"t60", pt:"Este é mais barato do que aquele.", a:["これはあれより安いです。"], h:"AはBより 〜です", hp:"A é mais… do que B"}
 ];
 
 /* =========================================================
@@ -437,11 +513,16 @@ const FURI = [
   ["先生","せんせい"],["部屋","へや"],["名前","なまえ"],["一人","ひとり"],["二人","ふたり"],["夏休","なつやす"],["紅茶","こうちゃ"],["十分","じゅっぷん"],
   ["運転","うんてん"],["仕事","しごと"],["病院","びょういん"],["料理","りょうり"],["来年","らいねん"],["写真","しゃしん"],["毎日","まいにち"],["心配","しんぱい"],
   ["明日","あした"],["手伝","てつだ"],["手紙","てがみ"],
+  ["金曜日","きんようび"],["東京","とうきょう"],["空港","くうこう"],["会社","かいしゃ"],["電話","でんわ"],["三番","さんばん"],["十時","じゅうじ"],["百円","ひゃくえん"],
+  ["一つ","ひとつ"],["一度","いちど"],["意味","いみ"],["音楽","おんがく"],
+  ["母","かあ","さ","お"],["着","つ","いきくけこ"],["着","き"],
+  ["紙","かみ"],["休","やす"],["高","たか"],["肉","にく"],["魚","さかな"],["友","とも"],["会","あ"],["店","みせ"],["大","おお"],["願","ねが"],["近","ちか"],
+  ["熱","ねつ"],["薬","くすり"],["使","つか"],["方","かた"],["教","おし"],["本","ほん"],["読","よ"],["聞","き"],["家","いえ"],["安","やす"],
   ["人","じん","","ル"],["人","ひと"],["話","はなし","の"],["話","はな"],["時","じ","","0123456789０１２３４５６７８９"],["時","とき"],["月","がつ","","0123456789０１２３４５６７８９"],
   ["来","き","まて"],["来","く","る"],["出","だ","し"],["出","で"],
   ["言","い"],["飲","の"],["食","た"],["見","み"],["住","す"],["働","はたら"],["犬","いぬ"],["起","お"],["車","くるま"],["好","す"],["頭","あたま"],["雨","あめ"],
   ["目","め"],["窓","まど"],["母","はは"],["書","か"],["入","はい"],["中","なか"],["買","か"],["物","もの"],["今","いま"],["帰","かえ"],["駅","えき"],["歩","ある"],
-  ["新","あたら"],["前","まえ"],["待","ま"],["作","つく"],["気","き"],["少","すこ"],["終","お"],["持","も"],["暑","あつ"],["思","おも"],["早","はや"],["着","つ"],
+  ["新","あたら"],["前","まえ"],["待","ま"],["作","つく"],["気","き"],["少","すこ"],["終","お"],["持","も"],["暑","あつ"],["思","おも"],["早","はや"],
   ["行","い"],["先","さき"],["語","ご"],["晩","ばん"]
 ].map((e, i) => ({b:e[0], r:e[1], next:e[2] || "", prev:e[3] || "", i})).sort((x, y) => y.b.length - x.b.length || x.i - y.i);
 const isKanji = c => c >= "一" && c <= "鿿";
@@ -524,6 +605,18 @@ const todayKey = () => ymd(new Date());
 const parseKey = k => new Date(k+"T00:00:00");
 function weekKey(d){ const x = new Date(d); x.setHours(0,0,0,0); x.setDate(x.getDate()-((x.getDay()+6)%7)); return ymd(x); }
 function day(k){ k = k || todayKey(); if(!S.days[k]) S.days[k] = {pts:0,pc:0,pw:0,pwq:[],tr:[],diary:0,goalMet:false}; return S.days[k]; }
+/* きょうの日課の進みぐあい（じょし・さくぶん・にっき） */
+function quest(d){
+  const q = CONFIG.daily;
+  const items = [
+    {k:"p", n:Math.min(d.pc + d.pw, q.particles), of:q.particles},
+    {k:"w", n:Math.min(d.tr.length, q.writing), of:q.writing},
+    {k:"d", n:Math.min(d.diary, q.diary), of:q.diary}
+  ].filter(x => x.of > 0);
+  const done = items.filter(x => x.n >= x.of).length;
+  return {items, done, total:items.length, all:items.length > 0 && done === items.length,
+    frac:items.length ? items.reduce((s, x) => s + x.n / x.of, 0) / items.length : 0, by:k => items.find(x => x.k === k)};
+}
 const counted = k => !!((S.days[k] && S.days[k].goalMet) || S.rest[k]);
 function streak(){ let d = new Date(); if(!counted(ymd(d))) d = addDays(d,-1); let n = 0; while(counted(ymd(d))){ n++; d = addDays(d,-1); } return n; }
 function levelInfo(t){ let L = 1, base = 0, need = 100; while(t >= base+need){ base += need; L++; need = 100*L; } return {L, into:t-base, need}; }
@@ -571,7 +664,7 @@ function addPoints(n){
   const d = day(); d.pts += n;
   toast("+"+n+" ✨");
   let goalNow = false;
-  if(!d.goalMet && d.pts >= CONFIG.dailyGoal){ d.goalMet = true; goalNow = true; }
+  if(!d.goalMet && quest(d).all){ d.goalMet = true; goalNow = true; }
   save();
   if(goalNow) onGoal();
   refresh();
@@ -637,7 +730,8 @@ function dailyReport(title, k){
   k = k || todayKey();
   const past = k !== todayKey(), d = day(k), lv = levelInfo(S.total), m = lvMeta(lv.L);
   const L = [`${CONFIG.studentNameMail} の学習レポート（${k}）`, title, "",
-    `${past ? "この日" : "今日"}のポイント：${d.pts} / 目標 ${CONFIG.dailyGoal}`,
+    `日課：${quest(d).items.map(x => `${{p:"助詞",w:"作文",d:"日記"}[x.k]} ${x.n}/${x.of}${x.n >= x.of ? "✓" : ""}`).join("・")}${d.goalMet ? "（達成）" : "（未達成）"}`,
+    `${past ? "この日" : "今日"}のポイント：${d.pts}`,
     `連続記録：${streak()}日（最高 ${S.bestStreak}日）`,
     `累計：${S.total} pts（Lv.${lv.L} ${m[1]}）／残高：${S.balance} pts`, "",
     `■ 助詞：${d.pc} / ${d.pc+d.pw} 正解`];
@@ -697,13 +791,11 @@ function greeting(){
 function staticTexts(){
   // ホーム
   setT("h-today","きょうの れんしゅう","PRATICAR HOJE");
-  $("b-part").innerHTML = `<b>じょし（は・が・を・に・で）</b>${T(`10もん・さいだい ${CONFIG.particlesPerSession*CONFIG.points.particleRight}ポイント`,"Partículas · 10 perguntas")}`;
-  $("b-write").innerHTML = `<b>さくぶん</b>${T(`ポルトガル語を 日本語に・3もん ${CONFIG.writingPerSession*CONFIG.points.writing}ポイント`,"Escrita · traduza 3 frases para japonês")}`;
   setT("tip","🇧🇷 を おすと ポルトガル語が でるよ","Toque em 🇧🇷 para ver a tradução em português.");
   // れんしゅう
   setT("pr-title","れんしゅう","Praticar");
   setT("pr-sub","どれを する？","Qual exercício você quer fazer?");
-  $("m-part").innerHTML = `<b>じょし（は・が・を・に・で）</b>${T("まちがえた もんだいは よく でるよ","As que você erra aparecem mais vezes.")}`;
+  $("m-part").innerHTML = `<b>じょし（は・が・を・に・で など）</b>${T("まちがえた もんだいは よく でるよ","As que você erra aparecem mais vezes.")}`;
   $("m-write").innerHTML = `<b>さくぶん</b>${T("ポルトガル語 → 日本語。こたえは ジャスにも とどくよ","Português → japonês. O Jas recebe suas respostas.")}`;
   // にっき
   setT("d-title","にっき 📔","Diário");
@@ -725,7 +817,7 @@ function staticTexts(){
   setT("s-sent-l","書いた 文 ✏️","frases escritas");
   setT("s-diary-l","にっき 📔","diários");
   setT("g-h-cal","12しゅうかんの きろく","ÚLTIMAS 12 SEMANAS");
-  setT("g-cal-l","こい いろ ＝ たくさん がんばった日・きいろ ＝ おやすみチケット","Mais escuro = mais pontos · amarelo = folga");
+  setT("g-cal-l","うすい いろ ＝ すこし れんしゅうした日・こい いろ ＝ もくひょう たっせい・きいろ ＝ おやすみチケット","Claro = praticou um pouco · escuro = meta concluída · amarelo = folga");
   setT("g-h-part","じょしの せいかいりつ","ACERTOS POR PARTÍCULA");
   setT("g-h-write","さくぶん","ESCRITA");
   setT("g-h-set","せってい","CONFIGURAÇÕES");
@@ -740,12 +832,19 @@ function refresh(){
   $("hello-sub").innerHTML = T("ことのはの森へ ようこそ 🌷", `${g[1]}! Bem-vinda à floresta das palavras.`);
   const ch = d.goalMet ? ["きょうの もくひょう クリア！すごい！🎉","Meta de hoje concluída! Incrível!"] : CHEER[new Date().getDate() % CHEER.length];
   $("bubble").innerHTML = T(ch[0], ch[1], true);
-  $("today-pts").textContent = d.pts;
-  $("today-goal").textContent = `/ ${CONFIG.dailyGoal}`;
-  $("ring-fg").style.strokeDashoffset = 307.9 * (1 - Math.min(1, d.pts / CONFIG.dailyGoal));
+  const qs = quest(d), left = qs.total - qs.done;
+  $("today-pts").textContent = d.goalMet ? qs.total : qs.done;
+  $("today-goal").textContent = `/ ${qs.total}`;
+  $("ring-fg").style.strokeDashoffset = 307.9 * (1 - (d.goalMet ? 1 : Math.min(1, qs.frac)));
   $("ring-fg").setAttribute("stroke", d.goalMet ? "#7fd3b6" : "#f49ac1");
   $("goal-text").innerHTML = d.goalMet ? T("もくひょう たっせい 🌸","Meta concluída!") : T("きょうの もくひょう","Meta de hoje");
-  $("goal-sub").innerHTML = d.goalMet ? T("ここからは ボーナス！","Agora é tudo bônus!") : T(`あと ${CONFIG.dailyGoal - d.pts} ポイント`, `Faltam ${CONFIG.dailyGoal - d.pts} pontos`);
+  $("goal-sub").innerHTML = d.goalMet ? T(`ここからは ボーナス！（きょう ${d.pts}ポイント）`, `Agora é tudo bônus! (${d.pts} pontos hoje)`)
+    : T(`${qs.total}つの れんしゅうを しよう・あと ${left}つ`,left === 1 ? "Falta 1 exercício para completar a meta." : `Faltam ${left} exercícios para completar a meta.`);
+  const pq = qs.by("p"), wq = qs.by("w");
+  $("b-part").innerHTML = `<b>じょし（は・が・を・に・で など）</b>` + (pq && pq.n >= pq.of ? `<span class="done">${T("✓ きょうは できたよ","Feito hoje")}</span>`
+    : T(`${CONFIG.particlesPerSession}もん${pq ? `・きょう ${pq.n} / ${pq.of}` : ""}`, `Partículas · ${CONFIG.particlesPerSession} perguntas${pq ? ` · hoje: ${pq.n} de ${pq.of}` : ""}`));
+  $("b-write").innerHTML = `<b>さくぶん</b>` + (wq && wq.n >= wq.of ? `<span class="done">${T("✓ きょうは できたよ","Feito hoje")}</span>`
+    : T(`ポルトガル語を 日本語に${wq ? `・きょう ${wq.n} / ${wq.of}` : ""}`, `Escrita · traduza para japonês${wq ? ` · hoje: ${wq.n} de ${wq.of}` : ""}`));
   $("streak-line").innerHTML = T(`🔥 ${st}日 れんぞく`, `${st} dias seguidos`);
   $("rest-status").innerHTML = S.restWeeks[weekKey(new Date())] ? T("🎫 おやすみチケット：こんしゅうは つかったよ","Folga desta semana: já usada") : T("🎫 おやすみチケット：1まい あるよ","Folga desta semana: disponível");
   $("balance").textContent = S.balance;
@@ -870,7 +969,7 @@ function gradeW(g){
 /* ---------- にっき ---------- */
 function submitDiary(){
   const jp = $("d-jp").value.trim(), pt = $("d-pt").value.trim();
-  if(jp.length < 3){ toast("もう すこし 書いてみよう 🙂"); return; }
+  if(jp.length < 6 || !/[ぁ-んァ-ヶ一-龥]/.test(jp)){ toast("もう すこし 書いてみよう 🙂"); return; }
   const d = day(), first = d.diary === 0;
   d.diary++;
   S.diaries.unshift({date:todayKey(), jp, pt, ts:Date.now()});
@@ -936,12 +1035,12 @@ function renderProgress(){
   for(let i=0;i<84;i++){
     const dt = addDays(start, i), k = ymd(dt);
     if(dt > end){ h += '<div style="background:transparent"></div>'; continue; }
-    const p = S.days[k] ? S.days[k].pts : 0;
-    const c = S.rest[k] && p < CONFIG.dailyGoal ? "hr" : p >= CONFIG.dailyGoal*1.5 ? "h3" : p >= CONFIG.dailyGoal ? "h2" : p > 0 ? "h1" : "";
+    const p = S.days[k] ? S.days[k].pts : 0, met = !!(S.days[k] && S.days[k].goalMet);
+    const c = S.rest[k] && !met ? "hr" : met ? (p >= 60 ? "h3" : "h2") : p > 0 ? "h1" : "";
     h += `<div class="${c}" title="${k}: ${p}"></div>`;
   }
   $("heat").innerHTML = h;
-  const parts = ["は","が","を","に","で","と","も","の","から","まで","より"];
+  const parts = ["は","が","を","に","で","へ","と","や","か","も","の","から","まで","より","だけ","しか"];
   const rows = parts.filter(p => S.partStats[p]).map(p => { const s = S.partStats[p], n = s.c+s.w, pct = Math.round(100*s.c/n);
     return `<div class="pbar"><span class="k">${p}</span><div class="bar ${pct>=80?"g":""}"><div style="width:${pct}%"></div></div><span class="muted">${pct}% <span class="small">(${n})</span></span></div>`; });
   $("pstats").innerHTML = rows.length ? rows.join("") + `<p class="muted small">${T("みどり ＝ 80% いじょう。（ ）は こたえた かず。","Verde = 80% ou mais. Entre parênteses: quantas vezes respondeu.")}</p>`
