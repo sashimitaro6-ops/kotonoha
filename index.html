@@ -154,6 +154,27 @@ label{display:block;font-size:14px;color:var(--muted);margin:12px 4px 4px;font-w
 .toast.on{transform:translateX(-50%) translateY(0)}
 .sparkle{position:fixed;pointer-events:none;z-index:40;font-size:20px;animation:fall 1.4s ease-in forwards}
 @keyframes fall{to{transform:translateY(60vh) rotate(200deg);opacity:0}}
+/* 演出 */
+#fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:45}
+.stamp{position:fixed;left:50%;top:38%;transform:translate(-50%,-50%);z-index:46;pointer-events:none;text-align:center;white-space:nowrap;animation:stamp 1.9s cubic-bezier(.2,1.6,.4,1) forwards}
+.stamp{padding:28px 40px;background:radial-gradient(closest-side,rgba(255,255,255,.92),rgba(255,255,255,.6) 60%,transparent)}
+.stamp b{display:block;font-size:46px;font-weight:900;line-height:1.25;color:#ff4f9a;letter-spacing:.04em;
+  text-shadow:2px 2px 0 #fff,-2px 2px 0 #fff,2px -2px 0 #fff,-2px -2px 0 #fff,0 3px 0 #fff,0 7px 16px rgba(226,104,157,.55)}
+.stamp b rt{color:#c77dd6;text-shadow:none}
+.stamp small{display:inline-block;margin-top:6px;font-size:18px;font-weight:900;color:var(--pink-d);background:#fff;border-radius:999px;padding:4px 16px;box-shadow:0 4px 14px rgba(226,104,157,.3)}
+.stamp.big b{font-size:58px}
+.stamp.gold b{color:#f0a400;text-shadow:2px 2px 0 #fff,-2px 2px 0 #fff,2px -2px 0 #fff,-2px -2px 0 #fff,0 3px 0 #fff,0 7px 16px rgba(255,190,40,.6)}
+@keyframes stamp{0%{transform:translate(-50%,-50%) scale(0) rotate(-12deg);opacity:0}18%{transform:translate(-50%,-50%) scale(1.15) rotate(3deg);opacity:1}
+  30%{transform:translate(-50%,-50%) scale(1) rotate(0)}80%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-62%) scale(.9);opacity:0}}
+.floaty{position:fixed;z-index:46;pointer-events:none;font-weight:900;font-size:22px;color:var(--pink-d);white-space:nowrap;transform:translate(-50%,-50%);
+  text-shadow:0 2px 0 #fff,0 0 8px #fff;animation:floaty 1.1s ease-out forwards}
+.floaty rt{color:var(--pink-d)}
+@keyframes floaty{0%{transform:translate(-50%,-30%) scale(.6);opacity:0}20%{transform:translate(-50%,-80%) scale(1.15);opacity:1}100%{transform:translate(-50%,-260%) scale(1);opacity:0}}
+.mascot{cursor:pointer}
+.mascot.hop{animation:hop .7s cubic-bezier(.3,1.8,.5,1)}
+@keyframes hop{30%{transform:translateY(-26px) rotate(-8deg) scale(1.08)}60%{transform:translateY(0) rotate(4deg) scale(.96,1.04)}}
+.shake{animation:shake .5s}
+@keyframes shake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
 .bigbtn .tr .j{font-weight:500;color:var(--muted);font-size:14px}
 button .tr .p{color:inherit;opacity:.8}
 .opts button:disabled{opacity:1}
@@ -189,7 +210,7 @@ button .tr .p{color:inherit;opacity:.8}
   </div>
 
   <div class="hero">
-    <svg class="mascot" viewBox="0 0 100 100" aria-hidden="true">
+    <svg class="mascot" viewBox="0 0 100 100" aria-hidden="true" onclick="tapBunny(this)">
       <ellipse cx="50" cy="93" rx="24" ry="4" fill="#e9d3e6"/>
       <ellipse cx="37" cy="27" rx="9" ry="24" fill="#fff" stroke="#f2c6da" stroke-width="2" transform="rotate(-12 37 27)"/>
       <ellipse cx="37" cy="29" rx="4" ry="16" fill="#fbcfe0" transform="rotate(-12 37 29)"/>
@@ -678,7 +699,7 @@ const FURI = [
   ["何分","なんぷん"],["何回","なんかい"],["上司","じょうし"],["下手","へた"],["両親","りょうしん"],["牛乳","ぎゅうにゅう"],["郵便局","ゆうびんきょく"],
   ["冷蔵庫","れいぞうこ"],["領収書","りょうしゅうしょ"],["口座","こうざ"],["台所","だいどころ"],["風呂","ふろ"],["外国人","がいこくじん"],["結婚","けっこん"],
   ["学校","がっこう"],["市役所","しやくしょ"],["手続","てつづ"],["曜日","ようび"],["毎晩","まいばん"],["洗濯","せんたく"],["目的","もくてき"],["鉛筆","えんぴつ"],
-  ["会議","かいぎ"],["先週","せんしゅう"],["銀行","ぎんこう"],["電気","でんき"],["書類","しょるい"],["画面","がめん"],["追加","ついか"],["共有","きょうゆう"],["安心","あんしん"],["自分","じぶん"],["見返","みかえ"],["準備","じゅんび"],["上","うえ"],["訳","やく"],["続","つづ"],["切","き"],["住所","じゅうしょ"],
+  ["会議","かいぎ"],["先週","せんしゅう"],["銀行","ぎんこう"],["電気","でんき"],["書類","しょるい"],["画面","がめん"],["追加","ついか"],["共有","きょうゆう"],["安心","あんしん"],["自分","じぶん"],["見返","みかえ"],["準備","じゅんび"],["天才","てんさい"],["完璧","かんぺき"],["調子","ちょうし"],["実","みの"],["上","うえ"],["訳","やく"],["続","つづ"],["切","き"],["住所","じゅうしょ"],
   ["停","てい"],["優","やさ"],["冬","ふゆ"],["夏","なつ"],["咳","せき"],["多","おお"],["妹","いもうと"],["寒","さむ"],["忘","わす"],["慣","な"],["止","と"],
   ["歯","は"],["浴","あ"],["消","け"],["磨","みが"],["空","そら"],["習","なら"],["貸","か"],["迷","まよ"],["遊","あそ"],["遠","とお"],["隣","となり"]
 ].map((e, i) => ({b:e[0], r:e[1], next:e[2] || "", prev:e[3] || "", i})).sort((x, y) => y.b.length - x.b.length || x.i - y.i);
@@ -901,7 +922,7 @@ function applyRestTicket(){
   if(S.restWeeks[wk]) return;
   S.rest[yk] = true; S.restWeeks[wk] = true; save();
   if(!S.tutV) return;   // 初めての日はチュートリアルを優先
-  setTimeout(() => modal(`<div class="big">🎫</div><h2>${T("お休みチケットを使ったよ","Folga usada")}</h2>
+  setTimeout(() => queueModal(`<div class="big">🎫</div><h2>${T("お休みチケットを使ったよ","Folga usada")}</h2>
     <p>${T(`昨日はお休み。でも <b>${dayR(streak())}</b> の連続は守られたよ！`, `Ontem você descansou, mas a sequência de ${streak()} dias foi salva!`)}</p>
     <button class="block" onclick="closeModal()">${T("今日も頑張る！","Vamos lá!")}</button>`), 400);
 }
@@ -917,7 +938,19 @@ function addPoints(n){
   if(!d.goalMet && quest(d).all){ d.goalMet = true; goalNow = true; }
   save();
   if(goalNow) onGoal();
+  checkLevel(goalNow ? 3200 : 1000);
   refresh();
+}
+/* レベルアップしたら お祝い（S.lvSeen ＝ もう お祝いした レベル。項目を足すだけ） */
+function checkLevel(delay){
+  const L = levelInfo(S.total).L;
+  if(S.lvSeen === undefined){ S.lvSeen = L; save(); return; }
+  if(L <= S.lvSeen) return;
+  const from = lvMeta(S.lvSeen), to = lvMeta(L); S.lvSeen = L; save();
+  setTimeout(() => { Party.level(L); queueModal(`<div class="big" style="font-size:72px">${to[0]}</div><h2>${T(`レベルアップ！ Lv.${L}`, `Subiu para o nível ${L}!`)}</h2>
+    <p style="font-size:20px;font-weight:900">${T(`${from[0]} ${from[1]} → ${to[0]} ${to[1]}`, `${from[2]} → ${to[2]}`)}</p>
+    <p>${T("毎日の練習が実ったね！","Seu esforço de todo dia deu frutos!")}</p>
+    <button class="block" style="margin-top:12px" onclick="closeModal()">${T("やったー！","Oba!")}</button>`); }, delay || 1000);
 }
 function bonus(n){ S.total += n; S.balance += n; day().pts += n; }
 function onGoal(){
@@ -928,7 +961,9 @@ function onGoal(){
   for(let i=0;i<7;i++){ const k = ymd(addDays(parseKey(wk), i)); if(S.days[k] && S.days[k].goalMet) c++; }
   if(c >= CONFIG.weeklyGoalDays && !S.weeklyBonus[wk]){ S.weeklyBonus[wk] = true; bonus(CONFIG.weeklyBonus); extra += `<p class="surprise">${T(`🏅 1週間の目標達成！ +${CONFIG.weeklyBonus}`, `Meta da semana! +${CONFIG.weeklyBonus} pts`)}</p>`; }
   save();
-  setTimeout(() => { sparkles(); modal(`<div class="big">🌸</div><h2>${T("今日の目標達成！","Meta de hoje concluída!")}</h2>
+  const MILE = [3, 7, 14, 21, 30, 50, 75, 100, 150, 200, 250, 300, 365];
+  if(MILE.includes(st)) extra = `<p class="surprise" style="font-size:18px">${T(`🔥 ${dayR(st)}連続の記録！`, `Recorde: ${st} dias seguidos!`)}</p>` + extra;
+  setTimeout(() => { Party.goal(st); queueModal(`<div class="big">🌸</div><h2>${T("今日の目標達成！","Meta de hoje concluída!")}</h2>
     <p>${T(`<b>${dayR(st)}</b> 連続 🔥`, `${st} ${st===1?"dia":"dias"} seguidos`)}</p>${extra}
     <button class="block" style="margin-top:12px" onclick="closeModal()">${T("やったー！","Oba!")}</button>`); }, 700);
   day().rep = daySig(day());
@@ -1052,15 +1087,154 @@ function go(id){
   refresh(); try{ window.scrollTo(0,0); }catch(e){}
 }
 function modal(html){ $("modal").innerHTML = html; $("overlay").classList.add("on"); }
-function closeModal(){ $("overlay").classList.remove("on"); }
+function closeModal(){ $("overlay").classList.remove("on"); if(MQ.length) setTimeout(() => { if(!$("overlay").classList.contains("on") && MQ.length) modal(MQ.shift()); }, 300); }
+/* お祝いの画面は、ほかの画面が出ているときは順番待ちにする（閉じたら次が出る） */
+const MQ = [];
+function queueModal(html){ if($("overlay").classList.contains("on")) MQ.push(html); else modal(html); }
 let toastT;
 function toast(t){ const el = $("toast"); el.innerHTML = furi(esc(t)); el.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove("on"), 1300); }
-function sparkles(){
-  const em = ["✨","🌸","⭐","💗","🌷","🦋"];
-  for(let i=0;i<18;i++){ const s = document.createElement("div"); s.className = "sparkle"; s.textContent = em[i % em.length];
-    s.style.left = (Math.random()*100)+"vw"; s.style.top = (-5 + Math.random()*20)+"vh"; s.style.animationDelay = (Math.random()*.4)+"s";
-    document.body.appendChild(s); setTimeout(() => s.remove(), 2000); }
+/* =========================================================
+   演出：花火・バラの爆発・紙ふぶき・ハート・花びら・スタンプ
+   1枚の canvas に描く（0円・オフラインでも動く）。端末が「動きを減らす」設定なら、スタンプだけにする。
+   ========================================================= */
+const FX = (() => {
+  let cv, ctx, W = 0, H = 0, ps = [], raf = 0, night = 0;
+  const reduce = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+  const R = (a, b) => a + Math.random() * (b - a), pick = a => a[Math.floor(Math.random() * a.length)];
+  const PAL = [["#ff4f9a","#ffb3d6","#ffffff"],["#a77bff","#dccbff","#ffffff"],["#2fcf9a","#bff3e1","#ffffff"],["#ffc21a","#fff0b3","#ffffff"],["#ff6b6b","#ffc1c1","#ffe0e0"],["#4fb8ff","#cdeaff","#ffffff"]];
+  function size(){ const d = Math.min(2, window.devicePixelRatio || 1); W = innerWidth; H = innerHeight; cv.width = W * d; cv.height = H * d; ctx.setTransform(d, 0, 0, d, 0, 0); }
+  function init(){ if(cv) return; cv = document.createElement("canvas"); cv.id = "fx"; document.body.appendChild(cv); ctx = cv.getContext("2d"); size(); addEventListener("resize", size); }
+  function add(p){
+    if(reduce) return; init();
+    if(ps.length > 900) return;
+    ps.push(Object.assign({kind:"dot", vx:0, vy:0, g:.12, drag:.985, life:0, max:90, size:4, rot:R(0, 6.3), vr:0, sway:0, ph:R(0, 99), trail:false, tw:false}, p));
+    if(!raf) raf = requestAnimationFrame(tick);
+  }
+  function tick(){
+    ctx.clearRect(0, 0, W, H);
+    if(night > 0){ ctx.globalAlpha = Math.min(.42, night / 60 * .42); ctx.fillStyle = "#2b1840"; ctx.fillRect(0, 0, W, H); night--; }
+    const list = ps; ps = [];
+    for(let k = 0; k < list.length; k++){
+      const p = list[k]; p.life++;
+      p.vx *= p.drag; p.vy = p.vy * p.drag + p.g;
+      p.x += p.vx + (p.sway ? Math.sin((p.life + p.ph) / 14) * p.sway : 0); p.y += p.vy; p.rot += p.vr;
+      if(p.kind === "rocket" && (p.vy >= -1.2 || p.life >= p.max)){ explode(p.x, p.y, p.pal, p.big, p.shape); continue; }
+      if(p.life >= p.max || p.y > H + 80 || p.y < -200){ if(p.end) p.end(p); continue; }
+      const t = p.life / p.max, a = t > .65 ? Math.max(0, (1 - t) / .35) : 1;
+      ctx.globalAlpha = a * (p.tw && t > .5 && Math.random() < .35 ? .25 : 1);
+      if(p.kind === "emoji"){
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.font = `${p.size}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`;
+        ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(p.e, 0, 0); ctx.restore();
+      } else if(p.kind === "rect"){
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.scale(1, Math.cos(p.life / 6 + p.ph)); ctx.fillStyle = p.c; ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2); ctx.restore();
+      } else {
+        if(p.trail){ ctx.strokeStyle = p.c; ctx.lineWidth = p.size * .8; ctx.lineCap = "round"; ctx.beginPath(); ctx.moveTo(p.x - p.vx * 3.2, p.y - p.vy * 3.2); ctx.lineTo(p.x, p.y); ctx.stroke(); }
+        ctx.fillStyle = p.c; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, 6.283); ctx.fill();
+      }
+      ps.push(p);
+    }
+    ctx.globalAlpha = 1;
+    raf = ps.length || night > 0 ? requestAnimationFrame(tick) : 0;
+    if(!raf) ctx.clearRect(0, 0, W, H);
+  }
+  /* 花火の玉がはじける（まる・ハート・ふつう） */
+  function explode(x, y, pal, big, shape){
+    pal = pal || pick(PAL); shape = shape || pick(["peony","ring","heart","peony"]);
+    const n = big ? 120 : 80, sp = big ? 7.5 : 5.5;
+    for(let k = 0; k < n; k++){
+      let vx, vy;
+      if(shape === "heart"){ const t = k / n * 6.283, hx = 16 * Math.pow(Math.sin(t), 3), hy = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t)); vx = hx / 16 * sp * .9; vy = hy / 16 * sp * .9; }
+      else { const ang = R(0, 6.283), v = shape === "ring" ? sp * R(.9, 1) : sp * Math.sqrt(Math.random()); vx = Math.cos(ang) * v; vy = Math.sin(ang) * v; }
+      add({x, y, vx, vy, g:.07, drag:.965, max:R(55, 85), size:R(1.6, 2.8), c:pal[k % pal.length], trail:true, tw:true,
+        end: Math.random() < .12 ? q => { for(let m = 0; m < 4; m++) add({x:q.x, y:q.y, vx:R(-1.5, 1.5), vy:R(-1.5, 1.5), g:.05, max:22, size:1.3, c:"#fff"}); } : null});
+    }
+    add({x, y, max:8, size:big ? 26 : 18, c:"rgba(255,255,255,.9)", g:0});   // 光
+  }
+  function rocket(x, y, opt){
+    opt = opt || {}; init(); const vy = -Math.sqrt(2 * .16 * Math.max(60, H + 10 - y));
+    add({kind:"rocket", x, y:H + 10, vx:R(-.4, .4), vy, g:.16, drag:1, max:200, size:2.4, c:"#fff3c4", trail:true, pal:opt.pal, big:opt.big, shape:opt.shape});
+  }
+  return {
+    R, pick, PAL,
+    get reduce(){ return reduce; },
+    dark(frames){ if(reduce) return; init(); night = Math.max(night, frames || 120); if(!raf) raf = requestAnimationFrame(tick); },
+    /* 花火を何発か打ちあげる */
+    fireworks(n, opt){ init(); opt = opt || {}; for(let k = 0; k < n; k++) setTimeout(() => rocket(R(W * .15, W * .85), R(H * .15, H * .42), {big:opt.big || Math.random() < .3, shape:opt.shape}), k * (opt.gap || 380) + R(0, 120)); },
+    /* その場で花火をはじけさせる（ボタンの上など） */
+    pop(x, y, big, shape){ init(); explode(x, y, null, big, shape); },
+    /* 絵文字が放射状に飛びちる（バラの爆発など） */
+    burst(x, y, emojis, n, opt){ init(); opt = opt || {};
+      for(let k = 0; k < (n || 16); k++){ const ang = R(0, 6.283), v = R(opt.min || 3, opt.max || 10);
+        add({kind:"emoji", e:pick(emojis), x, y, vx:Math.cos(ang) * v, vy:Math.sin(ang) * v - (opt.up || 2), g:opt.g || .22, drag:.975, max:R(60, 95), size:R(opt.s1 || 18, opt.s2 || 34), vr:R(-.2, .2)}); } },
+    /* 紙ふぶきを左右の下から打ちあげる */
+    confetti(n){ init(); const cols = ["#ff4f9a","#ffb3d6","#a77bff","#2fcf9a","#ffc21a","#4fb8ff","#ffffff"];
+      for(let k = 0; k < (n || 140); k++){ const left = k % 2 === 0, ang = left ? R(-1.35, -.75) : R(-2.4, -1.8), v = R(11, 19);
+        add({kind:"rect", x:left ? -10 : W + 10, y:H * .85, vx:Math.cos(ang) * v, vy:Math.sin(ang) * v, g:.25, drag:.975, max:R(110, 160), size:R(8, 13), c:pick(cols), vr:R(-.3, .3), sway:R(.4, 1.2)}); } },
+    /* 上から降らせる（花びら・ハート） */
+    rain(emojis, n, opt){ init(); opt = opt || {};
+      for(let k = 0; k < (n || 40); k++) setTimeout(() => add({kind:"emoji", e:pick(emojis), x:R(0, W), y:-30, vx:R(-.6, .6), vy:R(1.5, 3.5), g:.02, drag:.995, max:R(160, 240), size:R(opt.s1 || 18, opt.s2 || 32), vr:R(-.05, .05), sway:R(.6, 1.6)}), R(0, opt.dur || 1600)); },
+    /* 下から上へ（手紙・ハートが空にのぼる） */
+    rise(emojis, n){ init();
+      for(let k = 0; k < (n || 24); k++) setTimeout(() => add({kind:"emoji", e:pick(emojis), x:R(W * .1, W * .9), y:H + 30, vx:R(-.5, .5), vy:R(-7, -4.5), g:-.01, drag:.995, max:200, size:R(22, 38), vr:R(-.03, .03), sway:R(.5, 1.3)}), R(0, 1200)); }
+  };
+})();
+const buzz = pat => { try{ if(navigator.vibrate) navigator.vibrate(pat); }catch(e){} };
+const centerOf = el => { try{ const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }catch(e){ return [innerWidth / 2, innerHeight / 2]; } };
+/* 大きな文字のスタンプ（日本語＋ふりがな、下に小さくポルトガル語） */
+function stamp(jp, pt, cls){
+  const d = document.createElement("div"); d.className = "stamp" + (cls ? " " + cls : "");
+  d.innerHTML = `<b>${furi(jp)}</b>${pt ? `<small>${esc(pt)}</small>` : ""}`;
+  document.querySelectorAll(".stamp").forEach(x => x.remove());
+  document.body.appendChild(d); setTimeout(() => d.remove(), 2000);
 }
+/* ボタンの上にふわっと出る ほめことば */
+function floaty(el, text){
+  const [x, y] = centerOf(el), d = document.createElement("div"); d.className = "floaty";
+  d.style.left = x + "px"; d.style.top = y + "px"; d.innerHTML = furi(text);
+  document.body.appendChild(d); setTimeout(() => d.remove(), 1200);
+}
+const PRAISE = ["すごい！","天才！","完璧！","その調子！","いいね！","さすが！","ナイス！","正解！","かんぺき 💮"];
+const ROSES = ["🌹","🌹","🌹","🌸","💮","🌷"], HEARTS = ["💗","💖","💕","💓","💘"], PETALS = ["🌸","🌸","💮","🌷","🎀"], STARS = ["⭐","🌟","✨","💫"];
+/* 場面ごとの お祝い */
+const Party = {
+  correct(el, combo){
+    const [x, y] = centerOf(el);
+    const kind = FX.pick(["rose","heart","star","pop","rose"]);
+    if(kind === "rose") FX.burst(x, y, ROSES, 14, {max:8});
+    else if(kind === "heart") FX.burst(x, y, HEARTS, 14, {max:8});
+    else if(kind === "star") FX.burst(x, y, STARS, 14, {max:8});
+    else FX.pop(x, y, false);
+    floaty(el, FX.pick(PRAISE)); buzz(20);
+    if(combo >= 3 && combo % 2 === 1 || combo === 10){
+      setTimeout(() => { stamp(`${combo}問連続！🔥`, `${combo} seguidas!`); FX.fireworks(Math.min(6, combo - 1), {gap:260}); }, 350);
+    }
+  },
+  wrong(el){ floaty(el, "ドンマイ 🍀"); el.classList.add("shake"); setTimeout(() => el.classList.remove("shake"), 600); },
+  rose(){ const x = innerWidth / 2, y = innerHeight * .42; FX.burst(x, y, ROSES, 40, {min:5, max:15, s1:24, s2:44}); FX.burst(x, y, ["🌹"], 10, {min:2, max:6, s1:40, s2:60}); buzz([30, 40, 30]); },
+  great(jp, pt){ stamp(jp, pt); FX.fireworks(5); FX.confetti(90); buzz([40, 60, 40]); },
+  perfect(){ FX.dark(260); stamp("パーフェクト！💯", "Perfeito! Acertou tudo!", "big gold"); Party.rose(); FX.fireworks(12, {gap:240}); setTimeout(() => FX.confetti(160), 500); buzz([60, 80, 60, 80, 120]); },
+  diary(){ FX.rise(["💌","💌","💗","💕","🕊️"], 26); stamp("送ったよ 💌", "Enviado para o Jas!"); buzz(40); },
+  goal(st){
+    FX.dark(360); FX.confetti(180); FX.fireworks(14, {gap:230});
+    setTimeout(() => { Party.rose(); FX.rain(PETALS, 50, {dur:2500}); }, 900);
+    stamp("目標達成！🌸", "Meta concluída!", "big"); buzz([80, 60, 80, 60, 200]);
+  },
+  level(L){ FX.dark(300); FX.fireworks(10, {gap:260, big:true}); setTimeout(() => FX.burst(innerWidth / 2, innerHeight * .4, STARS.concat([lvMeta(L)[0]]), 40, {min:5, max:14, s1:24, s2:46}), 600);
+    stamp("レベルアップ！", `Nível ${L}!`, "big gold"); buzz([60, 60, 60, 60, 180]); },
+  redeem(){ FX.dark(260); Party.rose(); FX.confetti(160); FX.fireworks(8, {gap:260, shape:"heart"}); stamp("交換できたよ！🎁", "Prêmio trocado!", "big"); },
+  got(){ FX.rain(HEARTS, 60, {dur:2200, s1:22, s2:40}); FX.fireworks(3, {shape:"heart"}); stamp("よかったね 💗", "Que bom!"); },
+  start(){ FX.rain(PETALS, 50, {dur:2000}); FX.fireworks(3); stamp("はじめよう！🌷", "Vamos começar!"); }
+};
+/* うさぎを押すと、ぴょんと跳ねて ハートが出る。10回ごとに花火。 */
+let bunnyTaps = 0;
+function tapBunny(el){
+  el.classList.remove("hop"); void el.getBoundingClientRect(); el.classList.add("hop");
+  const [x, y] = centerOf(el); FX.burst(x, y - 10, HEARTS, 10, {min:2, max:6, up:3}); buzz(15);
+  const c = FX.pick(CHEER); $("bubble").innerHTML = T(c[0], c[1], true); applyPt();
+  if(++bunnyTaps % 10 === 0){ FX.fireworks(5, {shape:"heart"}); stamp("ぴょん！🐰💗", "Pula, pula!"); }
+}
+/* 前の版の名前（花びらを降らせる） */
+function sparkles(){ FX.rain(PETALS, 36, {dur:1400}); }
 
 function greeting(){
   const h = new Date().getHours();
@@ -1178,6 +1352,7 @@ function answerP(btn, o){
   const q = P.qs[P.i], ok = o === q.a, retry = P.i >= P.main;
   document.querySelectorAll(".opts button").forEach(b => { b.disabled = true; if(b.textContent === q.a) b.classList.add("right"); });
   if(!ok) btn.classList.add("wrong");
+  if(ok){ P.combo = (P.combo || 0) + 1; Party.correct(btn, retry ? 0 : P.combo); } else { P.combo = 0; Party.wrong(btn); }
   const bl = $("blank"); bl.textContent = q.a; bl.classList.add("ok");
   P.res[P.i] = ok;
   if(!retry){   // もう一度の ときは、きろく・ポイント・日課に 入れない
@@ -1203,7 +1378,12 @@ function nextP(){
   if(P.i === P.main && P.wrong.length && !P.retried){ P.retried = true; P.qs = P.qs.concat(P.wrong.map(w => w.q)); }
   if(P.i < P.qs.length){ renderP(); return; }
   const n = P.main, right = P.res.slice(0, n).filter(Boolean).length;
-  if(right >= n * 0.8) sparkles();
+  setTimeout(() => {
+    if(right === n) Party.perfect();
+    else if(right >= n * 0.8) Party.great("すばらしい！🌟", "Excelente!");
+    else if(right >= n * 0.5){ FX.rain(PETALS, 40); FX.fireworks(2); stamp("よく頑張ったね 🌷", "Mandou bem!"); }
+    else { FX.rain(HEARTS, 30); stamp("練習あるのみ！💪", "Continue assim!"); }
+  }, 250);
   const list = P.wrong.map(w => `<div class="item"><div class="jpx">${furi(esc(w.q.jp)).replace("＿", `<span class="blank ok">${w.q.a}</span>`)}</div>
       <div class="muted small">${T(`あなたの答え：「${w.chose}」→ 正しくは「${w.q.a}」`, `Você escolheu ${w.chose}; o certo é ${w.q.a}.`)}</div></div>`).join("");
   $("practice-run").innerHTML = `<div class="card" style="text-align:center">
@@ -1271,10 +1451,13 @@ function showW(){
       <button class="g2" onclick="gradeW(2)">${T("○ おしい","Quase")}</button>
       <button class="g1" onclick="gradeW(1)">${T("△ 間違えた","Errei")}</button>
     </div>`}`;
+  if(exact) setTimeout(() => { Party.rose(); FX.fireworks(3); stamp("ぴったり！🌹", "Igualzinho ao exemplo!"); }, 150);
   applyPt();
 }
 function gradeW(g, auto){
   const q = W.qs[W.i], ans = $("w-ans").value.trim();
+  if(!auto){ const el = document.querySelector(g === 3 ? ".grades .g3" : g === 2 ? ".grades .g2" : ".grades .g1");
+    if(el){ if(g === 3) Party.correct(el, 0); else floaty(el, g === 2 ? "おしい！" : "次はできるよ 🍀"); } }
   const old = S.tstats[q.id] || {}, prev = old.box !== undefined ? old.box : (old.grade === 3 ? 1 : 0);
   const s = {grade:g, n:(old.n || 0) + 1}; srsSet(s, g === 3 ? prev + 1 : g === 2 ? Math.min(prev, 1) : 0);
   S.tstats[q.id] = s;
@@ -1312,6 +1495,7 @@ function checkRedo(){
   const q = W.qs[W.i], na = norm($("r-ans").value), cands = q.a.map(norm);
   if(na && cands.includes(na)){
     W.recs.forEach(r => r.re = true); save();
+    Party.rose(); stamp("書けた！✍️", "Conseguiu!");
     $("r-ans").disabled = true; ["r-check","r-skip","peek-btn"].forEach(id => $(id).style.display = "none");
     $("peek-box").style.display = "";
     $("r-after").innerHTML = `<div class="explain" style="background:var(--mint-s)"><div class="hd">${T("🌸 書けた！","Conseguiu!")}</div>${T("答えの例と同じだよ。","Igual ao exemplo de resposta.")}</div>
@@ -1330,6 +1514,7 @@ function doneW(){
       <p>${T(`${W.qs.length}文書いて <b>${W.earned}</b> ポイント ゲット！`, `Você escreveu ${W.qs.length} frases e ganhou ${W.earned} pontos.`)}</p>
       <div class="grid2" style="margin-top:16px"><button class="ghost" onclick="go('home')">${T("ホーム","Início")}</button><button onclick="startWriting()">${T("もう3問","Mais 3")}</button></div>
     </div>`;
+  setTimeout(() => { FX.confetti(140); FX.fireworks(3); stamp("よくできました！✏️", "Muito bem!"); }, 200);
   applyPt();
 }
 
@@ -1348,7 +1533,8 @@ function submitDiary(){
   // 日記で目標達成になったときは、達成の画面を出す（「送ったよ」はトーストで伝える）
   const wasMet = d.goalMet;
   addPoints(first ? CONFIG.points.diaryFirst : CONFIG.points.diaryMore);
-  if(!wasMet && d.goalMet){ setTimeout(() => toast("送ったよ ✉️"), 1400); return; }
+  if(!wasMet && d.goalMet){ FX.rise(["💌","💗","💕"], 16); setTimeout(() => toast("送ったよ ✉️"), 1400); return; }
+  Party.diary();
   modal(`<div class="big">💌</div><h2>${T("送ったよ！","Enviado!")}</h2><p>${(CONFIG.studentEmail || CONFIG.replyByMail) ? T(`${CONFIG.teacherName}が読んで、メールで返事するね。`,"O Jas vai ler e responder por e-mail com as correções.") : T(`${CONFIG.teacherName}が読んで、返事するね。`,"O Jas vai ler e responder com as correções.")}</p><button class="block" onclick="closeModal()">OK</button>`);
   applyPt();
 }
@@ -1406,7 +1592,7 @@ function askGot(i){
 function setGot(i, on){
   const x = S.redemptions[i]; if(!x) return closeModal();
   if(on) x.got = Date.now(); else delete x.got;
-  save(); closeModal(); if(on){ sparkles(); toast("よかったね 💗"); } refresh();
+  save(); closeModal(); if(on) Party.got(); refresh();
 }
 function askRedeem(id){
   const r = CONFIG.rewards.find(x => x.id === id);
@@ -1422,7 +1608,7 @@ function redeem(id){
   save();
   sendMail({subject:`🎁 ${CONFIG.studentNameMail} がご褒美を交換しました`,
     body:`${CONFIG.studentNameMail} がご褒美を交換しました！\n\n${r.icon} ${r.name}（${r.cost} pts）\n\nあげたら、彼女にアプリの「ご褒美 → 交換したご褒美」で「🎁 もらった」を押してもらってください。押すまでは、学習レポートに「まだあげていないご褒美」として出ます。\n\n残りポイント：${S.balance} pts\n累計：${S.total} pts（Lv.${levelInfo(S.total).L}）\n連続記録：${streak()}日`});
-  sparkles();
+  Party.redeem();
   modal(`<div class="big">🎉</div><h2>${T("交換できたよ！","Trocado!")}</h2><p>${T(`${CONFIG.teacherName}に知らせたよ。楽しんでね！`,"O Jas já foi avisado. Aproveite!")}</p><button class="block" onclick="closeModal()">${T("やったー！","Oba!")}</button>`);
   refresh();
 }
@@ -1602,7 +1788,7 @@ function tutorial(i){
   $("modal").querySelectorAll(".tr").forEach(e => e.classList.add("open"));
   applyPt();
 }
-function endTutorial(){ tutI = -1; S.tutV = 1; save(); closeModal(); go("home"); }
+function endTutorial(){ tutI = -1; S.tutV = 1; save(); closeModal(); go("home"); setTimeout(() => Party.start(), 300); }
 
 $("overlay").addEventListener("click", e => { if(e.target.id === "overlay" && tutI < 0) closeModal(); });
 staticTexts();
