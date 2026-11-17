@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="ことのは">
+<meta name="theme-color" content="#fdeef5">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<title>ことのはの森 Kotonoha</title>
+<style>
+:root{
+  --ink:#5b4a6b; --muted:#a093ad; --line:#f1e3ee;
+  --pink:#f49ac1; --pink-d:#e2689d; --pink-s:#ffe6f0;
+  --lav:#b8a4f4; --lav-s:#efe9ff;
+  --mint:#7fd3b6; --mint-d:#43a984; --mint-s:#e1f6ee;
+  --butter:#ffd978; --butter-s:#fff5d6;
+  --card:rgba(255,255,255,.92);
+  --round:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP",sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%}
+body{color:var(--ink);font-family:var(--round);font-weight:500;font-size:16px;line-height:1.6;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255,255,255,.9) 0 2px, transparent 3px),
+    radial-gradient(circle at 78% 8%, rgba(255,255,255,.9) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 60% 40%, rgba(255,255,255,.8) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 30% 70%, rgba(255,255,255,.8) 0 2px, transparent 3px),
+    radial-gradient(circle at 88% 82%, rgba(255,255,255,.9) 0 1.5px, transparent 2.5px),
+    linear-gradient(170deg,#fde7f1 0%,#f1e8ff 45%,#e6f6f1 100%);
+  background-size:220px 220px,260px 260px,300px 300px,240px 240px,280px 280px,100% 100%;
+  background-attachment:fixed}
+main{max-width:520px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 14px) 16px calc(env(safe-area-inset-bottom) + 100px)}
+h1{font-size:21px;font-weight:900;margin:2px 0;letter-spacing:.04em}
+h2{font-size:19px;font-weight:900;margin:4px 0 8px}
+h3{font-size:14px;margin:22px 4px 8px;color:var(--pink-d);font-weight:900;letter-spacing:.08em}
+h3::before{content:"✦ "}
+p{margin:6px 0}
+.muted{color:var(--muted);font-size:14px}
+.small{font-size:13px}
+/* translation */
+.tr .p{display:none;font-size:.78em;color:var(--muted);font-weight:500;line-height:1.4;margin-top:1px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:0}
+body.showpt .tr .p,.tr.open .p{display:block}
+.tr.tap{cursor:pointer}
+/* layout */
+.card{background:var(--card);border-radius:24px;padding:18px;margin:12px 0;box-shadow:0 6px 18px rgba(226,104,157,.10),0 1px 0 #fff inset;border:2px solid #fff}
+.row{display:flex;gap:14px;align-items:center}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat{background:var(--card);border-radius:20px;padding:12px 14px;border:2px solid #fff;box-shadow:0 4px 12px rgba(184,164,244,.15)}
+.stat .n{font-size:24px;font-weight:900}
+.stat .l{font-size:13px;color:var(--muted)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+/* buttons */
+button{font:inherit;font-weight:700;border:none;border-radius:999px;padding:12px 18px;color:#fff;cursor:pointer;
+  background:linear-gradient(135deg,var(--pink) 0%,var(--lav) 100%);box-shadow:0 4px 0 rgba(226,104,157,.25)}
+button:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(226,104,157,.25)}
+button.ghost{background:#fff;color:var(--ink);box-shadow:0 3px 0 var(--line);border:2px solid var(--line)}
+button.soft{background:var(--butter-s);color:#b8860b;box-shadow:0 3px 0 #f3e2a9}
+button:disabled{opacity:.45;cursor:default}
+button.block{width:100%;display:block}
+.ptbtn{width:44px;height:44px;padding:0;border-radius:50%;font-size:20px;background:#fff;box-shadow:0 3px 0 var(--line);border:2px solid var(--line);flex:none}
+.ptbtn.on{background:var(--mint-s);border-color:var(--mint)}
+.bigbtn{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;text-align:left;background:var(--card);color:var(--ink);
+  border:2px solid #fff;padding:14px 16px;margin:10px 0;border-radius:24px;box-shadow:0 5px 14px rgba(184,164,244,.18)}
+.bigbtn .ic{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:24px;flex:none}
+.bigbtn b{display:block;font-size:17px;font-weight:900}
+.bigbtn .go{font-size:24px;color:var(--pink)}
+.bigbtn .txt{flex:1}
+.ic.pk{background:var(--pink-s)}.ic.lv{background:var(--lav-s)}.ic.mt{background:var(--mint-s)}
+.done{color:var(--mint-d);font-weight:900}
+/* mascot */
+.hero{display:flex;align-items:flex-end;gap:6px;margin-top:6px}
+.mascot{width:84px;height:84px;flex:none;animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-5px)}}
+.bubble{position:relative;background:#fff;border-radius:20px;padding:10px 14px;margin-bottom:22px;box-shadow:0 4px 12px rgba(226,104,157,.12);font-weight:700;flex:1}
+.bubble::after{content:"";position:absolute;left:-8px;bottom:14px;border:8px solid transparent;border-right-color:#fff;border-left:0}
+/* nav */
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;padding:0 12px calc(env(safe-area-inset-bottom) + 10px);pointer-events:none}
+nav .in{display:flex;max-width:500px;width:100%;background:rgba(255,255,255,.95);border-radius:28px;box-shadow:0 8px 24px rgba(184,164,244,.3);border:2px solid #fff;pointer-events:auto;padding:4px}
+nav button{flex:1;background:none;box-shadow:none;color:var(--muted);border-radius:22px;padding:8px 2px 6px;font-size:11px}
+nav button i{display:block;font-style:normal;font-size:21px;line-height:1.25}
+nav button.on{background:var(--pink-s);color:var(--pink-d)}
+section{display:none}
+section.on{display:block;animation:fade .3s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}}
+/* ring */
+.ring{position:relative;width:118px;height:118px;flex:none}
+.ring svg{transform:rotate(-90deg)}
+.ring .c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring .c b{font-size:28px;font-weight:900;line-height:1.1}
+.bar{height:12px;background:#f6eaf2;border-radius:8px;overflow:hidden}
+.bar>div{height:100%;background:linear-gradient(90deg,var(--pink),var(--lav));border-radius:8px;transition:width .5s}
+.bar.g>div{background:linear-gradient(90deg,var(--mint),#a8e6cf)}
+.pill{display:inline-block;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:900;background:var(--butter-s);color:#b8860b;border:2px solid #fff}
+/* exercises */
+.sentence{font-size:25px;font-weight:700;line-height:1.9;margin:8px 0 4px;overflow-wrap:anywhere}
+.blank{display:inline-block;min-width:1.9em;text-align:center;border-radius:12px;background:var(--pink-s);color:var(--pink-d);margin:0 3px;padding:0 6px;line-height:1.5}
+.blank.ok{background:var(--mint-s);color:var(--mint-d)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.opts button{font-size:26px;padding:14px;background:#fff;color:var(--ink);border:2px solid var(--line);box-shadow:0 4px 0 var(--line);border-radius:20px}
+.opts button.right{background:var(--mint-s);border-color:var(--mint);color:var(--mint-d);box-shadow:0 4px 0 #bfe9d9}
+.opts button.wrong{background:var(--pink-s);border-color:var(--pink);color:var(--pink-d);box-shadow:0 4px 0 #f8c9dc}
+.explain{margin-top:14px;padding:12px 14px;border-radius:18px;background:var(--lav-s);font-size:15px}
+textarea,input[type=text]{width:100%;font:inherit;font-size:18px;padding:12px 14px;border:2px solid var(--line);border-radius:18px;background:#fff;color:var(--ink);resize:vertical}
+textarea:focus{outline:none;border-color:var(--pink)}
+label{display:block;font-size:14px;color:var(--muted);margin:12px 4px 4px;font-weight:700}
+.model{font-size:20px;padding:10px 14px;background:var(--mint-s);border-radius:16px;margin:6px 0}
+.yours{font-size:20px;padding:10px 14px;background:var(--lav-s);border-radius:16px;margin:6px 0}
+.grades{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.grades button{padding:12px 4px;font-size:15px}
+.g3{background:linear-gradient(135deg,#7fd3b6,#a8e6cf)!important}
+.g2{background:linear-gradient(135deg,#ffcf6b,#ffe3a1)!important;color:#8a6500!important}
+.g1{background:linear-gradient(135deg,#f49ac1,#f8c0d8)!important}
+.pt-prompt{font-size:21px;font-weight:900;margin:4px 0 12px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.meaning{font-size:14px;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.linkbtn{background:none;box-shadow:none;color:var(--lav);padding:4px 0;font-size:14px;text-decoration:underline}
+.progress-dots{display:flex;gap:5px;margin-bottom:12px}
+.progress-dots span{flex:1;height:8px;border-radius:5px;background:#f6eaf2}
+.progress-dots span.ok{background:var(--mint)}.progress-dots span.ng{background:var(--pink)}.progress-dots span.cur{background:var(--lav)}
+/* lists */
+.item{padding:12px 0;border-bottom:2px dotted var(--line)}
+.item:last-child{border-bottom:none}
+.item .jpx{font-size:17px;white-space:pre-wrap}
+.empty{text-align:center;padding:18px 6px}
+.empty .big{font-size:44px}
+.heat{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,15px);gap:4px;justify-content:start;overflow-x:auto}
+.heat div{width:15px;height:15px;border-radius:5px;background:#f6eaf2}
+.heat .h1{background:#fbd0e2}.heat .h2{background:#f49ac1}.heat .h3{background:#c77dd6}.heat .hr{background:var(--butter-s);outline:2px dashed var(--butter);outline-offset:-2px}
+.pbar{display:grid;grid-template-columns:2.4em 1fr 3.8em;gap:8px;align-items:center;margin:8px 0;font-size:14px}
+.pbar .k{font-size:19px;font-weight:900;text-align:center}
+/* modal & toast */
+.overlay{position:fixed;inset:0;background:rgba(91,74,107,.35);display:none;align-items:center;justify-content:center;padding:24px;z-index:20}
+.overlay.on{display:flex}
+.modal{background:#fff;border-radius:28px;padding:26px 22px;max-width:360px;width:100%;text-align:center;border:3px solid var(--pink-s);animation:pop .35s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pop{from{transform:scale(.7);opacity:0}}
+.modal .big{font-size:54px;animation:bob 2s ease-in-out infinite}
+.modal .surprise{color:#c48a00;font-weight:900}
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 14px);transform:translateX(-50%) translateY(-140%);background:#fff;color:var(--pink-d);padding:8px 18px;border-radius:999px;font-weight:900;transition:transform .25s;z-index:30;box-shadow:0 6px 16px rgba(226,104,157,.25);border:2px solid var(--pink-s)}
+.toast.on{transform:translateX(-50%) translateY(0)}
+.sparkle{position:fixed;pointer-events:none;z-index:40;font-size:20px;animation:fall 1.4s ease-in forwards}
+@keyframes fall{to{transform:translateY(60vh) rotate(200deg);opacity:0}}
+.bigbtn .tr .j{font-weight:500;color:var(--muted);font-size:14px}
+button .tr .p{color:inherit;opacity:.8}
+.opts button:disabled{opacity:1}
+.explain .hd{font-weight:900;margin-bottom:6px}
+.tip{font-size:13px;color:var(--muted);text-align:center;margin:10px 0 0}
+</style>
+</head>
+<body>
+<main>
+
+<!-- ============ ホーム ============ -->
+<section id="home" class="on">
+  <div class="top">
+    <div>
+      <h1 id="hello"></h1>
+      <div class="muted" id="hello-sub"></div>
+    </div>
+    <button class="ptbtn" id="ptbtn" onclick="togglePt()" aria-label="Mostrar português">🇧🇷</button>
+  </div>
+
+  <div class="hero">
+    <svg class="mascot" viewBox="0 0 100 100" aria-hidden="true">
+      <ellipse cx="50" cy="93" rx="24" ry="4" fill="#e9d3e6"/>
+      <ellipse cx="37" cy="27" rx="9" ry="24" fill="#fff" stroke="#f2c6da" stroke-width="2" transform="rotate(-12 37 27)"/>
+      <ellipse cx="37" cy="29" rx="4" ry="16" fill="#fbcfe0" transform="rotate(-12 37 29)"/>
+      <ellipse cx="63" cy="27" rx="9" ry="24" fill="#fff" stroke="#f2c6da" stroke-width="2" transform="rotate(12 63 27)"/>
+      <ellipse cx="63" cy="29" rx="4" ry="16" fill="#fbcfe0" transform="rotate(12 63 29)"/>
+      <circle cx="50" cy="62" r="30" fill="#fff" stroke="#f2c6da" stroke-width="2"/>
+      <circle cx="40" cy="60" r="3.4" fill="#5b4a6b"/><circle cx="60" cy="60" r="3.4" fill="#5b4a6b"/>
+      <circle cx="41.2" cy="58.8" r="1.1" fill="#fff"/><circle cx="61.2" cy="58.8" r="1.1" fill="#fff"/>
+      <ellipse cx="33" cy="69" rx="5" ry="3" fill="#fbcfe0"/><ellipse cx="67" cy="69" rx="5" ry="3" fill="#fbcfe0"/>
+      <path d="M46 68 Q50 72 54 68" stroke="#5b4a6b" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M72 30 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" fill="#ffd978"/>
+      <circle cx="24" cy="44" r="2" fill="#b8a4f4"/>
+    </svg>
+    <div class="bubble" id="bubble"></div>
+  </div>
+
+  <div class="card row">
+    <div class="ring">
+      <svg width="118" height="118"><circle cx="59" cy="59" r="49" stroke="#f6eaf2" stroke-width="13" fill="none"/>
+        <circle id="ring-fg" cx="59" cy="59" r="49" stroke="#f49ac1" stroke-width="13" fill="none" stroke-linecap="round" stroke-dasharray="307.9" stroke-dashoffset="307.9" style="transition:stroke-dashoffset .6s"/></svg>
+      <div class="c"><b id="today-pts">0</b><span class="muted small" id="today-goal"></span></div>
+    </div>
+    <div style="flex:1">
+      <div style="font-size:18px;font-weight:900" id="goal-text"></div>
+      <div class="muted" id="goal-sub"></div>
+      <div style="margin-top:8px;font-weight:700" id="streak-line"></div>
+      <div class="muted small" id="rest-status"></div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="stat"><div class="n" id="balance">0</div><div class="l" id="balance-l"></div></div>
+    <div class="stat"><div class="n" id="lv-name">🌰</div><div class="l" id="lv-name-l"></div></div>
+  </div>
+
+  <h3 id="h-today"></h3>
+  <button class="bigbtn" onclick="go('practice');startParticles()">
+    <span class="ic pk">🎀</span><span class="txt" id="b-part"></span><span class="go">›</span>
+  </button>
+  <button class="bigbtn" onclick="go('practice');startWriting()">
+    <span class="ic lv">✏️</span><span class="txt" id="b-write"></span><span class="go">›</span>
+  </button>
+  <button class="bigbtn" onclick="go('diary')">
+    <span class="ic mt">📔</span><span class="txt" id="b-diary"></span><span class="go">›</span>
+  </button>
+  <p class="tip" id="tip"></p>
+</section>
+
+<!-- ============ れんしゅう ============ -->
+<section id="practice">
+  <div id="practice-menu">
+    <div class="top"><h1 id="pr-title"></h1><button class="ptbtn" onclick="togglePt()">🇧🇷</button></div>
+    <p class="muted" id="pr-sub"></p>
+    <button class="bigbtn" onclick="startParticles()">
+      <span class="ic pk">🎀</span><span class="txt" id="m-part"></span><span class="go">›</span>
+    </button>
+    <button class="bigbtn" onclick="startWriting()">
+      <span class="ic lv">✏️</span><span class="txt" id="m-write"></span><span class="go">›</span>
+    </button>
+  </div>
+  <div id="practice-run" style="display:none"></div>
+</section>
+
+<!-- ============ にっき ============ -->
+<section id="diary">
+  <div class="top"><h1 id="d-title"></h1><button class="ptbtn" onclick="togglePt()">🇧🇷</button></div>
+  <p class="muted" id="d-sub"></p>
+  <div class="card">
+    <label for="d-jp" id="d-l1"></label>
+    <textarea id="d-jp" rows="4" placeholder="きょうは しごとが いそがしかったです。"></textarea>
+    <label for="d-pt" id="d-l2"></label>
+    <textarea id="d-pt" rows="2" placeholder="Hoje o trabalho foi corrido."></textarea>
+    <p class="muted small" style="margin-top:10px" id="d-tip"></p>
+    <button class="block" style="margin-top:12px" onclick="submitDiary()" id="d-send"></button>
+  </div>
+  <h3 id="d-h-prev"></h3>
+  <div class="card" id="diary-list"></div>
+</section>
+
+<!-- ============ ごほうび ============ -->
+<section id="prizes">
+  <div class="top"><h1 id="z-title"></h1><button class="ptbtn" onclick="togglePt()">🇧🇷</button></div>
+  <div class="card row" style="justify-content:space-between">
+    <div><div class="muted" id="z-have"></div><div style="font-size:34px;font-weight:900" id="p-balance">0</div></div>
+    <div style="font-size:46px">🎁</div>
+  </div>
+  <div class="card" id="prize-list"></div>
+  <div id="redeem-wrap"><h3 id="z-h-done"></h3><div class="card" id="redeem-list"></div></div>
+</section>
+
+<!-- ============ せいちょう ============ -->
+<section id="progress">
+  <div class="top"><h1 id="g-title"></h1><button class="ptbtn" onclick="togglePt()">🇧🇷</button></div>
+  <div class="card">
+    <div class="top"><b id="lv-big" style="font-size:20px"></b><span class="muted small" id="lv-next"></span></div>
+    <div class="bar" style="margin-top:10px"><div id="lv-bar" style="width:0"></div></div>
+    <div class="muted small" style="margin-top:8px" id="lv-path"></div>
+  </div>
+  <div class="grid2">
+    <div class="stat"><div class="n" id="s-total">0</div><div class="l" id="s-total-l"></div></div>
+    <div class="stat"><div class="n" id="s-best">0</div><div class="l" id="s-best-l"></div></div>
+    <div class="stat"><div class="n" id="s-sent">0</div><div class="l" id="s-sent-l"></div></div>
+    <div class="stat"><div class="n" id="s-diary">0</div><div class="l" id="s-diary-l"></div></div>
+  </div>
+  <h3 id="g-h-cal"></h3>
+  <div class="card"><div class="heat" id="heat"></div><p class="muted small" style="margin-top:10px" id="g-cal-l"></p></div>
+  <h3 id="g-h-part"></h3>
+  <div class="card" id="pstats"></div>
+  <h3 id="g-h-write"></h3>
+  <div class="card" id="wstats"></div>
+  <h3 id="g-h-set"></h3>
+  <div class="card">
+    <button class="ghost block" onclick="manualReport()" id="g-report"></button>
+    <p class="muted small" id="outbox-status" style="margin:8px 4px 0"></p>
+    <div class="grid2" style="margin-top:12px">
+      <button class="ghost" onclick="exportData()" id="g-backup"></button>
+      <button class="ghost" onclick="document.getElementById('imp').click()" id="g-restore"></button>
+    </div>
+    <input type="file" id="imp" accept="application/json" style="display:none" onchange="importData(this)">
+  </div>
+</section>
+
+</main>
+
+<nav><div class="in">
+  <button data-go="home" class="on" onclick="go('home')"><i>🏡</i>ホーム</button>
+  <button data-go="practice" onclick="go('practice')"><i>🎀</i>れんしゅう</button>
+  <button data-go="diary" onclick="go('diary')"><i>📔</i>にっき</button>
+  <button data-go="prizes" onclick="go('prizes')"><i>🎁</i>ごほうび</button>
+  <button data-go="progress" onclick="go('progress')"><i>🌷</i>せいちょう</button>
+</div></nav>
+
+<div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   設定
+   ========================================================= */
+const CONFIG = {
+  studentName: "レティシア",      // アプリ内の表示名
+  studentNameMail: "Letícia",     // メールでの表示名
+  teacherName: "ジャス",
+  // Google Apps Script をデプロイしたURL（README の手順1）。空のままだとメールは送られません。
+  scriptUrl: "https://script.google.com/macros/s/AKfycbzGuUl0xa9DeYtsMAZbk4kJ1qPJ6sHDcZikEgR0FM0QSmWSc-ycKnTpUzP82wIp9Ii2UQ/exec",
+  token: "kt-d9331a3365e60098",   // gas/Code.gs の TOKEN と同じ（変更不要）
+  studentEmail: "",               // 彼女のメール（任意）。入れると日記メールへの返信で添削を返せます
+  dailyGoal: 30,
+  weeklyGoalDays: 5,
+  weeklyBonus: 30,
+  surpriseChance: 0.15,
+  particlesPerSession: 10,
+  writingPerSession: 3,
+  points: { particleRight: 2, particleWrong: 1, writing: 5, diaryFirst: 15, diaryMore: 5 },
+  // ご褒美カタログ（あとで相談して決める。例：{ id:"r1", name:"…", pt:"…", cost:100, icon:"🎬" }）
+  rewards: []
+};
+
+/* レベル（メルヘンな成長） */
+const LEVELS = [
+  ["🌰","たね","semente"],["🌱","めばえ","broto"],["🌿","ふたば","folhinhas"],["🌷","つぼみ","botão"],
+  ["🌸","はな","flor"],["🧚","ようせい","fadinha"],["⭐","ほし","estrela"],["🌈","にじ","arco-íris"],
+  ["🌙","つき","lua"],["🔮","まほうつかい","maga das palavras"]
+];
+
+/* =========================================================
+   問題：助詞の穴埋め（exj＝やさしい日本語の説明 / ex＝ポルトガル語訳）
+   ========================================================= */
+const PQ = [
+  {id:"p1", jp:"わたし＿ブラジル人です。", pt:"Eu sou brasileira.", a:"は", o:["は","を","に","で"], exj:"「は」は 話の テーマを しめします。「わたしは…」＝「わたしについて 言うと…」", ex:"は marca o tópico da frase: “sobre mim, …”."},
+  {id:"p2", jp:"まいあさ コーヒー＿飲みます。", pt:"Todas as manhãs eu tomo café.", a:"を", o:["を","が","に","で"], exj:"「を」は「なにを？」の こたえ。飲む・食べる・見る ものに つけます。", ex:"を marca o objeto direto: o que você bebe, come, vê…"},
+  {id:"p3", jp:"来年から 日本＿住みます。", pt:"A partir do ano que vem vou morar no Japão.", a:"に", o:["に","で","を","が"], exj:"「住む」の 場所は「に」。「で」は つかいません。", ex:"Com 住む (morar) usa-se に, não で."},
+  {id:"p4", jp:"広島＿働きます。", pt:"Vou trabalhar em Hiroshima.", a:"で", o:["で","に","を","が"], exj:"なにかを する 場所は「で」。くらべてみよう：広島に 住む／広島で 働く。", ex:"で marca o lugar onde uma ação acontece. Compare: 広島に住む / 広島で働く."},
+  {id:"p5", jp:"図書館＿勉強します。", pt:"Eu estudo na biblioteca.", a:"で", o:["で","に","を","が"], exj:"勉強は「すること」なので、場所は「で」。", ex:"Estudar é uma ação → o lugar leva で."},
+  {id:"p6", jp:"公園＿犬がいます。", pt:"Tem um cachorro no parque.", a:"に", o:["に","で","を","が"], exj:"「いる・ある」の 場所は「に」。", ex:"Com いる/ある (existir, ter), o lugar leva に."},
+  {id:"p7", jp:"七時＿起きます。", pt:"Eu acordo às sete.", a:"に", o:["に","で","を","が"], exj:"はっきりした 時間（7時・月曜日・3月）は「に」。", ex:"Horário exato (7時, 月曜日, 3月) leva に."},
+  {id:"p8", jp:"バス＿大学に行きます。", pt:"Vou à universidade de ônibus.", a:"で", o:["で","に","を","が"], exj:"のりものは「で」：バスで、電車で、車で。", ex:"で indica o meio: de ônibus, de trem, de carro."},
+  {id:"p9", jp:"はし＿ごはんを食べます。", pt:"Eu como com hashi.", a:"で", o:["で","に","を","が"], exj:"つかう どうぐも「で」：はしで、ペンで。", ex:"で também indica o instrumento: com hashi, com caneta."},
+  {id:"p10", jp:"ジャス＿映画を見ました。", pt:"Vi um filme com o Jas.", a:"と", o:["と","を","に","で"], exj:"人＋「と」＝ いっしょに。", ex:"と depois de uma pessoa = “com” (companhia)."},
+  {id:"p11", jp:"京都＿広島まで 新幹線で行きます。", pt:"Vou de Kyoto até Hiroshima de shinkansen.", a:"から", o:["から","に","で","が"], exj:"「から」は スタート。「AからBまで」で よく つかいます。", ex:"から = de / a partir de. Par comum: AからBまで."},
+  {id:"p12", jp:"九時から五時＿働きます。", pt:"Trabalho das nove às cinco.", a:"まで", o:["まで","から","に","で"], exj:"「まで」は おわり（ゴール）。", ex:"まで = até."},
+  {id:"p13", jp:"ジャスはコーヒーが好きです。わたし＿コーヒーが好きです。", pt:"O Jas gosta de café. Eu também gosto de café.", a:"も", o:["も","を","に","で"], exj:"「も」＝「おなじように」。「は・が」の かわりに つかいます。", ex:"も = também. Ele substitui は ou が."},
+  {id:"p14", jp:"だれ＿来ましたか。", pt:"Quem veio?", a:"が", o:["が","は","を","で"], exj:"「だれ・なに」が 主語の ときは かならず「が」。「は」は ×。", ex:"Palavra interrogativa como sujeito leva が, nunca は."},
+  {id:"p15", jp:"日本の食べ物＿好きです。", pt:"Gosto de comida japonesa.", a:"が", o:["が","を","に","で"], exj:"「好き・きらい・上手」は「が」を つかいます。", ex:"Com 好き / きらい / 上手 usa-se が (e não を)."},
+  {id:"p16", jp:"日本語＿少しわかります。", pt:"Entendo um pouco de japonês.", a:"が", o:["が","を","で","に"], exj:"「わかる」も「が」。", ex:"わかる (entender) também usa が."},
+  {id:"p17", jp:"頭＿いたいです。", pt:"Estou com dor de cabeça.", a:"が", o:["が","を","に","で"], exj:"いたい ところは「が」。", ex:"Dores: [parte do corpo] が いたい."},
+  {id:"p18", jp:"雨＿ふっています。", pt:"Está chovendo.", a:"が", o:["が","を","に","で"], exj:"目の まえで 起きていることを そのまま 言うときは「が」。", ex:"Para descrever algo que você vê acontecendo, usa-se が."},
+  {id:"p19", jp:"窓＿あけます。", pt:"Eu abro a janela.", a:"を", o:["を","が","に","で"], exj:"「あける」＝ だれかが あける → 「を」。", ex:"あける = abrir algo (alguém faz) → を."},
+  {id:"p20", jp:"窓＿あいています。", pt:"A janela está aberta.", a:"が", o:["が","を","に","で"], exj:"「あく」＝ ひとりでに あく → 「が」。あけるは「を」、あくは「が」。", ex:"あく = abrir-se → が. Par: あける を / あく が."},
+  {id:"p21", jp:"母＿手紙を書きます。", pt:"Escrevo uma carta para minha mãe.", a:"に", o:["に","で","を","が"], exj:"「だれに？」の あいては「に」。", ex:"に marca para quem: escrever, dar, ligar PARA alguém."},
+  {id:"p22", jp:"先生＿しつもんします。", pt:"Faço uma pergunta ao professor.", a:"に", o:["に","を","で","が"], exj:"する ことを うける 人は「に」。", ex:"A pessoa que recebe a ação leva に."},
+  {id:"p23", jp:"部屋＿入ります。", pt:"Entro no quarto.", a:"に", o:["に","を","で","が"], exj:"「入る」の 中は「に」。", ex:"入る (entrar): o lugar de destino leva に."},
+  {id:"p24", jp:"でんしゃ＿おります。", pt:"Desço do trem.", a:"を", o:["を","に","で","が"], exj:"「おりる・出る」の 出る 場所は「を」。", ex:"おりる / 出る: o lugar de onde você sai leva を."},
+  {id:"p25", jp:"みち＿わたります。", pt:"Atravesso a rua.", a:"を", o:["を","に","で","が"], exj:"とおる 場所にも「を」：みちを わたる、公園を さんぽする。", ex:"を também marca o lugar por onde se passa."},
+  {id:"p26", jp:"スーパーへ 買い物＿行きます。", pt:"Vou ao supermercado fazer compras.", a:"に", o:["に","を","で","が"], exj:"〈すること〉＋に＋行く ＝ 〜しに 行く。", ex:"[atividade] に 行く = ir para fazer algo."},
+  {id:"p27", jp:"にく＿やさいを買いました。", pt:"Comprei carne e legumes.", a:"と", o:["と","を","に","で"], exj:"もの と もの を ならべる「と」：AとB。", ex:"と entre substantivos = “e”."},
+  {id:"p28", jp:"わたし＿名前はレティシアです。", pt:"Meu nome é Letícia.", a:"の", o:["の","を","に","で"], exj:"「の」は ことばと ことばを つなぎます：わたしの 名前。", ex:"の liga dois substantivos: わたしの名前 = o meu nome."},
+  {id:"p29", jp:"日本語＿話してください。", pt:"Fale em japonês, por favor.", a:"で", o:["で","に","が","と"], exj:"なにご で 話すか も「で」：日本語で、ポルトガル語で。", ex:"で também indica a língua usada."},
+  {id:"p30", jp:"一人＿住んでいます。", pt:"Moro sozinha.", a:"で", o:["で","に","を","が"], exj:"一人で・二人で ＝ どんな ようすで。", ex:"一人で / 二人で = sozinha / nós dois."},
+  {id:"p31", jp:"夏休み＿ブラジルに帰ります。", pt:"Nas férias de verão volto ao Brasil.", a:"に", o:["に","で","を","が"], exj:"とくべつな 時（夏休み・たんじょうび）は「に」。", ex:"Momentos específicos levam に."},
+  {id:"p32", jp:"コーヒー＿紅茶が好きです。", pt:"Gosto mais de chá preto do que de café.", a:"より", o:["より","から","まで","と"], exj:"「AよりBが好き」＝ AとくらべてBの ほうが 好き。", ex:"AよりBが好き = gosto mais de B do que de A."},
+  {id:"p33", jp:"駅＿歩いて十分です。", pt:"Até a estação são dez minutos a pé.", a:"まで", o:["まで","に","を","が"], exj:"「まで」＝ そこに つくまでの きょり・時間。", ex:"まで = até (distância/tempo até um lugar)."},
+  {id:"p34", jp:"車＿運転します。", pt:"Eu dirijo carro.", a:"を", o:["を","で","に","が"], exj:"運転する ものは「を」。", ex:"O que você dirige é o objeto → を."},
+  {id:"p35", jp:"新しい仕事＿見つかりました。", pt:"Encontrei um novo emprego.", a:"が", o:["が","を","に","で"], exj:"「見つかる」は「が」、「見つける」は「を」。", ex:"見つかる → が. 見つける → を."},
+  {id:"p36", jp:"病院＿どこですか。", pt:"Onde fica o hospital?", a:"は", o:["は","を","に","で"], exj:"「〜は どこですか」：さがしている 場所が テーマ。", ex:"[lugar] は どこですか: o lugar é o tópico."},
+  {id:"p37", jp:"日本語の勉強＿たのしいです。", pt:"Estudar japonês é divertido.", a:"は", o:["は","を","に","で"], exj:"「は」で テーマを 出して、そのあと せつめい。", ex:"は apresenta o assunto e depois vem o comentário."},
+  {id:"p38", jp:"ともだち＿プレゼントをもらいました。", pt:"Ganhei um presente de uma amiga.", a:"に", o:["に","を","で","が"], exj:"「もらう」：くれた 人は「に」（「から」も OK）。", ex:"もらう: quem deu leva に (ou から)."},
+  {id:"p39", jp:"ジャス＿プレゼントをあげました。", pt:"Dei um presente para o Jas.", a:"に", o:["に","を","で","が"], exj:"「あげる」：もらう 人は「に」。", ex:"あげる: quem recebe leva に."},
+  {id:"p40", jp:"駅の前＿待っています。", pt:"Estou esperando em frente à estação.", a:"で", o:["で","に","を","が"], exj:"「待つ」は すること なので「で」。", ex:"Esperar é uma ação → で."},
+  {id:"p41", jp:"この電車は広島＿行きます。", pt:"Este trem vai para Hiroshima.", a:"に", o:["に","を","で","が"], exj:"「行く・来る・帰る」の 行き先は「に」（「へ」も OK）。", ex:"Destino de 行く/来る/帰る leva に (ou へ)."},
+  {id:"p42", jp:"日本料理＿作れます。", pt:"Sei fazer comida japonesa.", a:"が", o:["が","に","で","と"], exj:"「できる」の かたち（作れる・話せる）は「が」が ふつう。", ex:"Com a forma potencial, o objeto costuma levar が."},
+  {id:"p43", jp:"からだ＿気をつけてね。", pt:"Cuide da saúde, tá?", a:"に", o:["に","を","で","が"], exj:"「気をつける」は「に」。", ex:"気をつける usa に."},
+  {id:"p44", jp:"映画＿見に行きませんか。", pt:"Vamos ver um filme?", a:"を", o:["を","が","に","で"], exj:"映画は「見る」もの →「を」。", ex:"O filme é o objeto de 見る → を."}
+];
+
+/* =========================================================
+   問題：作文（ポルトガル語 → 日本語）  h=ヒントの文型 / hp=ヒントの意味
+   ========================================================= */
+const TR = [
+  {id:"t1", pt:"Eu moro em Kyoto.", a:["京都に住んでいます。"], h:"〜に 住んでいます", hp:"moro em…"},
+  {id:"t2", pt:"Eu quero ir ao Japão no ano que vem.", a:["来年、日本に行きたいです。"], h:"〜たいです", hp:"quero…"},
+  {id:"t3", pt:"Posso tirar uma foto?", a:["写真をとってもいいですか。"], h:"〜てもいいですか", hp:"posso…?"},
+  {id:"t4", pt:"Eu gosto de comida japonesa.", a:["日本の食べ物が好きです。"], h:"〜が 好きです", hp:"gosto de…"},
+  {id:"t5", pt:"Ontem eu fui ao supermercado com o Jas.", a:["きのう、ジャスとスーパーに行きました。"], h:"〈人〉と ＋ 〜ました", hp:"com [pessoa] + passado"},
+  {id:"t6", pt:"Eu não entendo muito bem japonês.", a:["日本語があまりわかりません。"], h:"あまり 〜ません", hp:"não muito…"},
+  {id:"t7", pt:"Fale devagar, por favor.", a:["ゆっくり話してください。"], h:"〜てください", hp:"por favor, faça…"},
+  {id:"t8", pt:"Onde fica a estação?", a:["駅はどこですか。"], h:"〜は どこですか", hp:"onde fica…?"},
+  {id:"t9", pt:"Eu estudo japonês todos os dias.", a:["毎日、日本語を勉強しています。"], h:"毎日 〜ています", hp:"todos os dias (hábito)"},
+  {id:"t10", pt:"Eu acordo às sete horas.", a:["七時に起きます。"], h:"〈時間〉に", hp:"horário + に"},
+  {id:"t11", pt:"Este café é muito gostoso.", a:["このコーヒーはとてもおいしいです。"], h:"この〜は とても 〜です", hp:"este… é muito…"},
+  {id:"t12", pt:"Quero comprar um presente para a minha mãe.", a:["母にプレゼントを買いたいです。"], h:"〈人〉に ＋ 〜たい", hp:"para [pessoa] + quero"},
+  {id:"t13", pt:"Quanto custa isto?", a:["これはいくらですか。"], h:"いくら", hp:"quanto custa"},
+  {id:"t14", pt:"Fui ao hospital porque estava com dor de cabeça.", a:["頭がいたかったので、病院に行きました。"], h:"〜ので、〜", hp:"porque… (a causa vem primeiro)"},
+  {id:"t15", pt:"Por favor, não se preocupe.", a:["心配しないでください。"], h:"〜ないでください", hp:"por favor, não…"},
+  {id:"t16", pt:"Eu já comi.", a:["もう食べました。"], h:"もう 〜ました", hp:"já…"},
+  {id:"t17", pt:"Ainda não terminei.", a:["まだ終わっていません。"], h:"まだ 〜ていません", hp:"ainda não…"},
+  {id:"t18", pt:"Vamos ao parque no domingo?", a:["日曜日に公園に行きませんか。","日曜日に公園に行きましょう。"], h:"〜ませんか", hp:"convite: vamos…?"},
+  {id:"t19", pt:"Eu consigo falar um pouco de japonês.", a:["日本語が少し話せます。"], h:"〜が 話せます", hp:"consigo falar…"},
+  {id:"t20", pt:"Eu nunca fui a Hiroshima.", a:["広島に行ったことがありません。"], h:"〜たことが ありません", hp:"nunca…"},
+  {id:"t21", pt:"Depois de jantar, eu assisto TV.", a:["晩ごはんを食べてから、テレビを見ます。"], h:"〜てから", hp:"depois de…"},
+  {id:"t22", pt:"Está chovendo, então vou levar guarda-chuva.", a:["雨がふっているので、かさを持っていきます。"], h:"〜ので ＋ 持っていきます", hp:"porque… + vou levar"},
+  {id:"t23", pt:"Acho que amanhã vai fazer calor.", a:["明日は暑いと思います。"], h:"〜と 思います", hp:"acho que…"},
+  {id:"t24", pt:"Eu gosto de cozinhar.", a:["料理をするのが好きです。","料理が好きです。"], h:"〜のが 好きです", hp:"gosto de [verbo]"},
+  {id:"t25", pt:"Este é o Jas, meu namorado.", a:["こちらは、かれしのジャスです。"], h:"こちらは 〜です", hp:"apresentar alguém"},
+  {id:"t26", pt:"Vou morar em Hiroshima a partir de julho.", a:["七月から広島に住みます。"], h:"〜から", hp:"a partir de…"},
+  {id:"t27", pt:"Você pode me ajudar, por favor?", a:["手伝ってくれませんか。","手伝ってください。"], h:"〜てくれませんか", hp:"pedido gentil"},
+  {id:"t28", pt:"Quero ficar boa em japonês.", a:["日本語が上手になりたいです。"], h:"〜が 上手に なりたい", hp:"quero ficar boa em…"},
+  {id:"t29", pt:"Eu estava cansada, então dormi cedo.", a:["つかれていたので、早くねました。"], h:"〜ので ＋ 早く", hp:"porque… + cedo"},
+  {id:"t30", pt:"Quando eu chegar ao Japão, quero comer ramen.", a:["日本に着いたら、ラーメンを食べたいです。"], h:"〜たら", hp:"quando… / se…"}
+];
+
+/* マスコットのひとこと [日本語, ポルトガル語] */
+const CHEER = [
+  ["きょうも いっしょに がんばろうね！","Vamos estudar juntas hoje!"],
+  ["すこしずつで だいじょうぶ 🌱","Um pouquinho de cada vez já está ótimo."],
+  ["まちがえるのは せいちょうの しるし！","Errar é sinal de que você está crescendo!"],
+  ["ことばの たねに 水を あげよう 💧","Vamos regar as sementes das palavras."],
+  ["きのうの あなたより、きょうの あなたは すこし つよい ✨","Hoje você está um pouco mais forte do que ontem."]
+];
+
+/* =========================================================
+   データ
+   ========================================================= */
+const KEY = "kotonoha-v1";
+function blank(){ return {total:0,balance:0,days:{},rest:{},restWeeks:{},weeklyBonus:{},pstats:{},partStats:{},tstats:{},writings:[],diaries:[],redemptions:[],bestStreak:0,outbox:[],showPt:false}; }
+function load(){ try{ const s = JSON.parse(localStorage.getItem(KEY)); if(s) return Object.assign(blank(), s); }catch(e){} return blank(); }
+let S = load();
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+
+const pad = n => String(n).padStart(2,"0");
+const ymd = d => d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const addDays = (d,n) => { const x = new Date(d); x.setDate(x.getDate()+n); return x; };
+const todayKey = () => ymd(new Date());
+const parseKey = k => new Date(k+"T00:00:00");
+function weekKey(d){ const x = new Date(d); x.setHours(0,0,0,0); x.setDate(x.getDate()-((x.getDay()+6)%7)); return ymd(x); }
+function day(k){ k = k || todayKey(); if(!S.days[k]) S.days[k] = {pts:0,pc:0,pw:0,pwq:[],tr:[],diary:0,goalMet:false}; return S.days[k]; }
+const counted = k => !!((S.days[k] && S.days[k].goalMet) || S.rest[k]);
+function streak(){ let d = new Date(); if(!counted(ymd(d))) d = addDays(d,-1); let n = 0; while(counted(ymd(d))){ n++; d = addDays(d,-1); } return n; }
+function levelInfo(t){ let L = 1, base = 0, need = 100; while(t >= base+need){ base += need; L++; need = 100*L; } return {L, into:t-base, need}; }
+const lvMeta = L => LEVELS[Math.min(L, LEVELS.length) - 1];
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const shuffle = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
+function pickWeighted(arr, wf, n){
+  const pool = arr.map(x => ({x, w:wf(x)})); const out = [];
+  while(out.length < n && pool.length){
+    const tot = pool.reduce((s,p) => s+p.w, 0); let r = Math.random()*tot, i = 0;
+    for(; i < pool.length-1; i++){ r -= pool[i].w; if(r <= 0) break; }
+    out.push(pool[i].x); pool.splice(i,1);
+  }
+  return out;
+}
+
+/* 日本語＋ポルトガル語訳（🇧🇷ボタン、またはタップで表示） */
+const T = (jp, pt, tap) => `<span class="tr${tap ? " tap" : ""}"><span class="j">${jp}</span><span class="p">${pt}</span></span>`;
+function setT(id, jp, pt, tap){ const el = document.getElementById(id); if(el) el.innerHTML = T(jp, pt, tap); }
+function togglePt(){ S.showPt = !S.showPt; save(); applyPt(); }
+function applyPt(){ document.body.classList.toggle("showpt", S.showPt); document.querySelectorAll(".ptbtn").forEach(b => b.classList.toggle("on", S.showPt)); }
+document.addEventListener("click", e => { const t = e.target.closest(".tr.tap"); if(t && !e.target.closest("button")) t.classList.toggle("open"); });
+
+/* おやすみチケット */
+function applyRestTicket(){
+  const y = addDays(new Date(), -1), yk = ymd(y);
+  if(counted(yk)) return;
+  if(!counted(ymd(addDays(new Date(), -2)))) return;
+  const wk = weekKey(y);
+  if(S.restWeeks[wk]) return;
+  S.rest[yk] = true; S.restWeeks[wk] = true; save();
+  setTimeout(() => modal(`<div class="big">🎫</div><h2>${T("おやすみチケットを つかったよ","Folga usada")}</h2>
+    <p>${T(`きのうは おやすみ。でも <b>${streak()}日</b> の れんぞくは まもられたよ！`, `Ontem você descansou, mas a sequência de ${streak()} dias foi salva!`)}</p>
+    <button class="block" onclick="closeModal()">${T("きょうも がんばる！","Vamos lá!")}</button>`), 400);
+}
+
+/* =========================================================
+   ポイント
+   ========================================================= */
+function addPoints(n){
+  S.total += n; S.balance += n;
+  const d = day(); d.pts += n;
+  toast("+"+n+" ✨");
+  let goalNow = false;
+  if(!d.goalMet && d.pts >= CONFIG.dailyGoal){ d.goalMet = true; goalNow = true; }
+  save();
+  if(goalNow) onGoal();
+  refresh();
+}
+function bonus(n){ S.total += n; S.balance += n; day().pts += n; }
+function onGoal(){
+  const st = streak(); if(st > S.bestStreak) S.bestStreak = st;
+  let extra = "";
+  if(Math.random() < CONFIG.surpriseChance){ const b = [10,20,30][Math.floor(Math.random()*3)]; bonus(b); extra += `<p class="surprise">${T(`🧚 サプライズ ボーナス！ +${b}`, `Bônus surpresa! +${b} pts`)}</p>`; }
+  const wk = weekKey(new Date()); let c = 0;
+  for(let i=0;i<7;i++){ const k = ymd(addDays(parseKey(wk), i)); if(S.days[k] && S.days[k].goalMet) c++; }
+  if(c >= CONFIG.weeklyGoalDays && !S.weeklyBonus[wk]){ S.weeklyBonus[wk] = true; bonus(CONFIG.weeklyBonus); extra += `<p class="surprise">${T(`🏅 1週間の もくひょう たっせい！ +${CONFIG.weeklyBonus}`, `Meta da semana! +${CONFIG.weeklyBonus} pts`)}</p>`; }
+  save();
+  setTimeout(() => { sparkles(); modal(`<div class="big">🌸</div><h2>${T("きょうの もくひょう たっせい！","Meta de hoje concluída!")}</h2>
+    <p>${T(`<b>${st}日</b> れんぞく 🔥`, `${st} ${st===1?"dia":"dias"} seguidos`)}</p>${extra}
+    <button class="block" style="margin-top:12px" onclick="closeModal()">${T("やったー！","Oba!")}</button>`); }, 700);
+  sendMail(dailyReport("✅ 今日の目標を達成しました"));
+  refresh();
+}
+
+/* =========================================================
+   メール（Google Apps Script 経由）
+   ========================================================= */
+function sendMail(m){ if(!CONFIG.scriptUrl) return; S.outbox.push({subject:m.subject, body:m.body, ts:Date.now()}); save(); flush(); }
+let flushing = false;
+async function flush(){
+  if(flushing || !CONFIG.scriptUrl || !S.outbox.length || !navigator.onLine) return;
+  flushing = true;
+  while(S.outbox.length){
+    const it = S.outbox[0];
+    try{
+      await fetch(CONFIG.scriptUrl, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"},
+        body: JSON.stringify({token:CONFIG.token, subject:it.subject, body:it.body, replyTo:CONFIG.studentEmail})});
+      S.outbox.shift(); save();
+    }catch(e){ break; }
+  }
+  flushing = false; refresh();
+}
+window.addEventListener("online", flush);
+
+const GRADE = {3:"◎ できた", 2:"○ おしい", 1:"△ まちがえた"};
+function dailyReport(title){
+  const k = todayKey(), d = day(k), lv = levelInfo(S.total), m = lvMeta(lv.L);
+  const L = [`${CONFIG.studentNameMail} の学習レポート（${k}）`, title, "",
+    `今日のポイント：${d.pts} / 目標 ${CONFIG.dailyGoal}`,
+    `連続記録：${streak()}日（最高 ${S.bestStreak}日）`,
+    `累計：${S.total} pts（Lv.${lv.L} ${m[1]}）／残高：${S.balance} pts`, "",
+    `■ 助詞：${d.pc} / ${d.pc+d.pw} 正解`];
+  d.pwq.forEach(w => { const q = PQ.find(x => x.id === w.id); if(q) L.push(`  ✕ ${q.jp.replace("＿", "［"+w.chose+"］")}（正解：${q.a}）`); });
+  L.push("", `■ 作文：${d.tr.length}文`);
+  d.tr.forEach(t => { const q = TR.find(x => x.id === t.id); if(!q) return;
+    L.push(`  「${q.pt}」`, `    彼女の答え：${t.ans}`, `    模範解答：${q.a[0]}`, `    自己評価：${GRADE[t.grade]}`); });
+  L.push("", `■ 日記：${d.diary}件`);
+  S.diaries.filter(x => x.date === k).forEach(x => { L.push(`  ${x.jp}`); if(x.pt) L.push(`  （${x.pt}）`); });
+  return {subject:`✅ ${CONFIG.studentNameMail} の学習レポート（${k}）`, body:L.join("\n")};
+}
+function manualReport(){
+  if(!CONFIG.scriptUrl){ modal(`<h2>${T("まだ じゅんび中","Ainda não configurado")}</h2><p>${T("メールの せってい が まだ です。","O envio de e-mail ainda não foi configurado.")}</p><button class="block" onclick="closeModal()">OK</button>`); return; }
+  sendMail(dailyReport("📧 レポートが手動で送られました"));
+  toast("おくったよ ✉️");
+}
+
+/* =========================================================
+   画面
+   ========================================================= */
+const $ = id => document.getElementById(id);
+function go(id){
+  document.querySelectorAll("section").forEach(s => s.classList.toggle("on", s.id === id));
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.go === id));
+  if(id === "practice"){ $("practice-menu").style.display = ""; $("practice-run").style.display = "none"; }
+  refresh(); try{ window.scrollTo(0,0); }catch(e){}
+}
+function modal(html){ $("modal").innerHTML = html; $("overlay").classList.add("on"); }
+function closeModal(){ $("overlay").classList.remove("on"); }
+let toastT;
+function toast(t){ const el = $("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove("on"), 1300); }
+function sparkles(){
+  const em = ["✨","🌸","⭐","💗","🌷","🦋"];
+  for(let i=0;i<18;i++){ const s = document.createElement("div"); s.className = "sparkle"; s.textContent = em[i % em.length];
+    s.style.left = (Math.random()*100)+"vw"; s.style.top = (-5 + Math.random()*20)+"vh"; s.style.animationDelay = (Math.random()*.4)+"s";
+    document.body.appendChild(s); setTimeout(() => s.remove(), 2000); }
+}
+
+function greeting(){
+  const h = new Date().getHours();
+  if(h < 11) return ["おはよう","Bom dia"]; if(h < 18) return ["こんにちは","Boa tarde"]; return ["こんばんは","Boa noite"];
+}
+function staticTexts(){
+  // ホーム
+  setT("h-today","きょうの れんしゅう","PRATICAR HOJE");
+  $("b-part").innerHTML = `<b>じょし（は・が・を・に・で）</b>${T(`10もん・さいだい ${CONFIG.particlesPerSession*CONFIG.points.particleRight}ポイント`,"Partículas · 10 perguntas")}`;
+  $("b-write").innerHTML = `<b>さくぶん</b>${T(`ポルトガル語を 日本語に・3もん ${CONFIG.writingPerSession*CONFIG.points.writing}ポイント`,"Escrita · traduza 3 frases para japonês")}`;
+  setT("tip","🇧🇷 を おすと ポルトガル語が でるよ","Toque em 🇧🇷 para ver a tradução em português.");
+  // れんしゅう
+  setT("pr-title","れんしゅう","Praticar");
+  setT("pr-sub","どれを する？","Qual exercício você quer fazer?");
+  $("m-part").innerHTML = `<b>じょし（は・が・を・に・で）</b>${T("まちがえた もんだいは よく でるよ","As que você erra aparecem mais vezes.")}`;
+  $("m-write").innerHTML = `<b>さくぶん</b>${T("ポルトガル語 → 日本語。こたえは ジャスにも とどくよ","Português → japonês. O Jas recebe suas respostas.")}`;
+  // にっき
+  setT("d-title","にっき 📔","Diário");
+  setT("d-sub","きょうの ことを 日本語で 1〜3文 書いてね。ジャスが よんで、メールで なおしてくれるよ。","Escreva 1 a 3 frases em japonês sobre o seu dia. O Jas vai ler e corrigir por e-mail.");
+  setT("d-l1","日本語で","Em japonês");
+  setT("d-l2","言いたかったこと（ポルトガル語・なくても OK）","O que você queria dizer (em português, opcional)");
+  setT("d-tip","💗 まちがえても だいじょうぶ！書くことが いちばんの れんしゅうだよ。","Tudo bem errar! Escrever é o melhor treino.");
+  $("d-send").innerHTML = T("ジャスに おくる 💌","Enviar para o Jas");
+  setT("d-h-prev","まえの にっき","DIÁRIOS ANTERIORES");
+  // ごほうび
+  setT("z-title","ごほうび 🎁","Prêmios");
+  setT("z-have","もっている ポイント","Seus pontos");
+  setT("z-h-done","こうかんした ごほうび","JÁ TROCADOS");
+  // せいちょう
+  setT("g-title","せいちょう 🌷","Progresso");
+  setT("s-total-l","ぜんぶの ポイント","pontos no total");
+  setT("s-best-l","いちばん ながい れんぞく 🔥","maior sequência");
+  setT("s-sent-l","書いた 文 ✏️","frases escritas");
+  setT("s-diary-l","にっき 📔","diários");
+  setT("g-h-cal","12しゅうかんの きろく","ÚLTIMAS 12 SEMANAS");
+  setT("g-cal-l","こい いろ ＝ たくさん がんばった日・きいろ ＝ おやすみチケット","Mais escuro = mais pontos · amarelo = folga");
+  setT("g-h-part","じょしの せいかいりつ","ACERTOS POR PARTÍCULA");
+  setT("g-h-write","さくぶん","ESCRITA");
+  setT("g-h-set","せってい","CONFIGURAÇÕES");
+  $("g-report").innerHTML = T("📧 きょうの レポートを ジャスに おくる","Enviar o relatório de hoje para o Jas");
+  $("g-backup").innerHTML = T("バックアップ","Backup");
+  $("g-restore").innerHTML = T("もどす","Restaurar");
+  $("lv-path").innerHTML = T(LEVELS.map(l => l[0]).join(" → "), LEVELS.map(l => l[2]).join(" → "));
+}
+function refresh(){
+  const d = day(), lv = levelInfo(S.total), st = streak(), g = greeting(), m = lvMeta(lv.L);
+  $("hello").textContent = `${g[0]}、${CONFIG.studentName}さん`;
+  $("hello-sub").innerHTML = T("ことのはの森へ ようこそ 🌷", `${g[1]}! Bem-vinda à floresta das palavras.`);
+  const ch = d.goalMet ? ["きょうの もくひょう クリア！すごい！🎉","Meta de hoje concluída! Incrível!"] : CHEER[new Date().getDate() % CHEER.length];
+  $("bubble").innerHTML = T(ch[0], ch[1], true);
+  $("today-pts").textContent = d.pts;
+  $("today-goal").textContent = `/ ${CONFIG.dailyGoal}`;
+  $("ring-fg").style.strokeDashoffset = 307.9 * (1 - Math.min(1, d.pts / CONFIG.dailyGoal));
+  $("ring-fg").setAttribute("stroke", d.goalMet ? "#7fd3b6" : "#f49ac1");
+  $("goal-text").innerHTML = d.goalMet ? T("もくひょう たっせい 🌸","Meta concluída!") : T("きょうの もくひょう","Meta de hoje");
+  $("goal-sub").innerHTML = d.goalMet ? T("ここからは ボーナス！","Agora é tudo bônus!") : T(`あと ${CONFIG.dailyGoal - d.pts} ポイント`, `Faltam ${CONFIG.dailyGoal - d.pts} pontos`);
+  $("streak-line").innerHTML = T(`🔥 ${st}日 れんぞく`, `${st} dias seguidos`);
+  $("rest-status").innerHTML = S.restWeeks[weekKey(new Date())] ? T("🎫 おやすみチケット：こんしゅうは つかったよ","Folga desta semana: já usada") : T("🎫 おやすみチケット：1まい あるよ","Folga desta semana: disponível");
+  $("balance").textContent = S.balance;
+  $("balance-l").innerHTML = T("ためた ポイント 🎁","pontos guardados");
+  $("lv-name").textContent = `${m[0]} Lv.${lv.L}`;
+  $("lv-name-l").innerHTML = T(m[1], m[2]);
+  $("b-diary").innerHTML = `<b>にっき</b>` + (d.diary ? `<span class="done">${T("✓ きょうは おくったよ", "Enviado hoje")}</span>` : T(`きょうの ことを 1〜3文・${CONFIG.points.diaryFirst}ポイント`,"1–3 frases sobre o seu dia"));
+  renderDiaryList(); renderPrizes(); renderProgress(); applyPt();
+}
+
+/* ---------- じょし ---------- */
+let P = null;
+function startParticles(){
+  const qs = pickWeighted(PQ, q => { const s = S.pstats[q.id]; if(!s) return 3; return Math.max(0.5, 1 + 2*s.w - 0.5*s.c); }, CONFIG.particlesPerSession);
+  P = {qs, i:0, res:[], earned:0};
+  $("practice-menu").style.display = "none"; $("practice-run").style.display = "";
+  renderP();
+}
+function dots(res, n, i){ let h = '<div class="progress-dots">'; for(let k=0;k<n;k++){ h += `<span class="${res[k]===true?"ok":res[k]===false?"ng":k===i?"cur":""}"></span>`; } return h + "</div>"; }
+function renderP(){
+  const q = P.qs[P.i];
+  $("practice-run").innerHTML = `
+    <div class="top"><button class="ghost" onclick="go('practice')">✕</button><span class="muted">${P.i+1} / ${P.qs.length}</span><button class="ptbtn" onclick="togglePt()">🇧🇷</button></div>
+    <div class="card">${dots(P.res, P.qs.length, P.i)}
+      <div class="muted small">${T("＿に はいる じょしは？","Qual partícula completa a frase?")}</div>
+      <div class="sentence">${esc(q.jp).replace("＿", '<span class="blank" id="blank">？</span>')}</div>
+      <button class="linkbtn" id="m-btn" onclick="this.style.display='none';$('meaning').style.display='block'">${T("いみを 見る","ver o significado")}</button>
+      <div class="meaning" id="meaning" style="display:none">🇧🇷 ${esc(q.pt)}</div>
+      <div class="opts">${shuffle(q.o).map(o => `<button onclick="answerP(this,'${o}')">${o}</button>`).join("")}</div>
+      <div id="p-after"></div>
+    </div>`;
+  applyPt();
+}
+function answerP(btn, o){
+  const q = P.qs[P.i], ok = o === q.a;
+  document.querySelectorAll(".opts button").forEach(b => { b.disabled = true; if(b.textContent === q.a) b.classList.add("right"); });
+  if(!ok) btn.classList.add("wrong");
+  const bl = $("blank"); bl.textContent = q.a; bl.classList.add("ok");
+  const s = S.pstats[q.id] || (S.pstats[q.id] = {c:0,w:0}); ok ? s.c++ : s.w++;
+  const ps = S.partStats[q.a] || (S.partStats[q.a] = {c:0,w:0}); ok ? ps.c++ : ps.w++;
+  const d = day(); ok ? d.pc++ : (d.pw++, d.pwq.push({id:q.id, chose:o}));
+  P.res[P.i] = ok;
+  const pts = ok ? CONFIG.points.particleRight : CONFIG.points.particleWrong; P.earned += pts;
+  addPoints(pts);
+  $("p-after").innerHTML = `<div class="explain"><div class="hd">${ok ? T("🌸 せいかい！","Certo!") : T(`🌧️ おしい！こたえは「${q.a}」`, `Quase! A resposta é ${q.a}`)}</div>${T(esc(q.exj), esc(q.ex), true)}</div>
+    <button class="block" style="margin-top:12px" onclick="nextP()">${P.i+1 < P.qs.length ? T("つぎへ →","Próxima") : T("けっかを 見る","Ver resultado")}</button>`;
+  $("meaning").style.display = "block"; $("m-btn").style.display = "none";
+  applyPt();
+}
+function nextP(){
+  P.i++;
+  if(P.i < P.qs.length){ renderP(); return; }
+  const right = P.res.filter(Boolean).length;
+  if(right >= 8) sparkles();
+  $("practice-run").innerHTML = `<div class="card" style="text-align:center">
+      <div style="font-size:52px">${right >= 8 ? "🌟" : right >= 5 ? "🌷" : "🌱"}</div>
+      <h2>${T(`${P.qs.length}もん中 ${right}もん せいかい`, `${right} de ${P.qs.length} certas`)}</h2>
+      <p>${T(`<b>${P.earned}</b> ポイント ゲット！`, `Você ganhou ${P.earned} pontos.`)}</p>
+      <p class="muted">${T("まちがえた もんだいは、かんたんに なるまで また でるよ。","As que você errou vão aparecer de novo até ficarem fáceis.")}</p>
+      <div class="grid2" style="margin-top:16px"><button class="ghost" onclick="go('home')">${T("ホーム","Início")}</button><button onclick="startParticles()">${T("もう10もん","Mais 10")}</button></div>
+    </div>`;
+  applyPt();
+}
+
+/* ---------- さくぶん ---------- */
+let W = null;
+function startWriting(){
+  const qs = pickWeighted(TR, q => { const s = S.tstats[q.id]; if(!s) return 3; return {3:1, 2:2.5, 1:4}[s.grade] || 3; }, CONFIG.writingPerSession);
+  W = {qs, i:0, earned:0};
+  $("practice-menu").style.display = "none"; $("practice-run").style.display = "";
+  renderW();
+}
+function renderW(){
+  const q = W.qs[W.i];
+  $("practice-run").innerHTML = `
+    <div class="top"><button class="ghost" onclick="go('practice')">✕</button><span class="muted">${W.i+1} / ${W.qs.length}</span><button class="ptbtn" onclick="togglePt()">🇧🇷</button></div>
+    <div class="card">
+      <div class="muted">${T("この 文を 日本語で 書いてね","Escreva esta frase em japonês")}</div>
+      <div class="pt-prompt">${esc(q.pt)}</div>
+      <button class="soft" id="hint-btn" onclick="showHint()">💡 ${T("ヒント","Dica")}</button><div id="hint-box"></div>
+      <label for="w-ans">${T("あなたの こたえ","Sua resposta")}</label>
+      <textarea id="w-ans" rows="2" placeholder="ここに 日本語で…" oninput="$('w-show').disabled = this.value.trim().length < 2"></textarea>
+      <button class="block" id="w-show" style="margin-top:12px" disabled onclick="showW()">${T("こたえを 見る","Ver resposta")}</button>
+      <div id="w-after"></div>
+    </div>`;
+  applyPt();
+}
+function showHint(){ const q = W.qs[W.i]; $("hint-btn").style.display = "none"; $("hint-box").innerHTML = `<div class="explain">💡 ${T(esc(q.h), esc(q.hp), true)}</div>`; applyPt(); }
+function showW(){
+  const q = W.qs[W.i], ans = $("w-ans").value.trim();
+  $("w-ans").disabled = true; $("w-show").style.display = "none";
+  $("w-after").innerHTML = `
+    <label>${T("あなたが 書いた 文","Você escreveu")}</label><div class="yours">${esc(ans)}</div>
+    <label>${T("こたえの れい","Exemplo de resposta")}</label>${q.a.map(a => `<div class="model">${esc(a)}</div>`).join("")}
+    <p class="muted small">${T("おなじ でなくても だいじょうぶ。ほかの 言い方も あるよ。ジャスも 見てくれるよ。","Não precisa ser igual: outras formas podem estar certas. O Jas também vai ver.")}</p>
+    <p style="margin-top:12px;font-weight:900">${T("どうだった？","Como foi?")}</p>
+    <div class="grades">
+      <button class="g3" onclick="gradeW(3)">${T("◎ できた","Acertei")}</button>
+      <button class="g2" onclick="gradeW(2)">${T("○ おしい","Quase")}</button>
+      <button class="g1" onclick="gradeW(1)">${T("△ まちがえた","Errei")}</button>
+    </div>`;
+  applyPt();
+}
+function gradeW(g){
+  const q = W.qs[W.i], ans = $("w-ans").value.trim();
+  S.tstats[q.id] = {grade:g, n:((S.tstats[q.id]||{}).n||0)+1};
+  day().tr.push({id:q.id, ans, grade:g});
+  S.writings.push({date:todayKey(), id:q.id, ans, grade:g});
+  W.earned += CONFIG.points.writing;
+  addPoints(CONFIG.points.writing);
+  W.i++;
+  if(W.i < W.qs.length){ renderW(); return; }
+  $("practice-run").innerHTML = `<div class="card" style="text-align:center">
+      <div style="font-size:52px">✏️</div><h2>${T("よく できました！","Muito bem!")}</h2>
+      <p>${T(`${W.qs.length}文 書いて <b>${W.earned}</b> ポイント ゲット！`, `Você escreveu ${W.qs.length} frases e ganhou ${W.earned} pontos.`)}</p>
+      <div class="grid2" style="margin-top:16px"><button class="ghost" onclick="go('home')">${T("ホーム","Início")}</button><button onclick="startWriting()">${T("もう3もん","Mais 3")}</button></div>
+    </div>`;
+  applyPt();
+}
+
+/* ---------- にっき ---------- */
+function submitDiary(){
+  const jp = $("d-jp").value.trim(), pt = $("d-pt").value.trim();
+  if(jp.length < 3){ toast("もう すこし 書いてみよう 🙂"); return; }
+  const d = day(), first = d.diary === 0;
+  d.diary++;
+  S.diaries.unshift({date:todayKey(), jp, pt, ts:Date.now()});
+  save();
+  sendMail({subject:`📓 ${CONFIG.studentNameMail} の日記（${todayKey()}）`,
+    body:`${CONFIG.studentNameMail} が日記を書きました（${todayKey()}）\n\n【日本語】\n${jp}\n\n【言いたかったこと】\n${pt || "（記入なし）"}\n\n${CONFIG.studentEmail ? "このメールに返信すると、そのまま彼女に添削が届きます。" : ""}`});
+  $("d-jp").value = ""; $("d-pt").value = "";
+  modal(`<div class="big">💌</div><h2>${T("おくったよ！","Enviado!")}</h2><p>${T(`${CONFIG.teacherName}が よんで、メールで へんじ するね。`,"O Jas vai ler e responder com as correções.")}</p><button class="block" onclick="closeModal()">OK</button>`);
+  addPoints(first ? CONFIG.points.diaryFirst : CONFIG.points.diaryMore);
+}
+function renderDiaryList(){
+  const el = $("diary-list");
+  if(!S.diaries.length){ el.innerHTML = `<div class="empty"><div class="big">🌱</div>${T("まだ ないよ。きょう はじめての にっきを 書いてみよう！","Ainda não há diários. Que tal escrever o primeiro hoje?")}</div>`; return; }
+  el.innerHTML = S.diaries.slice(0, 20).map(x => `<div class="item"><div class="muted small">${x.date}</div><div class="jpx">${esc(x.jp)}</div>${x.pt ? `<div class="muted small">${esc(x.pt)}</div>` : ""}</div>`).join("");
+}
+
+/* ---------- ごほうび ---------- */
+function renderPrizes(){
+  $("p-balance").textContent = S.balance;
+  if(!CONFIG.rewards.length){
+    $("prize-list").innerHTML = `<div class="empty"><div class="big">🧚</div><b>${T("ごほうびは いま じゅんび中…","Os prêmios estão sendo preparados…")}</b>
+      <p class="muted">${T("ポイントは ちゃんと たまっているよ。たのしみに まっててね！","Seus pontos continuam sendo guardados. Aguarde a surpresa!")}</p></div>`;
+  } else {
+    $("prize-list").innerHTML = CONFIG.rewards.map(r => `
+      <div class="item row"><div style="font-size:30px">${r.icon}</div><div style="flex:1">${T(`<b>${esc(r.name)}</b>`, esc(r.pt || ""))}<div style="font-weight:900;color:#c48a00">${r.cost} ポイント</div>
+      ${S.balance < r.cost ? `<div class="bar g" style="margin-top:6px;height:8px"><div style="width:${Math.round(100*S.balance/r.cost)}%"></div></div>` : ""}</div>
+      <button ${S.balance < r.cost ? "disabled" : ""} onclick="askRedeem('${r.id}')">${T("こうかん","Trocar")}</button></div>`).join("");
+  }
+  $("redeem-wrap").style.display = S.redemptions.length ? "" : "none";
+  $("redeem-list").innerHTML = S.redemptions.slice().reverse().map(x => `<div class="item top"><div>${x.icon} ${esc(x.name)}<div class="muted small">${new Date(x.ts).toLocaleDateString("ja-JP")}</div></div><div style="font-weight:900;color:#c48a00">−${x.cost}</div></div>`).join("");
+}
+function askRedeem(id){
+  const r = CONFIG.rewards.find(x => x.id === id);
+  modal(`<div class="big">${r.icon}</div><h2>${esc(r.name)}</h2><p>${T(`<b>${r.cost}ポイント</b>で こうかんする？`, `Trocar por ${r.cost} pontos? O Jas vai receber um aviso.`)}</p>
+    <div class="grid2" style="margin-top:14px"><button class="ghost" onclick="closeModal()">${T("やめる","Cancelar")}</button><button onclick="redeem('${id}')">${T("こうかん！","Trocar!")}</button></div>`);
+  applyPt();
+}
+function redeem(id){
+  const r = CONFIG.rewards.find(x => x.id === id);
+  if(S.balance < r.cost) return closeModal();
+  S.balance -= r.cost;
+  S.redemptions.push({id:r.id, name:r.name, icon:r.icon, cost:r.cost, ts:Date.now()});
+  save();
+  sendMail({subject:`🎁 ${CONFIG.studentNameMail} がご褒美を交換しました`,
+    body:`${CONFIG.studentNameMail} がご褒美を交換しました！\n\n${r.icon} ${r.name}（${r.cost} pts）\n\n残りポイント：${S.balance} pts\n累計：${S.total} pts（Lv.${levelInfo(S.total).L}）\n連続記録：${streak()}日`});
+  sparkles();
+  modal(`<div class="big">🎉</div><h2>${T("こうかん できたよ！","Trocado!")}</h2><p>${T(`${CONFIG.teacherName}に しらせたよ。たのしんでね！`,"O Jas já foi avisado. Aproveite!")}</p><button class="block" onclick="closeModal()">${T("やったー！","Oba!")}</button>`);
+  refresh();
+}
+
+/* ---------- せいちょう ---------- */
+function renderProgress(){
+  const lv = levelInfo(S.total), m = lvMeta(lv.L);
+  $("lv-big").textContent = `${m[0]} Lv.${lv.L} ${m[1]}`;
+  $("lv-next").innerHTML = T(`つぎまで あと ${lv.need - lv.into}`, `faltam ${lv.need - lv.into} pts`);
+  $("lv-bar").style.width = Math.round(100*lv.into/lv.need) + "%";
+  $("s-total").textContent = S.total;
+  $("s-best").textContent = Math.max(S.bestStreak, streak());
+  $("s-sent").textContent = S.writings.length + S.diaries.length;
+  $("s-diary").textContent = S.diaries.length;
+  const end = new Date(), start = addDays(parseKey(weekKey(end)), -7*11);
+  let h = "";
+  for(let i=0;i<84;i++){
+    const dt = addDays(start, i), k = ymd(dt);
+    if(dt > end){ h += '<div style="background:transparent"></div>'; continue; }
+    const p = S.days[k] ? S.days[k].pts : 0;
+    const c = S.rest[k] && p < CONFIG.dailyGoal ? "hr" : p >= CONFIG.dailyGoal*1.5 ? "h3" : p >= CONFIG.dailyGoal ? "h2" : p > 0 ? "h1" : "";
+    h += `<div class="${c}" title="${k}: ${p}"></div>`;
+  }
+  $("heat").innerHTML = h;
+  const parts = ["は","が","を","に","で","と","も","の","から","まで","より"];
+  const rows = parts.filter(p => S.partStats[p]).map(p => { const s = S.partStats[p], n = s.c+s.w, pct = Math.round(100*s.c/n);
+    return `<div class="pbar"><span class="k">${p}</span><div class="bar ${pct>=80?"g":""}"><div style="width:${pct}%"></div></div><span class="muted">${pct}% <span class="small">(${n})</span></span></div>`; });
+  $("pstats").innerHTML = rows.length ? rows.join("") + `<p class="muted small">${T("みどり ＝ 80% いじょう。（ ）は こたえた かず。","Verde = 80% ou mais. Entre parênteses: quantas vezes respondeu.")}</p>`
+    : `<div class="empty"><div class="big">🎀</div>${T("じょしの れんしゅうを すると ここに でるよ","Faça um exercício de partículas para ver aqui.")}</div>`;
+  const seen = Object.keys(S.tstats).length, good = Object.values(S.tstats).filter(s => s.grade === 3).length;
+  $("wstats").innerHTML = `<p>${T(`れんしゅうした 文：<b>${seen} / ${TR.length}</b>`, "Frases diferentes já praticadas")}</p><p>${T(`さいごに ◎ だった 文：<b>${good}</b>`, "Marcadas como ◎ na última vez")}</p>
+    <div class="bar g" style="margin-top:8px"><div style="width:${Math.round(100*good/TR.length)}%"></div></div>`;
+  $("outbox-status").innerHTML = !CONFIG.scriptUrl ? T("メール：まだ せってい されていません","E-mail: ainda não configurado.")
+    : S.outbox.length ? T(`${S.outbox.length}けん、インターネットに つながったら おくるよ`, "Mensagens esperando internet para enviar.") : T("メールは ぜんぶ おくったよ ✓","Todas as mensagens foram enviadas.");
+}
+
+/* ---------- バックアップ ---------- */
+function exportData(){
+  const blob = new Blob([JSON.stringify(S)], {type:"application/json"});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `kotonoha-backup-${todayKey()}.json`; a.click();
+}
+function importData(inp){
+  const f = inp.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = () => { try{ const s = JSON.parse(r.result); if(typeof s.total !== "number") throw 0; S = Object.assign(blank(), s); save(); refresh(); toast("もどしたよ ✓"); }catch(e){ toast("ファイルが ちがうみたい"); } };
+  r.readAsText(f); inp.value = "";
+}
+
+$("overlay").addEventListener("click", e => { if(e.target.id === "overlay") closeModal(); });
+staticTexts();
+applyRestTicket();
+refresh();
+flush();
+</script>
+</body>
+</html>
