@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="ことのは">
 <meta name="theme-color" content="#fdeef5">
+<meta name="robots" content="noindex,nofollow">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -285,7 +286,7 @@ button .tr .p{color:inherit;opacity:.8}
       <button class="ghost" onclick="exportData()" id="g-backup"></button>
       <button class="ghost" onclick="document.getElementById('imp').click()" id="g-restore"></button>
     </div>
-    <input type="file" id="imp" accept="application/json" style="display:none" onchange="importData(this)">
+    <input type="file" id="imp" accept=".json,application/json,text/plain" style="display:none" onchange="importData(this)">
   </div>
 </section>
 
@@ -432,8 +433,25 @@ const CHEER = [
    ========================================================= */
 const KEY = "kotonoha-v1";
 function blank(){ return {total:0,balance:0,days:{},rest:{},restWeeks:{},weeklyBonus:{},pstats:{},partStats:{},tstats:{},writings:[],diaries:[],redemptions:[],bestStreak:0,outbox:[],showPt:false}; }
-function load(){ try{ const s = JSON.parse(localStorage.getItem(KEY)); if(s) return Object.assign(blank(), s); }catch(e){} return blank(); }
+/* 読みこみ。こわれていたら、こわれたデータを別のキーに残して、予備（1日1回の控え）から戻す。
+   キー kotonoha-v1 の形は変えない。予備は別のキーに置く。 */
+const BAK = KEY + "-bak";
+function load(){
+  let raw = null; try{ raw = localStorage.getItem(KEY); }catch(e){}
+  if(raw){
+    try{ const s = JSON.parse(raw); if(s && typeof s === "object"){ keepBackup(raw); return Object.assign(blank(), s); } }catch(e){}
+    try{ localStorage.setItem(KEY + "-broken", raw); }catch(e){}
+  }
+  try{ const b = JSON.parse(localStorage.getItem(BAK)); if(b && b.s){ const s = JSON.parse(b.s); if(s && typeof s === "object") return Object.assign(blank(), s); } }catch(e){}
+  return blank();
+}
+function keepBackup(raw){
+  try{ const stamp = new Date().toDateString(); const b = JSON.parse(localStorage.getItem(BAK) || "null");
+    if(b && b.d === stamp) return; localStorage.setItem(BAK, JSON.stringify({d:stamp, s:raw})); }catch(e){}
+}
 let S = load();
+/* バックアップ用の中身（送信待ちメールは入れない） */
+function snapshot(){ const c = Object.assign({}, S); delete c.outbox; return c; }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
 
 const pad = n => String(n).padStart(2,"0");
@@ -504,35 +522,56 @@ function onGoal(){
   setTimeout(() => { sparkles(); modal(`<div class="big">🌸</div><h2>${T("きょうの もくひょう たっせい！","Meta de hoje concluída!")}</h2>
     <p>${T(`<b>${st}日</b> れんぞく 🔥`, `${st} ${st===1?"dia":"dias"} seguidos`)}</p>${extra}
     <button class="block" style="margin-top:12px" onclick="closeModal()">${T("やったー！","Oba!")}</button>`); }, 700);
-  sendMail(dailyReport("✅ 今日の目標を達成しました"));
+  day().rep = daySig(day());
+  sendMail(dailyReport("✅ 今日の目標を達成しました"), {snap:true});
   refresh();
 }
 
 /* =========================================================
    メール（Google Apps Script 経由）
    ========================================================= */
-function sendMail(m){ if(!CONFIG.scriptUrl) return; S.outbox.push({subject:m.subject, body:m.body, ts:Date.now()}); save(); flush(); }
+function sendMail(m, opt){
+  if(!CONFIG.scriptUrl) return;
+  S.outbox.push({id:Date.now().toString(36) + Math.random().toString(36).slice(2,8), subject:m.subject, body:m.body, ts:Date.now(), snap:!!(opt && opt.snap)});
+  save(); flush();
+}
+/* レポートの下につけるバックアップ（送る瞬間の最新データ） */
+function backupText(){
+  return "\n\n――――――――――――\n💾 バックアップ（読まなくてOK）\nデータが消えたときは、下の1行を kotonoha.json という名前で保存して彼女に送り、「せいちょう → もどす」で選んでもらいます。\n" + JSON.stringify(snapshot());
+}
+/* サーバーが「ok」と返したときだけ、送信待ちから消す。失敗したら残して、あとでもう一度送る。 */
 let flushing = false;
 async function flush(){
   if(flushing || !CONFIG.scriptUrl || !S.outbox.length || !navigator.onLine) return;
   flushing = true;
-  while(S.outbox.length){
-    const it = S.outbox[0];
-    try{
-      await fetch(CONFIG.scriptUrl, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"},
-        body: JSON.stringify({token:CONFIG.token, subject:it.subject, body:it.body, replyTo:CONFIG.studentEmail})});
-      S.outbox.shift(); save();
-    }catch(e){ break; }
-  }
-  flushing = false; refresh();
+  let sent = 0;
+  try{
+    while(S.outbox.length){
+      const it = S.outbox[0]; let ok = false;
+      try{
+        const res = await fetch(CONFIG.scriptUrl, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"},
+          body: JSON.stringify({token:CONFIG.token, id:it.id || String(it.ts), subject:it.subject, body:it.body + (it.snap ? backupText() : ""), replyTo:CONFIG.studentEmail})});
+        const txt = (await res.text()).trim();
+        ok = res.ok && (txt === "ok" || txt === "dup");
+      }catch(e){}
+      if(!ok) break;
+      if(S.outbox[0] === it) S.outbox.shift();
+      save(); sent++;
+    }
+  } finally { flushing = false; }
+  if(sent) refresh();
 }
 window.addEventListener("online", flush);
+setInterval(flush, 5*60*1000);
 
 const GRADE = {3:"◎ できた", 2:"○ おしい", 1:"△ まちがえた"};
-function dailyReport(title){
-  const k = todayKey(), d = day(k), lv = levelInfo(S.total), m = lvMeta(lv.L);
+/* その日にやった量。レポートを送ったときの値を day.rep に覚えておき、あとで増えていたらもう一度送る。 */
+const daySig = d => d.pc + d.pw + d.tr.length + d.diary;
+function dailyReport(title, k){
+  k = k || todayKey();
+  const past = k !== todayKey(), d = day(k), lv = levelInfo(S.total), m = lvMeta(lv.L);
   const L = [`${CONFIG.studentNameMail} の学習レポート（${k}）`, title, "",
-    `今日のポイント：${d.pts} / 目標 ${CONFIG.dailyGoal}`,
+    `${past ? "この日" : "今日"}のポイント：${d.pts} / 目標 ${CONFIG.dailyGoal}`,
     `連続記録：${streak()}日（最高 ${S.bestStreak}日）`,
     `累計：${S.total} pts（Lv.${lv.L} ${m[1]}）／残高：${S.balance} pts`, "",
     `■ 助詞：${d.pc} / ${d.pc+d.pw} 正解`];
@@ -542,11 +581,25 @@ function dailyReport(title){
     L.push(`  「${q.pt}」`, `    彼女の答え：${t.ans}`, `    模範解答：${q.a[0]}`, `    自己評価：${GRADE[t.grade]}`); });
   L.push("", `■ 日記：${d.diary}件`);
   S.diaries.filter(x => x.date === k).forEach(x => { L.push(`  ${x.jp}`); if(x.pt) L.push(`  （${x.pt}）`); });
-  return {subject:`✅ ${CONFIG.studentNameMail} の学習レポート（${k}）`, body:L.join("\n")};
+  return {subject:`${past ? "📘" : "✅"} ${CONFIG.studentNameMail} の学習レポート（${k}）`, body:L.join("\n")};
+}
+/* きのうまでの日で、レポートに入っていない練習があれば「1日のまとめ」を送る
+   （目標に届かなかった日、目標を達成したあとも練習した日） */
+function catchUpReports(){
+  if(!CONFIG.scriptUrl) return;
+  const t = todayKey(), lim = ymd(addDays(new Date(), -14)); let n = 0;
+  Object.keys(S.days).sort().forEach(k => {
+    const d = S.days[k]; if(k >= t || k < lim) return;
+    const s = daySig(d); if(!s || d.rep === s) return;
+    d.rep = s; n++;
+    sendMail(dailyReport(d.goalMet ? "📘 1日のまとめ（目標達成 ✅）" : "📘 1日のまとめ（目標には届きませんでした）", k), {snap:true});
+  });
+  if(n) save();
 }
 function manualReport(){
   if(!CONFIG.scriptUrl){ modal(`<h2>${T("まだ じゅんび中","Ainda não configurado")}</h2><p>${T("メールの せってい が まだ です。","O envio de e-mail ainda não foi configurado.")}</p><button class="block" onclick="closeModal()">OK</button>`); return; }
-  sendMail(dailyReport("📧 レポートが手動で送られました"));
+  day().rep = daySig(day()); save();
+  sendMail(dailyReport("📧 レポートが手動で送られました"), {snap:true});
   toast("おくったよ ✉️");
 }
 
@@ -588,7 +641,8 @@ function staticTexts(){
   $("m-write").innerHTML = `<b>さくぶん</b>${T("ポルトガル語 → 日本語。こたえは ジャスにも とどくよ","Português → japonês. O Jas recebe suas respostas.")}`;
   // にっき
   setT("d-title","にっき 📔","Diário");
-  setT("d-sub","きょうの ことを 日本語で 1〜3文 書いてね。ジャスが よんで、メールで なおしてくれるよ。","Escreva 1 a 3 frases em japonês sobre o seu dia. O Jas vai ler e corrigir por e-mail.");
+  if(CONFIG.studentEmail) setT("d-sub","きょうの ことを 日本語で 1〜3文 書いてね。ジャスが よんで、メールで なおしてくれるよ。","Escreva 1 a 3 frases em japonês sobre o seu dia. O Jas vai ler e corrigir por e-mail.");
+  else setT("d-sub","きょうの ことを 日本語で 1〜3文 書いてね。ジャスが よんで、なおしてくれるよ。","Escreva 1 a 3 frases em japonês sobre o seu dia. O Jas vai ler e corrigir.");
   setT("d-l1","日本語で","Em japonês");
   setT("d-l2","言いたかったこと（ポルトガル語・なくても OK）","O que você queria dizer (em português, opcional)");
   setT("d-tip","💗 まちがえても だいじょうぶ！書くことが いちばんの れんしゅうだよ。","Tudo bem errar! Escrever é o melhor treino.");
@@ -757,7 +811,7 @@ function submitDiary(){
   sendMail({subject:`📓 ${CONFIG.studentNameMail} の日記（${todayKey()}）`,
     body:`${CONFIG.studentNameMail} が日記を書きました（${todayKey()}）\n\n【日本語】\n${jp}\n\n【言いたかったこと】\n${pt || "（記入なし）"}\n\n${CONFIG.studentEmail ? "このメールに返信すると、そのまま彼女に添削が届きます。" : ""}`});
   $("d-jp").value = ""; $("d-pt").value = "";
-  modal(`<div class="big">💌</div><h2>${T("おくったよ！","Enviado!")}</h2><p>${T(`${CONFIG.teacherName}が よんで、メールで へんじ するね。`,"O Jas vai ler e responder com as correções.")}</p><button class="block" onclick="closeModal()">OK</button>`);
+  modal(`<div class="big">💌</div><h2>${T("おくったよ！","Enviado!")}</h2><p>${CONFIG.studentEmail ? T(`${CONFIG.teacherName}が よんで、メールで へんじ するね。`,"O Jas vai ler e responder por e-mail com as correções.") : T(`${CONFIG.teacherName}が よんで、へんじ するね。`,"O Jas vai ler e responder com as correções.")}</p><button class="block" onclick="closeModal()">OK</button>`);
   addPoints(first ? CONFIG.points.diaryFirst : CONFIG.points.diaryMore);
 }
 function renderDiaryList(){
@@ -833,22 +887,59 @@ function renderProgress(){
 }
 
 /* ---------- バックアップ ---------- */
-function exportData(){
-  const blob = new Blob([JSON.stringify(S)], {type:"application/json"});
-  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `kotonoha-backup-${todayKey()}.json`; a.click();
+async function exportData(){
+  const name = `kotonoha-backup-${todayKey()}.json`, json = JSON.stringify(snapshot());
+  // iPhone のホーム画面アプリではダウンロードが動かないことがあるので、まず「共有」をためす
+  try{
+    const f = new File([json], name, {type:"application/json"});
+    if(navigator.canShare && navigator.canShare({files:[f]})){ await navigator.share({files:[f], title:name}); return; }
+  }catch(e){ if(e && e.name === "AbortError") return; }
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([json], {type:"application/json"})); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
 }
+let pendingImport = null;
 function importData(inp){
   const f = inp.files[0]; if(!f) return;
   const r = new FileReader();
-  r.onload = () => { try{ const s = JSON.parse(r.result); if(typeof s.total !== "number") throw 0; S = Object.assign(blank(), s); save(); refresh(); toast("もどしたよ ✓"); }catch(e){ toast("ファイルが ちがうみたい"); } };
+  r.onload = () => {
+    try{
+      const s = JSON.parse(r.result); if(!s || typeof s.total !== "number" || !s.days || typeof s.days !== "object") throw 0;
+      pendingImport = s;
+      const last = Object.keys(s.days).sort().pop() || "—";
+      modal(`<div class="big">📦</div><h2>${T("この データに もどす？","Restaurar estes dados?")}</h2>
+        <p>${T(`ファイル：<b>${Number(s.total)}</b> ポイント（さいごの日：${esc(last)}）`, `Arquivo: ${Number(s.total)} pontos (último dia: ${esc(last)})`)}</p>
+        <p>${T(`いまの データ：<b>${S.total}</b> ポイント`, `Dados atuais: ${S.total} pontos`)}</p>
+        <p class="muted small">${T("いまの データは、ファイルの データに かわるよ。","Os dados atuais serão substituídos pelos do arquivo.")}</p>
+        <div class="grid2" style="margin-top:14px"><button class="ghost" onclick="pendingImport=null;closeModal()">${T("やめる","Cancelar")}</button><button onclick="confirmImport()">${T("もどす","Restaurar")}</button></div>`);
+      applyPt();
+    }catch(e){ toast("ファイルが ちがうみたい"); }
+  };
   r.readAsText(f); inp.value = "";
+}
+function confirmImport(){
+  const s = pendingImport; pendingImport = null; closeModal();
+  if(!s) return;
+  try{ localStorage.setItem(KEY + "-before-restore", JSON.stringify(S)); }catch(e){}   // 上書きする前のデータを残す
+  const box = S.outbox;                                                               // 送信待ちメールはそのまま
+  S = Object.assign(blank(), s); S.outbox = box;
+  save(); refresh(); toast("もどしたよ ✓");
 }
 
 $("overlay").addEventListener("click", e => { if(e.target.id === "overlay") closeModal(); });
 staticTexts();
 applyRestTicket();
+catchUpReports();
 refresh();
 flush();
+/* アプリを開いたままにして、あとで戻ってきたとき（iPhone は読みこみ直さないことが多い）にも、
+   おやすみチケット・前の日のまとめ・メールの再送を行う */
+document.addEventListener("visibilitychange", () => {
+  if(document.visibilityState !== "visible") return;
+  applyRestTicket(); catchUpReports(); refresh(); flush();
+});
+/* オフラインでも開けるようにする（sw.js）。保存データを端末が勝手に消さないように頼む。 */
+if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+if(navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
 </script>
 </body>
 </html>
