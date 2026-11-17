@@ -1004,6 +1004,8 @@ function dailyReport(title, k){
     if(t.re) L.push("    書き直し：✓ 模範解答を見ないで打ち直した"); });
   L.push("", `■ 日記：${d.diary}件`);
   S.diaries.filter(x => x.date === k).forEach(x => { L.push(`  ${x.jp}`); if(x.pt) L.push(`  （${x.pt}）`); });
+  const pend = S.redemptions.filter(x => !x.got);
+  if(pend.length) L.push("", "■ まだあげていないご褒美（彼女が「もらった」を押していないもの）", ...pend.map(x => `  ${x.icon} ${x.name}（${ymd(new Date(x.ts))} に交換）`));
   const cf = confusions().filter(x => x.n >= 2).slice(0, 5);
   if(cf.length) L.push("", "■ 助詞のよくある取り違え（これまでの合計）", ...cf.map(x => `  正解「${x.a}」のところで「${x.c}」を選んだ：${x.n}回`));
   return {subject:`${past ? "📘" : "✅"} ${CONFIG.studentNameMail} の学習レポート（${k}）`, body:L.join("\n")};
@@ -1375,7 +1377,25 @@ function renderPrizes(){
       <button ${S.balance < r.cost ? "disabled" : ""} onclick="askRedeem('${r.id}')">${T("交換","Trocar")}</button></div>`).join("");
   }
   $("redeem-wrap").style.display = S.redemptions.length ? "" : "none";
-  $("redeem-list").innerHTML = S.redemptions.slice().reverse().map(x => `<div class="item top"><div>${x.icon} ${furi(esc(x.name))}<div class="muted small">${new Date(x.ts).toLocaleDateString("ja-JP")}</div></div><div style="font-weight:900;color:#c48a00">−${x.cost}</div></div>`).join("");
+  // あげたかどうか：彼女がもらったら「もらった」を押す（記録に got＝日時 を足す。形は変えず項目を足すだけ）
+  const left = S.redemptions.filter(x => !x.got).length;
+  $("redeem-list").innerHTML = (left ? `<p class="muted small">${T(`まだもらっていないご褒美：<b>${left}</b>個。もらったら「🎁 もらった」を押してね。`, `Prêmios ainda não recebidos: ${left}. Quando receber, toque em “recebi”.`)}</p>` : "")
+    + S.redemptions.map((x, i) => [x, i]).reverse().map(([x, i]) => `<div class="item top"><div>${x.icon} ${furi(esc(x.name))}<div class="muted small">${T(`${new Date(x.ts).toLocaleDateString("ja-JP")} 交換`, "trocado")}<span style="font-weight:900;color:#c48a00">・−${x.cost}</span></div></div>
+      ${x.got ? `<button class="linkbtn" style="color:var(--mint-d);text-decoration:none;flex:none" onclick="askGot(${i})">${T("✓ もらった","Recebido")}</button>`
+        : `<button class="ghost" style="padding:8px 12px;font-size:14px;flex:none" onclick="askGot(${i})">${T("🎁 もらった","Recebi")}</button>`}</div>`).join("");
+}
+function askGot(i){
+  const x = S.redemptions[i]; if(!x) return;
+  modal(x.got ? `<div class="big">${x.icon}</div><h2>${furi(esc(x.name))}</h2><p>${T("「まだもらっていない」に戻す？","Voltar para “ainda não recebido”?")}</p>
+      <div class="grid2" style="margin-top:14px"><button class="ghost" onclick="closeModal()">${T("やめる","Cancelar")}</button><button onclick="setGot(${i},false)">${T("戻す","Voltar")}</button></div>`
+    : `<div class="big">${x.icon}</div><h2>${furi(esc(x.name))}</h2><p>${T("このご褒美、もらった？","Você já recebeu este prêmio?")}</p>
+      <div class="grid2" style="margin-top:14px"><button class="ghost" onclick="closeModal()">${T("まだ","Ainda não")}</button><button onclick="setGot(${i},true)">${T("もらった！","Recebi!")}</button></div>`);
+  applyPt();
+}
+function setGot(i, on){
+  const x = S.redemptions[i]; if(!x) return closeModal();
+  if(on) x.got = Date.now(); else delete x.got;
+  save(); closeModal(); if(on){ sparkles(); toast("よかったね 💗"); } refresh();
 }
 function askRedeem(id){
   const r = CONFIG.rewards.find(x => x.id === id);
@@ -1390,7 +1410,7 @@ function redeem(id){
   S.redemptions.push({id:r.id, name:r.name, icon:r.icon, cost:r.cost, ts:Date.now()});
   save();
   sendMail({subject:`🎁 ${CONFIG.studentNameMail} がご褒美を交換しました`,
-    body:`${CONFIG.studentNameMail} がご褒美を交換しました！\n\n${r.icon} ${r.name}（${r.cost} pts）\n\n残りポイント：${S.balance} pts\n累計：${S.total} pts（Lv.${levelInfo(S.total).L}）\n連続記録：${streak()}日`});
+    body:`${CONFIG.studentNameMail} がご褒美を交換しました！\n\n${r.icon} ${r.name}（${r.cost} pts）\n\nあげたら、彼女にアプリの「ご褒美 → 交換したご褒美」で「🎁 もらった」を押してもらってください。押すまでは、学習レポートに「まだあげていないご褒美」として出ます。\n\n残りポイント：${S.balance} pts\n累計：${S.total} pts（Lv.${levelInfo(S.total).L}）\n連続記録：${streak()}日`});
   sparkles();
   modal(`<div class="big">🎉</div><h2>${T("交換できたよ！","Trocado!")}</h2><p>${T(`${CONFIG.teacherName}に知らせたよ。楽しんでね！`,"O Jas já foi avisado. Aproveite!")}</p><button class="block" onclick="closeModal()">${T("やったー！","Oba!")}</button>`);
   refresh();
