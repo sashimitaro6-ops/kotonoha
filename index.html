@@ -188,6 +188,12 @@ button .tr .p{color:inherit;opacity:.8}
 .item .model,.item .yours{font-size:17px}
 /* 日本までのカウントダウン */
 .cd{padding:14px 18px}
+.rescue{text-align:center;background:linear-gradient(135deg,#fff5d6 0%,#ffe6f0 100%);border:2px solid #ffd978;animation:pop .4s ease-out}
+.rescue .rq-ic{font-size:40px;line-height:1.1}
+.rescue .rq-h{font-size:19px;font-weight:900;margin:4px 0}
+.rescue .rq-btn{margin-top:10px;font-size:17px;padding:14px 18px;background:linear-gradient(135deg,#ffcf6b,#f49ac1);color:#fff}
+.tkbtn{background:none;box-shadow:none;border:none;padding:2px 0;color:var(--muted);font-size:13px;font-weight:700;text-align:left;cursor:pointer;text-decoration:underline dotted}
+.tkbtn:active{transform:none}
 .cd .cdn{font-size:30px;font-weight:900;color:var(--pink-d);margin:0 2px}
 .cdtrack{display:flex;align-items:center;gap:8px;margin:8px 0 4px}
 .cdtrack .fl{font-size:22px;flex:none}
@@ -250,6 +256,8 @@ button .tr .p{color:inherit;opacity:.8}
   </div>
 
   <div class="card cd" id="cd-card" style="display:none"></div>
+
+  <div class="card rescue" id="rescue-card" style="display:none"></div>
 
   <div class="card row">
     <div class="ring">
@@ -399,6 +407,8 @@ const CONFIG = {
   daily: { particles: 10, writing: 3, diary: 1 },
   weeklyGoalDays: 5,
   weeklyBonus: 30,
+  dayStartHour: 3,                // 1日の区切り。夜中の0時〜3時の練習は「前の日」に数える
+  maxTickets: 3,                  // ストリーク復活券を持てる最大の枚数（毎週月曜日に1枚もらえる）
   surpriseChance: 0.15,
   particlesPerSession: 10,
   writingPerSession: 3,
@@ -898,7 +908,9 @@ function save(){
 const pad = n => String(n).padStart(2,"0");
 const ymd = d => d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
 const addDays = (d,n) => { const x = new Date(d); x.setDate(x.getDate()+n); return x; };
-const todayKey = () => ymd(new Date());
+/* 1日の区切りは朝3時（CONFIG.dayStartHour）。0時すぎに終わっても前の日の練習になる */
+const now0 = () => new Date(Date.now() - (CONFIG.dayStartHour || 0) * 36e5);
+const todayKey = () => ymd(now0());
 const parseKey = k => new Date(k+"T00:00:00");
 function weekKey(d){ const x = new Date(d); x.setHours(0,0,0,0); x.setDate(x.getDate()-((x.getDay()+6)%7)); return ymd(x); }
 function day(k){ k = k || todayKey(); if(!S.days[k]) S.days[k] = {pts:0,pc:0,pw:0,pwq:[],tr:[],diary:0,goalMet:false}; return S.days[k]; }
@@ -915,7 +927,7 @@ function quest(d){
     frac:items.length ? items.reduce((s, x) => s + x.n / x.of, 0) / items.length : 0, by:k => items.find(x => x.k === k)};
 }
 const counted = k => !!((S.days[k] && S.days[k].goalMet) || S.rest[k]);
-function streak(){ let d = new Date(); if(!counted(ymd(d))) d = addDays(d,-1); let n = 0; while(counted(ymd(d))){ n++; d = addDays(d,-1); } return n; }
+function streak(){ let d = parseKey(todayKey()); if(!counted(ymd(d))) d = addDays(d,-1); let n = 0; while(counted(ymd(d))){ n++; d = addDays(d,-1); } return n; }
 function levelInfo(t){ let L = 1, base = 0, need = 100; while(t >= base+need){ base += need; L++; need = 100*L; } return {L, into:t-base, need}; }
 const lvMeta = L => LEVELS[Math.min(L, LEVELS.length) - 1];
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -940,19 +952,96 @@ function applyPt(){
 }
 document.addEventListener("click", e => { const t = e.target.closest(".tr.tap"); if(t && !e.target.closest("button")) t.classList.toggle("open"); });
 
-/* おやすみチケット */
-function applyRestTicket(){
-  const y = addDays(new Date(), -1), yk = ymd(y);
-  if(counted(yk)) return;
-  if(!counted(ymd(addDays(new Date(), -2)))) return;
-  const wk = weekKey(y);
-  if(S.restWeeks[wk]) return;
-  S.rest[yk] = true; S.restWeeks[wk] = true; save();
-  if(!S.tutV) return;   // 初めての日はチュートリアルを優先
-  setTimeout(() => queueModal(`<div class="big">🎫</div><h2>${T("お休みチケットを使ったよ","Folga usada")}</h2>
-    <p>${T(`昨日はお休み。でも <b>${dayR(streak())}</b> の連続は守られたよ！`, `Ontem você descansou, mas a sequência de ${streak()} dias foi salva!`)}</p>
-    <button class="block" onclick="closeModal()">${T("今日も頑張る！","Vamos lá!")}</button>`), 400);
+/* =========================================================
+   ストリーク復活券
+   - 毎週月曜日に1枚もらえる（最大 CONFIG.maxTickets 枚）
+   - 目標に届かなかった日の「次の日」に、ホームの「復活券を使う」ボタンで使う
+   - 使うと、その日（S.rest[日付]）も連続に数える
+   ========================================================= */
+function grantTickets(){
+  const wk = weekKey(now0());
+  if(!S.ticketWeeks){ S.ticketWeeks = {}; S.ticketWeeks[wk] = 1; if(typeof S.tickets !== "number") S.tickets = 1; save(); return; }
+  if(typeof S.tickets !== "number") S.tickets = 0;
+  if(!S.ticketWeeks[wk]){ S.ticketWeeks[wk] = 1; S.tickets = Math.min(CONFIG.maxTickets || 3, S.tickets + 1); save(); }
 }
+/* k の日で終わる連続の長さ */
+function streakAt(k){ let d = parseKey(k), n = 0; while(counted(ymd(d))){ n++; d = addDays(d,-1); } return n; }
+/* 復活券で戻せる日（＝昨日が目標に届かず、おとといまで連続していた） */
+function rescueDay(){
+  const t = parseKey(todayKey()), y = ymd(addDays(t,-1)), y2 = ymd(addDays(t,-2));
+  return (!counted(y) && counted(y2)) ? {k:y, n:streakAt(y2)} : null;
+}
+const mdJ = k => { const d = parseKey(k); return `${d.getMonth()+1}月${d.getDate()}日`; };
+const mdP = k => { const d = parseKey(k); return `${d.getDate()}/${d.getMonth()+1}`; };
+function renderRescue(){
+  const el = $("rescue-card"); if(!el) return;
+  const r = rescueDay(); if(!r){ el.style.display = "none"; return; }
+  el.style.display = "";
+  const tk = S.tickets || 0;
+  el.innerHTML = tk > 0 ? `<div class="rq-ic">🎫</div>
+    <div class="rq-h">${T("連続記録が切れそう！","Sua sequência está em perigo!")}</div>
+    <p>${T(`${mdJ(r.k)}は目標に届かなかったよ。<br>復活券を1枚使うと、🔥 <b>${dayR(r.n)}</b> の連続が元に戻るよ。`, `Em ${mdP(r.k)} a meta não foi concluída. Use 1 cupom para recuperar a sequência de ${r.n} dias.`)}</p>
+    <button class="block rq-btn" onclick="askTicket()">${T(`🎫 復活券を使う（残り ${tk}枚）`, `Usar cupom (você tem ${tk})`)}</button>
+    <p class="muted small" style="margin:8px 0 0">${T("今日のうちに使ってね。明日になると使えないよ。","Use hoje — amanhã não será mais possível.")}</p>`
+  : `<div class="rq-ic">🎫</div>
+    <div class="rq-h">${T("連続記録が切れちゃった…","A sequência foi interrompida…")}</div>
+    <p>${T("復活券がないよ。復活券は毎週月曜日に1枚もらえるよ。今日からまた始めよう！","Você não tem cupons agora. Toda segunda-feira você ganha 1. Vamos recomeçar hoje!")}</p>`;
+}
+function askTicket(){
+  const r = rescueDay(); if(!r || !(S.tickets > 0)) return;
+  modal(`<div class="big">🎫</div><h2>${T("復活券を使う？","Usar o cupom?")}</h2>
+    <p>${T(`${mdJ(r.k)}を「やった日」にして、🔥 <b>${dayR(r.n)}</b> の連続を元に戻すよ。<br>残りの復活券：${S.tickets}枚 → ${S.tickets - 1}枚`, `${mdP(r.k)} vai contar como dia feito e a sequência de ${r.n} dias volta. Cupons: ${S.tickets} → ${S.tickets - 1}.`)}</p>
+    <div class="grid2" style="margin-top:14px"><button class="ghost" onclick="closeModal()">${T("やめる","Cancelar")}</button><button onclick="useTicket()">${T("使う！","Usar!")}</button></div>`);
+  applyPt();
+}
+function useTicket(){
+  const r = rescueDay(); if(!r || !(S.tickets > 0)) return closeModal();
+  S.tickets--; S.rest[r.k] = "ticket";
+  (S.ticketLog = S.ticketLog || []).push({k:r.k, ts:Date.now()});
+  const st = streak(); if(st > S.bestStreak) S.bestStreak = st;
+  save();
+  sendMail({subject:`🎫 ${CONFIG.studentNameMail} がストリーク復活券を使いました`,
+    body:`${CONFIG.studentNameMail} がストリーク復活券を使いました。\n\n戻した日：${r.k}\n連続記録：${st}日\n残りの復活券：${S.tickets}枚`});
+  sparkles();
+  modal(`<div class="big">🔥</div><h2>${T("連続記録が戻ったよ！","A sequência voltou!")}</h2>
+    <p>${T(`今は <b>${dayR(st)}</b> 連続。今日も練習して、記録をのばそう！`, `Agora são ${st} dias seguidos. Pratique hoje para continuar!`)}</p>
+    <button class="block" onclick="closeModal()">${T("がんばる！","Vamos lá!")}</button>`);
+  refresh();
+}
+function ticketInfo(){
+  modal(`<div class="big">🎫</div><h2>${T("ストリーク復活券","Cupom de sequência")}</h2>
+    <p style="text-align:left">${T("・目標に届かなかった日の次の日に、ホームに「復活券を使う」ボタンが出るよ。押すと、連続記録が元に戻るよ。","• No dia seguinte a um dia sem meta, aparece na tela inicial o botão “Usar cupom”. Ele recupera a sua sequência.")}</p>
+    <p style="text-align:left">${T(`・毎週月曜日に1枚もらえるよ（最大${CONFIG.maxTickets}枚まで貯められる）。`, `• Toda segunda-feira você ganha 1 cupom (pode guardar até ${CONFIG.maxTickets}).`)}</p>
+    <p style="text-align:left">${T(`・1日の区切りは朝${CONFIG.dayStartHour}時。夜中の0時をすぎても、${CONFIG.dayStartHour}時までの練習は前の日に数えるよ。`, `• O dia só vira às ${CONFIG.dayStartHour}h da manhã. O que você fizer depois da meia-noite, até as ${CONFIG.dayStartHour}h, conta para o dia anterior.`)}</p>
+    <p class="muted">${T(`今持っている復活券：${S.tickets || 0}枚`, `Você tem agora: ${S.tickets || 0}`)}</p>
+    <button class="block" onclick="closeModal()">OK</button>`);
+  applyPt();
+}
+/* 一度だけの修正：0時すぎに練習が終わって切れてしまった連続記録を戻す（2026年11月） */
+function repairStreakOnce(){
+  if(S.fix1122) return;
+  S.fix1122 = 1;
+  const t = parseKey(todayKey());
+  for(let i = 1; i <= 6; i++){
+    const d = addDays(t, -i), k = ymd(d);
+    if(k < "2026-11-15") break;
+    if(counted(k)) continue;
+    const prev = ymd(addDays(d,-1)), next = ymd(addDays(d,1));
+    const tried = (S.days[k] && S.days[k].pts > 0) || (S.days[next] && S.days[next].pts > 0);
+    if(counted(prev) && tried){
+      S.rest[k] = "fix";
+      const st = streak(); if(st > S.bestStreak) S.bestStreak = st;
+      save();
+      if(S.tutV) setTimeout(() => queueModal(`<div class="big">🔥</div><h2>${T("連続記録を元に戻したよ","Sua sequência foi recuperada")}</h2>
+        <p>${T(`夜中の0時をすぎて終わったせいで、連続が切れていたよ。ジャスが元に戻したよ。今は <b>${dayR(st)}</b> 連続！`, `A sequência tinha sido interrompida porque você terminou depois da meia-noite. O Jas recuperou: agora são ${st} dias seguidos!`)}</p>
+        <p>${T(`これからは、朝${CONFIG.dayStartHour}時までの練習は前の日に数えるよ。`, `Agora, o que você fizer até as ${CONFIG.dayStartHour}h da manhã conta para o dia anterior.`)}</p>
+        <button class="block" onclick="closeModal()">${T("ありがとう！","Obrigada!")}</button>`), 500);
+    }
+    break;
+  }
+  save();
+}
+function dailyChecks(){ grantTickets(); repairStreakOnce(); }
 
 /* =========================================================
    ポイント
@@ -984,7 +1073,7 @@ function onGoal(){
   const st = streak(); if(st > S.bestStreak) S.bestStreak = st;
   let extra = "";
   if(Math.random() < CONFIG.surpriseChance){ const b = [10,20,30][Math.floor(Math.random()*3)]; bonus(b); extra += `<p class="surprise">${T(`🧚 サプライズ ボーナス！ +${b}`, `Bônus surpresa! +${b} pts`)}</p>`; }
-  const wk = weekKey(new Date()); let c = 0;
+  const wk = weekKey(now0()); let c = 0;
   for(let i=0;i<7;i++){ const k = ymd(addDays(parseKey(wk), i)); if(S.days[k] && S.days[k].goalMet) c++; }
   if(c >= CONFIG.weeklyGoalDays && !S.weeklyBonus[wk]){ S.weeklyBonus[wk] = true; bonus(CONFIG.weeklyBonus); extra += `<p class="surprise">${T(`🏅 1週間の目標達成！ +${CONFIG.weeklyBonus}`, `Meta da semana! +${CONFIG.weeklyBonus} pts`)}</p>`; }
   save();
@@ -1088,7 +1177,7 @@ function dailyReport(title, k){
    （目標に届かなかった日、目標を達成したあとも練習した日） */
 function catchUpReports(){
   if(!CONFIG.scriptUrl) return;
-  const t = todayKey(), lim = ymd(addDays(new Date(), -14)); let n = 0;
+  const t = todayKey(), lim = ymd(addDays(parseKey(todayKey()), -14)); let n = 0;
   Object.keys(S.days).sort().forEach(k => {
     const d = S.days[k]; if(k >= t || k < lim) return;
     const s = daySig(d); if(!s || d.rep === s) return;
@@ -1302,7 +1391,7 @@ function staticTexts(){
   setT("s-sent-l","書いた文 ✏️","frases escritas");
   setT("s-diary-l","日記 📔","diários");
   setT("g-h-cal","12週間の記録","ÚLTIMAS 12 SEMANAS");
-  setT("g-cal-l","薄い色 ＝ 少し練習した日・濃い色 ＝ 目標達成・黄色 ＝ お休みチケット","Claro = praticou um pouco · escuro = meta concluída · amarelo = folga");
+  setT("g-cal-l","薄い色 ＝ 少し練習した日・濃い色 ＝ 目標達成・黄色 ＝ 復活券で戻した日","Claro = praticou um pouco · escuro = meta concluída · amarelo = dia recuperado com cupom");
   setT("g-h-part","助詞の正解率","ACERTOS POR PARTÍCULA");
   setT("g-h-write","作文","ESCRITA");
   setT("g-h-set","設定","CONFIGURAÇÕES");
@@ -1332,7 +1421,8 @@ function refresh(){
   $("b-write").innerHTML = `<b>${furi("作文")}</b>` + (wq && wq.n >= wq.of ? `<span class="done">${T("✓ 今日はできたよ","Feito hoje")}</span>`
     : T(`ポルトガル語を日本語に${wq ? `・今日 ${wq.n} / ${wq.of}` : ""}`, `Escrita · traduza para japonês${wq ? ` · hoje: ${wq.n} de ${wq.of}` : ""}`));
   $("streak-line").innerHTML = T(`🔥 ${dayR(st)} 連続`, `${st} dias seguidos`);
-  $("rest-status").innerHTML = S.restWeeks[weekKey(new Date())] ? T("🎫 お休みチケット：今週は使ったよ","Folga desta semana: já usada") : T("🎫 お休みチケット：1枚あるよ","Folga desta semana: disponível");
+  $("rest-status").innerHTML = `<button class="tkbtn" onclick="ticketInfo()">${T(`🎫 ストリーク復活券：${S.tickets || 0}枚 ⓘ`, `Cupons de sequência: ${S.tickets || 0} ⓘ`)}</button>`;
+  renderRescue();
   $("balance").textContent = S.balance;
   $("balance-l").innerHTML = T("貯めたポイント 🎁","pontos guardados");
   $("lv-name").textContent = `${m[0]} Lv.${lv.L}`;
@@ -1347,7 +1437,7 @@ function refresh(){
    問題ごとに box（0〜6）と due（つぎに出す日）を pstats / tstats に足す（もとの形はそのまま、項目を足すだけ）。
    せいかい → box が1つ上がり、出る間隔がのびる（その日・1日・3日・7日・14日・30日・60日）。まちがい → box 0。 */
 const GAPS = [0, 1, 3, 7, 14, 30, 60];
-function srsSet(s, box){ s.box = Math.max(0, Math.min(GAPS.length - 1, box)); s.due = ymd(addDays(new Date(), GAPS[s.box])); }
+function srsSet(s, box){ s.box = Math.max(0, Math.min(GAPS.length - 1, box)); s.due = ymd(addDays(parseKey(todayKey()), GAPS[s.box])); }
 function srsWeight(s, legacy){
   if(!s) return 2;                       // まだ 出ていない問題
   if(s.due === undefined) return legacy;  // 前の版で 答えた問題（日付がまだない）
@@ -1654,7 +1744,7 @@ function renderProgress(){
   $("s-best").textContent = Math.max(S.bestStreak, streak());
   $("s-sent").textContent = S.writings.length + S.diaries.length;
   $("s-diary").textContent = S.diaries.length;
-  const end = new Date(), start = addDays(parseKey(weekKey(end)), -7*11);
+  const end = parseKey(todayKey()), start = addDays(parseKey(weekKey(end)), -7*11);
   let h = "";
   for(let i=0;i<84;i++){
     const dt = addDays(start, i), k = ymd(dt);
@@ -1921,7 +2011,8 @@ function tutSteps(){
     {ic:"🎯", h:["毎日の目標","A meta de cada dia"], b:[
       ["助詞10問・作文3文・日記1件。三つ全部やったら目標達成！","10 partículas, 3 frases e 1 diário. Fez os três? Meta concluída!"],
       ["毎日続けると 🔥 連続記録がのびるよ","Praticando todo dia, a sua sequência 🔥 vai crescendo."],
-      ["🎫 お休みチケット：1週間に1回、休んでも連続が切れないよ","🎫 Folga: uma vez por semana, você pode descansar sem perder a sequência."]]},
+      ["🎫 ストリーク復活券：目標に届かなかった次の日、ホームの「復活券を使う」で連続が元に戻るよ（毎週月曜日に1枚）","🎫 Cupom de sequência: no dia seguinte a um dia sem meta, toque em “Usar cupom” na tela inicial para recuperar a sequência (1 cupom toda segunda-feira)."],
+      ["🌙 1日の区切りは朝3時。0時をすぎても3時までなら前の日の練習になるよ","🌙 O dia só vira às 3h da manhã. Até as 3h, conta para o dia anterior."]]},
     {ic:"🎀 ✏️", h:["練習","Os exercícios"], b:[
       ["🎀 助詞：＿に入る助詞を選ぶ。間違えた問題は、覚えるまでまた出るよ","🎀 Partículas: escolha a partícula certa. As que você errar voltam até você aprender."],
       ["✏️ 作文：ポルトガル語の文を日本語で書く。答えの例と比べて、自分で ◎○△ をつけてね","✏️ Escrita: escreva a frase em japonês, compare com o exemplo e se avalie com ◎ ○ △."],
@@ -1959,15 +2050,15 @@ $("overlay").addEventListener("click", e => { if(e.target.id === "overlay" && tu
 staticTexts();
 loadDraft();
 if(!S.tutV) setTimeout(() => tutorial(0), 300);
-applyRestTicket();
+dailyChecks();
 catchUpReports();
 refresh();
 flush();
 /* アプリを開いたままにして、あとで戻ってきたとき（iPhone は読みこみ直さないことが多い）にも、
-   おやすみチケット・前の日のまとめ・メールの再送を行う */
+   復活券・前の日のまとめ・メールの再送を行う */
 document.addEventListener("visibilitychange", () => {
   if(document.visibilityState !== "visible") return;
-  applyRestTicket(); catchUpReports(); refresh(); flush();
+  dailyChecks(); catchUpReports(); refresh(); flush();
 });
 /* オフラインでも開けるようにする（sw.js）。保存データを端末が勝手に消さないように頼む。 */
 if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
