@@ -414,21 +414,21 @@ const CONFIG = {
   writingPerSession: 3,
   points: { particleRight: 2, particleWrong: 1, writing: 5, diaryFirst: 15, diaryMore: 5 },
   // ご褒美カタログ（あとで相談して決める。例：{ id:"r1", name:"…", pt:"…", cost:100, icon:"🎬" }）
-  // 1週間で約300ポイントたまる（週5〜6日やった場合）
+  // 1週間で約300ポイントたまる（週5〜6日やった場合）。2026-11-24 に値段を3分の1にした（1週間で約2〜3個）
   // 安い順にならべる。id は交換の記録にひもづくので、あとから変えない。
   rewards: [
-    { id:"r1", icon:"💌", cost:300, name:"ジャスから日本語の手紙", pt:"Uma carta do Jas em japonês (com tradução)" },
-    { id:"r4", icon:"🎨", cost:300, name:"ジャスがあなたの似顔絵を描いて送る", pt:"O Jas desenha um retrato seu e te envia" },
-    { id:"r10", icon:"☔", cost:300, name:"ジャスが雨の日のおうちデートを計画する（日本に来てから）", pt:"O Jas planeja um encontro em casa para um dia de chuva (depois que você chegar ao Japão)" },
-    { id:"r6", icon:"🍳", cost:400, name:"ジャスの手料理（メニューはあなたが決める・日本に来てから）", pt:"Uma refeição feita pelo Jas: você escolhe o cardápio (depois que você chegar ao Japão)" },
-    { id:"r7", icon:"🥐", cost:400, name:"朝ごはんをベッドまで運ぶ（日本に来てから）", pt:"Café da manhã na cama (depois que você chegar ao Japão)" },
-    { id:"r8", icon:"💆", cost:400, name:"マッサージ30分（日本に来てから）", pt:"Massagem de 30 minutos (depois que você chegar ao Japão)" },
-    { id:"r9", icon:"🌃", cost:400, name:"一緒に夜景を見に行く（日本に来てから）", pt:"Ver a cidade à noite juntos (depois que você chegar ao Japão)" },
-    { id:"r5", icon:"💃", cost:600, name:"ジャスがあなたのためにダンス動画を送る", pt:"O Jas grava um vídeo dançando para você" },
-    { id:"r2", icon:"🧹", cost:600, name:"ジャスが三日間、家事を全部する（日本に来てから）", pt:"O Jas faz todas as tarefas de casa por 3 dias (depois que você chegar ao Japão)" },
-    { id:"r11", icon:"🧺", cost:600, name:"ピクニック（お弁当はジャスが作る・日本に来てから）", pt:"Um piquenique com bentô feito pelo Jas (depois que você chegar ao Japão)" },
-    { id:"r12", icon:"🚗", cost:800, name:"ドライブ（行き先はあなたが決める・日本に来てから）", pt:"Um passeio de carro: você escolhe o destino (depois que você chegar ao Japão)" },
-    { id:"r3", icon:"🗺️", cost:900, name:"ジャスがプランを決めるデート（日本に来てから）", pt:"Um encontro planejado pelo Jas (depois que você chegar ao Japão)" }
+    { id:"r1", icon:"💌", cost:100, name:"ジャスから日本語の手紙", pt:"Uma carta do Jas em japonês (com tradução)" },
+    { id:"r4", icon:"🎨", cost:100, name:"ジャスがあなたの似顔絵を描いて送る", pt:"O Jas desenha um retrato seu e te envia" },
+    { id:"r10", icon:"☔", cost:100, name:"ジャスが雨の日のおうちデートを計画する（日本に来てから）", pt:"O Jas planeja um encontro em casa para um dia de chuva (depois que você chegar ao Japão)" },
+    { id:"r6", icon:"🍳", cost:130, name:"ジャスの手料理（メニューはあなたが決める・日本に来てから）", pt:"Uma refeição feita pelo Jas: você escolhe o cardápio (depois que você chegar ao Japão)" },
+    { id:"r7", icon:"🥐", cost:130, name:"朝ごはんをベッドまで運ぶ（日本に来てから）", pt:"Café da manhã na cama (depois que você chegar ao Japão)" },
+    { id:"r8", icon:"💆", cost:130, name:"マッサージ30分（日本に来てから）", pt:"Massagem de 30 minutos (depois que você chegar ao Japão)" },
+    { id:"r9", icon:"🌃", cost:130, name:"一緒に夜景を見に行く（日本に来てから）", pt:"Ver a cidade à noite juntos (depois que você chegar ao Japão)" },
+    { id:"r5", icon:"💃", cost:200, name:"ジャスがあなたのためにダンス動画を送る", pt:"O Jas grava um vídeo dançando para você" },
+    { id:"r2", icon:"🧹", cost:200, name:"ジャスが三日間、家事を全部する（日本に来てから）", pt:"O Jas faz todas as tarefas de casa por 3 dias (depois que você chegar ao Japão)" },
+    { id:"r11", icon:"🧺", cost:200, name:"ピクニック（お弁当はジャスが作る・日本に来てから）", pt:"Um piquenique com bentô feito pelo Jas (depois que você chegar ao Japão)" },
+    { id:"r12", icon:"🚗", cost:270, name:"ドライブ（行き先はあなたが決める・日本に来てから）", pt:"Um passeio de carro: você escolhe o destino (depois que você chegar ao Japão)" },
+    { id:"r3", icon:"🗺️", cost:300, name:"ジャスがプランを決めるデート（日本に来てから）", pt:"Um encontro planejado pelo Jas (depois que você chegar ao Japão)" }
   ]
 };
 
@@ -1670,9 +1670,9 @@ function loadDraft(){
   try{ const d = JSON.parse(localStorage.getItem(DRAFT) || "null"); if(d){ $("d-jp").value = d.jp || ""; $("d-pt").value = d.pt || ""; } }catch(e){}
   ["d-jp","d-pt"].forEach(id => $(id).addEventListener("input", saveDraft));
 }
-/* きょうの お題（日替わり。「べつの おだい」で つぎへ） */
+/* きょうの お題（日替わり。1日の区切り（CONFIG.dayStartHour）で切り替わる。「べつの おだい」で つぎへ） */
 let dqShift = 0;
-function diaryQ(){ const n = new Date(); return DIARY_Q[(n.getFullYear()*372 + n.getMonth()*31 + n.getDate() + dqShift) % DIARY_Q.length]; }
+function diaryQ(){ const n = now0(); return DIARY_Q[(n.getFullYear()*372 + n.getMonth()*31 + n.getDate() + dqShift) % DIARY_Q.length]; }
 function nextDiaryQ(){ dqShift++; renderDiaryQ(); applyPt(); }
 function renderDiaryQ(){ const q = diaryQ(); $("d-q").innerHTML = T(furi(esc(q[0])), esc(q[1]), true); }
 function renderDiaryList(){
