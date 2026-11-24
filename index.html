@@ -804,7 +804,8 @@ const FURI = [
   ["一週間","いっしゅうかん"],["美容院","びよういん"],["富士山","ふじさん"],["引っ越","ひっこ"],["二回","にかい"],["三回","さんかい"],["回数","かいすう"],["理由","りゆう"],["中止","ちゅうし"],["八時","はちじ"],
   ["名詞","めいし"],["動詞","どうし"],["全然","ぜんぜん"],["三日","みっか"],["試着","しちゃく"],["店員","てんいん"],["通話","つうわ"],["指輪","ゆびわ"],["部長","ぶちょう"],["資料","しりょう"],
   ["元気","げんき"],["興味","きょうみ"],["旅行","りょこう"],["移動","いどう"],
-  ["髪","かみ"],["服","ふく"],["町","まち"],["静","しず"],["迎","むか"],["靴","くつ"],["呼","よ"],["雪","ゆき"],["祭","まつ"],["赤","あか"],["声","こえ"],["脱","ぬ"],["吸","す"],["借","か"],["立","た"],["歌","うた"]
+  ["髪","かみ"],["服","ふく"],["町","まち"],["静","しず"],["迎","むか"],["靴","くつ"],["呼","よ"],["雪","ゆき"],["祭","まつ"],["赤","あか"],["声","こえ"],["脱","ぬ"],["吸","す"],["借","か"],["立","た"],["歌","うた"],
+  ["復活券","ふっかつけん"],["夜中","よなか"],["毎週","まいしゅう"],["最大","さいだい"],["区切","くぎ"],["残","のこ"],["元","もと"],["個","こ"]
 ].map((e, i) => ({b:e[0], r:e[1], next:e[2] || "", prev:e[3] || "", i})).sort((x, y) => y.b.length - x.b.length || x.i - y.i);
 const isKanji = c => c >= "一" && c <= "鿿";
 /* ふりがなを つける。タグと、すでに ふりがなが ついた ところは そのまま。 */
@@ -939,6 +940,14 @@ const CHEER = [
 /* =========================================================
    データ
    ========================================================= */
+/* 日付（データの読みこみより前に使うので、ここに置く） */
+const pad = n => String(n).padStart(2,"0");
+const ymd = d => d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const addDays = (d,n) => { const x = new Date(d); x.setDate(x.getDate()+n); return x; };
+/* 1日の区切りは朝3時（CONFIG.dayStartHour）。0時すぎに終わっても前の日の練習になる */
+const now0 = () => new Date(Date.now() - (CONFIG.dayStartHour || 0) * 36e5);
+const todayKey = () => ymd(now0());
+const parseKey = k => new Date(k+"T00:00:00");
 const KEY = "kotonoha-v1";
 function blank(){ return {total:0,balance:0,days:{},rest:{},restWeeks:{},weeklyBonus:{},pstats:{},partStats:{},tstats:{},writings:[],diaries:[],redemptions:[],bestStreak:0,outbox:[],showPt:false,furi:false}; }
 /* 読みこみ。こわれていたら、こわれたデータを別のキーに残して、予備（1日1回の控え）から戻す。
@@ -954,7 +963,7 @@ function load(){
   return blank();
 }
 function keepBackup(raw){
-  try{ const stamp = new Date().toDateString(); const b = JSON.parse(localStorage.getItem(BAK) || "null");
+  try{ const stamp = todayKey(); const b = JSON.parse(localStorage.getItem(BAK) || "null");
     if(b && b.d === stamp) return; localStorage.setItem(BAK, JSON.stringify({d:stamp, s:raw})); }catch(e){}
 }
 let S = load();
@@ -971,13 +980,6 @@ function save(){
     <p>${T("スマホの容量がいっぱいかもしれません。ジャスに伝えてね。","Talvez a memória do celular esteja cheia. Avise o Jas.")}</p><button class="block" onclick="closeModal()">OK</button>`), 0); } }
 }
 
-const pad = n => String(n).padStart(2,"0");
-const ymd = d => d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
-const addDays = (d,n) => { const x = new Date(d); x.setDate(x.getDate()+n); return x; };
-/* 1日の区切りは朝3時（CONFIG.dayStartHour）。0時すぎに終わっても前の日の練習になる */
-const now0 = () => new Date(Date.now() - (CONFIG.dayStartHour || 0) * 36e5);
-const todayKey = () => ymd(now0());
-const parseKey = k => new Date(k+"T00:00:00");
 function weekKey(d){ const x = new Date(d); x.setHours(0,0,0,0); x.setDate(x.getDate()-((x.getDay()+6)%7)); return ymd(x); }
 /* 練習を始めた日の日付で記録する（3時をまたいでも、その回は始めた日に入れる）。
    ただし前の日に始めたものは、区切りから1時間（朝4時）まで。それより後は今日に入れる（開いたまま放っておいた場合など）。 */
@@ -1235,7 +1237,7 @@ function dailyReport(title, k){
   const L = [`${CONFIG.studentNameMail} の学習レポート（${k}）`, title, "",
     `日課：${quest(d).items.map(x => `${{p:"助詞",w:"作文",d:"日記"}[x.k]} ${x.n}/${x.of}${x.n >= x.of ? "✓" : ""}`).join("・")}${d.goalMet ? "（達成）" : "（未達成）"}`,
     `${past ? "この日" : "今日"}のポイント：${d.pts}`,
-    `連続記録：${streak()}日（最高 ${S.bestStreak}日）`,
+    `連続記録：${past ? streakAt(k) : streak()}日${past ? "（この日まで）" : ""}（最高 ${S.bestStreak}日）`,
     `累計：${S.total} pts（Lv.${lv.L} ${m[1]}）／残高：${S.balance} pts`, "",
     `■ 助詞：${d.pc} / ${d.pc+d.pw} 正解`];
   d.pwq.forEach(w => { const q = PQ.find(x => x.id === w.id); if(q) L.push(`  ✕ ${q.jp.replace("＿", "［"+w.chose+"］")}（正解：${q.a}）`); });
@@ -1471,7 +1473,7 @@ function staticTexts(){
   setT("s-sent-l","書いた文 ✏️","frases escritas");
   setT("s-diary-l","日記 📔","diários");
   setT("g-h-cal","12週間の記録","ÚLTIMAS 12 SEMANAS");
-  setT("g-cal-l","薄い色 ＝ 少し練習した日・濃い色 ＝ 目標達成・黄色 ＝ 復活券で戻した日","Claro = praticou um pouco · escuro = meta concluída · amarelo = dia recuperado com cupom");
+  setT("g-cal-l","薄い色 ＝ 少し練習した日・濃い色 ＝ 目標達成・紫 ＝ 目標のあとも練習した日・黄色 ＝ 復活券で戻した日や移動の日","Claro = praticou um pouco · escuro = meta concluída · roxo = continuou praticando depois da meta · amarelo = dia recuperado com cupom ou dia de viagem");
   setT("g-h-part","助詞の正解率","ACERTOS POR PARTÍCULA");
   setT("g-h-write","作文","ESCRITA");
   setT("g-h-set","設定","CONFIGURAÇÕES");
@@ -1840,7 +1842,8 @@ function renderProgress(){
     const dt = addDays(start, i), k = ymd(dt);
     if(dt > end){ h += '<div style="background:transparent"></div>'; continue; }
     const p = S.days[k] ? S.days[k].pts : 0, met = !!(S.days[k] && S.days[k].goalMet);
-    const c = (S.rest[k] || travelDay(k)) && !met ? "hr" : met ? (p >= 60 ? "h3" : "h2") : p > 0 ? "h1" : "";
+    const extra = met && daySig(S.days[k]) > CONFIG.daily.particles + CONFIG.daily.writing + CONFIG.daily.diary;   // 目標のあとも練習した日
+    const c = (S.rest[k] || travelDay(k)) && !met ? "hr" : met ? (extra ? "h3" : "h2") : p > 0 ? "h1" : "";
     h += `<div class="${c}" title="${k}: ${p}"></div>`;
   }
   $("heat").innerHTML = h;
