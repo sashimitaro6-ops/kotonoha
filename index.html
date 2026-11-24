@@ -109,6 +109,7 @@ nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;p
 nav .in{display:flex;max-width:500px;width:100%;background:rgba(255,255,255,.95);border-radius:28px;box-shadow:0 8px 24px rgba(184,164,244,.3);border:2px solid #fff;pointer-events:auto;padding:4px}
 nav button{flex:1;background:none;box-shadow:none;color:var(--muted);border-radius:22px;padding:8px 2px 6px;font-size:11px}
 nav button i{display:block;font-style:normal;font-size:21px;line-height:1.25}
+nav button i img{display:block;width:30px;height:30px;margin:0 auto 1px;object-fit:contain}
 nav button.on{background:var(--pink-s);color:var(--pink-t)}
 section{display:none}
 section.on{display:block;animation:fade .3s}
@@ -383,11 +384,11 @@ button rt{color:inherit;opacity:.85}
 </main>
 
 <nav><div class="in">
-  <button data-go="home" class="on" onclick="go('home')"><i>🏡</i>ホーム</button>
-  <button data-go="practice" onclick="go('practice')"><i>🎀</i>練習</button>
-  <button data-go="diary" onclick="go('diary')"><i>📔</i>日記</button>
-  <button data-go="prizes" onclick="go('prizes')"><i>🎁</i>ご褒美</button>
-  <button data-go="progress" onclick="go('progress')"><i>🌷</i>成長</button>
+  <button data-go="home" class="on" onclick="go('home')"><i><img src="images/tab-home.webp" alt="" draggable="false" onerror="imgFail(this)"></i>ホーム</button>
+  <button data-go="practice" onclick="go('practice')"><i><img src="images/tab-practice.webp" alt="" draggable="false" onerror="imgFail(this)"></i>練習</button>
+  <button data-go="diary" onclick="go('diary')"><i><img src="images/tab-diary.webp" alt="" draggable="false" onerror="imgFail(this)"></i>日記</button>
+  <button data-go="prizes" onclick="go('prizes')"><i><img src="images/tab-prizes.webp" alt="" draggable="false" onerror="imgFail(this)"></i>ご褒美</button>
+  <button data-go="progress" onclick="go('progress')"><i><img src="images/tab-growth.webp" alt="" draggable="false" onerror="imgFail(this)"></i>成長</button>
 </div></nav>
 
 <div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
@@ -1313,7 +1314,8 @@ function closeModal(){ $("overlay").classList.remove("on"); document.body.classL
 const IMG = (n, cls, st) => `<img src="images/${n}.webp" alt="" class="${cls || "bimg"}"${st ? ` style="${st}"` : ""} draggable="false" onerror="imgFail(this)">`;
 /* 絵が読みこめなかったとき（公開の直後・電波が悪いときなど）：1回だけ読みこみ直し、それでもだめなら絵文字を出す */
 const IMG_EMOJI = {"icon-particles":"🎀","icon-writing":"✏️","icon-diary":"📔","icon-letter":"💌","icon-note":"📒","journey":"✈️",
-  "gift":"🎁","flame":"🔥","ticket":"🎫","flag-br":"🇧🇷","flag-jp":"🇯🇵","pencil":"✏️"};
+  "gift":"🎁","flame":"🔥","ticket":"🎫","flag-br":"🇧🇷","flag-jp":"🇯🇵","pencil":"✏️",
+  "tab-home":"🏡","tab-practice":"🎀","tab-diary":"📔","tab-prizes":"🎁","tab-growth":"🌷"};
 /* 文の中に入れる小さな絵 */
 const ICO = n => `<img src="images/${n}.webp" alt="" class="ico" draggable="false" onerror="imgFail(this)">`;
 function imgFail(el){
