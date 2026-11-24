@@ -96,6 +96,9 @@ rt{ruby-align:center}
 /* 絵（images/）。うさぎは Gemini で作った絵、背景は透明 */
 .bimg{display:block;margin:0 auto;width:120px;height:120px;object-fit:contain;pointer-events:none}
 .ic img{width:40px;height:40px;object-fit:contain}
+/* 文の中の小さな絵（🔥🎫🎁🇧🇷 などの代わり） */
+.ico{display:inline-block;height:1.3em;width:auto;vertical-align:-.3em;margin:0 .06em}
+.ptbtn img{width:28px;height:28px;object-fit:contain;display:block;margin:auto}
 .env img{width:120px;height:120px;object-fit:contain;display:block}
 .cdimg{display:block;width:100%;height:auto;border-radius:16px;margin:8px 0 6px}
 @keyframes bob{50%{transform:translateY(-5px)}}
@@ -258,7 +261,7 @@ button rt{color:inherit;opacity:.85}
     <div>
       <h1 id="hello"></h1>
     </div>
-    <span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" id="ptbtn" onclick="togglePt()" aria-label="Mostrar português">🇧🇷</button></span>
+    <span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" id="ptbtn" onclick="togglePt()" aria-label="Mostrar português"><img src="images/flag-br.webp" alt="" draggable="false" onerror="imgFail(this)"></button></span>
   </div>
 
   <div class="hero">
@@ -285,7 +288,7 @@ button rt{color:inherit;opacity:.85}
   </div>
 
   <button class="stat row" style="width:100%;justify-content:space-between;color:var(--ink);text-align:left" onclick="go('prizes')">
-    <span><span class="n" id="balance" style="display:block">0</span><span class="l" id="balance-l"></span></span><span style="font-size:30px">🎁</span>
+    <span><span class="n" id="balance" style="display:block">0</span><span class="l" id="balance-l"></span></span><img src="images/gift.webp" alt="" style="width:46px;height:46px" draggable="false" onerror="imgFail(this)">
   </button>
 
   <h3 id="h-today"></h3>
@@ -306,7 +309,7 @@ button rt{color:inherit;opacity:.85}
 <!-- ============ 練習 ============ -->
 <section id="practice">
   <div id="practice-menu">
-    <div class="top"><h1 id="pr-title"></h1><span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" onclick="togglePt()" aria-label="Mostrar português">🇧🇷</button></span></div>
+    <div class="top"><h1 id="pr-title"></h1><span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" onclick="togglePt()" aria-label="Mostrar português"><img src="images/flag-br.webp" alt="" draggable="false" onerror="imgFail(this)"></button></span></div>
     <button class="bigbtn" onclick="startParticles()">
       <span class="ic pk"><img src="images/icon-particles.webp" alt="" onerror="imgFail(this)"></span><span class="txt" id="m-part"></span><span class="go">›</span>
     </button>
@@ -322,7 +325,7 @@ button rt{color:inherit;opacity:.85}
 
 <!-- ============ 日記 ============ -->
 <section id="diary">
-  <div class="top"><h1 id="d-title"></h1><span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" onclick="togglePt()">🇧🇷</button></span></div>
+  <div class="top"><h1 id="d-title"></h1><span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" onclick="togglePt()" aria-label="Mostrar português"><img src="images/flag-br.webp" alt="" draggable="false" onerror="imgFail(this)"></button></span></div>
   <div class="card">
     <div class="explain" style="margin:0 0 4px">
       <div class="hd" id="d-q-h"></div>
@@ -339,10 +342,10 @@ button rt{color:inherit;opacity:.85}
 
 <!-- ============ ご褒美 ============ -->
 <section id="prizes">
-  <div class="top"><h1 id="z-title"></h1><span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" onclick="togglePt()" aria-label="Mostrar português">🇧🇷</button></span></div>
+  <div class="top"><h1 id="z-title"></h1><span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" onclick="togglePt()" aria-label="Mostrar português"><img src="images/flag-br.webp" alt="" draggable="false" onerror="imgFail(this)"></button></span></div>
   <div class="card row" style="justify-content:space-between">
     <div><div class="muted" id="z-have"></div><div style="font-size:34px;font-weight:900" id="p-balance">0</div></div>
-    <div style="font-size:46px">🎁</div>
+    <img src="images/gift.webp" alt="" style="width:64px;height:64px" draggable="false" onerror="imgFail(this)">
   </div>
   <div id="gift-wrap"><h3 id="z-h-gift"></h3><div class="card" id="gift-box"></div></div>
   <div class="card" id="prize-list"></div>
@@ -351,7 +354,7 @@ button rt{color:inherit;opacity:.85}
 
 <!-- ============ 成長 ============ -->
 <section id="progress">
-  <div class="top"><h1 id="g-title"></h1><span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" onclick="togglePt()" aria-label="Mostrar português">🇧🇷</button></span></div>
+  <div class="top"><h1 id="g-title"></h1><span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" onclick="togglePt()" aria-label="Mostrar português"><img src="images/flag-br.webp" alt="" draggable="false" onerror="imgFail(this)"></button></span></div>
   <div class="grid2">
     <div class="stat"><div class="n" id="s-total">0</div><div class="l" id="s-total-l"></div></div>
     <div class="stat"><div class="n" id="s-best">0</div><div class="l" id="s-best-l"></div></div>
@@ -863,7 +866,7 @@ function speak(text){
 }
 function speakP(){ const q = P.qs[P.i]; if(q) speak(q.jp.replace("＿", q.a)); }
 function speakW(i){ const q = W.qs[W.i]; if(q && q.a[i]) speak(q.a[i]); }
-const topBtns = () => `<span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" onclick="togglePt()" aria-label="Mostrar português">🇧🇷</button></span>`;
+const topBtns = () => `<span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" onclick="togglePt()" aria-label="Mostrar português"><img src="images/flag-br.webp" alt="" draggable="false" onerror="imgFail(this)"></button></span>`;
 
 /* 日記の お題 [日本語, ポルトガル語]（日替わり）。漢字は FURI に ある ものだけ 使う。 */
 const DIARY_Q = [
@@ -1051,8 +1054,8 @@ function renderRescue(){
   const tk = S.tickets || 0;
   el.innerHTML = tk > 0 ? `${IMG("bunny-gentle", "bimg", "width:96px;height:96px")}
     <div class="rq-h">${T("連続記録が切れそう！","Sua sequência está em perigo!")}</div>
-    <p>${T(`${mdJ(r.k)}は目標に届かなかったよ。<br>復活券を1枚使うと、🔥 <b>${dayR(r.n)}</b> の連続が元に戻るよ。`, `Em ${mdP(r.k)} a meta não foi concluída. Use 1 cupom para recuperar a sequência de ${r.n} dias.`)}</p>
-    <button class="block rq-btn" onclick="askTicket()">${T(`🎫 復活券を使う（残り ${tk}枚）`, `Usar cupom (você tem ${tk})`)}</button>
+    <p>${T(`${mdJ(r.k)}は目標に届かなかったよ。<br>復活券を1枚使うと、${ICO("flame")} <b>${dayR(r.n)}</b> の連続が元に戻るよ。`, `Em ${mdP(r.k)} a meta não foi concluída. Use 1 cupom para recuperar a sequência de ${r.n} dias.`)}</p>
+    <button class="block rq-btn" onclick="askTicket()">${T(`${ICO("ticket")} 復活券を使う（残り ${tk}枚）`, `Usar cupom (você tem ${tk})`)}</button>
     <p class="muted small" style="margin:8px 0 0">${T("今日のうちに使ってね。明日になると使えないよ。","Use hoje — amanhã não será mais possível.")}</p>`
   : `${IMG("bunny-sleepy", "bimg", "width:96px;height:96px")}
     <div class="rq-h">${T("連続記録が切れちゃった…","A sequência foi interrompida…")}</div>
@@ -1060,8 +1063,8 @@ function renderRescue(){
 }
 function askTicket(){
   const r = rescueDay(); if(!r || !(S.tickets > 0)) return;
-  modal(`<div class="big">🎫</div><h2>${T("復活券を使う？","Usar o cupom?")}</h2>
-    <p>${T(`${mdJ(r.k)}を「やった日」にして、🔥 <b>${dayR(r.n)}</b> の連続を元に戻すよ。<br>残りの復活券：${S.tickets}枚 → ${S.tickets - 1}枚`, `${mdP(r.k)} vai contar como dia feito e a sequência de ${r.n} dias volta. Cupons: ${S.tickets} → ${S.tickets - 1}.`)}</p>
+  modal(`${IMG("ticket", "bimg", "width:100px;height:100px")}<h2>${T("復活券を使う？","Usar o cupom?")}</h2>
+    <p>${T(`${mdJ(r.k)}を「やった日」にして、${ICO("flame")} <b>${dayR(r.n)}</b> の連続を元に戻すよ。<br>残りの復活券：${S.tickets}枚 → ${S.tickets - 1}枚`, `${mdP(r.k)} vai contar como dia feito e a sequência de ${r.n} dias volta. Cupons: ${S.tickets} → ${S.tickets - 1}.`)}</p>
     <div class="grid2" style="margin-top:14px"><button class="ghost" onclick="closeModal()">${T("やめる","Cancelar")}</button><button onclick="useTicket()">${T("使う！","Usar!")}</button></div>`);
   applyPt();
 }
@@ -1074,13 +1077,13 @@ function useTicket(){
   sendMail({subject:`🎫 ${CONFIG.studentNameMail} がストリーク復活券を使いました`,
     body:`${CONFIG.studentNameMail} がストリーク復活券を使いました。\n\n戻した日：${r.k}\n連続記録：${st}日\n残りの復活券：${S.tickets}枚`});
   sparkles();
-  modal(`<div class="big">🔥</div><h2>${T("連続記録が戻ったよ！","A sequência voltou!")}</h2>
+  modal(`${IMG("flame", "bimg", "width:100px;height:100px")}<h2>${T("連続記録が戻ったよ！","A sequência voltou!")}</h2>
     <p>${T(`今は <b>${dayR(st)}</b> 連続。今日も練習して、記録をのばそう！`, `Agora são ${st} dias seguidos. Pratique hoje para continuar!`)}</p>
     <button class="block" onclick="closeModal()">${T("がんばる！","Vamos lá!")}</button>`);
   refresh();
 }
 function ticketInfo(){
-  modal(`<div class="big">🎫</div><h2>${T("ストリーク復活券","Cupom de sequência")}</h2>
+  modal(`${IMG("ticket", "bimg", "width:100px;height:100px")}<h2>${T("ストリーク復活券","Cupom de sequência")}</h2>
     <p style="text-align:left">${T("・目標に届かなかった日の次の日に、ホームに「復活券を使う」ボタンが出るよ。押すと、連続記録が元に戻るよ。","• No dia seguinte a um dia sem meta, aparece na tela inicial o botão “Usar cupom”. Ele recupera a sua sequência.")}</p>
     <p style="text-align:left">${T(`・毎週月曜日に1枚もらえるよ（最大${CONFIG.maxTickets}枚まで貯められる）。`, `• Toda segunda-feira você ganha 1 cupom (pode guardar até ${CONFIG.maxTickets}).`)}</p>
     <p style="text-align:left">${T(`・1日の区切りは朝${CONFIG.dayStartHour}時。夜中の0時をすぎても、${CONFIG.dayStartHour}時までの練習は前の日に数えるよ。`, `• O dia só vira às ${CONFIG.dayStartHour}h da manhã. O que você fizer depois da meia-noite, até as ${CONFIG.dayStartHour}h, conta para o dia anterior.`)}</p>
@@ -1103,7 +1106,7 @@ function repairStreakOnce(){
       S.rest[k] = "fix";
       const st = streak(); if(st > S.bestStreak) S.bestStreak = st;
       save();
-      if(S.tutV) setTimeout(() => queueModal(`<div class="big">🔥</div><h2>${T("連続記録を元に戻したよ","Sua sequência foi recuperada")}</h2>
+      if(S.tutV) setTimeout(() => queueModal(`${IMG("flame", "bimg", "width:100px;height:100px")}<h2>${T("連続記録を元に戻したよ","Sua sequência foi recuperada")}</h2>
         <p>${T(`夜中の0時をすぎて終わったせいで、連続が切れていたよ。ジャスが元に戻したよ。今は <b>${dayR(st)}</b> 連続！`, `A sequência tinha sido interrompida porque você terminou depois da meia-noite. O Jas recuperou: agora são ${st} dias seguidos!`)}</p>
         <p>${T(`これからは、朝${CONFIG.dayStartHour}時までの練習は前の日に数えるよ。`, `Agora, o que você fizer até as ${CONFIG.dayStartHour}h da manhã conta para o dia anterior.`)}</p>
         <button class="block" onclick="closeModal()">${T("ありがとう！","Obrigada!")}</button>`), 500);
@@ -1139,9 +1142,9 @@ function onGoal(k){
   if(c >= CONFIG.weeklyGoalDays && !S.weeklyBonus[wk]){ S.weeklyBonus[wk] = true; bonus(CONFIG.weeklyBonus, k); extra += `<p class="surprise">${T(`🏅 1週間の目標達成！ +${CONFIG.weeklyBonus}`, `Meta da semana! +${CONFIG.weeklyBonus} pts`)}</p>`; }
   save();
   const MILE = [3, 7, 14, 21, 30, 50, 75, 100, 150, 200, 250, 300, 365];
-  if(MILE.includes(st)) extra = `<p class="surprise" style="font-size:18px">${T(`🔥 ${dayR(st)}連続の記録！`, `Recorde: ${st} dias seguidos!`)}</p>` + extra;
+  if(MILE.includes(st)) extra = `<p class="surprise" style="font-size:18px">${T(`${ICO("flame")} ${dayR(st)}連続の記録！`, `Recorde: ${st} dias seguidos!`)}</p>` + extra;
   setTimeout(() => { Party.goal(st); queueModal(`${IMG("bunny-joy")}<h2>${T("今日の目標達成！","Meta de hoje concluída!")}</h2>
-    <p>${T(`<b>${dayR(st)}</b> 連続 🔥`, `${st} ${st===1?"dia":"dias"} seguidos`)}</p>${extra}
+    <p>${T(`<b>${dayR(st)}</b> 連続 ${ICO("flame")}`, `${st} ${st===1?"dia":"dias"} seguidos`)}</p>${extra}
     <button class="block" style="margin-top:12px" onclick="closeModal()">${T("やったー！","Oba!")}</button>`); }, 700);
   day(k).rep = daySig(day(k));
   sendMail(dailyReport(k === todayKey() ? "✅ 今日の目標を達成しました" : "✅ 目標を達成しました（区切りの3時をすぎてから終わりました）", k), {snap:true});
@@ -1285,7 +1288,10 @@ function closeModal(){ $("overlay").classList.remove("on"); document.body.classL
 /* うさぎなどの絵（images/ の WebP） */
 const IMG = (n, cls, st) => `<img src="images/${n}.webp" alt="" class="${cls || "bimg"}"${st ? ` style="${st}"` : ""} draggable="false" onerror="imgFail(this)">`;
 /* 絵が読みこめなかったとき（公開の直後・電波が悪いときなど）：1回だけ読みこみ直し、それでもだめなら絵文字を出す */
-const IMG_EMOJI = {"icon-particles":"🎀","icon-writing":"✏️","icon-diary":"📔","icon-letter":"💌","icon-note":"📒","journey":"✈️"};
+const IMG_EMOJI = {"icon-particles":"🎀","icon-writing":"✏️","icon-diary":"📔","icon-letter":"💌","icon-note":"📒","journey":"✈️",
+  "gift":"🎁","flame":"🔥","ticket":"🎫","flag-br":"🇧🇷","flag-jp":"🇯🇵","pencil":"✏️"};
+/* 文の中に入れる小さな絵 */
+const ICO = n => `<img src="images/${n}.webp" alt="" class="ico" draggable="false" onerror="imgFail(this)">`;
 function imgFail(el){
   const m = (el.getAttribute("src") || "").match(/images\/([\w-]+)\.webp/); if(!m) return;
   if(!el.dataset.retry){ el.dataset.retry = 1; el.src = `images/${m[1]}.webp?r=${Date.now()}`; return; }
@@ -1461,15 +1467,15 @@ function staticTexts(){
   $("d-send").innerHTML = T("ジャスに送る 💌","Enviar para o Jas");
   setT("d-h-prev","前の日記","DIÁRIOS ANTERIORES");
   // ご褒美
-  setT("z-title","ご褒美 🎁","Prêmios");
+  setT("z-title",`ご褒美 ${ICO("gift")}`,"Prêmios");
   setT("z-have","持っているポイント","Seus pontos");
   setT("z-h-done","交換したご褒美","JÁ TROCADOS");
   setT("z-h-gift","ご褒美の手紙 💌","CARTAS-PRÊMIO");
   // 成長
   setT("g-title","成長 🌷","Progresso");
   setT("s-total-l","全部のポイント","pontos no total");
-  setT("s-best-l","一番長い連続 🔥","maior sequência");
-  setT("s-sent-l","書いた文 ✏️","frases escritas");
+  setT("s-best-l",`一番長い連続 ${ICO("flame")}`,"maior sequência");
+  setT("s-sent-l",`書いた文 ${ICO("pencil")}`,"frases escritas");
   setT("s-diary-l","日記 📔","diários");
   setT("g-h-cal","12週間の記録","ÚLTIMAS 12 SEMANAS");
   $("g-cal-l").innerHTML = [["h1","少し練習した日","Praticou um pouco"],["h2","目標達成","Meta concluída"],["h3","目標のあとも練習","Continuou depois da meta"],["hr","復活券・移動の日","Cupom ou viagem"]]
@@ -1501,8 +1507,8 @@ function refresh(){
   const prog = (x, ptName) => x ? (x.n >= x.of ? `<span class="cnt done">✓</span>` : `<span class="cnt">${x.n} / ${x.of}</span>`) : "";
   $("b-part").innerHTML = `<b>${furi("助詞")}</b>` + T("", "Partículas") + prog(pq);
   $("b-write").innerHTML = `<b>${furi("作文")}</b>` + T("", "Escrita") + prog(wq);
-  $("streak-line").innerHTML = T(`🔥 ${dayR(st)} 連続`, `${st} dias seguidos`);
-  $("rest-status").innerHTML = `<button class="tkbtn" onclick="ticketInfo()" aria-label="Cupons">🎫 × ${S.tickets || 0}</button>`;
+  $("streak-line").innerHTML = T(`${ICO("flame")} ${dayR(st)} 連続`, `${st} dias seguidos`);
+  $("rest-status").innerHTML = `<button class="tkbtn" onclick="ticketInfo()" aria-label="Cupons">${ICO("ticket")} × ${S.tickets || 0}</button>`;
   renderRescue();
   $("balance").textContent = S.balance;
   $("balance-l").innerHTML = T("貯めたポイント","pontos guardados");
@@ -1541,7 +1547,7 @@ function renderP(){
       ${retry ? `<div class="explain" style="margin:0 0 10px">${T("🔁 もう一度","De novo (sem pontos)")}</div>` : ""}
       <div class="sentence">${furi(esc(q.jp)).replace("＿", '<span class="blank" id="blank">？</span>')}</div>
       <button class="linkbtn" id="m-btn" onclick="this.style.display='none';$('meaning').style.display='block'">${T("意味を見る","ver o significado")}</button>
-      <div class="meaning" id="meaning" style="display:none">🇧🇷 ${esc(q.pt)}</div>
+      <div class="meaning" id="meaning" style="display:none">${ICO("flag-br")} ${esc(q.pt)}</div>
       <div class="opts">${shuffle(q.o).map(o => `<button onclick="answerP(this,'${o}')">${o}</button>`).join("")}</div>
       <div id="p-after"></div>
     </div>`;
@@ -1578,7 +1584,7 @@ function nextStep(from){
   const q = quest(day()), need = k => { const x = q.by(k); return !!(x && x.n < x.of); };
   const order = {p:["w","d"], w:["d","p"]}[from] || [];
   const S2 = {p:[`go('practice',true);startParticles()`, "次は助詞 🎀 →", "Próximo: partículas →"],
-              w:[`go('practice',true);startWriting()`, "次は作文 ✏️ →", "Próximo: escrita →"],
+              w:[`go('practice',true);startWriting()`, `次は作文 ${ICO("pencil")} →`, "Próximo: escrita →"],
               d:[`go('diary',true)`, "次は日記 📔 →", "Próximo: diário →"]};
   const k = order.find(need);
   return k ? `<button class="block" style="margin-top:16px;font-size:18px;padding:14px 18px" onclick="${S2[k][0]}">${T(S2[k][1], S2[k][2])}</button>` : "";
@@ -1800,7 +1806,7 @@ function renderDiaryList(){
 const JP_AFTER = "日本に来てから";
 const rwName = n => String(n).replace("・" + JP_AFTER + "）", "）").replace("（" + JP_AFTER + "）", "");
 const rwPt = s => String(s || "").replace(/\s*\(depois que você chegar ao Japão\)/, "");
-const rwTag = n => String(n).includes(JP_AFTER) ? `<div class="tag-jp">🇯🇵 ${T(JP_AFTER, "Depois de chegar ao Japão")}</div>` : "";
+const rwTag = n => String(n).includes(JP_AFTER) ? `<div class="tag-jp">${ICO("flag-jp")} ${T(JP_AFTER, "Depois de chegar ao Japão")}</div>` : "";
 /* ご褒美の手紙の受け取り口：交換した順に、届いた手紙と、ジャスが書いている途中のもの */
 function renderGiftBox(){
   const reds = giftReds();
@@ -1832,7 +1838,7 @@ function renderPrizes(){
     + S.redemptions.map((x, i) => [x, i]).reverse().map(([x, i]) => `<div class="item top"><div>${x.icon} ${furi(esc(rwName(x.name)))}${rwTag(x.name)}<div class="muted small">${T(`${new Date(x.ts).toLocaleDateString("ja-JP")} 交換`, "trocado")}<span style="font-weight:900;color:#8a6500">・−${x.cost}</span></div></div>
       ${x.id === GIFT_REWARD ? giftBtn(i)
         : x.got ? `<button class="linkbtn" style="color:var(--mint-t);text-decoration:none;flex:none" onclick="askGot(${i})">${T("✓ もらった","Recebido")}</button>`
-        : `<button class="ghost" style="padding:8px 12px;font-size:14px;flex:none" onclick="askGot(${i})">${T("🎁 もらった","Recebi")}</button>`}</div>`).join("");
+        : `<button class="ghost" style="padding:8px 12px;font-size:14px;flex:none" onclick="askGot(${i})">${T(`${ICO("gift")} もらった`,"Recebi")}</button>`}</div>`).join("");
 }
 /* 手紙のご褒美：届いていれば「読む」、まだなら ✍️ */
 function giftBtn(i){
@@ -1939,7 +1945,7 @@ let noteTab = "m";
 function openNote(tab){
   if(tab) noteTab = tab; curRun = null;
   $("practice-menu").style.display = "none"; $("practice-run").style.display = "";
-  const tabs = [["m","🌧️ 間違い","Erros"],["w","✏️ 書いた文","Frases"],["r","🎀 ルール","Regras"]];
+  const tabs = [["m","🌧️ 間違い","Erros"],["w",`${ICO("pencil")} 書いた文`,"Frases"],["r","🎀 ルール","Regras"]];
   let body = "";
   if(noteTab === "m"){
     const bx = q => S.pstats[q.id].box || 0;
@@ -1954,10 +1960,10 @@ function openNote(tab){
     const ws = S.writings.slice(-40).reverse().map(w => { const q = TR.find(x => x.id === w.id); if(!q) return "";
       const g = w.auto ? T("🌸 ぴったり","Perfeito") : w.idk ? T("🤔 分からなかった","Não sabia") : T(GRADE[w.grade] || "", {3:"Acertei", 2:"Quase", 1:"Errei"}[w.grade] || "");
       return `<div class="item"><div class="muted small">${esc(w.date)}・${g}${w.re ? `・${T("✍️ 書き直した","Reescrita")}` : ""}</div>
-        <div class="meaning">🇧🇷 ${esc(q.pt)}</div>${w.ans ? `<div class="yours">${esc(w.ans)}</div>` : ""}
+        <div class="meaning">${ICO("flag-br")} ${esc(q.pt)}</div>${w.ans ? `<div class="yours">${esc(w.ans)}</div>` : ""}
         <div class="model">${furi(esc(q.a[0]))}${spkBtn(`speakT('${q.id}')`)}</div></div>`; }).join("");
     body = `<div class="card">` + (ws ? ws
-      : `<div class="empty"><div class="big">✏️</div>${T("作文をするとここに出るよ","Faça um exercício de escrita para ver aqui.")}</div>`) + `</div>`;
+      : `<div class="empty">${IMG("pencil", "bimg", "width:80px;height:80px")}${T("作文をするとここに出るよ","Faça um exercício de escrita para ver aqui.")}</div>`) + `</div>`;
   } else {
     body = `<div class="card">` + RULES.map((r, i) => { const s = S.partStats[r[0]];
       return `<div class="item row" style="align-items:flex-start"><div class="rule-k">${r[0]}${s ? `<div class="muted small" style="font-weight:500">${Math.round(100*s.c/(s.c+s.w))}%</div>` : ""}</div><div style="flex:1">` + r[1].map((u, j) =>
@@ -2118,7 +2124,7 @@ function revealLetter(id){
   if(S.letters[id] && !S.letters[id].r){ S.letters[id].r = Date.now(); save(); }
   modal(`<div class="paper"><div class="pt">💌 ${ljp(l.title[0])}</div>
       <div class="pj">${ljp(l.jp)}</div>
-      <div class="pp">🇧🇷 ${esc(l.pt).replace(/\n/g, "<br>")}</div>
+      <div class="pp">${ICO("flag-br")} ${esc(l.pt).replace(/\n/g, "<br>")}</div>
       ${canSpeak ? `<button class="spk wide" onclick="speak(findLetter('${id}').jp)" aria-label="Ouvir">🔊</button>` : ""}</div>
     <div class="grid2" style="margin-top:14px">${isGift(id) ? `<button class="ghost" onclick="closeModal();go('prizes')">${T("ご褒美","Prêmios")}</button>` : `<button class="ghost" onclick="openMailbox()">${T("手紙箱","Cartas")}</button>`}<button onclick="closeModal()">${T("閉じる","Fechar")}</button></div>`);
   applyPt(); refresh();
@@ -2168,16 +2174,16 @@ function tutSteps(){
     {ic:IMG("bunny-hello"), h:["ことのはの森へようこそ！","Bem-vinda à Floresta das Palavras!"], b:[
       ["ジャスが、あなたのために作った日本語の練習アプリだよ","O Jas fez este app de japonês especialmente para você."],
       ["毎日少しずつ練習して、日本に来る日の準備をしよう 🌸","Vamos praticar um pouquinho todo dia e nos preparar para a sua chegada ao Japão."]]},
-    {ic:"あ 🇧🇷", h:["二つのボタン","Dois botões"], b:[
+    {ic:`あ ${ICO("flag-br")}`, h:["二つのボタン","Dois botões"], b:[
       ["「あ」：漢字の上の読み方を出す・消す","「あ」: mostra ou esconde a leitura em cima dos kanji."],
-      ["🇧🇷：ポルトガル語の訳を出す・消す","🇧🇷: mostra ou esconde a tradução em português."],
+      [`${ICO("flag-br")}：ポルトガル語の訳を出す・消す`,"🇧🇷: mostra ou esconde a tradução em português."],
       ["文を押すと、その文だけ訳が出ることもあるよ","Em algumas frases, é só tocar para ver a tradução."]]},
     {ic:"🎯", h:["毎日の目標","A meta de cada dia"], b:[
       ["助詞10問・作文3文・日記1件。三つ全部やったら目標達成！","10 partículas, 3 frases e 1 diário. Fez os três? Meta concluída!"],
-      ["毎日続けると 🔥 連続記録がのびるよ","Praticando todo dia, a sua sequência 🔥 vai crescendo."],
-      ["🎫 ストリーク復活券：目標に届かなかった次の日、ホームの「復活券を使う」で連続が元に戻るよ（毎週月曜日に1枚）","🎫 Cupom de sequência: no dia seguinte a um dia sem meta, toque em “Usar cupom” na tela inicial para recuperar a sequência (1 cupom toda segunda-feira)."],
+      [`毎日続けると ${ICO("flame")} 連続記録がのびるよ`,"Praticando todo dia, a sua sequência 🔥 vai crescendo."],
+      [`${ICO("ticket")} ストリーク復活券：目標に届かなかった次の日、ホームの「復活券を使う」で連続が元に戻るよ（毎週月曜日に1枚）`,"🎫 Cupom de sequência: no dia seguinte a um dia sem meta, toque em “Usar cupom” na tela inicial para recuperar a sequência (1 cupom toda segunda-feira)."],
       ["🌙 1日の区切りは朝3時。0時をすぎても3時までなら前の日の練習になるよ","🌙 O dia só vira às 3h da manhã. Até as 3h, conta para o dia anterior."]]},
-    {ic:"🎀 ✏️", h:["練習","Os exercícios"], b:[
+    {ic:`${ICO("icon-particles")} ${ICO("pencil")}`, h:["練習","Os exercícios"], b:[
       ["🎀 助詞：＿に入る助詞を選ぶ。間違えた問題は、覚えるまでまた出るよ","🎀 Partículas: escolha a partícula certa. As que você errar voltam até você aprender."],
       ["✏️ 作文：ポルトガル語の文を日本語で書く。答えの例と比べて、自分で ◎○△ をつけてね。分からないときは「分からない」を押してもいいよ","✏️ Escrita: escreva a frase em japonês, compare com o exemplo e se avalie com ◎ ○ △. Se não souber, pode tocar em “Não sei”."],
       ["📒 ノート：間違えた問題・書いた文・助詞のルールを見返せるよ","📒 Caderno: reveja seus erros, as frases que escreveu e as regras das partículas."]]},
@@ -2185,9 +2191,9 @@ function tutSteps(){
       ["今日のことを日本語で1〜3文書いてね。お題もあるよ","Escreva de 1 a 3 frases em japonês sobre o seu dia. Tem sugestão de tema também."],
       mail ? ["ジャスが読んで、メールで直して返事するよ 💌","O Jas vai ler e responder por e-mail com as correções."] : ["ジャスが読んで、直して返事するよ 💌","O Jas vai ler e responder com as correções."],
       ["間違えても大丈夫！書くことが一番の練習だよ","Tudo bem errar! Escrever é o melhor treino."]]},
-    {ic:"🎁", h:["ポイントとご褒美","Pontos e prêmios"], b:[
+    {ic:IMG("gift", "bimg", "width:90px;height:90px"), h:["ポイントとご褒美","Pontos e prêmios"], b:[
       ["練習するとポイントがたまるよ。ポイントで、ジャスからのご褒美と交換できるよ","Praticando você ganha pontos e pode trocá-los por prêmios do Jas."],
-      ["ご褒美をもらったら、「🎁 もらった」を押してね","Quando receber o prêmio, toque em “🎁 もらった”."],
+      [`ご褒美をもらったら、「${ICO("gift")} もらった」を押してね`,"Quando receber o prêmio, toque em “🎁 もらった”."],
       ["「ジャスの手紙」のご褒美は、ジャスが書いたら「ご褒美」の画面に届くよ 💌","O prêmio “carta do Jas” chega na tela de prêmios quando o Jas terminar de escrever."]]},
     {ic:"📱", h:["準備","Preparação"], b:prep},
     {ic:IMG("bunny-cheer"), h:["準備OK！","Tudo pronto!"], b:[
