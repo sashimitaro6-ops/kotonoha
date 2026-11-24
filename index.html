@@ -408,6 +408,7 @@ const CONFIG = {
   weeklyGoalDays: 5,
   weeklyBonus: 30,
   dayStartHour: 3,                // 1日の区切り。夜中の0時〜3時の練習は「前の日」に数える
+  travelDays: 2,                  // 来日の日と、その前の何日かは「移動の日」。練習しなくても連続記録に数える（飛行機と時差のため）
   maxTickets: 3,                  // ストリーク復活券を持てる最大の枚数（毎週月曜日に1枚もらえる）
   surpriseChance: 0.15,
   particlesPerSession: 10,
@@ -575,7 +576,67 @@ const PQ = [
   {id:"p128", jp:"天気＿いいので、散歩に行きましょう。", pt:"O tempo está bom, vamos passear.", a:"が", o:["が", "を", "で", "に"], exj:"「〜がいい」：天気がいい、頭がいい。", ex:"〜が いい: o tempo está bom."},
   {id:"p129", jp:"これは私＿傘です。", pt:"Este é o meu guarda-chuva.", a:"の", o:["の", "を", "に", "で"], exj:"誰のものかは「の」：私の傘。", ex:"の indica de quem é: わたしの かさ."},
   {id:"p130", jp:"日曜日は掃除＿洗濯をします。", pt:"No domingo eu limpo a casa, lavo roupa etc.", a:"や", o:["や", "を", "で", "が"], exj:"「AやB」＝ AとBと、他にもある。", ex:"AやB = A, B e outras coisas."},
-  {id:"p131", jp:"ペン＿鉛筆を貸してください。", pt:"Me empresta uma caneta ou um lápis, por favor.", a:"か", o:["か", "を", "に", "で"], exj:"「AかB」＝ どちらか一つ。", ex:"AかB = A ou B."}
+  {id:"p131", jp:"ペン＿鉛筆を貸してください。", pt:"Me empresta uma caneta ou um lápis, por favor.", a:"か", o:["か", "を", "に", "で"], exj:"「AかB」＝ どちらか一つ。", ex:"AかB = A ou B."},
+  {id:"p132", jp:"一週間＿二回、ジムに行きます。", pt:"Vou à academia duas vezes por semana.", a:"に", o:["に", "と", "を", "が"], exj:"回数は「〜に〜回」：一週間に二回、一日に三回。", ex:"Para frequência: 〜に 〜回 (X vezes por semana/dia)."},
+  {id:"p133", jp:"風邪＿学校を休みました。", pt:"Faltei à escola por causa de um resfriado.", a:"で", o:["で", "を", "に", "が"], exj:"理由も「で」で言える：風邪で休む、雨で中止。", ex:"で também indica causa: por causa do resfriado."},
+  {id:"p134", jp:"八時に家＿出ます。", pt:"Saio de casa às oito.", a:"を", o:["を", "で", "が", "へ"], exj:"出る場所は「を」：家を出る、駅を出る。", ex:"Com 出る (sair de), o lugar de onde se sai leva を."},
+  {id:"p135", jp:"母＿作った料理が一番好きです。", pt:"A comida que minha mãe faz é a de que mais gosto.", a:"が", o:["が", "を", "で", "に"], exj:"名詞を説明する文の中では、した人に「が」：母が作った料理。", ex:"Dentro de uma frase que descreve um substantivo, quem faz a ação leva が."},
+  {id:"p136", jp:"私は歌う＿が好きです。", pt:"Eu gosto de cantar.", a:"の", o:["の", "を", "に", "で"], exj:"動詞に「の」をつけると、「すること」になる：歌うのが好き。", ex:"Verbo + の vira “o ato de…”: うたうのが すき = gostar de cantar."},
+  {id:"p137", jp:"日本語を勉強し＿日本に来ました。", pt:"Vim ao Japão para estudar japonês.", a:"に", o:["に", "で", "を", "と"], exj:"「〜しに来る／行く」で目的を言う：勉強しに来る。", ex:"Verbo (sem ます) + に くる/いく = vir/ir para fazer algo."},
+  {id:"p138", jp:"ジャスは「おいしい」＿言いました。", pt:"O Jas disse: “Está gostoso”.", a:"と", o:["と", "が", "に", "で"], exj:"言ったことばには「と」：「〜」と言う。", ex:"Para citar o que alguém disse: 「…」と いう."},
+  {id:"p139", jp:"明日は雨が降る＿思います。", pt:"Acho que amanhã vai chover.", a:"と", o:["と", "を", "に", "で"], exj:"自分の考えは「〜と思う」。", ex:"〜と おもう = acho que…"},
+  {id:"p140", jp:"何時に始まる＿分かりません。", pt:"Não sei a que horas começa.", a:"か", o:["か", "を", "と", "に"], exj:"文の中に質問を入れるときは「か」：何時に始まるか。", ex:"Para colocar uma pergunta dentro da frase: …か わかりません."},
+  {id:"p141", jp:"朝から何＿食べていません。", pt:"Não comi nada desde a manhã.", a:"も", o:["も", "が", "に", "と"], exj:"「何も〜ない」＝ 全然ない。", ex:"なにも + negativo = nada."},
+  {id:"p142", jp:"この仕事は三日＿終わります。", pt:"Este trabalho termina em três dias.", a:"で", o:["で", "を", "が", "と"], exj:"かかる時間は「で」：三日で終わる。", ex:"で indica em quanto tempo: em 3 dias."},
+  {id:"p143", jp:"ジャスは料理＿上手です。", pt:"O Jas cozinha bem.", a:"が", o:["が", "を", "で", "に"], exj:"「上手・下手・好き・嫌い」の前は「が」。", ex:"Antes de じょうず/へた/すき/きらい usa-se が."},
+  {id:"p144", jp:"美容院で髪＿切りました。", pt:"Cortei o cabelo no salão.", a:"を", o:["を", "が", "に", "で"], exj:"何を切ったか→「を」。人に切ってもらっても「髪を切る」と言う。", ex:"を marca o objeto. Em japonês se diz かみを きる mesmo quando outra pessoa corta."},
+  {id:"p145", jp:"銀行で口座＿作りたいです。", pt:"Quero abrir uma conta no banco.", a:"を", o:["を", "に", "で", "へ"], exj:"「口座を作る」＝ 銀行の口座を開く。", ex:"こうざを つくる = abrir uma conta."},
+  {id:"p146", jp:"この服＿試着してもいいですか。", pt:"Posso experimentar esta roupa?", a:"を", o:["を", "に", "で", "が"], exj:"試着するもの→「を」。", ex:"O que você experimenta leva を."},
+  {id:"p147", jp:"店員さん＿聞いてみます。", pt:"Vou perguntar ao funcionário.", a:"に", o:["に", "を", "で", "が"], exj:"聞く相手は「に」：店員さんに聞く。", ex:"A pessoa a quem você pergunta leva に."},
+  {id:"p148", jp:"寝る前＿この薬を飲んでください。", pt:"Tome este remédio antes de dormir.", a:"に", o:["に", "を", "が", "と"], exj:"「〜前に」＝ 〜する前：寝る前に。", ex:"〜まえに = antes de…"},
+  {id:"p149", jp:"ジャスと電話＿話しました。", pt:"Falei com o Jas por telefone.", a:"で", o:["で", "を", "に", "が"], exj:"道具・方法は「で」：電話で話す。", ex:"で indica o meio: pelo telefone."},
+  {id:"p150", jp:"ブラジルの家族＿ビデオ通話をします。", pt:"Faço chamada de vídeo com a minha família do Brasil.", a:"と", o:["と", "を", "で", "が"], exj:"一緒にする相手は「と」。", ex:"と = com (alguém)."},
+  {id:"p151", jp:"雨の日は家＿ゆっくりします。", pt:"Em dia de chuva, eu descanso em casa.", a:"で", o:["で", "に", "を", "が"], exj:"何かをする場所は「で」：家でゆっくりする。", ex:"O lugar onde se faz algo leva で."},
+  {id:"p152", jp:"この近く＿コンビニはありますか。", pt:"Tem uma loja de conveniência aqui perto?", a:"に", o:["に", "で", "を", "と"], exj:"ある・いる の場所は「に」。", ex:"Com ある/いる, o lugar leva に."},
+  {id:"p153", jp:"日本の冬はブラジル＿寒いです。", pt:"O inverno do Japão é mais frio que o do Brasil.", a:"より", o:["より", "から", "まで", "と"], exj:"「AはBより〜」＝ AのほうがBより〜。", ex:"A は B より 〜 = A é mais 〜 que B."},
+  {id:"p154", jp:"私が住んでいる町＿静かです。", pt:"A cidade onde eu moro é tranquila.", a:"は", o:["は", "を", "に", "で"], exj:"長い説明がついても、話のテーマは「は」。", ex:"Mesmo com uma descrição longa, o tópico continua com は."},
+  {id:"p155", jp:"ジャス＿くれた指輪をいつもつけています。", pt:"Eu sempre uso o anel que o Jas me deu.", a:"が", o:["が", "を", "で", "と"], exj:"名詞を説明する文の中では、した人に「が」：ジャスがくれた指輪。", ex:"Dentro de uma frase que descreve um substantivo, quem faz a ação leva が."},
+  {id:"p156", jp:"日本語が分かる人＿いますか。", pt:"Tem alguém que entende japonês?", a:"が", o:["が", "を", "で", "に"], exj:"「いる・ある」の前は「が」：〜人がいる。", ex:"Antes de いる/ある usa-se が."},
+  {id:"p157", jp:"駅＿迎えに来てくれますか。", pt:"Você pode vir me buscar na estação?", a:"まで", o:["まで", "を", "と", "が"], exj:"「駅まで迎えに来る」＝ 駅のところまで来る。", ex:"えきまで むかえに くる = vir buscar até a estação."},
+  {id:"p158", jp:"部長に会議の資料＿渡しました。", pt:"Entreguei os documentos da reunião ao chefe.", a:"を", o:["を", "が", "で", "と"], exj:"渡すものは「を」、渡す相手は「に」。", ex:"O que se entrega leva を; a pessoa leva に."},
+  {id:"p159", jp:"この電車は次の駅＿止まりますか。", pt:"Este trem para na próxima estação?", a:"に", o:["に", "を", "が", "と"], exj:"止まる所は「に」：次の駅に止まる。", ex:"O lugar onde o trem para leva に."},
+  {id:"p160", jp:"日本語が上手＿なりたいです。", pt:"Quero ficar boa em japonês.", a:"に", o:["に", "を", "が", "で"], exj:"変わったあとのことは「に」：上手になる、元気になる。", ex:"〜に なる = tornar-se / ficar."},
+  {id:"p161", jp:"この靴は私＿は少し小さいです。", pt:"Estes sapatos são um pouco pequenos para mim.", a:"に", o:["に", "を", "で", "が"], exj:"「〜には大きい・小さい」＝ 〜にとって。", ex:"〜には = para (alguém): para mim é pequeno."},
+  {id:"p162", jp:"引っ越し＿手伝ってくれてありがとう。", pt:"Obrigada por me ajudar com a mudança.", a:"を", o:["を", "に", "と", "が"], exj:"手伝うことは「を」：引っ越しを手伝う。", ex:"O que se ajuda a fazer leva を."},
+  {id:"p163", jp:"ジャスに日本語＿教えてもらいました。", pt:"O Jas me ensinou japonês.", a:"を", o:["を", "が", "で", "と"], exj:"教えてもらったこと→「を」、教えてくれた人→「に」。", ex:"O que foi ensinado leva を; quem ensinou leva に."},
+  {id:"p164", jp:"友達に駅まで車＿送ってもらいました。", pt:"Um amigo me levou de carro até a estação.", a:"で", o:["で", "を", "に", "が"], exj:"方法は「で」：車で送る。", ex:"で indica o meio: de carro."},
+  {id:"p165", jp:"写真＿撮ってもいいですか。", pt:"Posso tirar uma foto?", a:"を", o:["を", "が", "に", "で"], exj:"撮るもの→「を」。", ex:"O que se fotografa leva を."},
+  {id:"p166", jp:"名前＿呼ばれたら、中に入ってください。", pt:"Quando chamarem o seu nome, entre, por favor.", a:"を", o:["を", "に", "で", "と"], exj:"「名前を呼ばれる」：呼ばれたものは「を」のまま。", ex:"なまえを よばれる = ter o nome chamado."},
+  {id:"p167", jp:"先生＿ほめられました。", pt:"Fui elogiada pela professora.", a:"に", o:["に", "を", "で", "と"], exj:"「〜られる」の文で、した人は「に」：先生にほめられる。", ex:"Na voz passiva (〜られる), quem faz a ação leva に."},
+  {id:"p168", jp:"ジャスの誕生日＿ケーキを作ります。", pt:"Vou fazer um bolo no aniversário do Jas.", a:"に", o:["に", "を", "が", "と"], exj:"特別な日は「に」：誕生日に。", ex:"Datas especiais levam に: no aniversário."},
+  {id:"p169", jp:"雪＿見たことがありますか。", pt:"Você já viu neve?", a:"を", o:["を", "が", "に", "で"], exj:"「〜を見たことがある」で、したことがあるかを言う。", ex:"〜を みた ことが ある = já ter visto…"},
+  {id:"p170", jp:"日本のお祭り＿行ってみたいです。", pt:"Quero ir a um festival japonês.", a:"に", o:["に", "を", "が", "と"], exj:"行く所は「に」：お祭りに行く。", ex:"O destino leva に."},
+  {id:"p171", jp:"この漢字の読み方＿教えてください。", pt:"Me ensine a leitura deste kanji, por favor.", a:"を", o:["を", "が", "に", "で"], exj:"教えてほしいこと→「を」。", ex:"O que você quer que ensinem leva を."},
+  {id:"p172", jp:"ここから富士山＿見えます。", pt:"Daqui dá para ver o Monte Fuji.", a:"が", o:["が", "を", "で", "に"], exj:"「見える・聞こえる」の前は「が」。", ex:"Antes de みえる/きこえる usa-se が."},
+  {id:"p173", jp:"隣の部屋から音楽＿聞こえます。", pt:"Dá para ouvir música do quarto ao lado.", a:"が", o:["が", "を", "で", "に"], exj:"「聞こえる」の前は「が」。", ex:"Antes de きこえる usa-se が."},
+  {id:"p174", jp:"子どもの時、ピアノ＿習っていました。", pt:"Quando era criança, eu fazia aula de piano.", a:"を", o:["を", "が", "に", "で"], exj:"習うこと→「を」：ピアノを習う。", ex:"O que se aprende leva を."},
+  {id:"p175", jp:"赤ちゃん＿生まれました。", pt:"O bebê nasceu.", a:"が", o:["が", "を", "で", "に"], exj:"起きたことを言うときは「が」：赤ちゃんが生まれた。", ex:"Para contar um acontecimento, usa-se が."},
+  {id:"p176", jp:"大きい声＿話してください。", pt:"Fale em voz alta, por favor.", a:"で", o:["で", "を", "に", "が"], exj:"どうやって話すか→「で」：大きい声で。", ex:"で indica a maneira: em voz alta."},
+  {id:"p177", jp:"日本では、家に入るとき靴＿脱ぎます。", pt:"No Japão, tiramos os sapatos ao entrar em casa.", a:"を", o:["を", "が", "に", "で"], exj:"脱ぐもの→「を」：靴を脱ぐ。", ex:"O que se tira leva を."},
+  {id:"p178", jp:"夏休みに家族＿旅行しました。", pt:"Nas férias de verão viajei com a família.", a:"と", o:["と", "を", "に", "へ"], exj:"一緒にする相手は「と」。", ex:"と = com (alguém)."},
+  {id:"p179", jp:"毎日、日記＿書いています。", pt:"Escrevo um diário todos os dias.", a:"を", o:["を", "が", "に", "で"], exj:"書くもの→「を」。", ex:"O que se escreve leva を."},
+  {id:"p180", jp:"ジャスはサッカー＿興味があります。", pt:"O Jas se interessa por futebol.", a:"に", o:["に", "を", "で", "と"], exj:"「〜に興味がある」で覚えよう。", ex:"Decore: 〜に きょうみが ある (ter interesse em…)."},
+  {id:"p181", jp:"ここ＿たばこを吸わないでください。", pt:"Não fume aqui, por favor.", a:"で", o:["で", "に", "を", "が"], exj:"何かをする場所は「で」。", ex:"O lugar onde se faz algo leva で."},
+  {id:"p182", jp:"友達＿お金を借りました。", pt:"Peguei dinheiro emprestado de um amigo.", a:"に", o:["に", "を", "で", "が"], exj:"借りる相手は「に」（「から」でもいい）。", ex:"De quem se pega emprestado leva に (ou から)."},
+  {id:"p183", jp:"ジャスの家は駅＿近いです。", pt:"A casa do Jas é perto da estação.", a:"から", o:["から", "を", "で", "と"], exj:"「〜から近い・遠い」。", ex:"〜から ちかい/とおい = perto/longe de…"},
+  {id:"p184", jp:"ジャスはまだ会社＿います。", pt:"O Jas ainda está na empresa.", a:"に", o:["に", "で", "を", "が"], exj:"いる場所は「に」。", ex:"Com いる, o lugar leva に."},
+  {id:"p185", jp:"ブラジルでは、クリスマス＿夏です。", pt:"No Brasil, o Natal é no verão.", a:"は", o:["は", "を", "に", "で"], exj:"話のテーマは「は」。", ex:"O tópico da frase leva は."},
+  {id:"p186", jp:"空港から家まで電車＿一時間かかります。", pt:"Do aeroporto até em casa leva uma hora de trem.", a:"で", o:["で", "を", "に", "が"], exj:"方法は「で」：電車で。", ex:"で indica o meio: de trem."},
+  {id:"p187", jp:"何を買う＿決めましたか。", pt:"Você já decidiu o que vai comprar?", a:"か", o:["か", "を", "と", "に"], exj:"文の中に質問を入れるときは「か」：何を買うか。", ex:"Para colocar uma pergunta dentro da frase: なにを かうか."},
+  {id:"p188", jp:"ジャスは私＿話を聞いてくれます。", pt:"O Jas me escuta (escuta o que eu falo).", a:"の", o:["の", "を", "で", "が"], exj:"誰の話か→「の」：私の話。", ex:"の indica de quem: わたしの はなし."},
+  {id:"p189", jp:"ゴミの出し方＿分かりません。", pt:"Não sei como separar e jogar o lixo.", a:"が", o:["が", "と", "に", "で"], exj:"「分かる」の前は「が」。", ex:"Antes de わかる usa-se が."},
+  {id:"p190", jp:"寒いので、窓＿閉めてください。", pt:"Está frio, feche a janela, por favor.", a:"を", o:["を", "が", "に", "で"], exj:"閉めるもの→「を」：窓を閉める。", ex:"O que se fecha leva を."},
+  {id:"p191", jp:"あそこ＿立っている人は誰ですか。", pt:"Quem é aquela pessoa que está em pé ali?", a:"に", o:["に", "を", "が", "と"], exj:"立っている場所は「に」：あそこに立つ。", ex:"Com たつ, o lugar onde se está leva に."}
 ];
 
 /* =========================================================
@@ -693,6 +754,7 @@ const TR = [
    文の中に「降（お）ります」のように読みを書いた漢字には、つけない。
    ========================================================= */
 const FURI = [
+  ["話","はなし","をかは。"],["金","かね","","お"],
   ["消","き","え"],["分","わ","か"],["分","ぶん","","日"],["月","げつ","","か"],["通","つう","","0123456789０１２３４５６７８９"],["生","う","ま"],["数","かぞ","え"],["少","すく","な"],["腹","なか","","お"],["中","ちゅう","","問"],["分","ぷん","","0０"],["何","なん","でとの"],["降","お","り"],["日","にち","","0123456789０１２３４５６７８９"],
   ["日本料理","にほんりょうり"],["新幹線","しんかんせん"],["図書館","としょかん"],["日本語","にほんご"],["日曜日","にちようび"],["月曜日","げつようび"],
   ["日本","にほん"],["勉強","べんきょう"],["公園","こうえん"],["大学","だいがく"],["電車","でんしゃ"],["映画","えいが"],["京都","きょうと"],["広島","ひろしま"],
@@ -738,7 +800,11 @@ const FURI = [
   ["学校","がっこう"],["市役所","しやくしょ"],["手続","てつづ"],["曜日","ようび"],["毎晩","まいばん"],["洗濯","せんたく"],["目的","もくてき"],["鉛筆","えんぴつ"],
   ["会議","かいぎ"],["先週","せんしゅう"],["銀行","ぎんこう"],["電気","でんき"],["書類","しょるい"],["画面","がめん"],["追加","ついか"],["共有","きょうゆう"],["安心","あんしん"],["自分","じぶん"],["見返","みかえ"],["準備","じゅんび"],["天才","てんさい"],["一年","いちねん"],["全問","ぜんもん"],["記念日","きねんび"],["毎年","まいとし"],["今年","ことし"],["最初","さいしょ"],["最高","さいこう"],["本当","ほんとう"],["恋人","こいびと"],["無理","むり"],["特別","とくべつ"],["封筒","ふうとう"],["手紙箱","てがみばこ"],["尊敬","そんけい"],["自慢","じまん"],["努力","どりょく"],["宝物","たからもの"],["魔法","まほう"],["約束","やくそく"],["大変","たいへん"],["習慣","しゅうかん"],["所","ところ"],["力","ちから"],["心","こころ"],["過","す"],["暮","く"],["考","かんが"],["指","ゆび"],["旅","たび"],["誇","ほこ"],["芽","め"],["咲","さ"],["小","ちい"],["集","あつ"],["胸","むね"],["祝","いわ"],["幸","しあわ"],["完璧","かんぺき"],["調子","ちょうし"],["実","みの"],["上","うえ"],["訳","やく"],["続","つづ"],["切","き"],["住所","じゅうしょ"],
   ["停","てい"],["優","やさ"],["冬","ふゆ"],["夏","なつ"],["咳","せき"],["多","おお"],["妹","いもうと"],["寒","さむ"],["忘","わす"],["慣","な"],["止","と"],
-  ["歯","は"],["浴","あ"],["消","け"],["磨","みが"],["空","そら"],["習","なら"],["貸","か"],["迷","まよ"],["遊","あそ"],["遠","とお"],["隣","となり"]
+  ["歯","は"],["浴","あ"],["消","け"],["磨","みが"],["空","そら"],["習","なら"],["貸","か"],["迷","まよ"],["遊","あそ"],["遠","とお"],["隣","となり"],
+  ["一週間","いっしゅうかん"],["美容院","びよういん"],["富士山","ふじさん"],["引っ越","ひっこ"],["二回","にかい"],["三回","さんかい"],["回数","かいすう"],["理由","りゆう"],["中止","ちゅうし"],["八時","はちじ"],
+  ["名詞","めいし"],["動詞","どうし"],["全然","ぜんぜん"],["三日","みっか"],["試着","しちゃく"],["店員","てんいん"],["通話","つうわ"],["指輪","ゆびわ"],["部長","ぶちょう"],["資料","しりょう"],
+  ["元気","げんき"],["興味","きょうみ"],["旅行","りょこう"],["移動","いどう"],
+  ["髪","かみ"],["服","ふく"],["町","まち"],["静","しず"],["迎","むか"],["靴","くつ"],["呼","よ"],["雪","ゆき"],["祭","まつ"],["赤","あか"],["声","こえ"],["脱","ぬ"],["吸","す"],["借","か"],["立","た"],["歌","うた"]
 ].map((e, i) => ({b:e[0], r:e[1], next:e[2] || "", prev:e[3] || "", i})).sort((x, y) => y.b.length - x.b.length || x.i - y.i);
 const isKanji = c => c >= "一" && c <= "鿿";
 /* ふりがなを つける。タグと、すでに ふりがなが ついた ところは そのまま。 */
@@ -913,6 +979,13 @@ const now0 = () => new Date(Date.now() - (CONFIG.dayStartHour || 0) * 36e5);
 const todayKey = () => ymd(now0());
 const parseKey = k => new Date(k+"T00:00:00");
 function weekKey(d){ const x = new Date(d); x.setHours(0,0,0,0); x.setDate(x.getDate()-((x.getDay()+6)%7)); return ymd(x); }
+/* 練習を始めた日の日付で記録する（3時をまたいでも、その回は始めた日に入れる）。
+   ただし前の日に始めたものは、区切りから1時間（朝4時）まで。それより後は今日に入れる（開いたまま放っておいた場合など）。 */
+function sessKey(k){
+  const t = todayKey();
+  if(!k || k === t) return t;
+  return (k === ymd(addDays(parseKey(t), -1)) && now0().getHours() < 1) ? k : t;
+}
 function day(k){ k = k || todayKey(); if(!S.days[k]) S.days[k] = {pts:0,pc:0,pw:0,pwq:[],tr:[],diary:0,goalMet:false}; return S.days[k]; }
 /* きょうの日課の進みぐあい（助詞・作文・日記） */
 function quest(d){
@@ -926,7 +999,12 @@ function quest(d){
   return {items, done, total:items.length, all:items.length > 0 && done === items.length,
     frac:items.length ? items.reduce((s, x) => s + x.n / x.of, 0) / items.length : 0, by:k => items.find(x => x.k === k)};
 }
-const counted = k => !!((S.days[k] && S.days[k].goalMet) || S.rest[k]);
+/* 来日の移動の日（来日の日と、その前の CONFIG.travelDays 日）。練習しなくても連続に数える。保存はしない（計算で決める） */
+function travelDay(k){
+  const a = LD.arrive; if(!a) return false;
+  return k <= a && k >= ymd(addDays(parseKey(a), -(CONFIG.travelDays || 0)));
+}
+const counted = k => !!((S.days[k] && S.days[k].goalMet) || S.rest[k] || travelDay(k));
 function streak(){ let d = parseKey(todayKey()); if(!counted(ymd(d))) d = addDays(d,-1); let n = 0; while(counted(ymd(d))){ n++; d = addDays(d,-1); } return n; }
 function levelInfo(t){ let L = 1, base = 0, need = 100; while(t >= base+need){ base += need; L++; need = 100*L; } return {L, into:t-base, need}; }
 const lvMeta = L => LEVELS[Math.min(L, LEVELS.length) - 1];
@@ -1046,14 +1124,15 @@ function dailyChecks(){ grantTickets(); repairStreakOnce(); }
 /* =========================================================
    ポイント
    ========================================================= */
-function addPoints(n){
+function addPoints(n, k){
+  k = k || todayKey();
   S.total += n; S.balance += n;
-  const d = day(); d.pts += n;
+  const d = day(k); d.pts += n;
   toast("+"+n+" ✨");
   let goalNow = false;
   if(!d.goalMet && quest(d).all){ d.goalMet = true; goalNow = true; }
   save();
-  if(goalNow) onGoal();
+  if(goalNow) onGoal(k);
   checkLevel(goalNow ? 3200 : 1000);
   refresh();
 }
@@ -1068,22 +1147,23 @@ function checkLevel(delay){
     <p>${T("毎日の練習が実ったね！","Seu esforço de todo dia deu frutos!")}</p>
     <button class="block" style="margin-top:12px" onclick="closeModal()">${T("やったー！","Oba!")}</button>`); }, delay || 1000);
 }
-function bonus(n){ S.total += n; S.balance += n; day().pts += n; }
-function onGoal(){
+function bonus(n, k){ S.total += n; S.balance += n; day(k).pts += n; }
+function onGoal(k){
+  k = k || todayKey();
   const st = streak(); if(st > S.bestStreak) S.bestStreak = st;
   let extra = "";
-  if(Math.random() < CONFIG.surpriseChance){ const b = [10,20,30][Math.floor(Math.random()*3)]; bonus(b); extra += `<p class="surprise">${T(`🧚 サプライズ ボーナス！ +${b}`, `Bônus surpresa! +${b} pts`)}</p>`; }
-  const wk = weekKey(now0()); let c = 0;
+  if(Math.random() < CONFIG.surpriseChance){ const b = [10,20,30][Math.floor(Math.random()*3)]; bonus(b, k); extra += `<p class="surprise">${T(`🧚 サプライズ ボーナス！ +${b}`, `Bônus surpresa! +${b} pts`)}</p>`; }
+  const wk = weekKey(parseKey(k)); let c = 0;
   for(let i=0;i<7;i++){ const k = ymd(addDays(parseKey(wk), i)); if(S.days[k] && S.days[k].goalMet) c++; }
-  if(c >= CONFIG.weeklyGoalDays && !S.weeklyBonus[wk]){ S.weeklyBonus[wk] = true; bonus(CONFIG.weeklyBonus); extra += `<p class="surprise">${T(`🏅 1週間の目標達成！ +${CONFIG.weeklyBonus}`, `Meta da semana! +${CONFIG.weeklyBonus} pts`)}</p>`; }
+  if(c >= CONFIG.weeklyGoalDays && !S.weeklyBonus[wk]){ S.weeklyBonus[wk] = true; bonus(CONFIG.weeklyBonus, k); extra += `<p class="surprise">${T(`🏅 1週間の目標達成！ +${CONFIG.weeklyBonus}`, `Meta da semana! +${CONFIG.weeklyBonus} pts`)}</p>`; }
   save();
   const MILE = [3, 7, 14, 21, 30, 50, 75, 100, 150, 200, 250, 300, 365];
   if(MILE.includes(st)) extra = `<p class="surprise" style="font-size:18px">${T(`🔥 ${dayR(st)}連続の記録！`, `Recorde: ${st} dias seguidos!`)}</p>` + extra;
   setTimeout(() => { Party.goal(st); queueModal(`<div class="big">🌸</div><h2>${T("今日の目標達成！","Meta de hoje concluída!")}</h2>
     <p>${T(`<b>${dayR(st)}</b> 連続 🔥`, `${st} ${st===1?"dia":"dias"} seguidos`)}</p>${extra}
     <button class="block" style="margin-top:12px" onclick="closeModal()">${T("やったー！","Oba!")}</button>`); }, 700);
-  day().rep = daySig(day());
-  sendMail(dailyReport("✅ 今日の目標を達成しました"), {snap:true});
+  day(k).rep = daySig(day(k));
+  sendMail(dailyReport(k === todayKey() ? "✅ 今日の目標を達成しました" : "✅ 目標を達成しました（区切りの3時をすぎてから終わりました）", k), {snap:true});
   refresh();
 }
 
@@ -1449,7 +1529,7 @@ function srsWeight(s, legacy){
 let P = null;
 function startParticles(){
   const qs = pickWeighted(PQ, q => { const s = S.pstats[q.id]; return srsWeight(s, s ? Math.max(1, 1 + 2*s.w - 0.5*s.c) + 2 : 0); }, CONFIG.particlesPerSession);
-  P = {qs, i:0, res:[], earned:0, main:qs.length, wrong:[], retried:false};
+  P = {qs, i:0, res:[], earned:0, main:qs.length, wrong:[], retried:false, k:todayKey()};
   $("practice-menu").style.display = "none"; $("practice-run").style.display = "";
   renderP();
 }
@@ -1481,10 +1561,10 @@ function answerP(btn, o){
     const prev = s.box !== undefined ? s.box : Math.max(0, Math.min(2, s.c - s.w - (ok ? 1 : 0)));
     srsSet(s, ok ? prev + 1 : 0);
     const ps = S.partStats[q.a] || (S.partStats[q.a] = {c:0,w:0}); ok ? ps.c++ : ps.w++;
-    const d = day(); ok ? d.pc++ : (d.pw++, d.pwq.push({id:q.id, chose:o}));
+    P.k = sessKey(P.k); const d = day(P.k); ok ? d.pc++ : (d.pw++, d.pwq.push({id:q.id, chose:o}));
     if(!ok) P.wrong.push({q, chose:o});
     const pts = ok ? CONFIG.points.particleRight : CONFIG.points.particleWrong; P.earned += pts;
-    addPoints(pts);
+    addPoints(pts, P.k);
   } else save();
   const willRetry = !retry && P.i + 1 === P.main && P.wrong.length && !P.retried;
   $("p-after").innerHTML = `${canSpeak ? `<button class="spk wide" onclick="speakP()">${T("🔊 聞く","Ouvir a frase")}</button>` : ""}
@@ -1522,7 +1602,7 @@ function nextP(){
 let W = null;
 function startWriting(){
   const qs = pickWeighted(TR, q => { const s = S.tstats[q.id]; return srsWeight(s, s ? ({3:1, 2:2.5, 1:4}[s.grade] || 3) + 1 : 0); }, CONFIG.writingPerSession);
-  W = {qs, i:0, earned:0};
+  W = {qs, i:0, earned:0, k:todayKey()};
   $("practice-menu").style.display = "none"; $("practice-run").style.display = "";
   renderW();
 }
@@ -1583,8 +1663,9 @@ function gradeW(g, auto){
   const s = {grade:g, n:(old.n || 0) + 1}; srsSet(s, g === 3 ? prev + 1 : g === 2 ? Math.min(prev, 1) : 0);
   S.tstats[q.id] = s;
   const rec = {id:q.id, ans, grade:g}; if(auto) rec.auto = true;
-  const wrec = Object.assign({date:todayKey()}, rec);
-  day().tr.push(rec); S.writings.push(wrec);
+  W.k = sessKey(W.k);
+  const wrec = Object.assign({date:W.k}, rec);
+  day(W.k).tr.push(rec); S.writings.push(wrec);
   W.recs = [rec, wrec]; W.pend = true; save();
   // ○・△ の ときは、答えの例を 見ないで もう一度書く（ポイントは そのあとで 入る）
   if(!auto && g < 3) renderRedo(); else doneW();
@@ -1593,7 +1674,7 @@ function gradeW(g, auto){
 function settleW(){
   if(!W || !W.pend) return;
   W.pend = false; W.earned += CONFIG.points.writing;
-  addPoints(CONFIG.points.writing);
+  addPoints(CONFIG.points.writing, W.k);
 }
 function renderRedo(){
   const q = W.qs[W.i];
@@ -1643,37 +1724,46 @@ function doneW(){
 function submitDiary(){
   const jp = $("d-jp").value.trim(), pt = $("d-pt").value.trim();
   if(jp.length < 6 || !/[ぁ-んァ-ヶ一-龥]/.test(jp)){ toast("もう少し書いてみよう 🙂"); return; }
-  const d = day(), first = d.diary === 0;
+  const k = sessKey(dqDay), d = day(k), first = d.diary === 0;
   d.diary++;
   const dq = diaryQ();
-  S.diaries.unshift({date:todayKey(), jp, pt, ts:Date.now(), q:dq[0]});
+  S.diaries.unshift({date:k, jp, pt, ts:Date.now(), q:dq[0]});
   save();
-  sendMail({subject:`📓 ${CONFIG.studentNameMail} の日記（${todayKey()}）`,
-    body:`${CONFIG.studentNameMail} が日記を書きました（${todayKey()}）\n\n【画面に出ていたお題（参考）】\n${dq[0]}\n\n【日本語】\n${jp}\n\n【言いたかったこと】\n${pt || "（記入なし）"}\n\n${(CONFIG.studentEmail || CONFIG.replyByMail) ? "このメールに返信すると、そのまま彼女に添削が届きます。" : ""}`});
+  sendMail({subject:`📓 ${CONFIG.studentNameMail} の日記（${k}）`,
+    body:`${CONFIG.studentNameMail} が日記を書きました（${k}）\n\n【画面に出ていたお題（参考）】\n${dq[0]}\n\n【日本語】\n${jp}\n\n【言いたかったこと】\n${pt || "（記入なし）"}\n\n${(CONFIG.studentEmail || CONFIG.replyByMail) ? "このメールに返信すると、そのまま彼女に添削が届きます。" : ""}`});
   $("d-jp").value = ""; $("d-pt").value = ""; saveDraft();
   // 日記で目標達成になったときは、達成の画面を出す（「送ったよ」はトーストで伝える）
   const wasMet = d.goalMet;
-  addPoints(first ? CONFIG.points.diaryFirst : CONFIG.points.diaryMore);
+  addPoints(first ? CONFIG.points.diaryFirst : CONFIG.points.diaryMore, k);
   if(!wasMet && d.goalMet){ FX.rise(["💌","💗","💕"], 16); setTimeout(() => toast("送ったよ ✉️"), 1400); return; }
   Party.diary();
   modal(`<div class="big">💌</div><h2>${T("送ったよ！","Enviado!")}</h2><p>${(CONFIG.studentEmail || CONFIG.replyByMail) ? T(`${CONFIG.teacherName}が読んで、メールで返事するね。`,"O Jas vai ler e responder por e-mail com as correções.") : T(`${CONFIG.teacherName}が読んで、返事するね。`,"O Jas vai ler e responder com as correções.")}</p><button class="block" onclick="closeModal()">OK</button>`);
   applyPt();
 }
 /* 日記の下書き（ほかのアプリに切りかえて iPhone が読みこみ直しても、書いた文が消えないように）。
-   本体のキー（kotonoha-v1）には入れず、別のキーに置く。 */
+   本体のキー（kotonoha-v1）には入れず、別のキーに置く。
+   書き始めたときのお題（q）と日付（k）もいっしょに入れて、送るまでお題を変えない。 */
 const DRAFT = KEY + "-draft";
+let dqLock = null, dqDay = null;   // 書いている途中のお題と、書き始めた日
 function saveDraft(){
   try{ const jp = $("d-jp").value, pt = $("d-pt").value;
-    if(jp.trim() || pt.trim()) localStorage.setItem(DRAFT, JSON.stringify({jp, pt})); else localStorage.removeItem(DRAFT); }catch(e){}
+    if(jp.trim() || pt.trim()){
+      if(!dqLock) dqLock = diaryQ();
+      if(!dqDay) dqDay = todayKey();
+      localStorage.setItem(DRAFT, JSON.stringify({jp, pt, q:dqLock, k:dqDay}));
+    } else { dqLock = null; dqDay = null; localStorage.removeItem(DRAFT); }
+  }catch(e){}
 }
 function loadDraft(){
-  try{ const d = JSON.parse(localStorage.getItem(DRAFT) || "null"); if(d){ $("d-jp").value = d.jp || ""; $("d-pt").value = d.pt || ""; } }catch(e){}
+  try{ const d = JSON.parse(localStorage.getItem(DRAFT) || "null"); if(d){ $("d-jp").value = d.jp || ""; $("d-pt").value = d.pt || ""; dqLock = Array.isArray(d.q) ? d.q : null; dqDay = d.k || null; } }catch(e){}
   ["d-jp","d-pt"].forEach(id => $(id).addEventListener("input", saveDraft));
 }
-/* きょうの お題（日替わり。1日の区切り（CONFIG.dayStartHour）で切り替わる。「べつの おだい」で つぎへ） */
+/* きょうの お題（日替わり。1日の区切り（CONFIG.dayStartHour）で切り替わる。「べつの おだい」で つぎへ）
+   書いている途中（下書きがある間）は、書き始めたときのお題のまま。 */
 let dqShift = 0;
-function diaryQ(){ const n = now0(); return DIARY_Q[(n.getFullYear()*372 + n.getMonth()*31 + n.getDate() + dqShift) % DIARY_Q.length]; }
-function nextDiaryQ(){ dqShift++; renderDiaryQ(); applyPt(); }
+function autoDiaryQ(){ const n = now0(); return DIARY_Q[(n.getFullYear()*372 + n.getMonth()*31 + n.getDate() + dqShift) % DIARY_Q.length]; }
+function diaryQ(){ return dqLock || autoDiaryQ(); }
+function nextDiaryQ(){ dqShift++; if(dqLock){ dqLock = autoDiaryQ(); saveDraft(); } renderDiaryQ(); applyPt(); }
 function renderDiaryQ(){ const q = diaryQ(); $("d-q").innerHTML = T(furi(esc(q[0])), esc(q[1]), true); }
 function renderDiaryList(){
   renderDiaryQ();
@@ -1750,7 +1840,7 @@ function renderProgress(){
     const dt = addDays(start, i), k = ymd(dt);
     if(dt > end){ h += '<div style="background:transparent"></div>'; continue; }
     const p = S.days[k] ? S.days[k].pts : 0, met = !!(S.days[k] && S.days[k].goalMet);
-    const c = S.rest[k] && !met ? "hr" : met ? (p >= 60 ? "h3" : "h2") : p > 0 ? "h1" : "";
+    const c = (S.rest[k] || travelDay(k)) && !met ? "hr" : met ? (p >= 60 ? "h3" : "h2") : p > 0 ? "h1" : "";
     h += `<div class="${c}" title="${k}: ${p}"></div>`;
   }
   $("heat").innerHTML = h;
@@ -1987,7 +2077,8 @@ function renderCountdown(){
     : T(`🌸 日本に来て ${dayR(1 - left)}目`, `${1 - left}º dia no Japão`);
   el.innerHTML = `<div style="font-weight:900;font-size:17px">${head}</div>
     <div class="cdtrack"><span class="fl">🇧🇷</span><div class="cdline"><div class="cdfill" style="width:${pct}%"></div><span class="plane" style="left:${pct}%">✈️</span></div><span class="fl">🇯🇵</span></div>
-    <div class="muted small">${left > 0 ? T(`${md}に日本に着くよ。もうすぐ会えるね 💗`, `Chegada: ${a.getDate()}/${a.getMonth() + 1}. Falta pouco para a gente se ver!`) : T("ようこそ、日本へ。一緒に頑張ろうね 💗","Bem-vinda ao Japão. Vamos juntos!")}</div>`;
+    <div class="muted small">${left > 0 ? T(`${md}に日本に着くよ。もうすぐ会えるね 💗`, `Chegada: ${a.getDate()}/${a.getMonth() + 1}. Falta pouco para a gente se ver!`) : T("ようこそ、日本へ。一緒に頑張ろうね 💗","Bem-vinda ao Japão. Vamos juntos!")}</div>
+    ${left >= 0 && left <= (CONFIG.travelDays || 0) + 3 ? `<div class="small" style="margin-top:6px;font-weight:700">${T(`🧳 ${(t0 => `${t0.getMonth() + 1}月${dayR(t0.getDate())}`)(addDays(a, -(CONFIG.travelDays || 0)))}から${md}までは移動の日。練習しなくても、連続記録は切れないよ。`, `De ${mdP(ymd(addDays(a, -(CONFIG.travelDays || 0))))} até ${a.getDate()}/${a.getMonth() + 1} são dias de viagem: mesmo sem praticar, sua sequência não será interrompida.`)}</div>` : ""}`;
 }
 
 /* ---------- チュートリアル（初めて開いたときに1回。「成長 → 使い方を見る」でもう一度見られる） ----------
