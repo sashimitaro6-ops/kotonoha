@@ -144,9 +144,19 @@ label{display:block;font-size:14px;color:var(--muted);margin:12px 4px 4px;font-w
 .item .jpx{font-size:17px;white-space:pre-wrap}
 .empty{text-align:center;padding:18px 6px}
 .empty .big{font-size:44px}
-.heat{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,15px);gap:4px;justify-content:start;overflow-x:auto}
-.heat div{width:15px;height:15px;border-radius:5px;background:#f6eaf2}
-.heat .h1{background:#fbd0e2}.heat .h2{background:#f49ac1}.heat .h3{background:#c77dd6}.heat .hr{background:var(--butter-s);outline:2px dashed var(--butter);outline-offset:-2px}
+/* 12週間のカレンダー：左に曜日、上に月。マスを押すと、その日のポイントが出る */
+.heat{display:grid;grid-template-columns:20px repeat(12,19px);grid-auto-rows:19px;gap:4px;justify-content:start;overflow-x:auto;padding-top:2px}
+.heat .hd{font-size:11px;line-height:19px;color:var(--muted);text-align:center;white-space:nowrap;font-weight:700}
+.heat .mo{text-align:left;overflow:visible}
+.heat .c{border-radius:5px;background:#f6eaf2;cursor:pointer}
+.heat .c.fu{background:transparent;cursor:default}
+.heat .c.today{outline:2px solid var(--pink-t);outline-offset:1px}
+.h1{background:#fbd0e2!important}.h2{background:#f49ac1!important}.h3{background:#c77dd6!important}.hr{background:var(--butter-s)!important;outline:2px dashed var(--butter);outline-offset:-2px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font-size:13px;color:var(--muted)}
+.legend span.lg{display:inline-flex;align-items:center;gap:6px}
+.legend .sw{display:inline-block;width:14px;height:14px;border-radius:4px;flex:none}
+.nw{white-space:nowrap}
+.tag-jp{display:table;margin-top:4px;padding:1px 10px;border-radius:999px;font-size:12px;font-weight:700;background:var(--lav-s);color:var(--lav-t)}
 .pbar{display:grid;grid-template-columns:2.4em 1fr 3.8em;gap:8px;align-items:center;margin:8px 0;font-size:14px}
 .pbar .k{font-size:19px;font-weight:900;text-align:center}
 /* modal & toast */
@@ -243,7 +253,7 @@ button rt{color:inherit;opacity:.85}
       <h1 id="hello"></h1>
       <div class="muted" id="hello-sub"></div>
     </div>
-    <button class="ptbtn" id="ptbtn" onclick="togglePt()" aria-label="Mostrar português">🇧🇷</button>
+    <span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" id="ptbtn" onclick="togglePt()" aria-label="Mostrar português">🇧🇷</button></span>
   </div>
 
   <div class="hero">
@@ -306,7 +316,7 @@ button rt{color:inherit;opacity:.85}
 <!-- ============ 練習 ============ -->
 <section id="practice">
   <div id="practice-menu">
-    <div class="top"><h1 id="pr-title"></h1><button class="ptbtn" onclick="togglePt()">🇧🇷</button></div>
+    <div class="top"><h1 id="pr-title"></h1><span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" onclick="togglePt()" aria-label="Mostrar português">🇧🇷</button></span></div>
     <p class="muted" id="pr-sub"></p>
     <button class="bigbtn" onclick="startParticles()">
       <span class="ic pk">🎀</span><span class="txt" id="m-part"></span><span class="go">›</span>
@@ -344,7 +354,7 @@ button rt{color:inherit;opacity:.85}
 
 <!-- ============ ご褒美 ============ -->
 <section id="prizes">
-  <div class="top"><h1 id="z-title"></h1><button class="ptbtn" onclick="togglePt()">🇧🇷</button></div>
+  <div class="top"><h1 id="z-title"></h1><span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" onclick="togglePt()" aria-label="Mostrar português">🇧🇷</button></span></div>
   <div class="card row" style="justify-content:space-between">
     <div><div class="muted" id="z-have"></div><div style="font-size:34px;font-weight:900" id="p-balance">0</div></div>
     <div style="font-size:46px">🎁</div>
@@ -355,7 +365,7 @@ button rt{color:inherit;opacity:.85}
 
 <!-- ============ 成長 ============ -->
 <section id="progress">
-  <div class="top"><h1 id="g-title"></h1><button class="ptbtn" onclick="togglePt()">🇧🇷</button></div>
+  <div class="top"><h1 id="g-title"></h1><span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" onclick="togglePt()" aria-label="Mostrar português">🇧🇷</button></span></div>
   <div class="card">
     <div class="top"><b id="lv-big" style="font-size:20px"></b><span class="muted small" id="lv-next"></span></div>
     <div class="bar" style="margin-top:10px"><div id="lv-bar" style="width:0"></div></div>
@@ -368,7 +378,7 @@ button rt{color:inherit;opacity:.85}
     <div class="stat"><div class="n" id="s-diary">0</div><div class="l" id="s-diary-l"></div></div>
   </div>
   <h3 id="g-h-cal"></h3>
-  <div class="card"><div class="heat" id="heat"></div><p class="muted small" style="margin-top:10px" id="g-cal-l"></p></div>
+  <div class="card"><div class="heat" id="heat"></div><div class="legend" id="g-cal-l"></div></div>
   <h3 id="g-h-part"></h3>
   <div class="card" id="pstats"></div>
   <h3 id="g-h-write"></h3>
@@ -1499,7 +1509,8 @@ function staticTexts(){
   setT("s-sent-l","書いた文 ✏️","frases escritas");
   setT("s-diary-l","日記 📔","diários");
   setT("g-h-cal","12週間の記録","ÚLTIMAS 12 SEMANAS");
-  setT("g-cal-l","薄い色 ＝ 少し練習した日・濃い色 ＝ 目標達成・紫 ＝ 目標のあとも練習した日・黄色 ＝ 復活券で戻した日や移動の日","Claro = praticou um pouco · escuro = meta concluída · roxo = continuou praticando depois da meta · amarelo = dia recuperado com cupom ou dia de viagem");
+  $("g-cal-l").innerHTML = [["h1","少し練習した日","Praticou um pouco"],["h2","目標達成","Meta concluída"],["h3","目標のあとも練習","Continuou depois da meta"],["hr","復活券・移動の日","Cupom ou viagem"]]
+    .map(([c, j, p]) => `<span class="lg"><i class="sw ${c}"></i>${T(j, p)}</span>`).join("");
   setT("g-h-part","助詞の正解率","ACERTOS POR PARTÍCULA");
   setT("g-h-write","作文","ESCRITA");
   setT("g-h-set","設定","CONFIGURAÇÕES");
@@ -1507,11 +1518,11 @@ function staticTexts(){
   $("g-backup").innerHTML = T("バックアップ","Backup");
   $("g-restore").innerHTML = T("戻す","Restaurar");
   $("g-tut").innerHTML = T("📖 使い方を見る","Ver como usar o app");
-  $("lv-path").innerHTML = T(LEVELS.map(l => l[0]).join(" → "), LEVELS.map(l => l[2]).join(" → "));
+  $("lv-path").innerHTML = T(`<span class="nw">${LEVELS.map(l => l[0]).join("›")}</span>`, LEVELS.map(l => l[2]).join(" → "));
 }
 function refresh(){
   const d = day(), lv = levelInfo(S.total), st = streak(), g = greeting(), m = lvMeta(lv.L);
-  $("hello").textContent = `${g[0]}、${CONFIG.studentName}さん`;
+  $("hello").innerHTML = `${esc(g[0])}、<span class="nw">${esc(CONFIG.studentName)}さん</span>`;   // 名前の途中で折り返さない
   $("hello-sub").innerHTML = T("ことのはの森へようこそ 🌷", `${g[1]}! Bem-vinda à floresta das palavras.`);
   const ch = d.goalMet ? ["今日の目標クリア！すごい！🎉","Meta de hoje concluída! Incrível!"] : CHEER[new Date().getDate() % CHEER.length];
   $("bubble").innerHTML = T(ch[0], ch[1], true);
@@ -1522,14 +1533,14 @@ function refresh(){
   $("ring-fg").setAttribute("stroke", d.goalMet ? "#7fd3b6" : "#f49ac1");
   $("goal-text").innerHTML = d.goalMet ? T("目標達成 🌸","Meta concluída!") : T("今日の目標","Meta de hoje");
   $("goal-sub").innerHTML = d.goalMet ? T(`ここからはボーナス！（今日 ${d.pts}ポイント）`, `Agora é tudo bônus! (${d.pts} pontos hoje)`)
-    : T(`${qs.total}つの練習をしよう・あと ${left}つ`,left === 1 ? "Falta 1 exercício para completar a meta." : `Faltam ${left} exercícios para completar a meta.`);
+    : T(`${qs.total}つの練習をしよう・<span class="nw">あと ${left}つ</span>`,left === 1 ? "Falta 1 exercício para completar a meta." : `Faltam ${left} exercícios para completar a meta.`);
   const pq = qs.by("p"), wq = qs.by("w");
   $("b-part").innerHTML = `<b>${furi("助詞（は・が・を・に・で など）")}</b>` + (pq && pq.n >= pq.of ? `<span class="done">${T("✓ 今日はできたよ","Feito hoje")}</span>`
-    : T(`${CONFIG.particlesPerSession}問${pq ? `・今日 ${pq.n} / ${pq.of}` : ""}`, `Partículas · ${CONFIG.particlesPerSession} perguntas${pq ? ` · hoje: ${pq.n} de ${pq.of}` : ""}`));
+    : T(`${CONFIG.particlesPerSession}問${pq ? `・<span class="nw">今日 ${pq.n} / ${pq.of}</span>` : ""}`, `Partículas · ${CONFIG.particlesPerSession} perguntas${pq ? ` · hoje: ${pq.n} de ${pq.of}` : ""}`));
   $("b-write").innerHTML = `<b>${furi("作文")}</b>` + (wq && wq.n >= wq.of ? `<span class="done">${T("✓ 今日はできたよ","Feito hoje")}</span>`
-    : T(`ポルトガル語を日本語に${wq ? `・今日 ${wq.n} / ${wq.of}` : ""}`, `Escrita · traduza para japonês${wq ? ` · hoje: ${wq.n} de ${wq.of}` : ""}`));
+    : T(`ポルトガル語を日本語に${wq ? `・<span class="nw">今日 ${wq.n} / ${wq.of}</span>` : ""}`, `Escrita · traduza para japonês${wq ? ` · hoje: ${wq.n} de ${wq.of}` : ""}`));
   $("streak-line").innerHTML = T(`🔥 ${dayR(st)} 連続`, `${st} dias seguidos`);
-  $("rest-status").innerHTML = `<button class="tkbtn" onclick="ticketInfo()">${T(`🎫 ストリーク復活券：${S.tickets || 0}枚 ⓘ`, `Cupons de sequência: ${S.tickets || 0} ⓘ`)}</button>`;
+  $("rest-status").innerHTML = `<button class="tkbtn" onclick="ticketInfo()">${T(`<span class="nw">🎫 復活券：${S.tickets || 0}枚 ⓘ</span>`, `Cupons de sequência: ${S.tickets || 0} ⓘ`)}</button>`;
   renderRescue();
   $("balance").textContent = S.balance;
   $("balance-l").innerHTML = T("貯めたポイント 🎁","pontos guardados");
@@ -1831,6 +1842,11 @@ function renderDiaryList(){
 }
 
 /* ---------- ご褒美 ---------- */
+/* ご褒美の名前から「日本に来てから」を外して、小さな札にする（データの名前はそのまま） */
+const JP_AFTER = "日本に来てから";
+const rwName = n => String(n).replace("・" + JP_AFTER + "）", "）").replace("（" + JP_AFTER + "）", "");
+const rwPt = s => String(s || "").replace(/\s*\(depois que você chegar ao Japão\)/, "");
+const rwTag = n => String(n).includes(JP_AFTER) ? `<div class="tag-jp">🇯🇵 ${T(JP_AFTER, "Depois de chegar ao Japão")}</div>` : "";
 function renderPrizes(){
   $("p-balance").textContent = S.balance;
   if(!CONFIG.rewards.length){
@@ -1838,7 +1854,7 @@ function renderPrizes(){
       <p class="muted">${T("ポイントはちゃんと貯まっているよ。楽しみに待っててね！","Seus pontos continuam sendo guardados. Aguarde a surpresa!")}</p></div>`;
   } else {
     $("prize-list").innerHTML = CONFIG.rewards.map(r => `
-      <div class="item row"><div style="font-size:30px">${r.icon}</div><div style="flex:1">${T(`<b>${esc(r.name)}</b>`, esc(r.pt || ""))}<div style="font-weight:900;color:#8a6500">${r.cost} ポイント</div>
+      <div class="item row"><div style="font-size:30px">${r.icon}</div><div style="flex:1">${T(`<b>${esc(rwName(r.name))}</b>`, esc(rwPt(r.pt)))}${rwTag(r.name)}<div style="font-weight:900;color:#8a6500">${r.cost} ポイント</div>
       ${S.balance < r.cost ? `<div class="bar g" style="margin-top:6px;height:8px"><div style="width:${Math.round(100*S.balance/r.cost)}%"></div></div>` : ""}</div>
       <button ${S.balance < r.cost ? "disabled" : ""} onclick="askRedeem('${r.id}')">${T("交換","Trocar")}</button></div>`).join("");
   }
@@ -1846,7 +1862,7 @@ function renderPrizes(){
   // あげたかどうか：彼女がもらったら「もらった」を押す（記録に got＝日時 を足す。形は変えず項目を足すだけ）
   const left = S.redemptions.filter(x => !x.got).length;
   $("redeem-list").innerHTML = (left ? `<p class="muted small">${T(`まだもらっていないご褒美：<b>${left}</b>個。もらったら「🎁 もらった」を押してね。`, `Prêmios ainda não recebidos: ${left}. Quando receber, toque em “recebi”.`)}</p>` : "")
-    + S.redemptions.map((x, i) => [x, i]).reverse().map(([x, i]) => `<div class="item top"><div>${x.icon} ${furi(esc(x.name))}<div class="muted small">${T(`${new Date(x.ts).toLocaleDateString("ja-JP")} 交換`, "trocado")}<span style="font-weight:900;color:#8a6500">・−${x.cost}</span></div></div>
+    + S.redemptions.map((x, i) => [x, i]).reverse().map(([x, i]) => `<div class="item top"><div>${x.icon} ${furi(esc(rwName(x.name)))}${rwTag(x.name)}<div class="muted small">${T(`${new Date(x.ts).toLocaleDateString("ja-JP")} 交換`, "trocado")}<span style="font-weight:900;color:#8a6500">・−${x.cost}</span></div></div>
       ${x.got ? `<button class="linkbtn" style="color:var(--mint-t);text-decoration:none;flex:none" onclick="askGot(${i})">${T("✓ もらった","Recebido")}</button>`
         : `<button class="ghost" style="padding:8px 12px;font-size:14px;flex:none" onclick="askGot(${i})">${T("🎁 もらった","Recebi")}</button>`}</div>`).join("");
 }
@@ -1883,6 +1899,12 @@ function redeem(id){
 }
 
 /* ---------- 成長 ---------- */
+/* カレンダーのマスを押したとき */
+function heatTip(k){
+  const d = S.days[k], p = d ? d.pts : 0;
+  const st = d && d.goalMet ? "・目標達成 🌸" : S.rest[k] === "ticket" ? "・復活券 🎫" : travelDay(k) ? "・移動の日 🧳" : S.rest[k] ? "・おやすみ" : "";
+  toast(`${mdJ(k)}：${p}ポイント${st}`);
+}
 function renderProgress(){
   const lv = levelInfo(S.total), m = lvMeta(lv.L);
   $("lv-big").innerHTML = `${m[0]} Lv.${lv.L} ${furi(m[1])}`;
@@ -1892,16 +1914,24 @@ function renderProgress(){
   $("s-best").textContent = Math.max(S.bestStreak, streak());
   $("s-sent").textContent = S.writings.length + S.diaries.length;
   $("s-diary").textContent = S.diaries.length;
-  const end = parseKey(todayKey()), start = addDays(parseKey(weekKey(end)), -7*11);
-  let h = "";
-  for(let i=0;i<84;i++){
-    const dt = addDays(start, i), k = ymd(dt);
-    if(dt > end){ h += '<div style="background:transparent"></div>'; continue; }
-    const p = S.days[k] ? S.days[k].pts : 0, met = !!(S.days[k] && S.days[k].goalMet);
-    const extra = met && daySig(S.days[k]) > CONFIG.daily.particles + CONFIG.daily.writing + CONFIG.daily.diary;   // 目標のあとも練習した日
-    const c = (S.rest[k] || travelDay(k)) && !met ? "hr" : met ? (extra ? "h3" : "h2") : p > 0 ? "h1" : "";
-    h += `<div class="${c}" title="${k}: ${p}"></div>`;
+  const end = parseKey(todayKey()), start = addDays(parseKey(weekKey(end)), -7*11), tk = todayKey();
+  // 1行目：月（その週に月が変わったところ・左はし）。2行目から：曜日＋7日×12週
+  let h = '<div class="hd"></div>';
+  for(let w = 0; w < 12; w++){
+    const a = addDays(start, w*7), b = addDays(a, 6), m = b.getDate() <= 7 || w === 0 ? (w === 0 ? a : b).getMonth() + 1 : 0;
+    h += `<div class="hd mo">${m ? m + "月" : ""}</div>`;
   }
+  ["月","火","水","木","金","土","日"].forEach((wd, r) => {
+    h += `<div class="hd">${r % 2 ? "" : wd}</div>`;
+    for(let w = 0; w < 12; w++){
+      const dt = addDays(start, w*7 + r), k = ymd(dt);
+      if(dt > end){ h += '<div class="c fu"></div>'; continue; }
+      const p = S.days[k] ? S.days[k].pts : 0, met = !!(S.days[k] && S.days[k].goalMet);
+      const extra = met && daySig(S.days[k]) > CONFIG.daily.particles + CONFIG.daily.writing + CONFIG.daily.diary;   // 目標のあとも練習した日
+      const c = (S.rest[k] || travelDay(k)) && !met ? "hr" : met ? (extra ? "h3" : "h2") : p > 0 ? "h1" : "";
+      h += `<div class="c ${c}${k === tk ? " today" : ""}" onclick="heatTip('${k}')"></div>`;
+    }
+  });
   $("heat").innerHTML = h;
   const parts = ["は","が","を","に","で","へ","と","や","か","も","の","から","まで","より","だけ","しか"];
   const rows = parts.filter(p => S.partStats[p]).map(p => { const s = S.partStats[p], n = s.c+s.w, pct = Math.round(100*s.c/n);
