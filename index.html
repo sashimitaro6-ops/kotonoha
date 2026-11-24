@@ -292,10 +292,9 @@ button rt{color:inherit;opacity:.85}
     </div>
   </div>
 
-  <div class="grid2">
-    <div class="stat"><div class="n" id="balance">0</div><div class="l" id="balance-l"></div></div>
-    <div class="stat"><div class="n" id="lv-name">🌰</div><div class="l" id="lv-name-l"></div></div>
-  </div>
+  <button class="stat row" style="width:100%;justify-content:space-between;color:var(--ink);text-align:left" onclick="go('prizes')">
+    <span><span class="n" id="balance" style="display:block">0</span><span class="l" id="balance-l"></span></span><span style="font-size:30px">🎁</span>
+  </button>
 
   <h3 id="h-today"></h3>
   <button class="bigbtn" onclick="go('practice');startParticles()">
@@ -353,6 +352,7 @@ button rt{color:inherit;opacity:.85}
     <div><div class="muted" id="z-have"></div><div style="font-size:34px;font-weight:900" id="p-balance">0</div></div>
     <div style="font-size:46px">🎁</div>
   </div>
+  <div id="gift-wrap"><h3 id="z-h-gift"></h3><div class="card" id="gift-box"></div></div>
   <div class="card" id="prize-list"></div>
   <div id="redeem-wrap"><h3 id="z-h-done"></h3><div class="card" id="redeem-list"></div></div>
 </section>
@@ -360,11 +360,6 @@ button rt{color:inherit;opacity:.85}
 <!-- ============ 成長 ============ -->
 <section id="progress">
   <div class="top"><h1 id="g-title"></h1><span class="row" style="gap:8px"><button class="fbtn" onclick="toggleFuri()" aria-label="Furigana">あ</button><button class="ptbtn" onclick="togglePt()" aria-label="Mostrar português">🇧🇷</button></span></div>
-  <div class="card">
-    <div class="top"><b id="lv-big" style="font-size:20px"></b><span class="muted small" id="lv-next"></span></div>
-    <div class="bar" style="margin-top:10px"><div id="lv-bar" style="width:0"></div></div>
-    <div class="muted small" style="margin-top:8px" id="lv-path"></div>
-  </div>
   <div class="grid2">
     <div class="stat"><div class="n" id="s-total">0</div><div class="l" id="s-total-l"></div></div>
     <div class="stat"><div class="n" id="s-best">0</div><div class="l" id="s-best-l"></div></div>
@@ -446,12 +441,6 @@ const CONFIG = {
   ]
 };
 
-/* レベル（メルヘンな成長） */
-const LEVELS = [
-  ["🌰","種","semente"],["🌱","芽生え","broto"],["🌿","双葉","folhinhas"],["🌷","つぼみ","botão"],
-  ["🌸","花","flor"],["🧚","妖精","fadinha"],["⭐","星","estrela"],["🌈","虹","arco-íris"],
-  ["🌙","月","lua"],["🔮","魔法使い","maga das palavras"]
-];
 
 /* =========================================================
    問題：助詞の穴埋め（exj＝やさしい日本語の説明 / ex＝ポルトガル語訳）
@@ -1020,8 +1009,6 @@ function travelDay(k){
 }
 const counted = k => !!((S.days[k] && S.days[k].goalMet) || S.rest[k] || travelDay(k));
 function streak(){ let d = parseKey(todayKey()); if(!counted(ymd(d))) d = addDays(d,-1); let n = 0; while(counted(ymd(d))){ n++; d = addDays(d,-1); } return n; }
-function levelInfo(t){ let L = 1, base = 0, need = 100; while(t >= base+need){ base += need; L++; need = 100*L; } return {L, into:t-base, need}; }
-const lvMeta = L => LEVELS[Math.min(L, LEVELS.length) - 1];
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const shuffle = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; };
 function pickWeighted(arr, wf, n){
@@ -1147,19 +1134,7 @@ function addPoints(n, k, quiet){
   if(!d.goalMet && quest(d).all){ d.goalMet = true; goalNow = true; }
   save();
   if(goalNow) onGoal(k);
-  checkLevel(goalNow ? 3200 : 1000);
   refresh();
-}
-/* レベルアップしたら お祝い（S.lvSeen ＝ もう お祝いした レベル。項目を足すだけ） */
-function checkLevel(delay){
-  const L = levelInfo(S.total).L;
-  if(S.lvSeen === undefined){ S.lvSeen = L; save(); return; }
-  if(L <= S.lvSeen) return;
-  const from = lvMeta(S.lvSeen), to = lvMeta(L); S.lvSeen = L; save();
-  setTimeout(() => { Party.level(L); queueModal(`<div class="big" style="font-size:72px">${to[0]}</div><h2>${T(`レベルアップ！ Lv.${L}`, `Subiu para o nível ${L}!`)}</h2>
-    <p style="font-size:20px;font-weight:900">${T(`${from[0]} ${from[1]} → ${to[0]} ${to[1]}`, `${from[2]} → ${to[2]}`)}</p>
-    <p>${T("毎日の練習が実ったね！","Seu esforço de todo dia deu frutos!")}</p>
-    <button class="block" style="margin-top:12px" onclick="closeModal()">${T("やったー！","Oba!")}</button>`); }, delay || 1000);
 }
 function bonus(n, k){ S.total += n; S.balance += n; day(k).pts += n; }
 function onGoal(k){
@@ -1245,12 +1220,12 @@ const GRADE = {3:"◎ できた", 2:"○ おしい", 1:"△ 間違えた"};
 const daySig = d => d.pc + d.pw + d.tr.length + d.diary;
 function dailyReport(title, k){
   k = k || todayKey();
-  const past = k !== todayKey(), d = day(k), lv = levelInfo(S.total), m = lvMeta(lv.L);
+  const past = k !== todayKey(), d = day(k);
   const L = [`${CONFIG.studentNameMail} の学習レポート（${k}）`, title, "",
     `日課：${quest(d).items.map(x => `${{p:"助詞",w:"作文",d:"日記"}[x.k]} ${x.n}/${x.of}${x.n >= x.of ? "✓" : ""}`).join("・")}${d.goalMet ? "（達成）" : "（未達成）"}`,
     `${past ? "この日" : "今日"}のポイント：${d.pts}`,
     `連続記録：${past ? streakAt(k) : streak()}日${past ? "（この日まで）" : ""}（最高 ${S.bestStreak}日）`,
-    `累計：${S.total} pts（Lv.${lv.L} ${m[1]}）／残高：${S.balance} pts`, "",
+    `累計：${S.total} pts／残高：${S.balance} pts`, "",
     `■ 助詞：${d.pc} / ${d.pc+d.pw} 正解`];
   d.pwq.forEach(w => { const q = PQ.find(x => x.id === w.id); if(q) L.push(`  ✕ ${q.jp.replace("＿", "［"+w.chose+"］")}（正解：${q.a}）`); });
   L.push("", `■ 作文：${d.tr.length}文`);
@@ -1448,8 +1423,6 @@ const Party = {
     setTimeout(() => { Party.rose(); FX.rain(PETALS, 50, {dur:2500}); }, 900);
     stamp("目標達成！🌸", "Meta concluída!", "big"); buzz([80, 60, 80, 60, 200]);
   },
-  level(L){ FX.dark(300); FX.fireworks(10, {gap:260, big:true}); setTimeout(() => FX.burst(innerWidth / 2, innerHeight * .4, STARS.concat([lvMeta(L)[0]]), 40, {min:5, max:14, s1:24, s2:46}), 600);
-    stamp("レベルアップ！", `Nível ${L}!`, "big gold"); buzz([60, 60, 60, 60, 180]); },
   redeem(){ FX.dark(260); Party.rose(); FX.confetti(160); FX.fireworks(8, {gap:260, shape:"heart"}); stamp("交換できたよ！🎁", "Prêmio trocado!", "big"); },
   got(){ FX.rain(HEARTS, 60, {dur:2200, s1:22, s2:40}); FX.fireworks(3, {shape:"heart"}); stamp("よかったね 💗", "Que bom!"); },
   start(){ FX.rain(PETALS, 50, {dur:2000}); FX.fireworks(3); stamp("はじめよう！🌷", "Vamos começar!"); }
@@ -1488,6 +1461,7 @@ function staticTexts(){
   setT("z-title","ご褒美 🎁","Prêmios");
   setT("z-have","持っているポイント","Seus pontos");
   setT("z-h-done","交換したご褒美","JÁ TROCADOS");
+  setT("z-h-gift","ご褒美の手紙 💌","CARTAS-PRÊMIO");
   // 成長
   setT("g-title","成長 🌷","Progresso");
   setT("s-total-l","全部のポイント","pontos no total");
@@ -1504,10 +1478,9 @@ function staticTexts(){
   $("g-backup").innerHTML = T("バックアップ","Backup");
   $("g-restore").innerHTML = T("戻す","Restaurar");
   $("g-tut").innerHTML = T("📖 使い方を見る","Ver como usar o app");
-  $("lv-path").innerHTML = T(`<span class="nw">${LEVELS.map(l => l[0]).join("›")}</span>`, LEVELS.map(l => l[2]).join(" → "));
 }
 function refresh(){
-  const d = day(), lv = levelInfo(S.total), st = streak(), g = greeting(), m = lvMeta(lv.L);
+  const d = day(), st = streak(), g = greeting();
   $("hello").innerHTML = `${esc(g[0])}、<span class="nw">${esc(CONFIG.studentName)}さん</span>`;   // 名前の途中で折り返さない
   const ch = d.goalMet ? ["今日の目標クリア！すごい！🎉","Meta de hoje concluída! Incrível!"] : CHEER[new Date().getDate() % CHEER.length];
   $("bubble").innerHTML = T(ch[0], ch[1], true);
@@ -1527,9 +1500,7 @@ function refresh(){
   $("rest-status").innerHTML = `<button class="tkbtn" onclick="ticketInfo()" aria-label="Cupons">🎫 × ${S.tickets || 0}</button>`;
   renderRescue();
   $("balance").textContent = S.balance;
-  $("balance-l").innerHTML = T("貯めたポイント 🎁","pontos guardados");
-  $("lv-name").textContent = `${m[0]} Lv.${lv.L}`;
-  $("lv-name-l").innerHTML = T(m[1], m[2]);
+  $("balance-l").innerHTML = T("貯めたポイント","pontos guardados");
   $("b-diary").innerHTML = `<b>${furi("日記")}</b>` + T("", "Diário") + prog(qs.by("d"));
   checkLetters(); renderCountdown(); renderMailBtn();
   renderDiaryList(); renderPrizes(); renderProgress(); applyPt();
@@ -1825,8 +1796,21 @@ const JP_AFTER = "日本に来てから";
 const rwName = n => String(n).replace("・" + JP_AFTER + "）", "）").replace("（" + JP_AFTER + "）", "");
 const rwPt = s => String(s || "").replace(/\s*\(depois que você chegar ao Japão\)/, "");
 const rwTag = n => String(n).includes(JP_AFTER) ? `<div class="tag-jp">🇯🇵 ${T(JP_AFTER, "Depois de chegar ao Japão")}</div>` : "";
+/* ご褒美の手紙の受け取り口：交換した順に、届いた手紙と、ジャスが書いている途中のもの */
+function renderGiftBox(){
+  const reds = giftReds();
+  $("gift-wrap").style.display = reds.length ? "" : "none";
+  if(!reds.length) return;
+  $("gift-box").innerHTML = reds.map(([x], k) => {
+    const g = GIFTS.find(y => y.n === k + 1), got = g && S.letters && S.letters[g.id];
+    return got ? `<button class="mrow" onclick="openLetter('${g.id}')"><span style="font-size:24px">${got.r ? "📩" : "💌"}</span>
+        <span style="flex:1">${T(ljp(g.title[0]), g.title[1])}<span class="muted small" style="display:block">${new Date(got.ts).toLocaleDateString("ja-JP")}</span></span>${got.r ? "" : `<span class="mailnew">NEW</span>`}</button>`
+      : `<div class="mrow lock"><span style="font-size:22px">✍️</span><span style="flex:1">${T("ジャスが書いているよ","O Jas está escrevendo")}<span class="muted small" style="display:block">${new Date(x.ts).toLocaleDateString("ja-JP")}</span></span></div>`;
+  }).reverse().join("");
+}
 function renderPrizes(){
   $("p-balance").textContent = S.balance;
+  renderGiftBox();
   if(!CONFIG.rewards.length){
     $("prize-list").innerHTML = `<div class="empty"><div class="big">🧚</div><b>${T("ご褒美は今、準備中…","Os prêmios estão sendo preparados…")}</b>
       <p class="muted">${T("ポイントはちゃんと貯まっているよ。楽しみに待っててね！","Seus pontos continuam sendo guardados. Aguarde a surpresa!")}</p></div>`;
@@ -1841,8 +1825,15 @@ function renderPrizes(){
   const left = S.redemptions.filter(x => !x.got).length;
   $("redeem-list").innerHTML = ""
     + S.redemptions.map((x, i) => [x, i]).reverse().map(([x, i]) => `<div class="item top"><div>${x.icon} ${furi(esc(rwName(x.name)))}${rwTag(x.name)}<div class="muted small">${T(`${new Date(x.ts).toLocaleDateString("ja-JP")} 交換`, "trocado")}<span style="font-weight:900;color:#8a6500">・−${x.cost}</span></div></div>
-      ${x.got ? `<button class="linkbtn" style="color:var(--mint-t);text-decoration:none;flex:none" onclick="askGot(${i})">${T("✓ もらった","Recebido")}</button>`
+      ${x.id === GIFT_REWARD ? giftBtn(i)
+        : x.got ? `<button class="linkbtn" style="color:var(--mint-t);text-decoration:none;flex:none" onclick="askGot(${i})">${T("✓ もらった","Recebido")}</button>`
         : `<button class="ghost" style="padding:8px 12px;font-size:14px;flex:none" onclick="askGot(${i})">${T("🎁 もらった","Recebi")}</button>`}</div>`).join("");
+}
+/* 手紙のご褒美：届いていれば「読む」、まだなら ✍️ */
+function giftBtn(i){
+  const k = giftReds().findIndex(([, j]) => j === i), g = GIFTS.find(y => y.n === k + 1);
+  return g && S.letters && S.letters[g.id] ? `<button class="ghost" style="padding:8px 12px;font-size:14px;flex:none" onclick="openLetter('${g.id}')">${T("💌 読む","Ler")}</button>`
+    : `<span style="flex:none;font-size:20px" aria-label="O Jas está escrevendo">✍️</span>`;
 }
 function askGot(i){
   const x = S.redemptions[i]; if(!x) return;
@@ -1870,7 +1861,9 @@ function redeem(id){
   S.redemptions.push({id:r.id, name:r.name, icon:r.icon, cost:r.cost, ts:Date.now()});
   save();
   sendMail({subject:`🎁 ${CONFIG.studentNameMail} がご褒美を交換しました`,
-    body:`${CONFIG.studentNameMail} がご褒美を交換しました！\n\n${r.icon} ${r.name}（${r.cost} pts）\n\nあげたら、彼女にアプリの「ご褒美 → 交換したご褒美」で「🎁 もらった」を押してもらってください。押すまでは、学習レポートに「まだあげていないご褒美」として出ます。\n\n残りポイント：${S.balance} pts\n累計：${S.total} pts（Lv.${levelInfo(S.total).L}）\n連続記録：${streak()}日`});
+    body:`${CONFIG.studentNameMail} がご褒美を交換しました！\n\n${r.icon} ${r.name}（${r.cost} pts）\n\n${r.id === GIFT_REWARD
+      ? `これは ${giftReds().length} 回目の「手紙」のご褒美です。手紙を書いたら、Claude に「ご褒美の手紙 ${giftReds().length}通目」として渡してください（private/letters.json の gifts に n:${giftReds().length} で入れて公開します）。届くと、アプリの「ご褒美」の画面の「ご褒美の手紙」に出て、自動で「もらった」になります。`
+      : `あげたら、彼女にアプリの「ご褒美 → 交換したご褒美」で「🎁 もらった」を押してもらってください。押すまでは、学習レポートに「まだあげていないご褒美」として出ます。`}\n\n残りポイント：${S.balance} pts\n累計：${S.total} pts\n連続記録：${streak()}日`});
   Party.redeem();
   modal(`<div class="big">🎉</div><h2>${T("交換できたよ！","Trocado!")}</h2><p>${T(`${CONFIG.teacherName}に知らせたよ。楽しんでね！`,"O Jas já foi avisado. Aproveite!")}</p><button class="block" onclick="closeModal()">${T("やったー！","Oba!")}</button>`);
   refresh();
@@ -1884,10 +1877,6 @@ function heatTip(k){
   toast(""); $("toast").innerHTML = furi(`${mdJ(k)}：${p}ポイント${st}`);
 }
 function renderProgress(){
-  const lv = levelInfo(S.total), m = lvMeta(lv.L);
-  $("lv-big").innerHTML = `${m[0]} Lv.${lv.L} ${furi(m[1])}`;
-  $("lv-next").innerHTML = T(`次まであと ${lv.need - lv.into}`, `faltam ${lv.need - lv.into} pts`);
-  $("lv-bar").style.width = Math.round(100*lv.into/lv.need) + "%";
   $("s-total").textContent = S.total;
   $("s-best").textContent = Math.max(S.bestStreak, streak());
   $("s-sent").textContent = S.writings.length + S.diaries.length;
@@ -2018,9 +2007,16 @@ function confirmImport(){
    手紙と日付は private/letters.json にあり、private/build_letters.py で符号化してここに入れる
    （GitHub は公開なので平文で置かない）。既読などは S.letters[id] = {ts:届いた, n:知らせた, r:読んだ}。
    ========================================================= */
-const LETTER_DATA = "eyJhcnJpdmUiOiIyMDI3LTAyLTIyIiwic3RhcnQiOiIyMDI2LTExLTExIiwibGV0dGVycyI6W3siaWQiOiJ3MSIsImMiOnsidCI6ImZpcnN0In0sInRpdGxlIjpbIuOBr+OBmOOCgeOBpuOBruaJi+e0mSIsIkEgcHJpbWVpcmEgY2FydGEiXSwianAiOiLjg6zjg4HjgrfjgqLjgbhcbuOBk+OBruOCouODl+ODquOBr+OAgeOBguOBquOBn+OBruOBn+OCgeOBq+S9nOOCiuOBvuOBl+OBn+OAguavjuaXpeWwkeOBl+OBmuOBpOOAgeS4gOe3kuOBq+aXpeacrOiqnuOCkumgkeW8teOCjeOBhuOBreOAguWIhuOBi+OCieOBquOBhOOBk+OBqOOBjOOBguOBo+OBn+OCieOAgeOBhOOBpOOBp+OCguiBnuOBhOOBpuOBreOAglxu44K444Oj44K544KI44KKIiwicHQiOiJQYXJhIGEgTGV0w61jaWFcbkZpeiBlc3RlIGFwcCBwYXJhIHZvY8OqLiBWYW1vcyBlc3R1ZGFyIGphcG9uw6pzIGp1bnRvcywgdW0gcG91cXVpbmhvIHBvciBkaWEuIFNlIHRpdmVyIHF1YWxxdWVyIGTDunZpZGEsIMOpIHPDsyBtZSBwZXJndW50YXIuXG5EbyBKYXMifSx7ImlkIjoiZzEiLCJjIjp7InQiOiJnb2FsIiwibiI6MX0sInRpdGxlIjpbIuOBr+OBmOOCgeOBpuOBruebruaomemBlOaIkCIsIkEgcHJpbWVpcmEgbWV0YSJdLCJqcCI6IuWIneOCgeOBpuOBruebruaomemBlOaIkOOAgeOBiuOCgeOBp+OBqOOBhu+8geacgOWIneOBruS4gOaXpeOBjOS4gOeVquWkp+WkieOBoOOCiOOBreOAguOCiOOBj+mgkeW8teOCiuOBvuOBl+OBn+OAguaYjuaXpeOCguW+heOBo+OBpuOBhOOCi+OCiOOAglxu44K444Oj44K544KI44KKIiwicHQiOiJQYXJhYsOpbnMgcGVsYSBwcmltZWlyYSBtZXRhIGNvbmNsdcOtZGEhIE8gcHJpbWVpcm8gZGlhIMOpIHNlbXByZSBvIG1haXMgZGlmw61jaWwuIFZvY8OqIGZvaSBtdWl0byBiZW0uIFRlIGVzcGVybyBhbWFuaMOjIHRhbWLDqW0uXG5EbyBKYXMifSx7ImlkIjoiZDEiLCJjIjp7InQiOiJkaWFyeSIsIm4iOjF9LCJ0aXRsZSI6WyLjga/jgZjjgoHjgabjga7ml6XoqJgiLCJPIHByaW1laXJvIGRpw6FyaW8iXSwianAiOiLliJ3jgoHjgabjga7ml6XoqJjjgIHjgYLjgorjgYzjgajjgYbjgILjgYLjgarjgZ/jgYzml6XmnKzoqp7jgafmm7jjgYTjgZ/mlofjgpLoqq3jgoDjga7jgYzjgIHjgajjgabjgoLlrInjgZfjgYTjgafjgZnjgILplpPpgZXjgYjjgabjgoLlpKfkuIjlpKvjgILjgZPjgozjgYvjgonjgoLjgIHjgYLjgarjgZ/jga7mr47ml6XjgpLmlZnjgYjjgabjga3jgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiT2JyaWdhZG8gcGVsbyBwcmltZWlybyBkacOhcmlvLiBGaWNvIG11aXRvIGZlbGl6IGRlIGxlciBvIHF1ZSB2b2PDqiBlc2NyZXZlIGVtIGphcG9uw6pzLiBUdWRvIGJlbSBlcnJhci4gQ29udGludWUgbWUgY29udGFuZG8gc29icmUgbyBzZXUgZGlhLCB0w6E/XG5EbyBKYXMifSx7ImlkIjoiczMiLCJjIjp7InQiOiJzdHJlYWsiLCJuIjozfSwidGl0bGUiOlsiM+aXpemAo+e2miIsIjMgZGlhcyBzZWd1aWRvcyJdLCJqcCI6IjPml6XpgKPntprjgIHjgZnjgZTjgYTjga3vvIHntprjgZHjgovjgZPjgajjgYzjgIHkuIDnlarjga7lipvjgavjgarjgovjgojjgILjgZPjga7oqr/lrZDjgafooYzjgZPjgYbvvIFcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiMyBkaWFzIHNlZ3VpZG9zLCBxdWUgaW5jcsOtdmVsISBDb250aW51YXIgw6kgbyBxdWUgbWFpcyB0ZSBkw6EgZm9yw6dhLiBWYW1vcyBuZXNzZSByaXRtbyFcbkRvIEphcyJ9LHsiaWQiOiJzNyIsImMiOnsidCI6InN0cmVhayIsIm4iOjd9LCJ0aXRsZSI6WyIx6YCx6ZaT6YCj57aaIiwiMSBzZW1hbmEgc2VndWlkYSJdLCJqcCI6IjHpgLHplpPpgKPntprjgIHjgYrjgoHjgafjgajjgYbvvIHmr47ml6XpoJHlvLXjgovjgYLjgarjgZ/jgpLjgIHmnKzlvZPjgavlsIrmlazjgZfjgabjgYTjgb7jgZnjgILpgLHmnKvjga/lsJHjgZfjgobjgaPjgY/jgorjgZfjgabjga3jgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiVW1hIHNlbWFuYSBzZWd1aWRhLCBwYXJhYsOpbnMhIEV1IGFkbWlybyBtdWl0byB2b2PDqiwgcXVlIHNlIGVzZm9yw6dhIHRvZG9zIG9zIGRpYXMuIE5vIGZpbSBkZSBzZW1hbmEsIGRlc2NhbnNlIHVtIHBvdXF1aW5oby5cbkRvIEphcyJ9LHsiaWQiOiJzMTQiLCJjIjp7InQiOiJzdHJlYWsiLCJuIjoxNH0sInRpdGxlIjpbIjLpgLHplpPpgKPntpoiLCIyIHNlbWFuYXMgc2VndWlkYXMiXSwianAiOiIy6YCx6ZaT6YCj57aa77yB44KC44GG57e057+S44GM5q+O5pel44Gu57+S5oWj44Gr44Gq44Gj44Gf44Gt44CC44GC44Gq44Gf44Gu5pel5pys6Kqe44GM5bCR44GX44Ga44Gk5LiK5omL44Gr44Gq44Gj44Gm44GE44KL44Gu44GM44CB5pel6KiY44KS6Kqt44KT44Gn44GE44Gm5YiG44GL44KL44KI44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IjIgc2VtYW5hcyBzZWd1aWRhcyEgQSBwcsOhdGljYSBqw6Egdmlyb3UgdW0gaMOhYml0by4gTGVuZG8gc2V1cyBkacOhcmlvcywgZMOhIHBhcmEgdmVyIHF1ZSBvIHNldSBqYXBvbsOqcyBlc3TDoSBtZWxob3JhbmRvIGFvcyBwb3Vjb3MuXG5EbyBKYXMifSx7ImlkIjoiczMwIiwiYyI6eyJ0Ijoic3RyZWFrIiwibiI6MzB9LCJ0aXRsZSI6WyIzMOaXpemAo+e2miIsIjMwIGRpYXMgc2VndWlkb3MiXSwianAiOiIzMOaXpemAo+e2mu+8geacrOW9k+OBq+OBmeOBlOOBhOOAgjHjgYvmnIjjgIHkuIDml6XjgoLkvJHjgb7jgarjgYvjgaPjgZ/jgYLjgarjgZ/jga/jgIHjgbzjgY/jga7oh6rmhaLjgafjgZnjgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiMzAgZGlhcyBzZWd1aWRvcyEgSXNzbyDDqSBpbmNyw612ZWwgZGUgdmVyZGFkZS4gVW0gbcOqcyBpbnRlaXJvIHNlbSBwYXJhcjogdGVuaG8gbXVpdG8gb3JndWxobyBkZSB2b2PDqi5cbkRvIEphcyJ9LHsiaWQiOiJzNTAiLCJjIjp7InQiOiJzdHJlYWsiLCJuIjo1MH0sInRpdGxlIjpbIjUw5pel6YCj57aaIiwiNTAgZGlhcyBzZWd1aWRvcyJdLCJqcCI6IjUw5pel6YCj57aa77yB44GT44GT44G+44Gn5p2l44Gf44KJ44CB44KC44GG6Kqw44Gr44KC5q2i44KB44KJ44KM44Gq44GE44Gt44CC5pel5pys44Gn44CB44GC44Gq44Gf44Gu5pel5pys6Kqe44KS6IGe44GP44Gu44GM5qW944GX44G/44Gn44GZ44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IjUwIGRpYXMgc2VndWlkb3MhIEFnb3JhIG5pbmd1w6ltIG1haXMgdGUgc2VndXJhLiBFc3RvdSBhbnNpb3NvIHBhcmEgb3V2aXIgbyBzZXUgamFwb27DqnMgbm8gSmFww6NvLlxuRG8gSmFzIn0seyJpZCI6InMxMDAiLCJjIjp7InQiOiJzdHJlYWsiLCJuIjoxMDB9LCJ0aXRsZSI6WyIxMDDml6XpgKPntpoiLCIxMDAgZGlhcyBzZWd1aWRvcyJdLCJqcCI6IjEwMOaXpemAo+e2muOAgeacrOW9k+OBq+acrOW9k+OBq+OBiuOCgeOBp+OBqOOBhu+8gTEwMOaXpeWIhuOBruWKquWKm+OBr+OAgeOBguOBquOBn+OBruWuneeJqeOBp+OBmeOAguOBvOOBj+OBr+OAgeOBguOBquOBn+OCkuiqh+OCiuOBq+aAneOBhOOBvuOBmeOAglxu44K444Oj44K544KI44KKIiwicHQiOiIxMDAgZGlhcyBzZWd1aWRvcywgcGFyYWLDqW5zIGRlIHZlcmRhZGUhIEVzc2VzIDEwMCBkaWFzIGRlIGVzZm9yw6dvIHPDo28gdW0gdGVzb3VybyBzZXUuIFRlbmhvIG11aXRvIG9yZ3VsaG8gZGUgdm9jw6ouXG5EbyBKYXMifSx7ImlkIjoibHYyIiwiYyI6eyJ0IjoibGV2ZWwiLCJuIjoyfSwidGl0bGUiOlsi44Os44OZ44OrMiIsIk7DrXZlbCAyIl0sImpwIjoi44Os44OZ44Or44Ki44OD44OX44CB44GK44KB44Gn44Go44GG77yB56iu44GL44KJ6Iq944GM5Ye644Gf44Gt44CC44GT44KM44GL44KJ44CB44Gp44KT44Gp44KT5aSn44GN44GP44Gq44KL44KI44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IlBhcmFiw6lucyBwb3Igc3ViaXIgZGUgbsOtdmVsISBBIHNlbWVudGUgYnJvdG91LiBEYXF1aSBwcmEgZnJlbnRlLCBlbGEgc8OzIHZhaSBjcmVzY2VyLlxuRG8gSmFzIn0seyJpZCI6Imx2NCIsImMiOnsidCI6ImxldmVsIiwibiI6NH0sInRpdGxlIjpbIuODrOODmeODqzQiLCJOw612ZWwgNCJdLCJqcCI6IuOBpOOBvOOBv+OBq+OBquOBo+OBn+OBre+8geOCguOBhuOBmeOBkOiKseOBjOWSsuOBj+OCiOOAguavjuaXpeOBrue3tOe/kuOAgeOBoeOCg+OCk+OBqOimi+OBpuOBhOOCi+OCiOOAglxu44K444Oj44K544KI44KKIiwicHQiOiJWaXJvdSB1bSBib3TDo28hIExvZ28sIGxvZ28gYSBmbG9yIHZhaSBhYnJpci4gRXUgZXN0b3UgYWNvbXBhbmhhbmRvIGEgc3VhIHByw6F0aWNhIGRlIHRvZG8gZGlhLlxuRG8gSmFzIn0seyJpZCI6Imx2NiIsImMiOnsidCI6ImxldmVsIiwibiI6Nn0sInRpdGxlIjpbIuODrOODmeODqzYiLCJOw612ZWwgNiJdLCJqcCI6IuWmlueyvuOBq+OBquOBo+OBn+OBre+8geOBguOBquOBn+OBruaXpeacrOiqnuOBq+OAgemtlOazleOBjOOBi+OBi+OBo+OBpuOBjeOBn+OCiOOAglxu44K444Oj44K544KI44KKIiwicHQiOiJWb2PDqiB2aXJvdSB1bWEgZmFkaW5oYSEgTyBzZXUgamFwb27DqnMgZXN0w6EgZmljYW5kbyBtw6FnaWNvLlxuRG8gSmFzIn0seyJpZCI6Imx2OCIsImMiOnsidCI6ImxldmVsIiwibiI6OH0sInRpdGxlIjpbIuODrOODmeODqzgiLCJOw612ZWwgOCJdLCJqcCI6IuiZueOBruODrOODmeODq++8geOBk+OBk+OBvuOBp+adpeOCi+S6uuOBr+OAgeOBquOBi+OBquOBi+OBhOOBquOBhOOCiOOAguacrOW9k+OBq+OCiOOBj+mgkeW8teOBo+OBn+OBreOAglxu44K444Oj44K544KI44KKIiwicHQiOiJOw612ZWwgYXJjby3DrXJpcyEgUG91Y2EgZ2VudGUgY2hlZ2EgYXTDqSBhcXVpLiBWb2PDqiBzZSBlc2ZvcsOnb3UgZGVtYWlzLlxuRG8gSmFzIn0seyJpZCI6Imx2MTAiLCJjIjp7InQiOiJsZXZlbCIsIm4iOjEwfSwidGl0bGUiOlsi6a2U5rOV5L2/44GEIiwiTWFnYSBkYXMgcGFsYXZyYXMiXSwianAiOiLprZTms5Xkvb/jgYTjgavjgarjgorjgb7jgZfjgZ/vvIHoqIDokYnjga7prZTms5Xkvb/jgYTjgIHjg6zjg4HjgrfjgqLjgILjgYLjgarjgZ/jgarjgonjgIHml6XmnKzjgafjganjgpPjgarjgZPjgajjgafjgoLjgafjgY3jgovjgojjgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiVm9jw6ogdmlyb3UgbWFnYSEgTGV0w61jaWEsIGEgbWFnYSBkYXMgcGFsYXZyYXMuIE5vIEphcMOjbywgdm9jw6ogdmFpIGNvbnNlZ3VpciBmYXplciBxdWFscXVlciBjb2lzYS5cbkRvIEphcyJ9LHsiaWQiOiJwZjEiLCJjIjp7InQiOiJwZXJmZWN0IiwibiI6MX0sInRpdGxlIjpbIuOBr+OBmOOCgeOBpuOBruWFqOWVj+ato+inoyIsIk8gcHJpbWVpcm8gMTAgZGUgMTAiXSwianAiOiLliJ3jgoHjgabjga7lhajllY/mraPop6PvvIHlroznkqfjgaDjga3jgILliqnoqZ7jga/pm6PjgZfjgYTjga7jgavjgIHmnKzlvZPjgavjgZnjgZTjgYTjgojjgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiTyBwcmltZWlybyAxMCBkZSAxMCEgUGVyZmVpdG8uIEFzIHBhcnTDrWN1bGFzIHPDo28gZGlmw61jZWlzLCBlIG1lc21vIGFzc2ltIHZvY8OqIGFjZXJ0b3UgdHVkby5cbkRvIEphcyJ9LHsiaWQiOiJyZDEiLCJjIjp7InQiOiJyZWRlZW0iLCJuIjoxfSwidGl0bGUiOlsi44Gv44GY44KB44Gm44Gu44GU6KSS576OIiwiTyBwcmltZWlybyBwcsOqbWlvIl0sImpwIjoi5Yid44KB44Gm44Gu44GU6KSS576O44CB5Lqk5o+b44GX44Gm44GP44KM44Gm44GC44KK44GM44Go44GG44CC5qW944GX44G/44Gr5b6F44Gj44Gm44GE44Gm44Gt44CC57SE5p2f44Gv5b+F44Ga5a6I44KK44G+44GZ44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6Ik9icmlnYWRvIHBvciB0cm9jYXIgbyBzZXUgcHJpbWVpcm8gcHLDqm1pby4gUG9kZSBlc3BlcmFyLCBxdWUgZXUgdm91IGN1bXByaXIgYSBwcm9tZXNzYS5cbkRvIEphcyJ9LHsiaWQiOiJwdDEwMDAiLCJjIjp7InQiOiJ0b3RhbCIsIm4iOjEwMDB9LCJ0aXRsZSI6WyIxMDAw44Od44Kk44Oz44OIIiwiMTAwMCBwb250b3MiXSwianAiOiLjg53jgqTjg7Pjg4jjgYwxMDAw44KS44GT44GI44Gf44KI77yB5bCP44GV44Gq5Yqq5Yqb44GM44CB44GT44KT44Gq44Gr44Gf44GP44GV44KT6ZuG44G+44Gj44Gf44Gt44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IlZvY8OqIHBhc3NvdSBkZSAxMDAwIHBvbnRvcyEgT2xoYSBxdWFudG8gZXNmb3LDp28gcGVxdWVubyBzZSBqdW50b3UgYXF1aS5cbkRvIEphcyJ9LHsiaWQiOiJwdDMwMDAiLCJjIjp7InQiOiJ0b3RhbCIsIm4iOjMwMDB9LCJ0aXRsZSI6WyIzMDAw44Od44Kk44Oz44OIIiwiMzAwMCBwb250b3MiXSwianAiOiIzMDAw44Od44Kk44Oz44OI77yB44GT44GT44G+44Gn44Gu6YGT44Gu44KK44KS5oCd44GG44Go44CB6IO444GM44GE44Gj44Gx44GE44Gr44Gq44KK44G+44GZ44CC44GE44Gk44KC44GC44KK44GM44Go44GG44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IjMwMDAgcG9udG9zISBRdWFuZG8gcGVuc28gZW0gdG9kbyBvIGNhbWluaG8gYXTDqSBhcXVpLCBmaWNvIGVtb2Npb25hZG8uIE9icmlnYWRvIHBvciB0dWRvLlxuRG8gSmFzIn0seyJpZCI6ImJkIiwiYyI6eyJ0IjoiZGF0ZSIsIm1kIjoiMDMtMjgifSwidGl0bGUiOlsi44GK6KqV55Sf5pel44GK44KB44Gn44Go44GGIiwiRmVsaXogYW5pdmVyc8OhcmlvIl0sImpwIjoi44GK6KqV55Sf5pel44GK44KB44Gn44Go44GG77yB8J+Oglxu55Sf44G+44KM44Gm44GN44Gm44GP44KM44Gm44CB5pys5b2T44Gr44GC44KK44GM44Go44GG44CC5LuK5bm044Gv5pel5pys44Gn5LiA57eS44Gr44GK56Wd44GE44Gn44GN44KL44Gt44CC5pyA6auY44Gu5LiA5bm044Gr44GX44KI44GG44Gt44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IkZlbGl6IGFuaXZlcnPDoXJpbyEg8J+OglxuT2JyaWdhZG8gcG9yIGV4aXN0aXIuIEVzdGUgYW5vIGEgZ2VudGUgdmFpIGNvbWVtb3JhciBqdW50b3Mgbm8gSmFww6NvLiBWYW1vcyBmYXplciBkZXN0ZSBvIG1lbGhvciBhbm8uXG5EbyBKYXMifSx7ImlkIjoiYW4iLCJjIjp7InQiOiJkYXRlIiwibWQiOiIwMi0yNSJ9LCJ0aXRsZSI6WyLkuozkurrjga7oqJjlv7Xml6UiLCJPIG5vc3NvIGFuaXZlcnPDoXJpbyBkZSBuYW1vcm8iXSwianAiOiLku4rml6Xjga/kuozkurrjga7oqJjlv7Xml6XjgaDjga3jgILjgYTjgaTjgoLjgZ3jgbDjgavjgYTjgabjgY/jgozjgabjgIHjgYLjgorjgYzjgajjgYbjgILjgZPjgozjgYvjgonjgoLjgIHjgZrjgaPjgajkuIDnt5LjgavjgYTjgojjgYbjga3jgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiSG9qZSDDqSBvIG5vc3NvIGRpYS4gT2JyaWdhZG8gcG9yIGVzdGFyIHNlbXByZSBhbyBtZXUgbGFkby4gVmFtb3MgZmljYXIganVudG9zIHBhcmEgc2VtcHJlLlxuRG8gSmFzIn0seyJpZCI6InByIiwiYyI6eyJ0IjoiZGF0ZSIsIm1kIjoiMTAtMTMifSwidGl0bGUiOlsi44OX44Ot44Od44O844K644Gu5pelIiwiTyBkaWEgZG8gcGVkaWRvIl0sImpwIjoi5LuK5pel44Gv44OX44Ot44Od44O844K644GX44Gf5pel44Gg44Gt44CC44GC44Gu5pel44CB44CM44Gv44GE44CN44Go6KiA44Gj44Gm44GP44KM44Gm44CB44GC44KK44GM44Go44GG44CC44GC44Gq44Gf44Go57WQ5ama44Gn44GN44KL44GT44Go44GM44CB44G844GP44Gu5LiA55Wq44Gu5bm444Gb44Gn44GZ44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IkhvamUgw6kgbyBkaWEgZW0gcXVlIGV1IHRlIHBlZGkgZW0gY2FzYW1lbnRvLiBPYnJpZ2FkbyBwb3IgdGVyIGRpdG8g4oCcc2lt4oCdIG5hcXVlbGUgZGlhLiBDYXNhciBjb20gdm9jw6ogw6kgYSBtaW5oYSBtYWlvciBmZWxpY2lkYWRlLlxuRG8gSmFzIn0seyJpZCI6InhtIiwiYyI6eyJ0IjoiZGF0ZSIsIm1kIjoiMTItMjUifSwidGl0bGUiOlsi44Oh44Oq44O844Kv44Oq44K544Oe44K5IiwiRmVsaXogTmF0YWwiXSwianAiOiLjg6Hjg6rjg7zjgq/jg6rjgrnjg57jgrnvvIHwn46EXG7pgaDjgY/jgavjgYTjgabjgoLjgIHlv4Pjga/jgYTjgaTjgoLkuIDnt5LjgaDjgojjgILmnaXlubTjga7jgq/jg6rjgrnjg57jgrnjga/jgIHml6XmnKzjgafkuIDnt5LjgavpgY7jgZTjgZ3jgYbjga3jgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiRmVsaXogTmF0YWwhIPCfjoRcbk1lc21vIGxvbmdlLCBvIGNvcmHDp8OjbyBlc3TDoSBzZW1wcmUganVudG8uIE5vIHByw7N4aW1vIE5hdGFsLCB2YW1vcyBwYXNzYXIganVudG9zIG5vIEphcMOjby5cbkRvIEphcyJ9LHsiaWQiOiJueSIsImMiOnsidCI6ImRhdGUiLCJtZCI6IjAxLTAxIn0sInRpdGxlIjpbIuOBguOBkeOBvuOBl+OBpuOBiuOCgeOBp+OBqOOBhiIsIkZlbGl6IEFubyBOb3ZvIl0sImpwIjoi44GC44GR44G+44GX44Gm44GK44KB44Gn44Go44GG77yB8J+OjVxu5LuK5bm044Gv44CB44GE44KI44GE44KI5pel5pys44Gn5LiA57eS44Gr5pqu44KJ44Gb44KL44Gt44CC5LuK5bm044KC44KI44KN44GX44GP44Gt44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IkZlbGl6IEFubyBOb3ZvISDwn46NXG5Fc3RlIGFubywgZmluYWxtZW50ZSwgYSBnZW50ZSB2YWkgbW9yYXIganVudG8gbm8gSmFww6NvLiBDb250byBjb20gdm9jw6ogZXN0ZSBhbm8gdGFtYsOpbS5cbkRvIEphcyJ9LHsiaWQiOiJ2ZCIsImMiOnsidCI6ImRhdGUiLCJtZCI6IjAyLTE0In0sInRpdGxlIjpbIuODkOODrOODs+OCv+OCpOODsyIsIkRpYSBkZSBTw6NvIFZhbGVudGltIl0sImpwIjoi44OP44OD44OU44O844OQ44Os44Oz44K/44Kk44Oz77yB8J+SnVxu44KC44GG44GZ44GQ5Lya44GI44KL44Gt44CC44GC44Go5bCR44GX44Gg44KI44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IkZlbGl6IERpYSBkZSBTw6NvIFZhbGVudGltISDwn5KdXG5Mb2dvIGEgZ2VudGUgc2UgdsOqLiBGYWx0YSBwb3VxdWluaG8uXG5EbyBKYXMifSx7ImlkIjoiZG4iLCJjIjp7InQiOiJkYXRlIiwibWQiOiIwNi0xMiJ9LCJ0aXRsZSI6WyLmgYvkurrjga7ml6UiLCJEaWEgZG9zIE5hbW9yYWRvcyJdLCJqcCI6IuODluODqeOCuOODq+OBp+OBr+OAgeS7iuaXpeOBr+aBi+S6uuOBruaXpeOBoOOBreOAguaXpeacrOOBq+OBr+OBquOBhOOBkeOBqeOAgeS6jOS6uuOBruaXpeOBqOOBl+OBpuavjuW5tOOBiuelneOBhOOBl+OCiOOBhuOBreOAglxu44K444Oj44K544KI44KKIiwicHQiOiJObyBCcmFzaWwsIGhvamUgw6kgRGlhIGRvcyBOYW1vcmFkb3MuIE5vIEphcMOjbyBuw6NvIHRlbSwgbWFzIHZhbW9zIGNvbWVtb3JhciB0b2RvIGFubyBjb21vIG8gbm9zc28gZGlhLlxuRG8gSmFzIn0seyJpZCI6ImNkOTAiLCJjIjp7InQiOiJjZCIsIm4iOjkwfSwidGl0bGUiOlsi5pel5pys44G+44Gn44GC44GoOTDml6UiLCJGYWx0YW0gOTAgZGlhcyJdLCJqcCI6IuaXpeacrOOBvuOBp+OAgeOBguOBqDkw5pel77yB44Kr44Os44Oz44OA44O844KS6KaL44KL44Gu44GM44CB5q+O5pel44Gu5qW944GX44G/44Gn44GZ44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IkZhbHRhbSA5MCBkaWFzIHBhcmEgbyBKYXDDo28hIE9saGFyIG8gY2FsZW5kw6FyaW8gdmlyb3UgYSBhbGVncmlhIGRvIG1ldSBkaWEuXG5EbyBKYXMifSx7ImlkIjoiY2Q2MCIsImMiOnsidCI6ImNkIiwibiI6NjB9LCJ0aXRsZSI6WyLml6XmnKzjgb7jgafjgYLjgag2MOaXpSIsIkZhbHRhbSA2MCBkaWFzIl0sImpwIjoi44GC44GoNjDml6XvvIHml6XmnKzjgavmnaXjgZ/jgonjgIHkuIDnt5LjgavooYzjgY3jgZ/jgYTloLTmiYDjgYzjgZ/jgY/jgZXjgpPjgYLjgovjgojjgILooYzjgY3jgZ/jgYTmiYDjgYzjgYLjgaPjgZ/jgonjgIHmlZnjgYjjgabjga3jgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiRmFsdGFtIDYwIGRpYXMhIFRlbSBtdWl0b3MgbHVnYXJlcyBhb25kZSBxdWVybyBpciBjb20gdm9jw6ogbm8gSmFww6NvLiBTZSB0aXZlciBhbGd1bSBsdWdhciBxdWUgdm9jw6ogcXVlaXJhIGNvbmhlY2VyLCBtZSBjb250YS5cbkRvIEphcyJ9LHsiaWQiOiJjZDMwIiwiYyI6eyJ0IjoiY2QiLCJuIjozMH0sInRpdGxlIjpbIuaXpeacrOOBvuOBp+OBguOBqDMw5pelIiwiRmFsdGFtIDMwIGRpYXMiXSwianAiOiLjgYLjgagzMOaXpe+8geOCguOBhuOBmeOBkOOBoOOBreOAguaXpeacrOOBq+adpeOBn+OCieOAgeacgOWIneOBq+S9leOCkumjn+OBueOBn+OBhO+8n+iAg+OBiOOBpuOBiuOBhOOBpuOBreOAglxu44K444Oj44K544KI44KKIiwicHQiOiJGYWx0YW0gMzAgZGlhcyEgRXN0w6EgY2hlZ2FuZG8uIFF1YW5kbyBjaGVnYXIgYW8gSmFww6NvLCBvIHF1ZSB2b2PDqiBxdWVyIGNvbWVyIHByaW1laXJvPyBWYWkgcGVuc2FuZG8uXG5EbyBKYXMifSx7ImlkIjoiY2QxNCIsImMiOnsidCI6ImNkIiwibiI6MTR9LCJ0aXRsZSI6WyLml6XmnKzjgb7jgafjgYLjgagy6YCx6ZaTIiwiRmFsdGFtIDIgc2VtYW5hcyJdLCJqcCI6IuOBguOBqDLpgLHplpPvvIHmupblgpnjga/lpKflpInjgaDjgajmgJ3jgYbjgZHjganjgIHnhKHnkIbjgZfjgarjgYTjgafjga3jgILkvZPjgavmsJfjgpLjgaTjgZHjgabjgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiRmFsdGFtIDIgc2VtYW5hcyEgU2VpIHF1ZSBvcyBwcmVwYXJhdGl2b3Mgc8OjbyBjYW5zYXRpdm9zLCBtYXMgbsOjbyBleGFnZXJlLiBDdWlkZSBkYSBzYcO6ZGUuXG5EbyBKYXMifSx7ImlkIjoiY2Q3IiwiYyI6eyJ0IjoiY2QiLCJuIjo3fSwidGl0bGUiOlsi5pel5pys44G+44Gn44GC44GoMemAsemWkyIsIkZhbHRhIDEgc2VtYW5hIl0sImpwIjoi44GC44GoMemAsemWk++8geOBhOOCiOOBhOOCiOOBoOOBreOAguS8muOBiOOCi+aXpeOCkuaMh+OBp+aVsOOBiOOBpuOBhOOBvuOBmeOAglxu44K444Oj44K544KI44KKIiwicHQiOiJGYWx0YSAxIHNlbWFuYSEgQ2hlZ291IGEgaG9yYS4gRXN0b3UgY29udGFuZG8gb3MgZGlhcyBub3MgZGVkb3MuXG5EbyBKYXMifSx7ImlkIjoiY2QxIiwiYyI6eyJ0IjoiY2QiLCJuIjoxfSwidGl0bGUiOlsi5piO5pel44CB5pel5pys44GnIiwiQW1hbmjDoywgbm8gSmFww6NvIl0sImpwIjoi5piO5pel44CB5pel5pys44Gn5Lya44GI44KL44Gt44CC5rCX44KS44Gk44GR44Gm5p2l44Gm44Gt44CC5Lya44GI44KL44Gu44KS44CB5qW944GX44G/44Gr44GX44Gm44GE44G+44GZ44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IkFtYW5ow6MgYSBnZW50ZSBzZSB2w6ogbm8gSmFww6NvLiBGYcOnYSB1bWEgYm9hIHZpYWdlbS4gRXN0b3UgY29udGFuZG8gb3MgbWludXRvcy5cbkRvIEphcyJ9LHsiaWQiOiJhciIsImMiOnsidCI6ImFycml2ZSJ9LCJ0aXRsZSI6WyLml6XmnKzjgbjjgojjgYbjgZPjgZ0iLCJCZW0tdmluZGEgYW8gSmFww6NvIl0sImpwIjoi5pel5pys44G444KI44GG44GT44Gd77yB8J+Hr/Cfh7VcbumVt+OBhOaXheOAgeOBiueWsuOCjOOBleOBvuOAguS7iuaXpeOBi+OCieOAgeOBk+OBk+OBjOOBguOBquOBn+OBruWutuOBp+OBmeOAguOBk+OCjOOBi+OCieOCguOAgeOCiOOCjeOBl+OBj+OBreOAglxu44K444Oj44K544KI44KKIiwicHQiOiJCZW0tdmluZGEgYW8gSmFww6NvISDwn4ev8J+HtVxuT2JyaWdhZG8gcG9yIGZhemVyIGVzc2EgbG9uZ2EgdmlhZ2VtLiBBIHBhcnRpciBkZSBob2plLCBhcXVpIMOpIGEgc3VhIGNhc2EuIENvbnRvIGNvbSB2b2PDqiBkYXF1aSBwcmEgZnJlbnRlLlxuRG8gSmFzIn1dfQ==";/*LETTERS*/
+const LETTER_DATA = "eyJhcnJpdmUiOiIyMDI3LTAyLTIyIiwic3RhcnQiOiIyMDI2LTExLTExIiwibGV0dGVycyI6W3siaWQiOiJ3MSIsImMiOnsidCI6ImZpcnN0In0sInRpdGxlIjpbIuOBr+OBmOOCgeOBpuOBruaJi+e0mSIsIkEgcHJpbWVpcmEgY2FydGEiXSwianAiOiLjg6zjg4HjgrfjgqLjgbhcbuOBk+OBruOCouODl+ODquOBr+OAgeOBguOBquOBn+OBruOBn+OCgeOBq+S9nOOCiuOBvuOBl+OBn+OAguavjuaXpeWwkeOBl+OBmuOBpOOAgeS4gOe3kuOBq+aXpeacrOiqnuOCkumgkeW8teOCjeOBhuOBreOAguWIhuOBi+OCieOBquOBhOOBk+OBqOOBjOOBguOBo+OBn+OCieOAgeOBhOOBpOOBp+OCguiBnuOBhOOBpuOBreOAglxu44K444Oj44K544KI44KKIiwicHQiOiJQYXJhIGEgTGV0w61jaWFcbkZpeiBlc3RlIGFwcCBwYXJhIHZvY8OqLiBWYW1vcyBlc3R1ZGFyIGphcG9uw6pzIGp1bnRvcywgdW0gcG91cXVpbmhvIHBvciBkaWEuIFNlIHRpdmVyIHF1YWxxdWVyIGTDunZpZGEsIMOpIHPDsyBtZSBwZXJndW50YXIuXG5EbyBKYXMifSx7ImlkIjoiZzEiLCJjIjp7InQiOiJnb2FsIiwibiI6MX0sInRpdGxlIjpbIuOBr+OBmOOCgeOBpuOBruebruaomemBlOaIkCIsIkEgcHJpbWVpcmEgbWV0YSJdLCJqcCI6IuWIneOCgeOBpuOBruebruaomemBlOaIkOOAgeOBiuOCgeOBp+OBqOOBhu+8geacgOWIneOBruS4gOaXpeOBjOS4gOeVquWkp+WkieOBoOOCiOOBreOAguOCiOOBj+mgkeW8teOCiuOBvuOBl+OBn+OAguaYjuaXpeOCguW+heOBo+OBpuOBhOOCi+OCiOOAglxu44K444Oj44K544KI44KKIiwicHQiOiJQYXJhYsOpbnMgcGVsYSBwcmltZWlyYSBtZXRhIGNvbmNsdcOtZGEhIE8gcHJpbWVpcm8gZGlhIMOpIHNlbXByZSBvIG1haXMgZGlmw61jaWwuIFZvY8OqIGZvaSBtdWl0byBiZW0uIFRlIGVzcGVybyBhbWFuaMOjIHRhbWLDqW0uXG5EbyBKYXMifSx7ImlkIjoiZDEiLCJjIjp7InQiOiJkaWFyeSIsIm4iOjF9LCJ0aXRsZSI6WyLjga/jgZjjgoHjgabjga7ml6XoqJgiLCJPIHByaW1laXJvIGRpw6FyaW8iXSwianAiOiLliJ3jgoHjgabjga7ml6XoqJjjgIHjgYLjgorjgYzjgajjgYbjgILjgYLjgarjgZ/jgYzml6XmnKzoqp7jgafmm7jjgYTjgZ/mlofjgpLoqq3jgoDjga7jgYzjgIHjgajjgabjgoLlrInjgZfjgYTjgafjgZnjgILplpPpgZXjgYjjgabjgoLlpKfkuIjlpKvjgILjgZPjgozjgYvjgonjgoLjgIHjgYLjgarjgZ/jga7mr47ml6XjgpLmlZnjgYjjgabjga3jgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiT2JyaWdhZG8gcGVsbyBwcmltZWlybyBkacOhcmlvLiBGaWNvIG11aXRvIGZlbGl6IGRlIGxlciBvIHF1ZSB2b2PDqiBlc2NyZXZlIGVtIGphcG9uw6pzLiBUdWRvIGJlbSBlcnJhci4gQ29udGludWUgbWUgY29udGFuZG8gc29icmUgbyBzZXUgZGlhLCB0w6E/XG5EbyBKYXMifSx7ImlkIjoiczMiLCJjIjp7InQiOiJzdHJlYWsiLCJuIjozfSwidGl0bGUiOlsiM+aXpemAo+e2miIsIjMgZGlhcyBzZWd1aWRvcyJdLCJqcCI6IjPml6XpgKPntprjgIHjgZnjgZTjgYTjga3vvIHntprjgZHjgovjgZPjgajjgYzjgIHkuIDnlarjga7lipvjgavjgarjgovjgojjgILjgZPjga7oqr/lrZDjgafooYzjgZPjgYbvvIFcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiMyBkaWFzIHNlZ3VpZG9zLCBxdWUgaW5jcsOtdmVsISBDb250aW51YXIgw6kgbyBxdWUgbWFpcyB0ZSBkw6EgZm9yw6dhLiBWYW1vcyBuZXNzZSByaXRtbyFcbkRvIEphcyJ9LHsiaWQiOiJzNyIsImMiOnsidCI6InN0cmVhayIsIm4iOjd9LCJ0aXRsZSI6WyIx6YCx6ZaT6YCj57aaIiwiMSBzZW1hbmEgc2VndWlkYSJdLCJqcCI6IjHpgLHplpPpgKPntprjgIHjgYrjgoHjgafjgajjgYbvvIHmr47ml6XpoJHlvLXjgovjgYLjgarjgZ/jgpLjgIHmnKzlvZPjgavlsIrmlazjgZfjgabjgYTjgb7jgZnjgILpgLHmnKvjga/lsJHjgZfjgobjgaPjgY/jgorjgZfjgabjga3jgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiVW1hIHNlbWFuYSBzZWd1aWRhLCBwYXJhYsOpbnMhIEV1IGFkbWlybyBtdWl0byB2b2PDqiwgcXVlIHNlIGVzZm9yw6dhIHRvZG9zIG9zIGRpYXMuIE5vIGZpbSBkZSBzZW1hbmEsIGRlc2NhbnNlIHVtIHBvdXF1aW5oby5cbkRvIEphcyJ9LHsiaWQiOiJzMTQiLCJjIjp7InQiOiJzdHJlYWsiLCJuIjoxNH0sInRpdGxlIjpbIjLpgLHplpPpgKPntpoiLCIyIHNlbWFuYXMgc2VndWlkYXMiXSwianAiOiIy6YCx6ZaT6YCj57aa77yB44KC44GG57e057+S44GM5q+O5pel44Gu57+S5oWj44Gr44Gq44Gj44Gf44Gt44CC44GC44Gq44Gf44Gu5pel5pys6Kqe44GM5bCR44GX44Ga44Gk5LiK5omL44Gr44Gq44Gj44Gm44GE44KL44Gu44GM44CB5pel6KiY44KS6Kqt44KT44Gn44GE44Gm5YiG44GL44KL44KI44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IjIgc2VtYW5hcyBzZWd1aWRhcyEgQSBwcsOhdGljYSBqw6Egdmlyb3UgdW0gaMOhYml0by4gTGVuZG8gc2V1cyBkacOhcmlvcywgZMOhIHBhcmEgdmVyIHF1ZSBvIHNldSBqYXBvbsOqcyBlc3TDoSBtZWxob3JhbmRvIGFvcyBwb3Vjb3MuXG5EbyBKYXMifSx7ImlkIjoiczMwIiwiYyI6eyJ0Ijoic3RyZWFrIiwibiI6MzB9LCJ0aXRsZSI6WyIzMOaXpemAo+e2miIsIjMwIGRpYXMgc2VndWlkb3MiXSwianAiOiIzMOaXpemAo+e2mu+8geacrOW9k+OBq+OBmeOBlOOBhOOAgjHjgYvmnIjjgIHkuIDml6XjgoLkvJHjgb7jgarjgYvjgaPjgZ/jgYLjgarjgZ/jga/jgIHjgbzjgY/jga7oh6rmhaLjgafjgZnjgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiMzAgZGlhcyBzZWd1aWRvcyEgSXNzbyDDqSBpbmNyw612ZWwgZGUgdmVyZGFkZS4gVW0gbcOqcyBpbnRlaXJvIHNlbSBwYXJhcjogdGVuaG8gbXVpdG8gb3JndWxobyBkZSB2b2PDqi5cbkRvIEphcyJ9LHsiaWQiOiJzNTAiLCJjIjp7InQiOiJzdHJlYWsiLCJuIjo1MH0sInRpdGxlIjpbIjUw5pel6YCj57aaIiwiNTAgZGlhcyBzZWd1aWRvcyJdLCJqcCI6IjUw5pel6YCj57aa77yB44GT44GT44G+44Gn5p2l44Gf44KJ44CB44KC44GG6Kqw44Gr44KC5q2i44KB44KJ44KM44Gq44GE44Gt44CC5pel5pys44Gn44CB44GC44Gq44Gf44Gu5pel5pys6Kqe44KS6IGe44GP44Gu44GM5qW944GX44G/44Gn44GZ44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IjUwIGRpYXMgc2VndWlkb3MhIEFnb3JhIG5pbmd1w6ltIG1haXMgdGUgc2VndXJhLiBFc3RvdSBhbnNpb3NvIHBhcmEgb3V2aXIgbyBzZXUgamFwb27DqnMgbm8gSmFww6NvLlxuRG8gSmFzIn0seyJpZCI6InMxMDAiLCJjIjp7InQiOiJzdHJlYWsiLCJuIjoxMDB9LCJ0aXRsZSI6WyIxMDDml6XpgKPntpoiLCIxMDAgZGlhcyBzZWd1aWRvcyJdLCJqcCI6IjEwMOaXpemAo+e2muOAgeacrOW9k+OBq+acrOW9k+OBq+OBiuOCgeOBp+OBqOOBhu+8gTEwMOaXpeWIhuOBruWKquWKm+OBr+OAgeOBguOBquOBn+OBruWuneeJqeOBp+OBmeOAguOBvOOBj+OBr+OAgeOBguOBquOBn+OCkuiqh+OCiuOBq+aAneOBhOOBvuOBmeOAglxu44K444Oj44K544KI44KKIiwicHQiOiIxMDAgZGlhcyBzZWd1aWRvcywgcGFyYWLDqW5zIGRlIHZlcmRhZGUhIEVzc2VzIDEwMCBkaWFzIGRlIGVzZm9yw6dvIHPDo28gdW0gdGVzb3VybyBzZXUuIFRlbmhvIG11aXRvIG9yZ3VsaG8gZGUgdm9jw6ouXG5EbyBKYXMifSx7ImlkIjoibHYyIiwiYyI6eyJ0IjoibGV2ZWwiLCJuIjoyfSwidGl0bGUiOlsi44Os44OZ44OrMiIsIk7DrXZlbCAyIl0sImpwIjoi44Os44OZ44Or44Ki44OD44OX44CB44GK44KB44Gn44Go44GG77yB56iu44GL44KJ6Iq944GM5Ye644Gf44Gt44CC44GT44KM44GL44KJ44CB44Gp44KT44Gp44KT5aSn44GN44GP44Gq44KL44KI44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IlBhcmFiw6lucyBwb3Igc3ViaXIgZGUgbsOtdmVsISBBIHNlbWVudGUgYnJvdG91LiBEYXF1aSBwcmEgZnJlbnRlLCBlbGEgc8OzIHZhaSBjcmVzY2VyLlxuRG8gSmFzIn0seyJpZCI6Imx2NCIsImMiOnsidCI6ImxldmVsIiwibiI6NH0sInRpdGxlIjpbIuODrOODmeODqzQiLCJOw612ZWwgNCJdLCJqcCI6IuOBpOOBvOOBv+OBq+OBquOBo+OBn+OBre+8geOCguOBhuOBmeOBkOiKseOBjOWSsuOBj+OCiOOAguavjuaXpeOBrue3tOe/kuOAgeOBoeOCg+OCk+OBqOimi+OBpuOBhOOCi+OCiOOAglxu44K444Oj44K544KI44KKIiwicHQiOiJWaXJvdSB1bSBib3TDo28hIExvZ28sIGxvZ28gYSBmbG9yIHZhaSBhYnJpci4gRXUgZXN0b3UgYWNvbXBhbmhhbmRvIGEgc3VhIHByw6F0aWNhIGRlIHRvZG8gZGlhLlxuRG8gSmFzIn0seyJpZCI6Imx2NiIsImMiOnsidCI6ImxldmVsIiwibiI6Nn0sInRpdGxlIjpbIuODrOODmeODqzYiLCJOw612ZWwgNiJdLCJqcCI6IuWmlueyvuOBq+OBquOBo+OBn+OBre+8geOBguOBquOBn+OBruaXpeacrOiqnuOBq+OAgemtlOazleOBjOOBi+OBi+OBo+OBpuOBjeOBn+OCiOOAglxu44K444Oj44K544KI44KKIiwicHQiOiJWb2PDqiB2aXJvdSB1bWEgZmFkaW5oYSEgTyBzZXUgamFwb27DqnMgZXN0w6EgZmljYW5kbyBtw6FnaWNvLlxuRG8gSmFzIn0seyJpZCI6Imx2OCIsImMiOnsidCI6ImxldmVsIiwibiI6OH0sInRpdGxlIjpbIuODrOODmeODqzgiLCJOw612ZWwgOCJdLCJqcCI6IuiZueOBruODrOODmeODq++8geOBk+OBk+OBvuOBp+adpeOCi+S6uuOBr+OAgeOBquOBi+OBquOBi+OBhOOBquOBhOOCiOOAguacrOW9k+OBq+OCiOOBj+mgkeW8teOBo+OBn+OBreOAglxu44K444Oj44K544KI44KKIiwicHQiOiJOw612ZWwgYXJjby3DrXJpcyEgUG91Y2EgZ2VudGUgY2hlZ2EgYXTDqSBhcXVpLiBWb2PDqiBzZSBlc2ZvcsOnb3UgZGVtYWlzLlxuRG8gSmFzIn0seyJpZCI6Imx2MTAiLCJjIjp7InQiOiJsZXZlbCIsIm4iOjEwfSwidGl0bGUiOlsi6a2U5rOV5L2/44GEIiwiTWFnYSBkYXMgcGFsYXZyYXMiXSwianAiOiLprZTms5Xkvb/jgYTjgavjgarjgorjgb7jgZfjgZ/vvIHoqIDokYnjga7prZTms5Xkvb/jgYTjgIHjg6zjg4HjgrfjgqLjgILjgYLjgarjgZ/jgarjgonjgIHml6XmnKzjgafjganjgpPjgarjgZPjgajjgafjgoLjgafjgY3jgovjgojjgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiVm9jw6ogdmlyb3UgbWFnYSEgTGV0w61jaWEsIGEgbWFnYSBkYXMgcGFsYXZyYXMuIE5vIEphcMOjbywgdm9jw6ogdmFpIGNvbnNlZ3VpciBmYXplciBxdWFscXVlciBjb2lzYS5cbkRvIEphcyJ9LHsiaWQiOiJwZjEiLCJjIjp7InQiOiJwZXJmZWN0IiwibiI6MX0sInRpdGxlIjpbIuOBr+OBmOOCgeOBpuOBruWFqOWVj+ato+inoyIsIk8gcHJpbWVpcm8gMTAgZGUgMTAiXSwianAiOiLliJ3jgoHjgabjga7lhajllY/mraPop6PvvIHlroznkqfjgaDjga3jgILliqnoqZ7jga/pm6PjgZfjgYTjga7jgavjgIHmnKzlvZPjgavjgZnjgZTjgYTjgojjgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiTyBwcmltZWlybyAxMCBkZSAxMCEgUGVyZmVpdG8uIEFzIHBhcnTDrWN1bGFzIHPDo28gZGlmw61jZWlzLCBlIG1lc21vIGFzc2ltIHZvY8OqIGFjZXJ0b3UgdHVkby5cbkRvIEphcyJ9LHsiaWQiOiJyZDEiLCJjIjp7InQiOiJyZWRlZW0iLCJuIjoxfSwidGl0bGUiOlsi44Gv44GY44KB44Gm44Gu44GU6KSS576OIiwiTyBwcmltZWlybyBwcsOqbWlvIl0sImpwIjoi5Yid44KB44Gm44Gu44GU6KSS576O44CB5Lqk5o+b44GX44Gm44GP44KM44Gm44GC44KK44GM44Go44GG44CC5qW944GX44G/44Gr5b6F44Gj44Gm44GE44Gm44Gt44CC57SE5p2f44Gv5b+F44Ga5a6I44KK44G+44GZ44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6Ik9icmlnYWRvIHBvciB0cm9jYXIgbyBzZXUgcHJpbWVpcm8gcHLDqm1pby4gUG9kZSBlc3BlcmFyLCBxdWUgZXUgdm91IGN1bXByaXIgYSBwcm9tZXNzYS5cbkRvIEphcyJ9LHsiaWQiOiJwdDEwMDAiLCJjIjp7InQiOiJ0b3RhbCIsIm4iOjEwMDB9LCJ0aXRsZSI6WyIxMDAw44Od44Kk44Oz44OIIiwiMTAwMCBwb250b3MiXSwianAiOiLjg53jgqTjg7Pjg4jjgYwxMDAw44KS44GT44GI44Gf44KI77yB5bCP44GV44Gq5Yqq5Yqb44GM44CB44GT44KT44Gq44Gr44Gf44GP44GV44KT6ZuG44G+44Gj44Gf44Gt44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IlZvY8OqIHBhc3NvdSBkZSAxMDAwIHBvbnRvcyEgT2xoYSBxdWFudG8gZXNmb3LDp28gcGVxdWVubyBzZSBqdW50b3UgYXF1aS5cbkRvIEphcyJ9LHsiaWQiOiJwdDMwMDAiLCJjIjp7InQiOiJ0b3RhbCIsIm4iOjMwMDB9LCJ0aXRsZSI6WyIzMDAw44Od44Kk44Oz44OIIiwiMzAwMCBwb250b3MiXSwianAiOiIzMDAw44Od44Kk44Oz44OI77yB44GT44GT44G+44Gn44Gu6YGT44Gu44KK44KS5oCd44GG44Go44CB6IO444GM44GE44Gj44Gx44GE44Gr44Gq44KK44G+44GZ44CC44GE44Gk44KC44GC44KK44GM44Go44GG44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IjMwMDAgcG9udG9zISBRdWFuZG8gcGVuc28gZW0gdG9kbyBvIGNhbWluaG8gYXTDqSBhcXVpLCBmaWNvIGVtb2Npb25hZG8uIE9icmlnYWRvIHBvciB0dWRvLlxuRG8gSmFzIn0seyJpZCI6ImJkIiwiYyI6eyJ0IjoiZGF0ZSIsIm1kIjoiMDMtMjgifSwidGl0bGUiOlsi44GK6KqV55Sf5pel44GK44KB44Gn44Go44GGIiwiRmVsaXogYW5pdmVyc8OhcmlvIl0sImpwIjoi44GK6KqV55Sf5pel44GK44KB44Gn44Go44GG77yB8J+Oglxu55Sf44G+44KM44Gm44GN44Gm44GP44KM44Gm44CB5pys5b2T44Gr44GC44KK44GM44Go44GG44CC5LuK5bm044Gv5pel5pys44Gn5LiA57eS44Gr44GK56Wd44GE44Gn44GN44KL44Gt44CC5pyA6auY44Gu5LiA5bm044Gr44GX44KI44GG44Gt44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IkZlbGl6IGFuaXZlcnPDoXJpbyEg8J+OglxuT2JyaWdhZG8gcG9yIGV4aXN0aXIuIEVzdGUgYW5vIGEgZ2VudGUgdmFpIGNvbWVtb3JhciBqdW50b3Mgbm8gSmFww6NvLiBWYW1vcyBmYXplciBkZXN0ZSBvIG1lbGhvciBhbm8uXG5EbyBKYXMifSx7ImlkIjoiYW4iLCJjIjp7InQiOiJkYXRlIiwibWQiOiIwMi0yNSJ9LCJ0aXRsZSI6WyLkuozkurrjga7oqJjlv7Xml6UiLCJPIG5vc3NvIGFuaXZlcnPDoXJpbyBkZSBuYW1vcm8iXSwianAiOiLku4rml6Xjga/kuozkurrjga7oqJjlv7Xml6XjgaDjga3jgILjgYTjgaTjgoLjgZ3jgbDjgavjgYTjgabjgY/jgozjgabjgIHjgYLjgorjgYzjgajjgYbjgILjgZPjgozjgYvjgonjgoLjgIHjgZrjgaPjgajkuIDnt5LjgavjgYTjgojjgYbjga3jgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiSG9qZSDDqSBvIG5vc3NvIGRpYS4gT2JyaWdhZG8gcG9yIGVzdGFyIHNlbXByZSBhbyBtZXUgbGFkby4gVmFtb3MgZmljYXIganVudG9zIHBhcmEgc2VtcHJlLlxuRG8gSmFzIn0seyJpZCI6InByIiwiYyI6eyJ0IjoiZGF0ZSIsIm1kIjoiMTAtMTMifSwidGl0bGUiOlsi44OX44Ot44Od44O844K644Gu5pelIiwiTyBkaWEgZG8gcGVkaWRvIl0sImpwIjoi5LuK5pel44Gv44OX44Ot44Od44O844K644GX44Gf5pel44Gg44Gt44CC44GC44Gu5pel44CB44CM44Gv44GE44CN44Go6KiA44Gj44Gm44GP44KM44Gm44CB44GC44KK44GM44Go44GG44CC44GC44Gq44Gf44Go57WQ5ama44Gn44GN44KL44GT44Go44GM44CB44G844GP44Gu5LiA55Wq44Gu5bm444Gb44Gn44GZ44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IkhvamUgw6kgbyBkaWEgZW0gcXVlIGV1IHRlIHBlZGkgZW0gY2FzYW1lbnRvLiBPYnJpZ2FkbyBwb3IgdGVyIGRpdG8g4oCcc2lt4oCdIG5hcXVlbGUgZGlhLiBDYXNhciBjb20gdm9jw6ogw6kgYSBtaW5oYSBtYWlvciBmZWxpY2lkYWRlLlxuRG8gSmFzIn0seyJpZCI6InhtIiwiYyI6eyJ0IjoiZGF0ZSIsIm1kIjoiMTItMjUifSwidGl0bGUiOlsi44Oh44Oq44O844Kv44Oq44K544Oe44K5IiwiRmVsaXogTmF0YWwiXSwianAiOiLjg6Hjg6rjg7zjgq/jg6rjgrnjg57jgrnvvIHwn46EXG7pgaDjgY/jgavjgYTjgabjgoLjgIHlv4Pjga/jgYTjgaTjgoLkuIDnt5LjgaDjgojjgILmnaXlubTjga7jgq/jg6rjgrnjg57jgrnjga/jgIHml6XmnKzjgafkuIDnt5LjgavpgY7jgZTjgZ3jgYbjga3jgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiRmVsaXogTmF0YWwhIPCfjoRcbk1lc21vIGxvbmdlLCBvIGNvcmHDp8OjbyBlc3TDoSBzZW1wcmUganVudG8uIE5vIHByw7N4aW1vIE5hdGFsLCB2YW1vcyBwYXNzYXIganVudG9zIG5vIEphcMOjby5cbkRvIEphcyJ9LHsiaWQiOiJueSIsImMiOnsidCI6ImRhdGUiLCJtZCI6IjAxLTAxIn0sInRpdGxlIjpbIuOBguOBkeOBvuOBl+OBpuOBiuOCgeOBp+OBqOOBhiIsIkZlbGl6IEFubyBOb3ZvIl0sImpwIjoi44GC44GR44G+44GX44Gm44GK44KB44Gn44Go44GG77yB8J+OjVxu5LuK5bm044Gv44CB44GE44KI44GE44KI5pel5pys44Gn5LiA57eS44Gr5pqu44KJ44Gb44KL44Gt44CC5LuK5bm044KC44KI44KN44GX44GP44Gt44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IkZlbGl6IEFubyBOb3ZvISDwn46NXG5Fc3RlIGFubywgZmluYWxtZW50ZSwgYSBnZW50ZSB2YWkgbW9yYXIganVudG8gbm8gSmFww6NvLiBDb250byBjb20gdm9jw6ogZXN0ZSBhbm8gdGFtYsOpbS5cbkRvIEphcyJ9LHsiaWQiOiJ2ZCIsImMiOnsidCI6ImRhdGUiLCJtZCI6IjAyLTE0In0sInRpdGxlIjpbIuODkOODrOODs+OCv+OCpOODsyIsIkRpYSBkZSBTw6NvIFZhbGVudGltIl0sImpwIjoi44OP44OD44OU44O844OQ44Os44Oz44K/44Kk44Oz77yB8J+SnVxu44KC44GG44GZ44GQ5Lya44GI44KL44Gt44CC44GC44Go5bCR44GX44Gg44KI44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IkZlbGl6IERpYSBkZSBTw6NvIFZhbGVudGltISDwn5KdXG5Mb2dvIGEgZ2VudGUgc2UgdsOqLiBGYWx0YSBwb3VxdWluaG8uXG5EbyBKYXMifSx7ImlkIjoiZG4iLCJjIjp7InQiOiJkYXRlIiwibWQiOiIwNi0xMiJ9LCJ0aXRsZSI6WyLmgYvkurrjga7ml6UiLCJEaWEgZG9zIE5hbW9yYWRvcyJdLCJqcCI6IuODluODqeOCuOODq+OBp+OBr+OAgeS7iuaXpeOBr+aBi+S6uuOBruaXpeOBoOOBreOAguaXpeacrOOBq+OBr+OBquOBhOOBkeOBqeOAgeS6jOS6uuOBruaXpeOBqOOBl+OBpuavjuW5tOOBiuelneOBhOOBl+OCiOOBhuOBreOAglxu44K444Oj44K544KI44KKIiwicHQiOiJObyBCcmFzaWwsIGhvamUgw6kgRGlhIGRvcyBOYW1vcmFkb3MuIE5vIEphcMOjbyBuw6NvIHRlbSwgbWFzIHZhbW9zIGNvbWVtb3JhciB0b2RvIGFubyBjb21vIG8gbm9zc28gZGlhLlxuRG8gSmFzIn0seyJpZCI6ImNkOTAiLCJjIjp7InQiOiJjZCIsIm4iOjkwfSwidGl0bGUiOlsi5pel5pys44G+44Gn44GC44GoOTDml6UiLCJGYWx0YW0gOTAgZGlhcyJdLCJqcCI6IuaXpeacrOOBvuOBp+OAgeOBguOBqDkw5pel77yB44Kr44Os44Oz44OA44O844KS6KaL44KL44Gu44GM44CB5q+O5pel44Gu5qW944GX44G/44Gn44GZ44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IkZhbHRhbSA5MCBkaWFzIHBhcmEgbyBKYXDDo28hIE9saGFyIG8gY2FsZW5kw6FyaW8gdmlyb3UgYSBhbGVncmlhIGRvIG1ldSBkaWEuXG5EbyBKYXMifSx7ImlkIjoiY2Q2MCIsImMiOnsidCI6ImNkIiwibiI6NjB9LCJ0aXRsZSI6WyLml6XmnKzjgb7jgafjgYLjgag2MOaXpSIsIkZhbHRhbSA2MCBkaWFzIl0sImpwIjoi44GC44GoNjDml6XvvIHml6XmnKzjgavmnaXjgZ/jgonjgIHkuIDnt5LjgavooYzjgY3jgZ/jgYTloLTmiYDjgYzjgZ/jgY/jgZXjgpPjgYLjgovjgojjgILooYzjgY3jgZ/jgYTmiYDjgYzjgYLjgaPjgZ/jgonjgIHmlZnjgYjjgabjga3jgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiRmFsdGFtIDYwIGRpYXMhIFRlbSBtdWl0b3MgbHVnYXJlcyBhb25kZSBxdWVybyBpciBjb20gdm9jw6ogbm8gSmFww6NvLiBTZSB0aXZlciBhbGd1bSBsdWdhciBxdWUgdm9jw6ogcXVlaXJhIGNvbmhlY2VyLCBtZSBjb250YS5cbkRvIEphcyJ9LHsiaWQiOiJjZDMwIiwiYyI6eyJ0IjoiY2QiLCJuIjozMH0sInRpdGxlIjpbIuaXpeacrOOBvuOBp+OBguOBqDMw5pelIiwiRmFsdGFtIDMwIGRpYXMiXSwianAiOiLjgYLjgagzMOaXpe+8geOCguOBhuOBmeOBkOOBoOOBreOAguaXpeacrOOBq+adpeOBn+OCieOAgeacgOWIneOBq+S9leOCkumjn+OBueOBn+OBhO+8n+iAg+OBiOOBpuOBiuOBhOOBpuOBreOAglxu44K444Oj44K544KI44KKIiwicHQiOiJGYWx0YW0gMzAgZGlhcyEgRXN0w6EgY2hlZ2FuZG8uIFF1YW5kbyBjaGVnYXIgYW8gSmFww6NvLCBvIHF1ZSB2b2PDqiBxdWVyIGNvbWVyIHByaW1laXJvPyBWYWkgcGVuc2FuZG8uXG5EbyBKYXMifSx7ImlkIjoiY2QxNCIsImMiOnsidCI6ImNkIiwibiI6MTR9LCJ0aXRsZSI6WyLml6XmnKzjgb7jgafjgYLjgagy6YCx6ZaTIiwiRmFsdGFtIDIgc2VtYW5hcyJdLCJqcCI6IuOBguOBqDLpgLHplpPvvIHmupblgpnjga/lpKflpInjgaDjgajmgJ3jgYbjgZHjganjgIHnhKHnkIbjgZfjgarjgYTjgafjga3jgILkvZPjgavmsJfjgpLjgaTjgZHjgabjgIJcbuOCuOODo+OCueOCiOOCiiIsInB0IjoiRmFsdGFtIDIgc2VtYW5hcyEgU2VpIHF1ZSBvcyBwcmVwYXJhdGl2b3Mgc8OjbyBjYW5zYXRpdm9zLCBtYXMgbsOjbyBleGFnZXJlLiBDdWlkZSBkYSBzYcO6ZGUuXG5EbyBKYXMifSx7ImlkIjoiY2Q3IiwiYyI6eyJ0IjoiY2QiLCJuIjo3fSwidGl0bGUiOlsi5pel5pys44G+44Gn44GC44GoMemAsemWkyIsIkZhbHRhIDEgc2VtYW5hIl0sImpwIjoi44GC44GoMemAsemWk++8geOBhOOCiOOBhOOCiOOBoOOBreOAguS8muOBiOOCi+aXpeOCkuaMh+OBp+aVsOOBiOOBpuOBhOOBvuOBmeOAglxu44K444Oj44K544KI44KKIiwicHQiOiJGYWx0YSAxIHNlbWFuYSEgQ2hlZ291IGEgaG9yYS4gRXN0b3UgY29udGFuZG8gb3MgZGlhcyBub3MgZGVkb3MuXG5EbyBKYXMifSx7ImlkIjoiY2QxIiwiYyI6eyJ0IjoiY2QiLCJuIjoxfSwidGl0bGUiOlsi5piO5pel44CB5pel5pys44GnIiwiQW1hbmjDoywgbm8gSmFww6NvIl0sImpwIjoi5piO5pel44CB5pel5pys44Gn5Lya44GI44KL44Gt44CC5rCX44KS44Gk44GR44Gm5p2l44Gm44Gt44CC5Lya44GI44KL44Gu44KS44CB5qW944GX44G/44Gr44GX44Gm44GE44G+44GZ44CCXG7jgrjjg6PjgrnjgojjgooiLCJwdCI6IkFtYW5ow6MgYSBnZW50ZSBzZSB2w6ogbm8gSmFww6NvLiBGYcOnYSB1bWEgYm9hIHZpYWdlbS4gRXN0b3UgY29udGFuZG8gb3MgbWludXRvcy5cbkRvIEphcyJ9LHsiaWQiOiJhciIsImMiOnsidCI6ImFycml2ZSJ9LCJ0aXRsZSI6WyLml6XmnKzjgbjjgojjgYbjgZPjgZ0iLCJCZW0tdmluZGEgYW8gSmFww6NvIl0sImpwIjoi5pel5pys44G444KI44GG44GT44Gd77yB8J+Hr/Cfh7VcbumVt+OBhOaXheOAgeOBiueWsuOCjOOBleOBvuOAguS7iuaXpeOBi+OCieOAgeOBk+OBk+OBjOOBguOBquOBn+OBruWutuOBp+OBmeOAguOBk+OCjOOBi+OCieOCguOAgeOCiOOCjeOBl+OBj+OBreOAglxu44K444Oj44K544KI44KKIiwicHQiOiJCZW0tdmluZGEgYW8gSmFww6NvISDwn4ev8J+HtVxuT2JyaWdhZG8gcG9yIGZhemVyIGVzc2EgbG9uZ2EgdmlhZ2VtLiBBIHBhcnRpciBkZSBob2plLCBhcXVpIMOpIGEgc3VhIGNhc2EuIENvbnRvIGNvbSB2b2PDqiBkYXF1aSBwcmEgZnJlbnRlLlxuRG8gSmFzIn1dLCJnaWZ0cyI6W119";/*LETTERS*/
 const LD = (() => { try{ return JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(LETTER_DATA), c => c.charCodeAt(0)))); }catch(e){ return {letters:[]}; } })();
 const LETTERS = LD.letters || [];
+/* ご褒美「ジャスから日本語の手紙」への手紙（別枠）。letters.json の gifts に {id:"rw1", n:1, title, jp, pt} で入れる。
+   n ＝ その手紙のご褒美を交換した何回目か。交換していれば届き、その交換は自動で「もらった」になる。 */
+const GIFTS = LD.gifts || [];
+const GIFT_REWARD = "r1";
+const giftReds = () => S.redemptions.map((x, i) => [x, i]).filter(([x]) => x.id === GIFT_REWARD);
+const findLetter = id => LETTERS.find(x => x.id === id) || GIFTS.find(x => x.id === id);
+const isGift = id => GIFTS.some(x => x.id === id);
 const CDN = LETTERS.filter(l => l.c.t === "cd").map(l => l.c.n).sort((a, b) => b - a);
 const daysTo = k => Math.round((parseKey(k) - parseKey(todayKey())) / 864e5);
 const cdLeft = () => LD.arrive ? daysTo(LD.arrive) : null;
@@ -2032,7 +2028,7 @@ function letterDue(l){
     case "goal": return Object.values(S.days).filter(d => d.goalMet).length >= c.n;
     case "diary": return S.diaries.length >= c.n;
     case "streak": return Math.max(S.bestStreak || 0, streak()) >= c.n;
-    case "level": return levelInfo(S.total).L >= c.n;
+    case "level": return false;   // レベルのしくみをなくした（2026-11-24）。もう届かない
     case "total": return S.total >= c.n;
     case "perfect": return (S.perfects || 0) >= c.n;
     case "redeem": return S.redemptions.length >= c.n;
@@ -2047,6 +2043,7 @@ function letterGone(l){
   const c = l.c, left = cdLeft();
   if(c.t === "cd"){ const lo = cdBelow(c.n); return left === null || left < 1 || (lo !== undefined && left <= lo); }
   if(c.t === "arrive") return left === null || left <= -14;
+  if(c.t === "level") return true;
   return false;
 }
 function letterHint(c){
@@ -2055,7 +2052,6 @@ function letterHint(c){
     case "goal": return [`目標を${c.n}回達成すると届く`, `Chega quando você concluir a meta ${c.n} vez(es)`];
     case "diary": return [`日記を${c.n}件送ると届く`, `Chega quando você enviar ${c.n} diário(s)`];
     case "streak": return [`${dayR(c.n)}連続で届く`, `Chega com ${c.n} dias seguidos`];
-    case "level": return [`レベル${c.n}で届く`, `Chega no nível ${c.n}`];
     case "total": return [`全部で${c.n}ポイントになると届く`, `Chega quando você somar ${c.n} pontos`];
     case "perfect": return ["助詞で全問正解すると届く","Chega quando você acertar todas as partículas"];
     case "redeem": return ["ご褒美を交換すると届く","Chega quando você trocar um prêmio"];
@@ -2069,11 +2065,14 @@ function checkLetters(){
   if(!S.letters) S.letters = {};
   let n = 0;
   LETTERS.forEach(l => { if(!S.letters[l.id] && letterDue(l)){ S.letters[l.id] = {ts:Date.now()}; n++; } });
+  const reds = giftReds();
+  GIFTS.forEach(g => { const r = reds[g.n - 1]; if(r && !S.letters[g.id]){ S.letters[g.id] = {ts:Date.now()}; if(!r[0].got) r[0].got = Date.now(); n++; } });
   if(n) save();
 }
 /* 手紙の日本語（「3日」は みっか と読むように dayR を使ってから、ふりがなを つける） */
 const ljp = t => furi(esc(t).replace(/(\d+)日/g, (m, n) => dayR(+n))).replace(/\n/g, "<br>");
 const unreadLetters = () => LETTERS.filter(l => S.letters && S.letters[l.id] && !S.letters[l.id].r);
+const unreadAll = () => LETTERS.concat(GIFTS).filter(l => S.letters && S.letters[l.id] && !S.letters[l.id].r);
 function renderMailBtn(){
   const got = LETTERS.filter(l => S.letters && S.letters[l.id]).length, un = unreadLetters().length;
   $("b-mail").innerHTML = `<b>${furi("ジャスからの手紙")}${un ? `<span class="mailnew">${un}</span>` : ""}</b>`
@@ -2086,37 +2085,37 @@ function homeEvents(){
     S.arrived = 1; save();
     setTimeout(() => { FX.dark(420); FX.fireworks(20, {gap:220, big:true}); Party.rose(); FX.confetti(200); stamp("日本へようこそ！🇯🇵", "Bem-vinda ao Japão!", "big gold"); buzz([80, 60, 80, 60, 300]); }, 600);
   }
-  const fresh = unreadLetters().filter(l => !S.letters[l.id].n);
+  const fresh = unreadAll().filter(l => !S.letters[l.id].n);
   if(!fresh.length) return;
   fresh.forEach(l => S.letters[l.id].n = 1); save();
-  const l = fresh[0], special = ["date","cd","arrive"].includes(l.c.t);
+  const l = fresh.find(x => isGift(x.id)) || fresh[0], gift = isGift(l.id), special = gift || ["date","cd","arrive"].includes(l.c.t);
   setTimeout(() => {
     // そのあいだに練習などの画面に移っていたら、知らせるのは次にホームを開いたときにする
     if(!$("home").classList.contains("on")){ fresh.forEach(x => S.letters[x.id].n = 0); save(); return; }
     FX.rain(HEARTS.concat(["💌"]), special ? 50 : 30, {dur:1800});
     if(special) FX.fireworks(6, {shape:"heart"});
     queueModal(`<div class="env" onclick="openLetter('${l.id}')">💌</div>
-      <h2>${T(fresh.length > 1 ? `ジャスから手紙が${fresh.length}通届いたよ！` : "ジャスから手紙が届いたよ！", fresh.length > 1 ? `Chegaram ${fresh.length} cartas do Jas!` : "Chegou uma carta do Jas!")}</h2>
+      <h2>${gift ? T("ご褒美の手紙が届いたよ！","Chegou a sua carta-prêmio!") : T(fresh.length > 1 ? `ジャスから手紙が${fresh.length}通届いたよ！` : "ジャスから手紙が届いたよ！", fresh.length > 1 ? `Chegaram ${fresh.length} cartas do Jas!` : "Chegou uma carta do Jas!")}</h2>
       <p class="muted">${T(`「${ljp(l.title[0])}」`, l.title[1])}</p>
       <div class="grid2" style="margin-top:14px"><button class="ghost" onclick="closeModal()">${T("あとで","Depois")}</button><button onclick="openLetter('${l.id}')">${T("開ける 💌","Abrir")}</button></div>`);
   }, 1600);
 }
 function openLetter(id){
-  const l = LETTERS.find(x => x.id === id); if(!l) return;
+  const l = findLetter(id); if(!l) return;
   modal(`<div class="env" onclick="revealLetter('${id}')">💌</div><h2>${T(ljp(l.title[0]), l.title[1])}</h2>
     <p class="muted">${T("封筒を押して開けてね","Toque no envelope para abrir")}</p>`);
   applyPt();
 }
 function revealLetter(id){
-  const l = LETTERS.find(x => x.id === id); if(!l) return;
+  const l = findLetter(id); if(!l) return;
   const [x, y] = centerOf(document.querySelector(".env") || document.body);
   FX.burst(x, y, HEARTS.concat(ROSES), 30, {min:4, max:12, s1:20, s2:38}); buzz([30, 40, 30]);
   if(S.letters[id] && !S.letters[id].r){ S.letters[id].r = Date.now(); save(); }
   modal(`<div class="paper"><div class="pt">💌 ${ljp(l.title[0])}</div>
       <div class="pj">${ljp(l.jp)}</div>
       <div class="pp">🇧🇷 ${esc(l.pt).replace(/\n/g, "<br>")}</div>
-      ${canSpeak ? `<button class="spk wide" onclick="speak(LETTERS.find(x => x.id === '${id}').jp)">${T("🔊 聞く","Ouvir")}</button>` : ""}</div>
-    <div class="grid2" style="margin-top:14px"><button class="ghost" onclick="openMailbox()">${T("手紙箱","Cartas")}</button><button onclick="closeModal()">${T("閉じる","Fechar")}</button></div>`);
+      ${canSpeak ? `<button class="spk wide" onclick="speak(findLetter('${id}').jp)" aria-label="Ouvir">🔊</button>` : ""}</div>
+    <div class="grid2" style="margin-top:14px">${isGift(id) ? `<button class="ghost" onclick="closeModal();go('prizes')">${T("ご褒美","Prêmios")}</button>` : `<button class="ghost" onclick="openMailbox()">${T("手紙箱","Cartas")}</button>`}<button onclick="closeModal()">${T("閉じる","Fechar")}</button></div>`);
   applyPt(); refresh();
 }
 function openMailbox(){
@@ -2183,7 +2182,7 @@ function tutSteps(){
     {ic:"🎁", h:["ポイントとご褒美","Pontos e prêmios"], b:[
       ["練習するとポイントがたまるよ。ポイントで、ジャスからのご褒美と交換できるよ","Praticando você ganha pontos e pode trocá-los por prêmios do Jas."],
       ["ご褒美をもらったら、「🎁 もらった」を押してね","Quando receber o prêmio, toque em “🎁 もらった”."],
-      ["ポイントがたまるとレベルアップ：🌰 種 → 🔮 魔法使い","Com os pontos você sobe de nível: 🌰 semente → 🔮 maga das palavras."]]},
+      ["「ジャスの手紙」のご褒美は、ジャスが書いたら「ご褒美」の画面に届くよ 💌","O prêmio “carta do Jas” chega na tela de prêmios quando o Jas terminar de escrever."]]},
     {ic:"📱", h:["準備","Preparação"], b:prep},
     {ic:"🐰", h:["準備OK！","Tudo pronto!"], b:[
       ["分からないときは「成長」→「使い方を見る」で、この説明をもう一度見られるよ","Se tiver dúvida, veja esta explicação de novo em 成長 (Progresso) → 使い方を見る."],
