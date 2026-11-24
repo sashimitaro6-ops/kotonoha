@@ -1070,7 +1070,7 @@ function rescueDay(){
   const t = parseKey(todayKey()), y = ymd(addDays(t,-1)), y2 = ymd(addDays(t,-2));
   return (!counted(y) && counted(y2)) ? {k:y, n:streakAt(y2)} : null;
 }
-const mdJ = k => { const d = parseKey(k); return `${d.getMonth()+1}月${d.getDate()}日`; };
+const mdJ = k => { const d = parseKey(k); return `${d.getMonth()+1}月${dayR(d.getDate())}`; };   // 日の読み（はつか など）つき
 const mdP = k => { const d = parseKey(k); return `${d.getDate()}/${d.getMonth()+1}`; };
 function renderRescue(){
   const el = $("rescue-card"); if(!el) return;
@@ -1903,7 +1903,7 @@ function redeem(id){
 function heatTip(k){
   const d = S.days[k], p = d ? d.pts : 0;
   const st = d && d.goalMet ? "・目標達成 🌸" : S.rest[k] === "ticket" ? "・復活券 🎫" : travelDay(k) ? "・移動の日 🧳" : S.rest[k] ? "・おやすみ" : "";
-  toast(`${mdJ(k)}：${p}ポイント${st}`);
+  toast(""); $("toast").innerHTML = furi(`${mdJ(k)}：${p}ポイント${st}`);
 }
 function renderProgress(){
   const lv = levelInfo(S.total), m = lvMeta(lv.L);
