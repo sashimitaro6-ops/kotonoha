@@ -641,107 +641,107 @@ const PQ = [
    ========================================================= */
 const TR = [
   {id:"t1", pt:"Eu moro em Kyoto.", a:["京都に住んでいます。"], h:"〜に 住んでいます", hp:"moro em…"},
-  {id:"t2", pt:"Eu quero ir ao Japão no ano que vem.", a:["来年、日本に行きたいです。"], h:"〜たいです", hp:"quero…"},
-  {id:"t3", pt:"Posso tirar uma foto?", a:["写真を撮ってもいいですか。"], h:"〜てもいいですか", hp:"posso…?"},
-  {id:"t4", pt:"Eu gosto de comida japonesa.", a:["日本の食べ物が好きです。"], h:"〜が 好きです", hp:"gosto de…"},
-  {id:"t5", pt:"Ontem eu fui ao supermercado com o Jas.", a:["昨日、ジャスとスーパーに行きました。"], h:"〈人〉と ＋ 〜ました", hp:"com [pessoa] + passado"},
-  {id:"t6", pt:"Eu não entendo muito bem japonês.", a:["日本語があまりわかりません。"], h:"あまり 〜ません", hp:"não muito…"},
-  {id:"t7", pt:"Fale devagar, por favor.", a:["ゆっくり話してください。"], h:"〜てください", hp:"por favor, faça…"},
-  {id:"t8", pt:"Onde fica a estação?", a:["駅はどこですか。"], h:"〜は どこですか", hp:"onde fica…?"},
-  {id:"t9", pt:"Eu estudo japonês todos os dias.", a:["毎日、日本語を勉強しています。"], h:"毎日 〜ています", hp:"todos os dias (hábito)"},
+  {id:"t2", pt:"Eu quero ir ao Japão no ano que vem.", a:["来年、日本に行きたいです。", "来年、日本へ行きたいです。"], h:"〜たいです", hp:"quero…"},
+  {id:"t3", pt:"Posso tirar uma foto?", a:["写真を撮ってもいいですか。", "写真を撮っても大丈夫ですか。", "写真を撮ってもよろしいですか。"], h:"〜てもいいですか", hp:"posso…?"},
+  {id:"t4", pt:"Eu gosto de comida japonesa.", a:["日本の食べ物が好きです。", "日本の料理が好きです。", "日本料理が好きです。"], h:"〜が 好きです", hp:"gosto de…"},
+  {id:"t5", pt:"Ontem eu fui ao supermercado com o Jas.", a:["昨日、ジャスとスーパーに行きました。", "昨日、ジャスと一緒にスーパーに行きました。", "ジャスと昨日スーパーに行きました。", "昨日、ジャスとスーパーへ行きました。"], h:"〈人〉と ＋ 〜ました", hp:"com [pessoa] + passado"},
+  {id:"t6", pt:"Eu não entendo muito bem japonês.", a:["日本語があまりわかりません。", "日本語はあまりわかりません。", "日本語があまりよくわかりません。", "日本語はよくわかりません。"], h:"あまり 〜ません", hp:"não muito…"},
+  {id:"t7", pt:"Fale devagar, por favor.", a:["ゆっくり話してください。", "ゆっくり話してくれませんか。", "もっとゆっくり話してください。"], h:"〜てください", hp:"por favor, faça…"},
+  {id:"t8", pt:"Onde fica a estação?", a:["駅はどこですか。", "駅はどこにありますか。"], h:"〜は どこですか", hp:"onde fica…?"},
+  {id:"t9", pt:"Eu estudo japonês todos os dias.", a:["毎日、日本語を勉強しています。", "毎日、日本語を勉強します。"], h:"毎日 〜ています", hp:"todos os dias (hábito)"},
   {id:"t10", pt:"Eu acordo às sete horas.", a:["七時に起きます。"], h:"〈時間〉に", hp:"horário + に"},
   {id:"t11", pt:"Este café é muito gostoso.", a:["このコーヒーはとてもおいしいです。"], h:"この〜は とても 〜です", hp:"este… é muito…"},
-  {id:"t12", pt:"Quero comprar um presente para a minha mãe.", a:["母にプレゼントを買いたいです。"], h:"〈人〉に ＋ 〜たい", hp:"para [pessoa] + quero"},
+  {id:"t12", pt:"Quero comprar um presente para a minha mãe.", a:["母にプレゼントを買いたいです。", "お母さんにプレゼントを買いたいです。", "母のためにプレゼントを買いたいです。"], h:"〈人〉に ＋ 〜たい", hp:"para [pessoa] + quero"},
   {id:"t13", pt:"Quanto custa isto?", a:["これはいくらですか。"], h:"いくら", hp:"quanto custa"},
-  {id:"t14", pt:"Fui ao hospital porque estava com dor de cabeça.", a:["頭が痛かったので、病院に行きました。"], h:"〜ので、〜", hp:"porque… (a causa vem primeiro)"},
+  {id:"t14", pt:"Fui ao hospital porque estava com dor de cabeça.", a:["頭が痛かったので、病院に行きました。", "頭が痛かったから、病院に行きました。", "頭が痛くて、病院に行きました。", "頭が痛かったので、病院へ行きました。"], h:"〜ので、〜", hp:"porque… (a causa vem primeiro)"},
   {id:"t15", pt:"Por favor, não se preocupe.", a:["心配しないでください。"], h:"〜ないでください", hp:"por favor, não…"},
-  {id:"t16", pt:"Eu já comi.", a:["もう食べました。"], h:"もう 〜ました", hp:"já…"},
+  {id:"t16", pt:"Eu já comi.", a:["もう食べました。", "もうごはんを食べました。"], h:"もう 〜ました", hp:"já…"},
   {id:"t17", pt:"Ainda não terminei.", a:["まだ終わっていません。"], h:"まだ 〜ていません", hp:"ainda não…"},
-  {id:"t18", pt:"Vamos ao parque no domingo?", a:["日曜日に公園に行きませんか。","日曜日に公園に行きましょう。"], h:"〜ませんか", hp:"convite: vamos…?"},
-  {id:"t19", pt:"Eu consigo falar um pouco de japonês.", a:["日本語が少し話せます。"], h:"〜が 話せます", hp:"consigo falar…"},
-  {id:"t20", pt:"Eu nunca fui a Hiroshima.", a:["広島に行ったことがありません。"], h:"〜たことが ありません", hp:"nunca…"},
-  {id:"t21", pt:"Depois de jantar, eu assisto TV.", a:["晩ごはんを食べてから、テレビを見ます。"], h:"〜てから", hp:"depois de…"},
-  {id:"t22", pt:"Está chovendo, então vou levar guarda-chuva.", a:["雨が降っているので、傘を持っていきます。"], h:"〜ので ＋ 持っていきます", hp:"porque… + vou levar"},
-  {id:"t23", pt:"Acho que amanhã vai fazer calor.", a:["明日は暑いと思います。"], h:"〜と 思います", hp:"acho que…"},
-  {id:"t24", pt:"Eu gosto de cozinhar.", a:["料理をするのが好きです。","料理が好きです。"], h:"〜のが 好きです", hp:"gosto de [verbo]"},
-  {id:"t25", pt:"Este é o Jas, meu namorado.", a:["こちらは、彼氏のジャスです。"], h:"こちらは 〜です", hp:"apresentar alguém"},
-  {id:"t26", pt:"Vou morar em Hiroshima a partir de julho.", a:["七月から広島に住みます。"], h:"〜から", hp:"a partir de…"},
-  {id:"t27", pt:"Você pode me ajudar, por favor?", a:["手伝ってくれませんか。","手伝ってください。"], h:"〜てくれませんか", hp:"pedido gentil"},
-  {id:"t28", pt:"Quero ficar boa em japonês.", a:["日本語が上手になりたいです。"], h:"〜が 上手に なりたい", hp:"quero ficar boa em…"},
-  {id:"t29", pt:"Eu estava cansada, então dormi cedo.", a:["疲れていたので、早く寝ました。"], h:"〜ので ＋ 早く", hp:"porque… + cedo"},
-  {id:"t30", pt:"Quando eu chegar ao Japão, quero comer ramen.", a:["日本に着いたら、ラーメンを食べたいです。"], h:"〜たら", hp:"quando… / se…"},
+  {id:"t18", pt:"Vamos ao parque no domingo?", a:["日曜日に公園に行きませんか。", "日曜日に公園に行きましょう。", "日曜日に公園へ行きませんか。"], h:"〜ませんか", hp:"convite: vamos…?"},
+  {id:"t19", pt:"Eu consigo falar um pouco de japonês.", a:["日本語が少し話せます。", "日本語を少し話せます。", "少し日本語が話せます。", "日本語が少しできます。"], h:"〜が 話せます", hp:"consigo falar…"},
+  {id:"t20", pt:"Eu nunca fui a Hiroshima.", a:["広島に行ったことがありません。", "広島には行ったことがありません。", "一度も広島に行ったことがありません。"], h:"〜たことが ありません", hp:"nunca…"},
+  {id:"t21", pt:"Depois de jantar, eu assisto TV.", a:["晩ごはんを食べてから、テレビを見ます。", "晩ごはんの後で、テレビを見ます。", "夕ごはんを食べてから、テレビを見ます。"], h:"〜てから", hp:"depois de…"},
+  {id:"t22", pt:"Está chovendo, então vou levar guarda-chuva.", a:["雨が降っているので、傘を持っていきます。", "雨が降っているから、傘を持っていきます。"], h:"〜ので ＋ 持っていきます", hp:"porque… + vou levar"},
+  {id:"t23", pt:"Acho que amanhã vai fazer calor.", a:["明日は暑いと思います。", "明日は暑くなると思います。"], h:"〜と 思います", hp:"acho que…"},
+  {id:"t24", pt:"Eu gosto de cozinhar.", a:["料理をするのが好きです。", "料理が好きです。", "料理するのが好きです。"], h:"〜のが 好きです", hp:"gosto de [verbo]"},
+  {id:"t25", pt:"Este é o Jas, meu namorado.", a:["こちらは、彼氏のジャスです。", "こちらは私の彼氏のジャスです。", "彼氏のジャスです。"], h:"こちらは 〜です", hp:"apresentar alguém"},
+  {id:"t26", pt:"Vou morar em Hiroshima a partir de julho.", a:["七月から広島に住みます。", "七月から広島に住む予定です。"], h:"〜から", hp:"a partir de…"},
+  {id:"t27", pt:"Você pode me ajudar, por favor?", a:["手伝ってくれませんか。", "手伝ってください。", "手伝ってもらえませんか。"], h:"〜てくれませんか", hp:"pedido gentil"},
+  {id:"t28", pt:"Quero ficar boa em japonês.", a:["日本語が上手になりたいです。", "日本語がうまくなりたいです。"], h:"〜が 上手に なりたい", hp:"quero ficar boa em…"},
+  {id:"t29", pt:"Eu estava cansada, então dormi cedo.", a:["疲れていたので、早く寝ました。", "疲れていたから、早く寝ました。", "疲れたので、早く寝ました。"], h:"〜ので ＋ 早く", hp:"porque… + cedo"},
+  {id:"t30", pt:"Quando eu chegar ao Japão, quero comer ramen.", a:["日本に着いたら、ラーメンを食べたいです。", "日本に着いたら、ラーメンが食べたいです。"], h:"〜たら", hp:"quando… / se…"},
   /* ---- 来日してからの場面と、文をつなぐ言い方 ---- */
-  {id:"t31", pt:"Muito prazer. Eu sou a Letícia.", a:["はじめまして。レチシアです。"], h:"はじめまして。〜です", hp:"muito prazer + seu nome"},
+  {id:"t31", pt:"Muito prazer. Eu sou a Letícia.", a:["はじめまして。レチシアです。", "はじめまして。レチシアと申します。"], h:"はじめまして。〜です", hp:"muito prazer + seu nome"},
   {id:"t32", pt:"Eu vim do Brasil.", a:["ブラジルから来ました。"], h:"〜から 来ました", hp:"vim de…"},
-  {id:"t33", pt:"Eu ainda não consigo falar bem japonês.", a:["まだ日本語が上手に話せません。"], h:"まだ 〜ません", hp:"ainda não…"},
-  {id:"t34", pt:"Pode repetir, por favor?", a:["もう一度言ってください。","もう一度お願いします。"], h:"もう一度", hp:"mais uma vez"},
-  {id:"t35", pt:"Como se diz isto em japonês?", a:["これは日本語で何と言いますか。"], h:"〜で 何と 言いますか", hp:"como se diz em…?"},
-  {id:"t36", pt:"O que isto significa?", a:["これはどういう意味ですか。"], h:"どういう 意味", hp:"que significado"},
-  {id:"t37", pt:"Tem um supermercado aqui perto?", a:["この近くにスーパーがありますか。"], h:"〜に 〜が ありますか", hp:"tem… em…?"},
-  {id:"t38", pt:"Como eu faço para ir até a estação?", a:["駅までどうやって行きますか。"], h:"〜まで どうやって", hp:"como… até…"},
-  {id:"t39", pt:"Posso experimentar esta roupa?", a:["これを着てみてもいいですか。"], h:"〜てみても いいですか", hp:"posso experimentar…?"},
-  {id:"t40", pt:"Não preciso de sacola.", a:["袋はいりません。"], h:"〜は いりません", hp:"não preciso de…"},
+  {id:"t33", pt:"Eu ainda não consigo falar bem japonês.", a:["まだ日本語が上手に話せません。", "まだ日本語を上手に話せません。", "日本語はまだ上手に話せません。"], h:"まだ 〜ません", hp:"ainda não…"},
+  {id:"t34", pt:"Pode repetir, por favor?", a:["もう一度言ってください。", "もう一度お願いします。", "もう一回言ってください。"], h:"もう一度", hp:"mais uma vez"},
+  {id:"t35", pt:"Como se diz isto em japonês?", a:["これは日本語で何と言いますか。", "これは日本語で何て言いますか。"], h:"〜で 何と 言いますか", hp:"como se diz em…?"},
+  {id:"t36", pt:"O que isto significa?", a:["これはどういう意味ですか。", "これはどんな意味ですか。"], h:"どういう 意味", hp:"que significado"},
+  {id:"t37", pt:"Tem um supermercado aqui perto?", a:["この近くにスーパーがありますか。", "この近くにスーパーはありますか。"], h:"〜に 〜が ありますか", hp:"tem… em…?"},
+  {id:"t38", pt:"Como eu faço para ir até a estação?", a:["駅までどうやって行きますか。", "駅にはどうやって行きますか。", "駅へはどうやって行きますか。"], h:"〜まで どうやって", hp:"como… até…"},
+  {id:"t39", pt:"Posso experimentar esta roupa?", a:["これを着てみてもいいですか。", "これを試着してもいいですか。"], h:"〜てみても いいですか", hp:"posso experimentar…?"},
+  {id:"t40", pt:"Não preciso de sacola.", a:["袋はいりません。", "袋は大丈夫です。"], h:"〜は いりません", hp:"não preciso de…"},
   {id:"t41", pt:"Vou querer este.", a:["これにします。","これをください。"], h:"〜に します", hp:"vou querer…"},
-  {id:"t42", pt:"Estou com febre desde ontem.", a:["昨日から熱があります。"], h:"〜から 〜が あります", hp:"desde… tenho…"},
+  {id:"t42", pt:"Estou com febre desde ontem.", a:["昨日から熱があります。", "昨日から熱が出ています。"], h:"〜から 〜が あります", hp:"desde… tenho…"},
   {id:"t43", pt:"Estou com dor de barriga.", a:["お腹が痛いです。"], h:"〜が 痛いです", hp:"estou com dor de…"},
-  {id:"t44", pt:"Tomo este remédio depois de comer.", a:["ごはんを食べた後で、この薬を飲みます。"], h:"〜たあとで", hp:"depois de…"},
+  {id:"t44", pt:"Tomo este remédio depois de comer.", a:["ごはんを食べた後で、この薬を飲みます。", "ごはんを食べた後に、この薬を飲みます。", "食事の後で、この薬を飲みます。"], h:"〜たあとで", hp:"depois de…"},
   {id:"t45", pt:"Trabalho de segunda a sexta.", a:["月曜日から金曜日まで働きます。","月曜日から金曜日まで働いています。"], h:"〜から 〜まで", hp:"de… a…"},
-  {id:"t46", pt:"Amanhã eu estou de folga.", a:["明日は休みです。"], h:"〜は 休みです", hp:"… é folga"},
-  {id:"t47", pt:"Desculpe o atraso.", a:["遅くなってすみません。"], h:"〜て すみません", hp:"desculpe por…"},
-  {id:"t48", pt:"Não sei como usar. Pode me ensinar, por favor?", a:["使い方がわかりません。教えてください。"], h:"使い方 ＋ 教えてください", hp:"modo de usar + me ensine"},
+  {id:"t46", pt:"Amanhã eu estou de folga.", a:["明日は休みです。", "明日は仕事が休みです。"], h:"〜は 休みです", hp:"… é folga"},
+  {id:"t47", pt:"Desculpe o atraso.", a:["遅くなってすみません。", "遅れてすみません。", "遅くなってごめんなさい。"], h:"〜て すみません", hp:"desculpe por…"},
+  {id:"t48", pt:"Não sei como usar. Pode me ensinar, por favor?", a:["使い方がわかりません。教えてください。", "使い方がわからないので、教えてください。"], h:"使い方 ＋ 教えてください", hp:"modo de usar + me ensine"},
   {id:"t49", pt:"Obrigada pela refeição. Estava muito gostoso.", a:["ごちそうさまでした。とてもおいしかったです。"], h:"ごちそうさまでした ＋ 〜かったです", hp:"agradecer a comida + estava…"},
   {id:"t50", pt:"Você cozinha muito bem!", a:["料理がとても上手ですね。"], h:"〜が 上手ですね", hp:"você é bom/boa em…"},
-  {id:"t51", pt:"Estou feliz por ter vindo ao Japão.", a:["日本に来て嬉しいです。"], h:"〜て うれしいです", hp:"estou feliz por…"},
-  {id:"t52", pt:"Quando tenho tempo, leio livros.", a:["時間があるとき、本を読みます。"], h:"〜とき", hp:"quando…"},
+  {id:"t51", pt:"Estou feliz por ter vindo ao Japão.", a:["日本に来て嬉しいです。", "日本に来られて嬉しいです。"], h:"〜て うれしいです", hp:"estou feliz por…"},
+  {id:"t52", pt:"Quando tenho tempo, leio livros.", a:["時間があるとき、本を読みます。", "時間があるときは、本を読みます。"], h:"〜とき", hp:"quando…"},
   {id:"t53", pt:"Estudo japonês ouvindo música.", a:["音楽を聞きながら、日本語を勉強します。"], h:"〜ながら", hp:"fazendo… (ao mesmo tempo)"},
   {id:"t54", pt:"Fui ao supermercado, mas estava fechado.", a:["スーパーに行きましたが、閉まっていました。","スーパーに行ったけど、閉まっていました。"], h:"〜が、〜 ／ 〜けど、〜", hp:"…, mas…"},
-  {id:"t55", pt:"Se chover amanhã, vou ficar em casa.", a:["明日雨が降ったら、家にいます。"], h:"〜たら", hp:"se…"},
-  {id:"t56", pt:"Tenho que acordar cedo amanhã.", a:["明日は早く起きなければなりません。","明日は早く起きないといけません。"], h:"〜なければ なりません", hp:"tenho que…"},
-  {id:"t57", pt:"Não precisa ter pressa.", a:["急がなくてもいいです。"], h:"〜なくても いいです", hp:"não precisa…"},
+  {id:"t55", pt:"Se chover amanhã, vou ficar em casa.", a:["明日雨が降ったら、家にいます。", "もし明日雨が降ったら、家にいます。"], h:"〜たら", hp:"se…"},
+  {id:"t56", pt:"Tenho que acordar cedo amanhã.", a:["明日は早く起きなければなりません。", "明日は早く起きないといけません。", "明日は早く起きなくてはいけません。"], h:"〜なければ なりません", hp:"tenho que…"},
+  {id:"t57", pt:"Não precisa ter pressa.", a:["急がなくてもいいです。", "急がなくても大丈夫です。"], h:"〜なくても いいです", hp:"não precisa…"},
   {id:"t58", pt:"É melhor descansar um pouco.", a:["少し休んだほうがいいです。"], h:"〜たほうが いいです", hp:"é melhor…"},
   {id:"t59", pt:"Estou procurando a minha carteira.", a:["財布を探しています。"], h:"〜を 探しています", hp:"estou procurando…"},
-  {id:"t60", pt:"Este é mais barato do que aquele.", a:["これはあれより安いです。"], h:"AはBより 〜です", hp:"A é mais… do que B"},
+  {id:"t60", pt:"Este é mais barato do que aquele.", a:["これはあれより安いです。", "これのほうがあれより安いです。"], h:"AはBより 〜です", hp:"A é mais… do que B"},
   /* ---- 追加（2026-11-17）：来日後の場面（交通・買い物・病院・役所・職場・家族）と、文をつなぐ言い方 ---- */
   {id:"t61", pt:"Eu acordo às seis e meia.", a:["六時半に起きます。"], h:"〈時間〉に", hp:"horário + に"},
   {id:"t62", pt:"Eu moro com o Jas.", a:["ジャスと住んでいます。", "ジャスと一緒に住んでいます。"], h:"〈人〉と 住んでいます", hp:"moro com…"},
-  {id:"t63", pt:"Com licença, onde fica o ponto de ônibus?", a:["すみません、バス停はどこですか。"], h:"すみません、〜は どこですか", hp:"com licença, onde fica…?"},
+  {id:"t63", pt:"Com licença, onde fica o ponto de ônibus?", a:["すみません、バス停はどこですか。", "すみません、バス停はどこにありますか。"], h:"すみません、〜は どこですか", hp:"com licença, onde fica…?"},
   {id:"t64", pt:"Este trem para em Hiroshima?", a:["この電車は広島に止まりますか。"], h:"〜に 止まりますか", hp:"para em…?"},
   {id:"t65", pt:"Qual é o ônibus que vai para a estação?", a:["駅に行くバスはどれですか。", "どのバスが駅に行きますか。"], h:"〜に 行く バス", hp:"o ônibus que vai para…"},
   {id:"t66", pt:"Me dá o recibo, por favor.", a:["レシートをください。", "領収書をください。"], h:"〜を ください", hp:"me dê…, por favor"},
-  {id:"t67", pt:"Tem um tamanho maior?", a:["もっと大きいサイズはありますか。"], h:"もっと 〜 ありますか", hp:"tem um mais…?"},
+  {id:"t67", pt:"Tem um tamanho maior?", a:["もっと大きいサイズはありますか。", "もう少し大きいサイズはありますか。"], h:"もっと 〜 ありますか", hp:"tem um mais…?"},
   {id:"t68", pt:"Só estou olhando, obrigada.", a:["見ているだけです。ありがとうございます。", "見ているだけです。"], h:"〜ている だけです", hp:"só estou…"},
-  {id:"t69", pt:"Estou com tosse desde a semana passada.", a:["先週から咳が出ます。"], h:"〜から 〜が 出ます", hp:"desde… estou com…"},
+  {id:"t69", pt:"Estou com tosse desde a semana passada.", a:["先週から咳が出ます。", "先週から咳が出ています。"], h:"〜から 〜が 出ます", hp:"desde… estou com…"},
   {id:"t70", pt:"Quantas vezes por dia eu tomo este remédio?", a:["この薬は一日に何回飲みますか。", "この薬は一日何回飲みますか。"], h:"一日に 何回", hp:"quantas vezes por dia"},
   {id:"t71", pt:"Eu tenho alergia a camarão.", a:["えびのアレルギーがあります。", "えびアレルギーがあります。"], h:"〜アレルギーが あります", hp:"tenho alergia a…"},
-  {id:"t72", pt:"Quero abrir uma conta no banco.", a:["銀行の口座を作りたいです。"], h:"〜を 作りたいです", hp:"quero abrir (fazer)…"},
-  {id:"t73", pt:"Onde eu escrevo o meu endereço?", a:["住所はどこに書きますか。"], h:"〜は どこに 書きますか", hp:"onde eu escrevo…?"},
-  {id:"t74", pt:"Eu não tenho carimbo. Pode ser assinatura?", a:["はんこがありません。サインでもいいですか。"], h:"〜でも いいですか", hp:"pode ser…?"},
+  {id:"t72", pt:"Quero abrir uma conta no banco.", a:["銀行の口座を作りたいです。", "銀行で口座を作りたいです。", "銀行口座を作りたいです。"], h:"〜を 作りたいです", hp:"quero abrir (fazer)…"},
+  {id:"t73", pt:"Onde eu escrevo o meu endereço?", a:["住所はどこに書きますか。", "住所はどこに書けばいいですか。"], h:"〜は どこに 書きますか", hp:"onde eu escrevo…?"},
+  {id:"t74", pt:"Eu não tenho carimbo. Pode ser assinatura?", a:["はんこがありません。サインでもいいですか。", "はんこがないです。サインでもいいですか。", "はんこを持っていません。サインでもいいですか。"], h:"〜でも いいですか", hp:"pode ser…?"},
   {id:"t75", pt:"A partir de hoje vou trabalhar aqui. Conto com vocês.", a:["今日からここで働きます。よろしくお願いします。"], h:"〜から 〜で 働きます", hp:"a partir de… vou trabalhar em…"},
   {id:"t76", pt:"Desculpe, hoje vou embora mais cedo.", a:["すみません、今日は早く帰ります。"], h:"早く 帰ります", hp:"ir embora cedo"},
   {id:"t77", pt:"A reunião começa às duas.", a:["会議は二時に始まります。", "会議は二時からです。"], h:"〈時間〉に 始まります", hp:"começa às…"},
   {id:"t78", pt:"Posso fazer uma pergunta?", a:["質問してもいいですか。", "質問してもいいでしょうか。"], h:"〜ても いいですか", hp:"posso…?"},
   {id:"t79", pt:"Ainda não me acostumei com o trabalho.", a:["まだ仕事に慣れていません。"], h:"〜に 慣れていません", hp:"ainda não me acostumei com…"},
-  {id:"t80", pt:"Vou me esforçar no trabalho.", a:["仕事を頑張ります。"], h:"〜を 頑張ります", hp:"vou me esforçar em…"},
-  {id:"t81", pt:"Os pais do Jas são muito gentis.", a:["ジャスの両親はとても優しいです。"], h:"〜は とても 〜です", hp:"… são muito…"},
+  {id:"t80", pt:"Vou me esforçar no trabalho.", a:["仕事を頑張ります。", "仕事、頑張ります。"], h:"〜を 頑張ります", hp:"vou me esforçar em…"},
+  {id:"t81", pt:"Os pais do Jas são muito gentis.", a:["ジャスの両親はとても優しいです。", "ジャスのご両親はとても優しいです。"], h:"〜は とても 〜です", hp:"… são muito…"},
   {id:"t82", pt:"Obrigada por hoje.", a:["今日はありがとうございました。"], h:"〜は ありがとうございました", hp:"obrigada por…"},
   {id:"t83", pt:"Este presente é para a mãe do Jas.", a:["これはジャスのお母さんへのプレゼントです。", "このプレゼントはジャスのお母さんにです。"], h:"〜への プレゼント", hp:"presente para…"},
   {id:"t84", pt:"Quero aprender a fazer comida japonesa.", a:["日本料理の作り方を習いたいです。"], h:"〜の 作り方を 習いたい", hp:"quero aprender a fazer…"},
   {id:"t85", pt:"Vamos jantar juntos no sábado?", a:["土曜日に一緒に晩ごはんを食べませんか。", "土曜日、一緒に晩ごはんを食べませんか。"], h:"一緒に 〜ませんか", hp:"vamos… juntos?"},
   {id:"t86", pt:"Eu queria ir, mas não tive tempo.", a:["行きたかったですが、時間がありませんでした。", "行きたかったけど、時間がありませんでした。"], h:"〜たかったですが、〜", hp:"queria…, mas…"},
-  {id:"t87", pt:"Antes de dormir, eu escovo os dentes.", a:["寝る前に、歯を磨きます。"], h:"〜る 前に", hp:"antes de…"},
-  {id:"t88", pt:"Se tiver tempo, me liga, por favor.", a:["時間があったら、電話してください。"], h:"〜たら、〜てください", hp:"se…, por favor…"},
+  {id:"t87", pt:"Antes de dormir, eu escovo os dentes.", a:["寝る前に、歯を磨きます。", "寝る前に歯磨きをします。"], h:"〜る 前に", hp:"antes de…"},
+  {id:"t88", pt:"Se tiver tempo, me liga, por favor.", a:["時間があったら、電話してください。", "時間があったら、電話をください。"], h:"〜たら、〜てください", hp:"se…, por favor…"},
   {id:"t89", pt:"Eu já fui ao Japão uma vez.", a:["日本に一度行ったことがあります。", "一度日本に行ったことがあります。"], h:"〜たことが あります", hp:"já… (experiência)"},
   {id:"t90", pt:"Eu quero morar perto da estação.", a:["駅の近くに住みたいです。"], h:"〜の 近くに 住みたい", hp:"quero morar perto de…"},
   {id:"t91", pt:"Hoje está mais frio do que ontem.", a:["今日は昨日より寒いです。"], h:"AはBより 〜です", hp:"A é mais… do que B"},
-  {id:"t92", pt:"Eu gosto mais do verão do que do inverno.", a:["冬より夏のほうが好きです。"], h:"AよりBのほうが 好きです", hp:"gosto mais de B do que de A"},
+  {id:"t92", pt:"Eu gosto mais do verão do que do inverno.", a:["冬より夏のほうが好きです。", "冬より夏が好きです。"], h:"AよりBのほうが 好きです", hp:"gosto mais de B do que de A"},
   {id:"t93", pt:"Eu esqueci o guarda-chuva no trem.", a:["電車に傘を忘れました。"], h:"〜に 〜を 忘れました", hp:"esqueci… em…"},
-  {id:"t94", pt:"O que você vai fazer no fim de semana?", a:["週末は何をしますか。"], h:"〜は 何を しますか", hp:"o que vai fazer…?"},
+  {id:"t94", pt:"O que você vai fazer no fim de semana?", a:["週末は何をしますか。", "週末は何をする予定ですか。", "週末、何をしますか。"], h:"〜は 何を しますか", hp:"o que vai fazer…?"},
   {id:"t95", pt:"Eu fiquei em casa o dia todo.", a:["一日中、家にいました。"], h:"一日中", hp:"o dia todo"},
-  {id:"t96", pt:"Eu me perdi. Onde estou?", a:["道に迷いました。ここはどこですか。"], h:"道に 迷いました", hp:"me perdi"},
+  {id:"t96", pt:"Eu me perdi. Onde estou?", a:["道に迷いました。ここはどこですか。", "迷ってしまいました。ここはどこですか。"], h:"道に 迷いました", hp:"me perdi"},
   {id:"t97", pt:"São quantos minutos a pé?", a:["歩いて何分ですか。", "歩いて何分かかりますか。"], h:"歩いて 何分", hp:"quantos minutos a pé"},
   {id:"t98", pt:"Hoje eu quero tentar falar só em japonês.", a:["今日は日本語だけで話してみたいです。"], h:"〜だけで 〜てみたい", hp:"só em… + quero tentar"},
-  {id:"t99", pt:"Eu ainda não consigo ler muito bem kanji.", a:["まだ漢字があまり読めません。"], h:"あまり 〜ません", hp:"não muito…"},
-  {id:"t100", pt:"Estou ansiosa para te ver no Japão!", a:["日本で会うのが楽しみです。"], h:"〜のが 楽しみです", hp:"estou ansiosa para…"}
+  {id:"t99", pt:"Eu ainda não consigo ler muito bem kanji.", a:["まだ漢字があまり読めません。", "まだ漢字はあまり読めません。"], h:"あまり 〜ません", hp:"não muito…"},
+  {id:"t100", pt:"Estou ansiosa para te ver no Japão!", a:["日本で会うのが楽しみです。", "日本で会えるのが楽しみです。"], h:"〜のが 楽しみです", hp:"estou ansiosa para…"}
 ];
 
 /* =========================================================
@@ -751,8 +751,9 @@ const TR = [
    文の中に「降（お）ります」のように読みを書いた漢字には、つけない。
    ========================================================= */
 const FURI = [
+  ["方","ほう","が","のだた"],["遅","おく","れ"],["来","こ","らよ"],["美味","おい","し"],["飯","はん","","ご"],
   ["話","はなし","をかは。"],["金","かね","","お"],
-  ["消","き","え"],["分","わ","か"],["分","ぶん","","日"],["月","げつ","","か"],["通","つう","","0123456789０１２３４５６７８９"],["生","う","ま"],["数","かぞ","え"],["少","すく","な"],["腹","なか","","お"],["中","ちゅう","","問"],["分","ぷん","","0０"],["何","なん","でとの"],["降","お","り"],["日","にち","","0123456789０１２３４５６７８９"],
+  ["消","き","え"],["分","わ","か"],["分","ぶん","","日"],["月","げつ","","か"],["通","つう","","0123456789０１２３４５６７８９"],["生","う","ま"],["数","かぞ","え"],["少","すく","な"],["腹","なか","","お"],["中","ちゅう","","問"],["分","ぷん","","0０"],["何","なん","でとのて"],["降","お","り"],["日","にち","","0123456789０１２３４５６７８９"],
   ["日本料理","にほんりょうり"],["新幹線","しんかんせん"],["図書館","としょかん"],["日本語","にほんご"],["日曜日","にちようび"],["月曜日","げつようび"],
   ["日本","にほん"],["勉強","べんきょう"],["公園","こうえん"],["大学","だいがく"],["電車","でんしゃ"],["映画","えいが"],["京都","きょうと"],["広島","ひろしま"],
   ["七月","しちがつ"],["七時","しちじ"],["九時","くじ"],["五時","ごじ"],["時間","じかん"],["場所","ばしょ"],["主語","しゅご"],["上手","じょうず"],
@@ -802,6 +803,11 @@ const FURI = [
   ["名詞","めいし"],["動詞","どうし"],["全然","ぜんぜん"],["三日","みっか"],["試着","しちゃく"],["店員","てんいん"],["通話","つうわ"],["指輪","ゆびわ"],["部長","ぶちょう"],["資料","しりょう"],
   ["元気","げんき"],["興味","きょうみ"],["旅行","りょこう"],["移動","いどう"],
   ["髪","かみ"],["服","ふく"],["町","まち"],["静","しず"],["迎","むか"],["靴","くつ"],["呼","よ"],["雪","ゆき"],["祭","まつ"],["赤","あか"],["声","こえ"],["脱","ぬ"],["吸","す"],["借","か"],["立","た"],["歌","うた"],
+  ["下さい","ください"],["有り難う","ありがとう"],["有難う","ありがとう"],["御座","ござ"],["済みません","すみません"],["御免","ごめん"],["御飯","ごはん"],
+  ["御馳走","ごちそう"],["馳走","ちそう"],["宜しく","よろしく"],["御願","おねが"],["出来","でき"],["何処","どこ"],["此処","ここ"],["其処","そこ"],["幾ら","いくら"],
+  ["此方","こちら"],["余り","あまり"],["未だ","まだ"],["沢山","たくさん"],["丁度","ちょうど"],["色々","いろいろ"],["時々","ときどき"],["今晩","こんばん"],
+  ["一回","いっかい"],["予定","よてい"],["食事","しょくじ"],["歯磨","はみが"],["大好","だいす"],["凄","すご"],["解","わ","か"],["僕","ぼく"],["事","こと"],
+  ["良","よ"],["様","さま"],["申","もう"],["夕","ゆう"],["貰","もら"],["頂","いただ"],["為","ため"],["是非","ぜひ"],["又","また"],["迄","まで"],
   ["復活券","ふっかつけん"],["途中","とちゅう"],["夜中","よなか"],["毎週","まいしゅう"],["最大","さいだい"],["区切","くぎ"],["残","のこ"],["元","もと"],["個","こ"]
 ].map((e, i) => ({b:e[0], r:e[1], next:e[2] || "", prev:e[3] || "", i})).sort((x, y) => y.b.length - x.b.length || x.i - y.i);
 const isKanji = c => c >= "一" && c <= "鿿";
@@ -817,11 +823,29 @@ function kanjiNum(n){
   if(!(n >= 0 && n < 10000)) return null; if(n === 0) return "〇";
   return [[1000,"千"],[100,"百"],[10,"十"],[1,""]].map(([u, k]) => { const x = Math.floor(n / u) % 10; return !x ? "" : (x === 1 && k ? "" : D[x]) + k; }).join("");
 }
+/* 作文の答えをくらべるための読み（norm にくわえて、意味が変わらない言い方のゆれをそろえる。答えと答えの例の両方に同じようにかける）
+   - 文のはじめ（「、」のあとも）の「わたしは・ぼくは・あなたは」は、なくても同じ（日本語ではよく言わない）
+   - 2つ以上の文があるときは、順番がちがっても同じ
+   - 文のおわりの「ね・よ・よね」は、なくても同じ
+   - 住んでます／住んでいます、すごく／とても、けれど／けど、でしょうか／ですか、よいです／いいです */
+const LOOSE = [["けれども","けど"],["けれど","けど"],["でしょうか","ですか"],["すごく","とても"],["ちょっと","すこし"],
+  ["よいです","いいです"],["くありません","くないです"],["てません","ていません"],["でません","でいません"],["てます","ています"],["でます","でいます"]];
 function norm(s){
   s = String(s).replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0)).replace(/\d+/g, m => kanjiNum(m) || m);
   s = s.replace(/([一-鿿])（([ぁ-んー]+)）/g, "$2");
   s = furiTokens(s).map(([b, r]) => r || b).join("");
-  return s.replace(/[ァ-ヶ]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x60)).replace(/[\s　、。，．,.!！?？「」『』・〜~…]/g, "");
+  s = s.replace(/[ァ-ヶ]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x60));
+  return s.replace(/[\s　、。，．,.!！?？「」『』・〜~…]/g, "");
+}
+/* norm の前に文を分けて、文ごとのゆれをそろえてから、全体のゆれをそろえる */
+function looseKey(s, sorted){
+  s = String(s).replace(/(^|[、,。．.!！?？\s　])(私|わたし|僕|ぼく|あたし|あなた)は/g, "$1");   // 「わたしは」は言わなくても同じ
+  const parts = s.split(/[。．.!！?？\n]+/).map(t => norm(t)).filter(Boolean)
+    .map(t => t.replace(/(よね|ね|よ)$/, ""));
+  if(sorted) parts.sort();   // 文の順番がちがってもいいように（「はじめまして。レチシアです。」など）。「。」がないと分けられないので、順番どおりでもくらべる
+  let k = parts.join("");
+  LOOSE.forEach(([a, b]) => { k = k.split(a).join(b); });
+  return k;
 }
 /* 2つの文の おなじ ところ（いちばん長い 共通部分）を しらべる */
 function lcsMask(a, b){
@@ -1646,7 +1670,22 @@ function cmpHtml(na, cands){
     <div class="model kana">${markDiff(best.n, best.m.mb, "df-add")}</div>
 `;
 }
-const modelsHtml = q => q.a.map((a, i) => `<div class="model">${furi(esc(a))}${canSpeak ? `<button class="spk" onclick="speakW(${i})" aria-label="Ouvir">🔊</button>` : ""}</div>`).join("");
+/* 答えの例は1つだけ見せる（i ＝ 彼女の答えに一番近いもの。ほかの言い方も、正解として判定には使う） */
+const modelsHtml = (q, i) => { i = i || 0; return `<div class="model">${furi(esc(q.a[i]))}${canSpeak ? `<button class="spk" onclick="speakW(${i})" aria-label="Ouvir">🔊</button>` : ""}</div>`; };
+/* 一番近い答えの例の番号（読みで くらべる） */
+/* 答えが答えの例のどれかと同じか（順番どおり・文の順番を入れかえて の両方でくらべる）。同じなら その番号、ちがえば -1 */
+function matchIdx(ans, list){
+  const a = looseKey(ans), b = looseKey(ans, true);
+  if(!a) return -1;
+  let i = list.findIndex(x => looseKey(x) === a);
+  if(i < 0) i = list.findIndex(x => looseKey(x, true) === b);
+  return i;
+}
+function closest(na, cands){
+  let bi = 0, br = -1;
+  cands.forEach((n, i) => { const r = 2 * lcsMask(na, n).len / (na.length + n.length || 1); if(r > br){ br = r; bi = i; } });
+  return bi;
+}
 /* 答えの例を出したあと、下のボタン（◎○△ や 次へ）が見えるところまで動かす（下のメニューにかくれないように） */
 function scrollToAction(el){
   if(!el) return;
@@ -1666,11 +1705,13 @@ function showW(idk){
     scrollToAction($("w-idk-go")); applyPt(); return;
   }
   // よみ（ひらがな）に そろえて くらべる。漢字でも ひらがなでも、答えの例と おなじなら「ぴったり」。
-  const na = norm(ans), cands = q.a.map(norm);
-  const exact = na.length > 0 && cands.includes(na);
-  const cmp = exact ? "" : cmpHtml(na, cands);
+  const na = looseKey(ans), cands = q.a.map(x => looseKey(x)), mi = matchIdx(ans, q.a);
+  const exact = mi >= 0;
+  const bi = exact ? mi : closest(na, cands);
+  const cmp = exact ? "" : cmpHtml(na, [cands[bi]]);
+  W.bi = bi;
   $("w-after").innerHTML = `
-    <label>${T("答えの例","Exemplo de resposta")}</label>${modelsHtml(q)}
+    <label>${T("答えの例","Exemplo de resposta")}</label>${modelsHtml(q, bi)}
     ${exact ? `<div class="explain" style="background:var(--mint-s)"><div class="hd">${T("🌸 ぴったり！","Perfeito!")}</div>${T("答えの例と同じだよ。","Igual ao exemplo de resposta.")}</div>
     <button class="block" style="margin-top:12px" onclick="gradeW(3,true)">${T("次へ →","Próxima")}</button>` : `${cmp}
     <p style="margin-top:12px;font-weight:900">${T("どうだった？","Como foi?")}</p>
@@ -1712,7 +1753,7 @@ function renderRedo(){
       <div class="explain" style="margin:0 0 10px">${T("✍️ 見ないで、もう一度","Escreva de novo, sem olhar")}</div>
       <div class="pt-prompt">${esc(q.pt)}</div>
       <button class="soft" id="peek-btn" onclick="const b=$('peek-box');b.style.display=b.style.display?'':'none'">👀 ${T("ちょっと見る","Espiar")}</button>
-      <div id="peek-box" style="display:none">${modelsHtml(q)}</div>
+      <div id="peek-box" style="display:none">${modelsHtml(q, W.bi || 0)}</div>
       <textarea id="r-ans" rows="2" placeholder="ここに日本語で…" oninput="$('r-check').disabled = this.value.trim().length < 2"></textarea>
       <button class="block" id="r-check" style="margin-top:12px" disabled onclick="checkRedo()">${T("確かめる","Conferir")}</button>
       <div id="r-after"></div>
@@ -1721,8 +1762,8 @@ function renderRedo(){
   applyPt();
 }
 function checkRedo(){
-  const q = W.qs[W.i], na = norm($("r-ans").value), cands = q.a.map(norm);
-  if(na && cands.includes(na)){
+  const q = W.qs[W.i], na = looseKey($("r-ans").value), cands = q.a.map(x => looseKey(x));
+  if(matchIdx($("r-ans").value, q.a) >= 0){
     W.recs.forEach(r => r.re = true); save();
     Party.rose(); stamp("書けた！✍️", "Conseguiu!");
     $("r-ans").disabled = true; ["r-check","r-skip","peek-btn"].forEach(id => $(id).style.display = "none");
@@ -1731,7 +1772,7 @@ function checkRedo(){
       <button class="block" style="margin-top:12px" onclick="doneW()">${T("次へ →","Próxima")}</button>`;
     scrollToAction(document.querySelector("#r-after button.block"));
   } else {
-    $("r-after").innerHTML = `${cmpHtml(na, cands)}<p class="muted small">${T("直して、もう一度「確かめる」を押してね。","Corrija e toque em “Conferir” de novo.")}</p>`;
+    $("r-after").innerHTML = `${cmpHtml(na, [cands[closest(na, cands)]])}<p class="muted small">${T("直して、もう一度「確かめる」を押してね。","Corrija e toque em “Conferir” de novo.")}</p>`;
   }
   applyPt();
 }
