@@ -89,6 +89,10 @@ rt{ruby-align:center}
 .bigbtn .txt{flex:1}
 .ic.pk{background:var(--pink-s)}.ic.lv{background:var(--lav-s)}.ic.mt{background:var(--mint-s)}
 .done{color:var(--mint-t);font-weight:900}
+.dl{flex-basis:100%;text-align:center;font-size:15px;font-weight:700;color:var(--muted)}
+.dl:empty{display:none}
+.dl.hot{color:var(--pink-t);animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{50%{opacity:.5}}
 .cnt{display:block;font-size:14px;color:var(--muted);font-weight:700}
 /* mascot */
 .hero{display:flex;align-items:flex-end;gap:6px;margin-top:6px}
@@ -274,7 +278,7 @@ button rt{color:inherit;opacity:.85}
 
   <div class="card rescue" id="rescue-card" style="display:none"></div>
 
-  <div class="card row">
+  <div class="card row" style="flex-wrap:wrap">
     <div class="ring">
       <svg width="118" height="118"><circle cx="59" cy="59" r="49" stroke="#f6eaf2" stroke-width="13" fill="none"/>
         <circle id="ring-fg" cx="59" cy="59" r="49" stroke="#f49ac1" stroke-width="13" fill="none" stroke-linecap="round" stroke-dasharray="307.9" stroke-dashoffset="307.9" style="transition:stroke-dashoffset .6s"/></svg>
@@ -286,6 +290,7 @@ button rt{color:inherit;opacity:.85}
       <div style="margin-top:8px;font-weight:700" id="streak-line"></div>
       <div class="muted small" id="rest-status"></div>
     </div>
+    <div class="dl" id="deadline"></div>
   </div>
 
   <button class="stat row" style="width:100%;justify-content:space-between;color:var(--ink);text-align:left" onclick="go('prizes')">
@@ -817,6 +822,18 @@ function furi(s){ return String(s).split(/(<ruby>.*?<\/ruby>|<[^>]*>)/).map((p, 
 /* 「3日」の よみ（ふつか・みっか…）。日数は 文脈で 読みが 変わるので、ここで まとめて つける。 */
 const DAYR = {2:"ふつか",3:"みっか",4:"よっか",5:"いつか",6:"むいか",7:"なのか",8:"ようか",9:"ここのか",10:"とおか",14:"じゅうよっか",20:"はつか",24:"にじゅうよっか"};
 const dayR = n => DAYR[n] ? `<ruby>${n}日<rt>${DAYR[n]}</rt></ruby>` : `${n}<ruby>日<rt>にち</rt></ruby>`;
+/* 「5時間」「20分」の読み（よじかん・にじゅっぷん など、数で読みが変わるので まとめて つける） */
+const NUMR = ["","いち","に","さん","よん","ご","ろく","なな","はち","きゅう"];
+function tensR(t){ return t ? (t === 1 ? "" : NUMR[t]) + "じゅう" : ""; }
+function hourRd(n){ const t = Math.floor(n / 10), o = n % 10; return tensR(t) + ({4:"よ", 7:"なな", 9:"く"}[o] || NUMR[o]) + "じかん"; }
+function minRd(n){
+  const t = Math.floor(n / 10), o = n % 10;
+  const one = {1:"いっぷん",2:"にふん",3:"さんぷん",4:"よんぷん",5:"ごふん",6:"ろっぷん",7:"ななふん",8:"はっぷん",9:"きゅうふん"}[o];
+  return !n ? "ぜろふん" : o ? tensR(t) + one : (t === 1 ? "じゅっぷん" : NUMR[t] + "じゅっぷん");
+}
+const hourR = n => `<ruby>${n}時間<rt>${hourRd(n)}</rt></ruby>`, minR = n => `<ruby>${n}分<rt>${minRd(n)}</rt></ruby>`;
+/* 「1時間30分」を1つのことばにして、読みも1つにまとめる（読みが長くても、時間と分の間があかない） */
+const hmR = (h, m) => h && m ? `<ruby>${h}時間${m}分<rt>${hourRd(h)}${minRd(m)}</rt></ruby>` : h ? hourR(h) : minR(m);
 /* 作文の くらべ用：よみ（ひらがな）に して、空白や 「。、」などを とる */
 /* 数字を漢数字に（7 → 七、10 → 十、25 → 二十五）。「7時」と打っても「七時」と同じ よみで くらべられる。 */
 function kanjiNum(n){
@@ -1534,6 +1551,7 @@ function refresh(){
   $("b-part").innerHTML = `<b>${furi("助詞")}</b>` + T("", "Partículas") + prog(pq);
   $("b-write").innerHTML = `<b>${furi("作文")}</b>` + T("", "Escrita") + prog(wq);
   $("streak-line").innerHTML = T(`${ICO("flame")} ${dayR(st)} 連続`, `${st} dias seguidos`);
+  renderDeadline();
   $("rest-status").innerHTML = `<button class="tkbtn" onclick="ticketInfo()" aria-label="Cupons">${ICO("ticket")} × ${S.tickets || 0}</button>`;
   renderRescue();
   $("balance").textContent = S.balance;
@@ -1543,6 +1561,20 @@ function refresh(){
   renderDiaryList(); renderPrizes(); renderProgress(); applyPt();
   if($("home").classList.contains("on")) homeEvents();
 }
+
+/* 今日の日課のしめきり（朝3時）までの残り時間。目標を達成した日・移動の日は出さない。3時間を切ったらピンクで点滅 */
+function renderDeadline(){
+  const el = $("deadline"); if(!el) return;
+  const k = todayKey(), d = S.days[k];
+  if((d && d.goalMet) || travelDay(k)){ el.innerHTML = ""; el.className = "dl"; return; }
+  const end = addDays(parseKey(k), 1); end.setHours(CONFIG.dayStartHour || 0, 0, 0, 0);
+  const left = Math.max(0, Math.floor((end - Date.now()) / 60000)), h = Math.floor(left / 60), m = left % 60;
+  const jp = hmR(h, m), pt = (h ? `${h}h` : "") + (m || !h ? `${String(m).padStart(h ? 2 : 1, "0")}${h ? "" : "min"}` : "");
+  el.className = "dl" + (left < 180 ? " hot" : "");
+  el.innerHTML = T(`${left < 180 ? "⏰" : "⏳"} ${CONFIG.dayStartHour}時まで <span class="nw">あと ${jp}</span>`, `Faltam ${pt} para o prazo de hoje (${CONFIG.dayStartHour}h da manhã)`);
+  applyPt();
+}
+setInterval(() => { if(document.visibilityState === "visible" && $("home").classList.contains("on")) renderDeadline(); }, 30000);
 
 /* ---------- ふくしゅうの間隔（日付で管理） ----------
    問題ごとに box（0〜6）と due（つぎに出す日）を pstats / tstats に足す（もとの形はそのまま、項目を足すだけ）。
