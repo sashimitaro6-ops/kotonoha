@@ -3,8 +3,10 @@
      → ネットにつながっていれば、いつも最新版になる。
    - フォント：一度取ったら保存したものを使う。
    - メール送信（POST）や、ほかのサイトへの通信にはさわらない。 */
-const CACHE = "kotonoha-shell-v1";
-const SHELL = ["./", "manifest.webmanifest", "icon-192.png", "icon-512.png", "apple-touch-icon.png"];
+const CACHE = "kotonoha-shell-v2";   // 絵（images/）を足したので v2
+const IMAGES = ["bunny-base","bunny-hello","bunny-cheer","bunny-joy","bunny-gentle","bunny-letter","bunny-sleepy","bunny-travel",
+  "icon-particles","icon-writing","icon-diary","icon-letter","icon-note","journey"].map(n => `images/${n}.webp`);
+const SHELL = ["./", "manifest.webmanifest", "icon-192.png", "icon-512.png", "apple-touch-icon.png"].concat(IMAGES);
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).catch(() => {}).then(() => self.skipWaiting()));
