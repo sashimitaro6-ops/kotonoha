@@ -17,7 +17,9 @@
 <title>ことのはの森 Kotonoha</title>
 <style>
 :root{
-  --ink:#5b4a6b; --muted:#a093ad; --line:#f1e3ee;
+  --ink:#5b4a6b; --muted:#725f86; --line:#f1e3ee;
+  /* 文字用の濃い色（パステルの背景の上でも読める：コントラスト4.5以上） */
+  --pink-t:#b03a6e; --mint-t:#277a5c; --lav-t:#6c4fc0;
   --pink:#f49ac1; --pink-d:#e2689d; --pink-s:#ffe6f0;
   --lav:#b8a4f4; --lav-s:#efe9ff;
   --mint:#7fd3b6; --mint-d:#43a984; --mint-s:#e1f6ee;
@@ -40,13 +42,13 @@ body{color:var(--ink);font-family:var(--round);font-weight:500;font-size:16px;li
 main{max-width:520px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 14px) 16px calc(env(safe-area-inset-bottom) + 100px)}
 h1{font-size:21px;font-weight:900;margin:2px 0;letter-spacing:.04em}
 h2{font-size:19px;font-weight:900;margin:4px 0 8px}
-h3{font-size:14px;margin:22px 4px 8px;color:var(--pink-d);font-weight:900;letter-spacing:.08em}
+h3{font-size:15px;margin:22px 4px 8px;color:var(--pink-t);font-weight:900;letter-spacing:.08em}
 h3::before{content:"✦ "}
 p{margin:6px 0}
 .muted{color:var(--muted);font-size:14px}
 .small{font-size:13px}
 /* translation */
-.tr .p{display:none;font-size:.78em;color:var(--muted);font-weight:500;line-height:1.4;margin-top:1px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:0}
+.tr .p{display:none;font-size:max(.88em,13px);color:var(--muted);font-weight:500;line-height:1.4;margin-top:1px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:0}
 body.showpt .tr .p,.tr.open .p{display:block}
 .tr.tap{cursor:pointer}
 /* layout */
@@ -59,21 +61,25 @@ body.showpt .tr .p,.tr.open .p{display:block}
 .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
 /* buttons */
 button{font:inherit;font-weight:700;border:none;border-radius:999px;padding:12px 18px;color:#fff;cursor:pointer;
-  background:linear-gradient(135deg,var(--pink) 0%,var(--lav) 100%);box-shadow:0 4px 0 rgba(226,104,157,.25)}
+  background:linear-gradient(135deg,#c2457a 0%,#7f5fd0 100%);box-shadow:0 4px 0 rgba(176,58,110,.25)}
 button:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(226,104,157,.25)}
 button.ghost{background:#fff;color:var(--ink);box-shadow:0 3px 0 var(--line);border:2px solid var(--line)}
-button.soft{background:var(--butter-s);color:#b8860b;box-shadow:0 3px 0 #f3e2a9}
+button.soft{background:var(--butter-s);color:#8a6500;box-shadow:0 3px 0 #f3e2a9}
 button:disabled{opacity:.45;cursor:default}
 button.block{width:100%;display:block}
 .ptbtn,.fbtn{width:44px;height:44px;padding:0;border-radius:50%;font-size:20px;background:#fff;box-shadow:0 3px 0 var(--line);border:2px solid var(--line);flex:none}
 .ptbtn.on,.fbtn.on{background:var(--mint-s);border-color:var(--mint)}
 .fbtn{color:var(--ink);font-size:18px;font-weight:900}
 body:not(.furi) rt{display:none}
-rt{font-size:max(.45em,8px);font-weight:500;color:var(--muted);letter-spacing:0}
+rt{font-size:max(.55em,9px);font-weight:500;color:var(--muted);letter-spacing:0}
+/* ふりがなが漢字より長いときは、ことばの外側に少し間をあける（漢字と漢字の間は広げない：「練 習」にならないように）。
+   ふりがなどうしが重ならないように、はみ出しはしない。 */
+ruby{ruby-align:center}
+rt{ruby-align:center}
 .spk{padding:4px 12px;font-size:15px;background:#fff;color:var(--ink);box-shadow:0 2px 0 var(--line);border:2px solid var(--line);margin-left:6px;vertical-align:middle}
 .spk.wide{margin:12px 0 0}
-.df-ng{background:var(--pink-s);color:var(--pink-d);border-radius:4px;text-decoration:underline wavy}
-.df-add{background:var(--mint-s);color:var(--mint-d);border-radius:4px;text-decoration:underline}
+.df-ng{background:var(--pink-s);color:var(--pink-t);border-radius:4px;text-decoration:underline wavy}
+.df-add{background:var(--mint-s);color:var(--mint-t);border-radius:4px;text-decoration:underline}
 .kana{letter-spacing:.08em}
 .bigbtn{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;text-align:left;background:var(--card);color:var(--ink);
   border:2px solid #fff;padding:14px 16px;margin:10px 0;border-radius:24px;box-shadow:0 5px 14px rgba(184,164,244,.18)}
@@ -82,7 +88,7 @@ rt{font-size:max(.45em,8px);font-weight:500;color:var(--muted);letter-spacing:0}
 .bigbtn .go{font-size:24px;color:var(--pink)}
 .bigbtn .txt{flex:1}
 .ic.pk{background:var(--pink-s)}.ic.lv{background:var(--lav-s)}.ic.mt{background:var(--mint-s)}
-.done{color:var(--mint-d);font-weight:900}
+.done{color:var(--mint-t);font-weight:900}
 /* mascot */
 .hero{display:flex;align-items:flex-end;gap:6px;margin-top:6px}
 .mascot{width:84px;height:84px;flex:none;animation:bob 3s ease-in-out infinite}
@@ -94,7 +100,7 @@ nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;p
 nav .in{display:flex;max-width:500px;width:100%;background:rgba(255,255,255,.95);border-radius:28px;box-shadow:0 8px 24px rgba(184,164,244,.3);border:2px solid #fff;pointer-events:auto;padding:4px}
 nav button{flex:1;background:none;box-shadow:none;color:var(--muted);border-radius:22px;padding:8px 2px 6px;font-size:11px}
 nav button i{display:block;font-style:normal;font-size:21px;line-height:1.25}
-nav button.on{background:var(--pink-s);color:var(--pink-d)}
+nav button.on{background:var(--pink-s);color:var(--pink-t)}
 section{display:none}
 section.on{display:block;animation:fade .3s}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}}
@@ -106,15 +112,15 @@ section.on{display:block;animation:fade .3s}
 .bar{height:12px;background:#f6eaf2;border-radius:8px;overflow:hidden}
 .bar>div{height:100%;background:linear-gradient(90deg,var(--pink),var(--lav));border-radius:8px;transition:width .5s}
 .bar.g>div{background:linear-gradient(90deg,var(--mint),#a8e6cf)}
-.pill{display:inline-block;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:900;background:var(--butter-s);color:#b8860b;border:2px solid #fff}
+.pill{display:inline-block;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:900;background:var(--butter-s);color:#8a6500;border:2px solid #fff}
 /* exercises */
 .sentence{font-size:25px;font-weight:700;line-height:1.9;margin:8px 0 4px;overflow-wrap:anywhere}
-.blank{display:inline-block;min-width:1.9em;text-align:center;border-radius:12px;background:var(--pink-s);color:var(--pink-d);margin:0 3px;padding:0 6px;line-height:1.5}
-.blank.ok{background:var(--mint-s);color:var(--mint-d)}
+.blank{display:inline-block;min-width:1.9em;text-align:center;border-radius:12px;background:var(--pink-s);color:var(--pink-t);margin:0 3px;padding:0 6px;line-height:1.5}
+.blank.ok{background:var(--mint-s);color:var(--mint-t)}
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
 .opts button{font-size:26px;padding:14px;background:#fff;color:var(--ink);border:2px solid var(--line);box-shadow:0 4px 0 var(--line);border-radius:20px}
-.opts button.right{background:var(--mint-s);border-color:var(--mint);color:var(--mint-d);box-shadow:0 4px 0 #bfe9d9}
-.opts button.wrong{background:var(--pink-s);border-color:var(--pink);color:var(--pink-d);box-shadow:0 4px 0 #f8c9dc}
+.opts button.right{background:var(--mint-s);border-color:var(--mint);color:var(--mint-t);box-shadow:0 4px 0 #bfe9d9}
+.opts button.wrong{background:var(--pink-s);border-color:var(--pink);color:var(--pink-t);box-shadow:0 4px 0 #f8c9dc}
 .explain{margin-top:14px;padding:12px 14px;border-radius:18px;background:var(--lav-s);font-size:15px}
 textarea,input[type=text]{width:100%;font:inherit;font-size:18px;padding:12px 14px;border:2px solid var(--line);border-radius:18px;background:#fff;color:var(--ink);resize:vertical}
 textarea:focus{outline:none;border-color:var(--pink)}
@@ -123,12 +129,12 @@ label{display:block;font-size:14px;color:var(--muted);margin:12px 4px 4px;font-w
 .yours{font-size:20px;padding:10px 14px;background:var(--lav-s);border-radius:16px;margin:6px 0}
 .grades{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
 .grades button{padding:12px 4px;font-size:15px}
-.g3{background:linear-gradient(135deg,#7fd3b6,#a8e6cf)!important}
-.g2{background:linear-gradient(135deg,#ffcf6b,#ffe3a1)!important;color:#8a6500!important}
-.g1{background:linear-gradient(135deg,#f49ac1,#f8c0d8)!important}
+.g3{background:linear-gradient(135deg,#a8e6cf,#c9f0e1)!important;color:#1e6b4f!important}
+.g2{background:linear-gradient(135deg,#ffcf6b,#ffe3a1)!important;color:#5b4300!important}
+.g1{background:linear-gradient(135deg,#ffd0e3,#ffe6f0)!important;color:#a8306a!important}
 .pt-prompt{font-size:21px;font-weight:900;margin:4px 0 12px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-.meaning{font-size:14px;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-.linkbtn{background:none;box-shadow:none;color:var(--lav);padding:4px 0;font-size:14px;text-decoration:underline}
+.meaning{font-size:15px;color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.linkbtn{background:none;box-shadow:none;color:var(--lav-t);padding:4px 0;font-size:14px;text-decoration:underline}
 .progress-dots{display:flex;gap:5px;margin-bottom:12px}
 .progress-dots span{flex:1;height:8px;border-radius:5px;background:#f6eaf2}
 .progress-dots span.ok{background:var(--mint)}.progress-dots span.ng{background:var(--pink)}.progress-dots span.cur{background:var(--lav)}
@@ -149,13 +155,15 @@ label{display:block;font-size:14px;color:var(--muted);margin:12px 4px 4px;font-w
 .modal{background:#fff;border-radius:28px;padding:26px 22px;max-width:360px;width:100%;text-align:center;border:3px solid var(--pink-s);animation:pop .35s cubic-bezier(.2,1.6,.4,1)}
 @keyframes pop{from{transform:scale(.7);opacity:0}}
 .modal .big{font-size:54px;animation:bob 2s ease-in-out infinite}
-.modal .surprise{color:#c48a00;font-weight:900}
-.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 14px);transform:translateX(-50%) translateY(-140%);background:#fff;color:var(--pink-d);padding:8px 18px;border-radius:999px;font-weight:900;transition:transform .25s;z-index:30;box-shadow:0 6px 16px rgba(226,104,157,.25);border:2px solid var(--pink-s)}
+.modal .surprise{color:#8a6500;font-weight:900}
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 14px);transform:translateX(-50%) translateY(-140%);background:#fff;color:var(--pink-t);padding:8px 18px;border-radius:999px;font-weight:900;transition:transform .25s;z-index:50;box-shadow:0 6px 16px rgba(226,104,157,.25);border:2px solid var(--pink-s)}
 .toast.on{transform:translateX(-50%) translateY(0)}
 .sparkle{position:fixed;pointer-events:none;z-index:40;font-size:20px;animation:fall 1.4s ease-in forwards}
 @keyframes fall{to{transform:translateY(60vh) rotate(200deg);opacity:0}}
 /* 演出 */
 #fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:45}
+/* 手紙・チュートリアルなどの画面が出ているときは、花びらやハートを画面の後ろに回す（文字にかぶらないように） */
+body.modal-on #fx{z-index:19}
 .stamp{position:fixed;left:50%;top:38%;transform:translate(-50%,-50%);z-index:46;pointer-events:none;text-align:center;white-space:nowrap;animation:stamp 1.9s cubic-bezier(.2,1.6,.4,1) forwards}
 .stamp{padding:28px 40px;background:radial-gradient(closest-side,rgba(255,255,255,.92),rgba(255,255,255,.6) 60%,transparent)}
 .stamp b{display:block;font-size:46px;font-weight:900;line-height:1.25;color:#ff4f9a;letter-spacing:.04em;
@@ -176,25 +184,26 @@ label{display:block;font-size:14px;color:var(--muted);margin:12px 4px 4px;font-w
 .shake{animation:shake .5s}
 @keyframes shake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
 .bigbtn .tr .j{font-weight:500;color:var(--muted);font-size:14px}
-button .tr .p{color:inherit;opacity:.8}
+button .tr .p{color:inherit;opacity:.95}
+button rt{color:inherit;opacity:.85}
 .opts button:disabled{opacity:1}
 .explain .hd{font-weight:900;margin-bottom:6px}
-.tip{font-size:13px;color:var(--muted);text-align:center;margin:10px 0 0}
+.tip{font-size:14px;color:var(--muted);text-align:center;margin:10px 0 0}
 .tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}
 .tabs button{padding:10px 4px;font-size:14px;background:#fff;color:var(--ink);border:2px solid var(--line);box-shadow:0 3px 0 var(--line)}
-.tabs button.on{background:var(--pink-s);border-color:var(--pink);color:var(--pink-d)}
-.hl{color:var(--pink-d);font-weight:900}
-.rule-k{font-size:24px;font-weight:900;color:var(--pink-d);min-width:2.2em;text-align:center}
+.tabs button.on{background:var(--pink-s);border-color:var(--pink);color:var(--pink-t)}
+.hl{color:var(--pink-t);font-weight:900}
+.rule-k{font-size:24px;font-weight:900;color:var(--pink-t);min-width:2.2em;text-align:center}
 .item .model,.item .yours{font-size:17px}
 /* 日本までのカウントダウン */
 .cd{padding:14px 18px}
 .rescue{text-align:center;background:linear-gradient(135deg,#fff5d6 0%,#ffe6f0 100%);border:2px solid #ffd978;animation:pop .4s ease-out}
 .rescue .rq-ic{font-size:40px;line-height:1.1}
 .rescue .rq-h{font-size:19px;font-weight:900;margin:4px 0}
-.rescue .rq-btn{margin-top:10px;font-size:17px;padding:14px 18px;background:linear-gradient(135deg,#ffcf6b,#f49ac1);color:#fff}
+.rescue .rq-btn{margin-top:10px;font-size:17px;padding:14px 18px;background:linear-gradient(135deg,#ffcf6b,#ffb3d1);color:#5b4a6b}
 .tkbtn{background:none;box-shadow:none;border:none;padding:2px 0;color:var(--muted);font-size:13px;font-weight:700;text-align:left;cursor:pointer;text-decoration:underline dotted}
 .tkbtn:active{transform:none}
-.cd .cdn{font-size:30px;font-weight:900;color:var(--pink-d);margin:0 2px}
+.cd .cdn{font-size:30px;font-weight:900;color:var(--pink-t);margin:0 2px}
 .cdtrack{display:flex;align-items:center;gap:8px;margin:8px 0 4px}
 .cdtrack .fl{font-size:22px;flex:none}
 .cdline{position:relative;flex:1;height:8px;border-radius:6px;background:repeating-linear-gradient(90deg,var(--line) 0 8px,transparent 8px 14px)}
@@ -202,14 +211,14 @@ button .tr .p{color:inherit;opacity:.8}
 .plane{position:absolute;top:50%;transform:translate(-50%,-58%);font-size:24px;animation:fly 2.4s ease-in-out infinite}
 @keyframes fly{50%{transform:translate(-50%,-80%) rotate(-6deg)}}
 /* 手紙 */
-.mailnew{display:inline-block;margin-left:6px;padding:1px 9px;border-radius:999px;background:var(--pink);color:#fff;font-size:12px;font-weight:900;animation:pulse 1.4s ease-in-out infinite}
+.mailnew{display:inline-block;margin-left:6px;padding:1px 9px;border-radius:999px;background:var(--pink-t);color:#fff;font-size:12px;font-weight:900;animation:pulse 1.4s ease-in-out infinite}
 @keyframes pulse{50%{transform:scale(1.12)}}
 .env{font-size:96px;line-height:1.1;cursor:pointer;display:inline-block;animation:wiggle 1.2s ease-in-out infinite}
 @keyframes wiggle{0%,100%{transform:rotate(0)}20%{transform:rotate(-9deg) scale(1.05)}40%{transform:rotate(8deg)}60%{transform:rotate(-5deg)}80%{transform:rotate(3deg)}}
 .paper{text-align:left;background:repeating-linear-gradient(#fffdf8 0 31px,#f6e3ee 31px 32px);border:2px solid var(--pink-s);border-radius:18px;padding:16px 16px 10px;
   box-shadow:0 8px 22px rgba(226,104,157,.18);animation:unfold .6s cubic-bezier(.2,1.4,.4,1)}
 @keyframes unfold{from{transform:translateY(40px) scale(.85);opacity:0}}
-.paper .pt{font-weight:900;color:var(--pink-d);margin-bottom:6px}
+.paper .pt{font-weight:900;color:var(--pink-t);margin-bottom:6px}
 .paper .pj{font-size:18px;line-height:2.1}
 .paper .pp{font-size:14px;color:var(--muted);margin-top:10px;line-height:1.5;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 .mrow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:#fff;color:var(--ink);border:2px solid var(--line);box-shadow:0 3px 0 var(--line);border-radius:18px;padding:10px 12px;margin:8px 0;font-size:15px}
@@ -805,7 +814,7 @@ const FURI = [
   ["名詞","めいし"],["動詞","どうし"],["全然","ぜんぜん"],["三日","みっか"],["試着","しちゃく"],["店員","てんいん"],["通話","つうわ"],["指輪","ゆびわ"],["部長","ぶちょう"],["資料","しりょう"],
   ["元気","げんき"],["興味","きょうみ"],["旅行","りょこう"],["移動","いどう"],
   ["髪","かみ"],["服","ふく"],["町","まち"],["静","しず"],["迎","むか"],["靴","くつ"],["呼","よ"],["雪","ゆき"],["祭","まつ"],["赤","あか"],["声","こえ"],["脱","ぬ"],["吸","す"],["借","か"],["立","た"],["歌","うた"],
-  ["復活券","ふっかつけん"],["夜中","よなか"],["毎週","まいしゅう"],["最大","さいだい"],["区切","くぎ"],["残","のこ"],["元","もと"],["個","こ"]
+  ["復活券","ふっかつけん"],["途中","とちゅう"],["夜中","よなか"],["毎週","まいしゅう"],["最大","さいだい"],["区切","くぎ"],["残","のこ"],["元","もと"],["個","こ"]
 ].map((e, i) => ({b:e[0], r:e[1], next:e[2] || "", prev:e[3] || "", i})).sort((x, y) => y.b.length - x.b.length || x.i - y.i);
 const isKanji = c => c >= "一" && c <= "鿿";
 /* ふりがなを つける。タグと、すでに ふりがなが ついた ところは そのまま。 */
@@ -1126,11 +1135,11 @@ function dailyChecks(){ grantTickets(); repairStreakOnce(); }
 /* =========================================================
    ポイント
    ========================================================= */
-function addPoints(n, k){
+function addPoints(n, k, quiet){
   k = k || todayKey();
   S.total += n; S.balance += n;
   const d = day(k); d.pts += n;
-  toast("+"+n+" ✨");
+  if(!quiet) toast("+"+n+" ✨");
   let goalNow = false;
   if(!d.goalMet && quest(d).all){ d.goalMet = true; goalNow = true; }
   save();
@@ -1243,7 +1252,7 @@ function dailyReport(title, k){
   d.pwq.forEach(w => { const q = PQ.find(x => x.id === w.id); if(q) L.push(`  ✕ ${q.jp.replace("＿", "［"+w.chose+"］")}（正解：${q.a}）`); });
   L.push("", `■ 作文：${d.tr.length}文`);
   d.tr.forEach(t => { const q = TR.find(x => x.id === t.id); if(!q) return;
-    L.push(`  「${q.pt}」`, `    彼女の答え：${t.ans}`, `    模範解答：${q.a[0]}`, t.auto ? "    自動判定：◎ 模範解答と一致" : `    自己評価：${GRADE[t.grade]}`);
+    L.push(`  「${q.pt}」`, `    彼女の答え：${t.idk ? "（分からなかった → 答えの例を見た）" : t.ans}`, `    模範解答：${q.a[0]}`, t.auto ? "    自動判定：◎ 模範解答と一致" : t.idk ? "    自己評価：（なし）" : `    自己評価：${GRADE[t.grade]}`);
     if(t.re) L.push("    書き直し：✓ 模範解答を見ないで打ち直した"); });
   L.push("", `■ 日記：${d.diary}件`);
   S.diaries.filter(x => x.date === k).forEach(x => { L.push(`  ${x.jp}`); if(x.pt) L.push(`  （${x.pt}）`); });
@@ -1279,15 +1288,30 @@ function manualReport(){
    画面
    ========================================================= */
 const $ = id => document.getElementById(id);
-function go(id){
+/* 練習の途中かどうか（やめる前に確認する） */
+let curRun = null;   // "p"（助詞）・"w"（作文）・null
+function midRun(){
+  if(!$("practice").classList.contains("on") || $("practice-run").style.display === "none") return false;
+  if(curRun === "p") return !!(P && P.res.length && P.i < P.qs.length);
+  if(curRun === "w"){ const t = $("w-ans") || $("r-ans"); return !!(W && W.i < W.qs.length && (W.i > 0 || W.pend || (t && !t.disabled && t.value.trim()))); }
+  return false;
+}
+function go(id, force){
+  if(!force && midRun()){
+    const keep = curRun === "p" ? T("ここまでの答えは記録されているよ。","As respostas até aqui já foram salvas.") : T("書いている途中の文は消えるよ。","A frase que você está escrevendo será perdida.");
+    modal(`<div class="big">🌷</div><h2>${T("練習をやめる？","Parar o exercício?")}</h2><p>${keep}</p>
+      <div class="grid2" style="margin-top:14px"><button class="ghost" onclick="closeModal()">${T("続ける","Continuar")}</button><button onclick="closeModal();go('${id}',true)">${T("やめる","Parar")}</button></div>`);
+    applyPt(); return;
+  }
+  curRun = null;
   settleW();
   document.querySelectorAll("section").forEach(s => s.classList.toggle("on", s.id === id));
   document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.go === id));
   if(id === "practice"){ $("practice-menu").style.display = ""; $("practice-run").style.display = "none"; }
   refresh(); try{ window.scrollTo(0,0); }catch(e){}
 }
-function modal(html){ $("modal").innerHTML = html; $("overlay").classList.add("on"); }
-function closeModal(){ $("overlay").classList.remove("on"); if(MQ.length) setTimeout(() => { if(!$("overlay").classList.contains("on") && MQ.length) modal(MQ.shift()); }, 300); }
+function modal(html){ $("modal").innerHTML = html; $("overlay").classList.add("on"); document.body.classList.add("modal-on"); }
+function closeModal(){ $("overlay").classList.remove("on"); document.body.classList.remove("modal-on"); if(MQ.length) setTimeout(() => { if(!$("overlay").classList.contains("on") && MQ.length) modal(MQ.shift()); }, 300); }
 /* お祝いの画面は、ほかの画面が出ているときは順番待ちにする（閉じたら次が出る） */
 const MQ = [];
 function queueModal(html){ if($("overlay").classList.contains("on")) MQ.push(html); else modal(html); }
@@ -1389,7 +1413,9 @@ function stamp(jp, pt, cls){
 }
 /* ボタンの上にふわっと出る ほめことば */
 function floaty(el, text){
-  const [x, y] = centerOf(el), d = document.createElement("div"); d.className = "floaty";
+  // ボタンの上のふちから出す（ボタンの文字にかぶらないように）
+  let [x, y] = centerOf(el); try{ y = el.getBoundingClientRect().top - 6; }catch(e){}
+  const d = document.createElement("div"); d.className = "floaty";
   d.style.left = x + "px"; d.style.top = y + "px"; d.innerHTML = furi(text);
   document.body.appendChild(d); setTimeout(() => d.remove(), 1200);
 }
@@ -1531,7 +1557,7 @@ function srsWeight(s, legacy){
 let P = null;
 function startParticles(){
   const qs = pickWeighted(PQ, q => { const s = S.pstats[q.id]; return srsWeight(s, s ? Math.max(1, 1 + 2*s.w - 0.5*s.c) + 2 : 0); }, CONFIG.particlesPerSession);
-  P = {qs, i:0, res:[], earned:0, main:qs.length, wrong:[], retried:false, k:todayKey()};
+  P = {qs, i:0, res:[], earned:0, main:qs.length, wrong:[], retried:false, k:todayKey()}; curRun = "p";
   $("practice-menu").style.display = "none"; $("practice-run").style.display = "";
   renderP();
 }
@@ -1566,7 +1592,7 @@ function answerP(btn, o){
     P.k = sessKey(P.k); const d = day(P.k); ok ? d.pc++ : (d.pw++, d.pwq.push({id:q.id, chose:o}));
     if(!ok) P.wrong.push({q, chose:o});
     const pts = ok ? CONFIG.points.particleRight : CONFIG.points.particleWrong; P.earned += pts;
-    addPoints(pts, P.k);
+    addPoints(pts, P.k, !ok);   // まちがえたときは「+1」を出さない（ポイントは入る）
   } else save();
   const willRetry = !retry && P.i + 1 === P.main && P.wrong.length && !P.retried;
   $("p-after").innerHTML = `${canSpeak ? `<button class="spk wide" onclick="speakP()">${T("🔊 聞く","Ouvir a frase")}</button>` : ""}
@@ -1575,6 +1601,17 @@ function answerP(btn, o){
       : willRetry ? T("間違えた問題をもう一度 →","Tentar de novo as que errei") : T("結果を見る","Ver resultado")}</button>`;
   $("meaning").style.display = "block"; $("m-btn").style.display = "none";
   applyPt();
+  scrollToAction(document.querySelector("#p-after button.block"));
+}
+/* 練習の結果画面に出す「次の練習」ボタン（日課でまだ終わっていないもの） */
+function nextStep(from){
+  const q = quest(day()), need = k => { const x = q.by(k); return !!(x && x.n < x.of); };
+  const order = {p:["w","d"], w:["d","p"]}[from] || [];
+  const S2 = {p:[`go('practice',true);startParticles()`, "次は助詞 🎀 →", "Próximo: partículas →"],
+              w:[`go('practice',true);startWriting()`, "次は作文 ✏️ →", "Próximo: escrita →"],
+              d:[`go('diary',true)`, "次は日記 📔 →", "Próximo: diário →"]};
+  const k = order.find(need);
+  return k ? `<button class="block" style="margin-top:16px;font-size:18px;padding:14px 18px" onclick="${S2[k][0]}">${T(S2[k][1], S2[k][2])}</button>` : "";
 }
 function nextP(){
   P.i++;
@@ -1595,7 +1632,8 @@ function nextP(){
       <p>${T(`<b>${P.earned}</b> ポイント ゲット！`, `Você ganhou ${P.earned} pontos.`)}</p>
       ${list ? `<div style="text-align:left;margin-top:14px"><div class="muted small" style="font-weight:700">${T("間違えた問題","As que você errou")}</div>${list}</div>` : ""}
       <p class="muted">${T("間違えた問題は、覚えるまでまた出るよ。","As que você errou vão aparecer de novo até você aprender.")}</p>
-      <div class="grid2" style="margin-top:16px"><button class="ghost" onclick="go('home')">${T("ホーム","Início")}</button><button onclick="startParticles()">${T("もう10問","Mais 10")}</button></div>
+      ${nextStep("p")}
+      <div class="grid2" style="margin-top:12px"><button class="ghost" onclick="go('home')">${T("ホーム","Início")}</button><button class="${nextStep("p") ? "ghost" : ""}" onclick="startParticles()">${T("もう10問","Mais 10")}</button></div>
     </div>`;
   applyPt();
 }
@@ -1604,7 +1642,7 @@ function nextP(){
 let W = null;
 function startWriting(){
   const qs = pickWeighted(TR, q => { const s = S.tstats[q.id]; return srsWeight(s, s ? ({3:1, 2:2.5, 1:4}[s.grade] || 3) + 1 : 0); }, CONFIG.writingPerSession);
-  W = {qs, i:0, earned:0, k:todayKey()};
+  W = {qs, i:0, earned:0, k:todayKey()}; curRun = "w";
   $("practice-menu").style.display = "none"; $("practice-run").style.display = "";
   renderW();
 }
@@ -1619,6 +1657,7 @@ function renderW(){
       <label for="w-ans">${T("あなたの答え","Sua resposta")}</label>
       <textarea id="w-ans" rows="2" placeholder="ここに日本語で…" oninput="$('w-show').disabled = this.value.trim().length < 2"></textarea>
       <button class="block" id="w-show" style="margin-top:12px" disabled onclick="showW()">${T("答えを見る","Ver resposta")}</button>
+      <button class="linkbtn" id="w-idk" style="display:block;margin:10px auto 0" onclick="showW(true)">${T("🤔 分からない（答えを見る）","Não sei — ver a resposta")}</button>
       <div id="w-after"></div>
     </div>${tipLine()}`;
   applyPt();
@@ -1635,15 +1674,29 @@ function cmpHtml(na, cands){
     <p class="muted small">${T('<span class="df-ng">ピンク</span>＝違うところ・<span class="df-add">緑</span>＝足りないところ',"Rosa = diferente · verde = faltou")}</p>`;
 }
 const modelsHtml = q => q.a.map((a, i) => `<div class="model">${furi(esc(a))}${canSpeak ? `<button class="spk" onclick="speakW(${i})" aria-label="Ouvir">🔊</button>` : ""}</div>`).join("");
-function showW(){
-  const q = W.qs[W.i], ans = $("w-ans").value.trim();
-  $("w-ans").disabled = true; $("w-show").style.display = "none";
+/* 答えの例を出したあと、下のボタン（◎○△ や 次へ）が見えるところまで動かす（下のメニューにかくれないように） */
+function scrollToAction(el){
+  if(!el) return;
+  setTimeout(() => { try{ const r = el.getBoundingClientRect(), nav = document.querySelector("nav .in"), lim = (nav ? nav.getBoundingClientRect().top : innerHeight) - 16;
+    if(r.bottom > lim) window.scrollBy({top: r.bottom - lim, behavior: "smooth"}); }catch(e){} }, 60);
+}
+function showW(idk){
+  const q = W.qs[W.i], ans = idk ? "" : $("w-ans").value.trim();
+  $("w-ans").disabled = true; $("w-show").style.display = "none"; $("w-idk").style.display = "none";
+  // 分からなかったとき：答えの例を見て、つぎの画面で見ないで書いてみる（△として記録）
+  if(idk){
+    $("w-ans").style.display = "none";
+    $("w-after").innerHTML = `
+      <label>${T("答えの例","Exemplo de resposta")}</label>${modelsHtml(q)}
+      <div class="explain"><div class="hd">${T("🌱 答えの例を読んで、覚えよう","Leia o exemplo e tente memorizar")}</div>${T("次の画面で、見ないで書いてみよう。","Na próxima tela, escreva sem olhar.")}</div>
+      <button class="block" id="w-idk-go" style="margin-top:12px" onclick="gradeW(1,false,true)">${T("書いてみる ✍️","Vou tentar escrever")}</button>`;
+    scrollToAction($("w-idk-go")); applyPt(); return;
+  }
   // よみ（ひらがな）に そろえて くらべる。漢字でも ひらがなでも、答えの例と おなじなら「ぴったり」。
   const na = norm(ans), cands = q.a.map(norm);
   const exact = na.length > 0 && cands.includes(na);
   const cmp = exact ? "" : cmpHtml(na, cands);
   $("w-after").innerHTML = `
-    <label>${T("あなたが書いた文","Você escreveu")}</label><div class="yours">${esc(ans)}</div>
     <label>${T("答えの例","Exemplo de resposta")}</label>${modelsHtml(q)}
     ${exact ? `<div class="explain" style="background:var(--mint-s)"><div class="hd">${T("🌸 ぴったり！","Perfeito!")}</div>${T("答えの例と同じだよ。","Igual ao exemplo de resposta.")}</div>
     <button class="block" style="margin-top:12px" onclick="gradeW(3,true)">${T("次へ →","Próxima")}</button>` : `${cmp}
@@ -1656,15 +1709,16 @@ function showW(){
     </div>`}`;
   if(exact) setTimeout(() => { Party.rose(); FX.fireworks(3); stamp("ぴったり！🌹", "Igualzinho ao exemplo!"); }, 150);
   applyPt();
+  scrollToAction(document.querySelector("#w-after .grades") || document.querySelector("#w-after button.block"));
 }
-function gradeW(g, auto){
-  const q = W.qs[W.i], ans = $("w-ans").value.trim();
-  if(!auto){ const el = document.querySelector(g === 3 ? ".grades .g3" : g === 2 ? ".grades .g2" : ".grades .g1");
+function gradeW(g, auto, idk){
+  const q = W.qs[W.i], ans = idk ? "" : $("w-ans").value.trim();
+  if(!auto && !idk){ const el = document.querySelector(g === 3 ? ".grades .g3" : g === 2 ? ".grades .g2" : ".grades .g1");
     if(el){ if(g === 3) Party.correct(el, 0); else floaty(el, g === 2 ? "おしい！" : "次はできるよ 🍀"); } }
   const old = S.tstats[q.id] || {}, prev = old.box !== undefined ? old.box : (old.grade === 3 ? 1 : 0);
   const s = {grade:g, n:(old.n || 0) + 1}; srsSet(s, g === 3 ? prev + 1 : g === 2 ? Math.min(prev, 1) : 0);
   S.tstats[q.id] = s;
-  const rec = {id:q.id, ans, grade:g}; if(auto) rec.auto = true;
+  const rec = {id:q.id, ans, grade:g}; if(auto) rec.auto = true; if(idk) rec.idk = true;   // idk：分からなくて答えを見た
   W.k = sessKey(W.k);
   const wrec = Object.assign({date:W.k}, rec);
   day(W.k).tr.push(rec); S.writings.push(wrec);
@@ -1704,6 +1758,7 @@ function checkRedo(){
     $("peek-box").style.display = "";
     $("r-after").innerHTML = `<div class="explain" style="background:var(--mint-s)"><div class="hd">${T("🌸 書けた！","Conseguiu!")}</div>${T("答えの例と同じだよ。","Igual ao exemplo de resposta.")}</div>
       <button class="block" style="margin-top:12px" onclick="doneW()">${T("次へ →","Próxima")}</button>`;
+    scrollToAction(document.querySelector("#r-after button.block"));
   } else {
     $("r-after").innerHTML = `${cmpHtml(na, cands)}<p class="muted small">${T("直して、もう一度「確かめる」を押してね。","Corrija e toque em “Conferir” de novo.")}</p>`;
   }
@@ -1716,7 +1771,8 @@ function doneW(){
   $("practice-run").innerHTML = `<div class="card" style="text-align:center">
       <div style="font-size:52px">✏️</div><h2>${T("よくできました！","Muito bem!")}</h2>
       <p>${T(`${W.qs.length}文書いて <b>${W.earned}</b> ポイント ゲット！`, `Você escreveu ${W.qs.length} frases e ganhou ${W.earned} pontos.`)}</p>
-      <div class="grid2" style="margin-top:16px"><button class="ghost" onclick="go('home')">${T("ホーム","Início")}</button><button onclick="startWriting()">${T("もう3問","Mais 3")}</button></div>
+      ${nextStep("w")}
+      <div class="grid2" style="margin-top:12px"><button class="ghost" onclick="go('home')">${T("ホーム","Início")}</button><button class="${nextStep("w") ? "ghost" : ""}" onclick="startWriting()">${T("もう3問","Mais 3")}</button></div>
     </div>`;
   setTimeout(() => { FX.confetti(140); FX.fireworks(3); stamp("よくできました！✏️", "Muito bem!"); }, 200);
   applyPt();
@@ -1782,7 +1838,7 @@ function renderPrizes(){
       <p class="muted">${T("ポイントはちゃんと貯まっているよ。楽しみに待っててね！","Seus pontos continuam sendo guardados. Aguarde a surpresa!")}</p></div>`;
   } else {
     $("prize-list").innerHTML = CONFIG.rewards.map(r => `
-      <div class="item row"><div style="font-size:30px">${r.icon}</div><div style="flex:1">${T(`<b>${esc(r.name)}</b>`, esc(r.pt || ""))}<div style="font-weight:900;color:#c48a00">${r.cost} ポイント</div>
+      <div class="item row"><div style="font-size:30px">${r.icon}</div><div style="flex:1">${T(`<b>${esc(r.name)}</b>`, esc(r.pt || ""))}<div style="font-weight:900;color:#8a6500">${r.cost} ポイント</div>
       ${S.balance < r.cost ? `<div class="bar g" style="margin-top:6px;height:8px"><div style="width:${Math.round(100*S.balance/r.cost)}%"></div></div>` : ""}</div>
       <button ${S.balance < r.cost ? "disabled" : ""} onclick="askRedeem('${r.id}')">${T("交換","Trocar")}</button></div>`).join("");
   }
@@ -1790,8 +1846,8 @@ function renderPrizes(){
   // あげたかどうか：彼女がもらったら「もらった」を押す（記録に got＝日時 を足す。形は変えず項目を足すだけ）
   const left = S.redemptions.filter(x => !x.got).length;
   $("redeem-list").innerHTML = (left ? `<p class="muted small">${T(`まだもらっていないご褒美：<b>${left}</b>個。もらったら「🎁 もらった」を押してね。`, `Prêmios ainda não recebidos: ${left}. Quando receber, toque em “recebi”.`)}</p>` : "")
-    + S.redemptions.map((x, i) => [x, i]).reverse().map(([x, i]) => `<div class="item top"><div>${x.icon} ${furi(esc(x.name))}<div class="muted small">${T(`${new Date(x.ts).toLocaleDateString("ja-JP")} 交換`, "trocado")}<span style="font-weight:900;color:#c48a00">・−${x.cost}</span></div></div>
-      ${x.got ? `<button class="linkbtn" style="color:var(--mint-d);text-decoration:none;flex:none" onclick="askGot(${i})">${T("✓ もらった","Recebido")}</button>`
+    + S.redemptions.map((x, i) => [x, i]).reverse().map(([x, i]) => `<div class="item top"><div>${x.icon} ${furi(esc(x.name))}<div class="muted small">${T(`${new Date(x.ts).toLocaleDateString("ja-JP")} 交換`, "trocado")}<span style="font-weight:900;color:#8a6500">・−${x.cost}</span></div></div>
+      ${x.got ? `<button class="linkbtn" style="color:var(--mint-t);text-decoration:none;flex:none" onclick="askGot(${i})">${T("✓ もらった","Recebido")}</button>`
         : `<button class="ghost" style="padding:8px 12px;font-size:14px;flex:none" onclick="askGot(${i})">${T("🎁 もらった","Recebi")}</button>`}</div>`).join("");
 }
 function askGot(i){
@@ -1879,7 +1935,7 @@ function speakR(i, j){ speak(RULES[i][1][j][2].replace(/[\[\]]/g, "")); }
 const spkBtn = call => canSpeak ? `<button class="spk" onclick="${call}" aria-label="Ouvir">🔊</button>` : "";
 let noteTab = "m";
 function openNote(tab){
-  if(tab) noteTab = tab;
+  if(tab) noteTab = tab; curRun = null;
   $("practice-menu").style.display = "none"; $("practice-run").style.display = "";
   const tabs = [["m","🌧️ 間違い","Erros"],["w","✏️ 書いた文","Frases"],["r","🎀 ルール","Regras"]];
   let body = "";
@@ -1894,9 +1950,9 @@ function openNote(tab){
       : `<div class="empty"><div class="big">🌸</div>${T("間違えた問題はまだないよ","Você ainda não errou nenhuma pergunta.")}</div>`) + `</div>`;
   } else if(noteTab === "w"){
     const ws = S.writings.slice(-40).reverse().map(w => { const q = TR.find(x => x.id === w.id); if(!q) return "";
-      const g = w.auto ? T("🌸 ぴったり","Perfeito") : T(GRADE[w.grade] || "", {3:"Acertei", 2:"Quase", 1:"Errei"}[w.grade] || "");
+      const g = w.auto ? T("🌸 ぴったり","Perfeito") : w.idk ? T("🤔 分からなかった","Não sabia") : T(GRADE[w.grade] || "", {3:"Acertei", 2:"Quase", 1:"Errei"}[w.grade] || "");
       return `<div class="item"><div class="muted small">${esc(w.date)}・${g}${w.re ? `・${T("✍️ 書き直した","Reescrita")}` : ""}</div>
-        <div class="meaning">🇧🇷 ${esc(q.pt)}</div><div class="yours">${esc(w.ans)}</div>
+        <div class="meaning">🇧🇷 ${esc(q.pt)}</div>${w.ans ? `<div class="yours">${esc(w.ans)}</div>` : ""}
         <div class="model">${furi(esc(q.a[0]))}${spkBtn(`speakT('${q.id}')`)}</div></div>`; }).join("");
     body = `<div class="card">` + (ws ? `<p class="muted small">${T("紫 ＝ あなたが書いた文・緑 ＝ 答えの例","Lilás = o que você escreveu · verde = exemplo de resposta")}</p>` + ws
       : `<div class="empty"><div class="big">✏️</div>${T("作文をするとここに出るよ","Faça um exercício de escrita para ver aqui.")}</div>`) + `</div>`;
@@ -2028,6 +2084,8 @@ function homeEvents(){
   fresh.forEach(l => S.letters[l.id].n = 1); save();
   const l = fresh[0], special = ["date","cd","arrive"].includes(l.c.t);
   setTimeout(() => {
+    // そのあいだに練習などの画面に移っていたら、知らせるのは次にホームを開いたときにする
+    if(!$("home").classList.contains("on")){ fresh.forEach(x => S.letters[x.id].n = 0); save(); return; }
     FX.rain(HEARTS.concat(["💌"]), special ? 50 : 30, {dur:1800});
     if(special) FX.fireworks(6, {shape:"heart"});
     queueModal(`<div class="env" onclick="openLetter('${l.id}')">💌</div>
@@ -2109,7 +2167,7 @@ function tutSteps(){
       ["🌙 1日の区切りは朝3時。0時をすぎても3時までなら前の日の練習になるよ","🌙 O dia só vira às 3h da manhã. Até as 3h, conta para o dia anterior."]]},
     {ic:"🎀 ✏️", h:["練習","Os exercícios"], b:[
       ["🎀 助詞：＿に入る助詞を選ぶ。間違えた問題は、覚えるまでまた出るよ","🎀 Partículas: escolha a partícula certa. As que você errar voltam até você aprender."],
-      ["✏️ 作文：ポルトガル語の文を日本語で書く。答えの例と比べて、自分で ◎○△ をつけてね","✏️ Escrita: escreva a frase em japonês, compare com o exemplo e se avalie com ◎ ○ △."],
+      ["✏️ 作文：ポルトガル語の文を日本語で書く。答えの例と比べて、自分で ◎○△ をつけてね。分からないときは「分からない」を押してもいいよ","✏️ Escrita: escreva a frase em japonês, compare com o exemplo e se avalie com ◎ ○ △. Se não souber, pode tocar em “Não sei”."],
       ["📒 ノート：間違えた問題・書いた文・助詞のルールを見返せるよ","📒 Caderno: reveja seus erros, as frases que escreveu e as regras das partículas."]]},
     {ic:"📔", h:["日記","O diário"], b:[
       ["今日のことを日本語で1〜3文書いてね。お題もあるよ","Escreva de 1 a 3 frases em japonês sobre o seu dia. Tem sugestão de tema também."],
