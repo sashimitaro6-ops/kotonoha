@@ -2238,6 +2238,8 @@ function openNote(tab){
      はじめて覚えた日のうちは、正解しても box を上げない（見たばかりで覚えているだけなので）。
    - 「覚えた」＝ 覚える単語のうち box 4 以上（打って答えるのに2回以上正解し、間隔が2週間になったもの）。 */
 const VREVIEW = 40, VEXTRA = 5;
+/* 長いことば（少々お待ちください など）はスマホの幅に入るように小さくする */
+const vSize = v => Math.round(Math.max(22, Math.min(40, 280 / [...v.w].length)));
 const vSay = v => (v.r || v.w).replace(/～/g, "");
 const vLearned = v => { const s = S.vstats[v.w]; return S.vsort[v.w] === 0 && !!(s && s.box >= 4); };
 /* 「知ってる」の確かめを、あとの日にばらして入れる */
@@ -2265,9 +2267,10 @@ function vTarget(d){ const q = CONFIG.vocabNew || 0; if(!q) return 0; const n = 
    「～」の語は「～」の語どうし。意味が同じ語は入れない。 */
 function vOpts(v){
   const tl = v.w.includes("～"), base = x => x !== v && x.pt !== v.pt && x.w !== v.w && x.w.includes("～") === tl;
+  const uniq = a => new Set(a.map(x => x.pt)).size;   // 意味が同じ語（少し・ちょっと）は1つと数える
   let pool = VOCAB.filter(x => base(x) && x.c === v.c && x.pos === v.pos);
-  if(pool.length < 3) pool = VOCAB.filter(x => base(x) && x.pos === v.pos);
-  if(pool.length < 3) pool = VOCAB.filter(base);
+  if(uniq(pool) < 3) pool = VOCAB.filter(x => base(x) && x.pos === v.pos);
+  if(uniq(pool) < 3) pool = VOCAB.filter(base);
   const out = [v];
   for(let n = 0; out.length < 4 && n < 200; n++){ const x = pool[Math.floor(Math.random() * pool.length)]; if(!out.some(y => y === x || y.pt === x.pt || y.w === x.w)) out.push(x); }
   return shuffle(out);
@@ -2345,7 +2348,7 @@ function vLabel(){
 function renderV(){
   const q = V.qs[V.i], v = q.v, m = vMode(q);
   V.opts = m < 2 ? vOpts(v) : null; V.done = false; V.typed = "";
-  const ask = m === 0 ? `<div class="vs-word">${vWord(v)}</div>` : `<div class="vs-mean">${ICO("flag-br")} ${esc(v.pt)}</div>`;
+  const ask = m === 0 ? `<div class="vs-word" style="font-size:${vSize(v)}px">${vWord(v)}</div>` : `<div class="vs-mean">${ICO("flag-br")} ${esc(v.pt)}</div>`;
   const body = m === 0 ? `<div class="opts vopts">${V.opts.map((o, j) => `<button onclick="answerV(this,${j})">${esc(o.pt)}</button>`).join("")}</div>
        <button class="ghost block vidk" style="margin-top:12px" onclick="answerV(null,-1)">${T("🤔 分からない","Não sei")}</button>`
     : m === 1 ? `<div class="opts vopts jp">${V.opts.map((o, j) => `<button onclick="answerV(this,${j})">${vWord(o)}</button>`).join("")}</div>`
@@ -2405,7 +2408,7 @@ function afterV(ok, el){
   save();
   const fix = !ok && V.typed && q.t === "r" ? `<button class="linkbtn" onclick="fixV()">${T("✓ 合ってた","Eu acertei")}</button>` : "";
   $("v-after").innerHTML = `<div class="explain"><div class="hd">${msg}</div>
-      <div class="row" style="gap:8px"><b style="font-size:22px">${vWord(v)}</b><span style="flex:1">${esc(v.pt)}</span>${spkBtn(`speak('${esc(vSay(v))}')`)}</div>${vExHtml(v)}${fix}</div>
+      <div class="row" style="gap:8px"><b style="font-size:22px;flex:1">${vWord(v)}</b>${spkBtn(`speak('${esc(vSay(v))}')`)}</div><div style="margin-top:2px">${esc(v.pt)}</div>${vExHtml(v)}${fix}</div>
     <button class="block" style="margin-top:12px" onclick="nextV()">${T("次へ →","Próxima")}</button>`;
   applyPt();
   if(auto){ const me = V, i = V.i; V.t = setTimeout(() => { if(V === me && V.i === i && V.done && curRun === "v") nextV(); }, 800); }
@@ -2472,7 +2475,11 @@ function vExample(v){
 /* 例文の表示：その単語のところを色で示す。🔊（答えのあとだけ）・タップでポルトガル語 */
 function vExHtml(v){
   const ex = vExample(v); if(!ex) return "";
-  const st = [v.w.replace(/～/g, ""), vStem(v)].find(x => x.length >= 1 && ex.jp.includes(x));
+  // 色をつける所：ことばそのもの → 活用した形（最後のかなを1字ずつ外す。漢字が1字は残す）→ 「お」をとった形
+  const w0 = v.w.replace(/～/g, ""), cands = [w0, vStem(v)];
+  for(let t = w0; /[ぁ-ん]$/.test(t) && t.length > 1;){ t = t.slice(0, -1); if(/[一-龯々]/.test(t) || t.length >= 2) cands.push(t); }
+  if(/^[おご][一-龯々]/.test(w0)) cands.push(w0.slice(1));
+  const st = cands.find(x => x && x.length >= 1 && ex.jp.includes(x));
   let jp;
   if(st){ const i = ex.jp.indexOf(st); jp = furi(esc(ex.jp.slice(0, i))) + `<b class="hl">${furi(esc(st))}</b>` + furi(esc(ex.jp.slice(i + st.length))); }
   else jp = furi(esc(ex.jp));
