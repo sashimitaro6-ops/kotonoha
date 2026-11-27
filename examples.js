@@ -1705,4 +1705,643 @@ ICカード|ICカードで電車に乗ります。|Pego o trem com o cartão de 
 真っ赤|恥ずかしくて、顔が真っ赤になりました。|Fiquei com vergonha e o rosto ficou vermelhíssimo.
 真っ青|海が真っ青できれいです。|O mar está azul intenso e lindo.
 真っ暗|停電で部屋が真っ暗になりました。|Com a queda de energia, o quarto ficou escuríssimo.
+なる|来年、二十八歳になります。|Ano que vem vou fazer 28 anos.
+帰る|仕事が終わったら、まっすぐ家に帰ります。|Quando acabar o trabalho, volto direto para casa.
+戻る|すぐ戻るので、ここで待っていてね。|Já volto, me espere aqui.
+出る|毎朝八時に家を出ます。|Saio de casa às oito toda manhã.
+出す|郵便局で手紙を出しました。|Mandei a carta no correio.
+入れる|コーヒーに牛乳を入れます。|Coloco leite no café.
+思う|日本語はおもしろいと思います。|Acho que japonês é interessante.
+考える|将来のことを考えています。|Estou pensando no futuro.
+知る|そのニュースを今日知りました。|Fiquei sabendo dessa notícia hoje.
+知っている|この店を知っていますか。|Você conhece esta loja?
+できる|少し日本語ができます。|Sei um pouco de japonês.
+持つ|重い荷物を持ちましょうか。|Quer que eu carregue a bagagem pesada?
+持ってくる|明日、写真を持ってきます。|Amanhã trago as fotos.
+連れていく|犬を公園に連れていきます。|Levo o cachorro ao parque.
+連れてくる|今度、友達を連れてきてもいい？|Da próxima vez posso trazer uma amiga?
+置く|鍵はテーブルの上に置いてね。|Deixe a chave em cima da mesa.
+取る|塩を取ってください。|Me passa o sal, por favor.
+開く|ドアが開きました。|A porta abriu.
+消す|寝る前に電気を消します。|Apago a luz antes de dormir.
+始める|四月から新しい仕事を始めます。|Em abril começo um trabalho novo.
+終える|宿題を終えてから、テレビを見ます。|Vejo TV depois de terminar a lição.
+続ける|毎日日本語の勉強を続けています。|Continuo estudando japonês todo dia.
+続く|雨の日が続いています。|Os dias de chuva continuam.
+やめる|甘いものを食べるのをやめました。|Parei de comer doces.
+決まる|結婚式の日が決まりました。|A data do casamento foi decidida.
+変える|髪型を変えました。|Mudei o penteado.
+変わる|日本に来て、生活が変わりました。|Vindo ao Japão, minha vida mudou.
+選ぶ|ジャスにプレゼントを選びました。|Escolhi um presente para o Jas.
+探す|新しいアパートを探しています。|Estou procurando um apartamento novo.
+見つける|やっと鍵を見つけました。|Finalmente achei a chave.
+なくなる|牛乳がなくなりました。|O leite acabou.
+落とす|財布を落としてしまいました。|Deixei a carteira cair.
+落ちる|木から葉が落ちます。|As folhas caem das árvores.
+拾う|道でお金を拾って、交番に届けました。|Achei dinheiro na rua e levei ao posto policial.
+壊す|子供がおもちゃを壊しました。|A criança quebrou o brinquedo.
+壊れる|洗濯機が壊れました。|A máquina de lavar quebrou.
+直す|ジャスが自転車を直してくれました。|O Jas consertou a bicicleta para mim.
+割れる|コップが割れました。|O copo quebrou.
+汚れる|雨で靴が汚れました。|O sapato sujou por causa da chuva.
+汚す|服を汚さないように、エプロンをします。|Uso avental para não sujar a roupa.
+動く|このエレベーターは動いていません。|Este elevador não está funcionando.
+動かす|机を少し動かしてください。|Mova a mesa um pouco, por favor.
+押す|このボタンを押してください。|Aperte este botão, por favor.
+引く|ドアを引いて開けます。|Abro a porta puxando.
+回す|この鍵は右に回します。|Esta chave gira para a direita.
+回る|地球は太陽の周りを回っています。|A Terra gira em volta do Sol.
+押さえる|紙が飛ばないように押さえてください。|Segure o papel para não voar, por favor.
+上げる|分かる人は手を上げてください。|Quem souber, levante a mão.
+下げる|エアコンの温度を下げます。|Abaixo a temperatura do ar-condicionado.
+上がる|気温が上がりました。|A temperatura subiu.
+下がる|熱が下がりました。|A febre baixou.
+登る|富士山に登りたいです。|Quero subir o Monte Fuji.
+立つ|電車ではずっと立っていました。|Fiquei de pé o tempo todo no trem.
+座る|どうぞ、座ってください。|Sente-se, por favor.
+歩く|駅まで歩いて行きます。|Vou a pé até a estação.
+急ぐ|遅れそうなので、急ぎます。|Parece que vou me atrasar, então vou me apressar.
+逃げる|地震のときは、外に逃げないで。|No terremoto, não fuja para fora.
+転ぶ|雪の道で転びました。|Levei um tombo na rua com neve.
+ぶつかる|自転車が人にぶつかりました。|A bicicleta bateu numa pessoa.
+触る|作品に触らないでください。|Não toque nas obras, por favor.
+投げる|犬にボールを投げます。|Jogo a bola para o cachorro.
+打つ|スマホでメッセージを打ちます。|Digito a mensagem no celular.
+蹴る|ボールを強く蹴りました。|Chutei a bola com força.
+握る|子供の手を握って、道を渡ります。|Atravesso a rua segurando a mão da criança.
+抱く|赤ちゃんを抱いて歩きます。|Ando com o bebê no colo.
+抱きしめる|空港でジャスを抱きしめました。|Abracei o Jas no aeroporto.
+貼る|封筒に切手を貼ります。|Colo o selo no envelope.
+包む|プレゼントをきれいな紙で包みます。|Embrulho o presente num papel bonito.
+結ぶ|靴のひもを結びます。|Amarro o cadarço.
+掛ける|壁に時計を掛けました。|Pendurei o relógio na parede.
+足りる|お金が足りません。|O dinheiro não é suficiente.
+余る|料理が余ったので、明日食べます。|Sobrou comida, então como amanhã.
+残る|仕事が少し残っています。|Ainda resta um pouco de trabalho.
+残す|ご飯を残さないで食べましょう。|Vamos comer sem deixar arroz.
+増える|最近、体重が増えました。|Ultimamente meu peso aumentou.
+減る|日本の人口は減っています。|A população do Japão está diminuindo.
+増やす|日本語の単語を増やしたいです。|Quero aumentar meu vocabulário de japonês.
+減らす|甘いものを減らしています。|Estou diminuindo os doces.
+比べる|二つの値段を比べます。|Comparo os dois preços.
+数える|お金を数えます。|Conto o dinheiro.
+測る|熱を測ってください。|Meça a febre, por favor.
+調べる|電車の時間を調べます。|Confiro o horário do trem.
+試す|新しい料理を試してみました。|Experimentei uma receita nova.
+集める|かわいい切手を集めています。|Coleciono selos bonitos.
+集まる|駅の前に人が集まっています。|Tem gente reunida em frente à estação.
+分ける|ケーキを二人で分けました。|Dividimos o bolo entre nós dois.
+並べる|お皿をテーブルに並べます。|Arrumo os pratos na mesa.
+重ねる|お皿を重ねて片付けます。|Empilho os pratos e guardo.
+運ぶ|荷物を部屋に運びます。|Levo a bagagem para o quarto.
+届ける|落とし物を交番に届けました。|Levei o objeto perdido ao posto policial.
+配る|駅でチラシを配っています。|Estão distribuindo panfletos na estação.
+見送る|空港で家族に見送ってもらいました。|Minha família me acompanhou até o aeroporto.
+訪ねる|週末に祖母の家を訪ねます。|No fim de semana visito a casa da minha avó.
+招待する|友達を家に招待しました。|Convidei amigos para casa.
+誘う|ジャスを映画に誘いました。|Convidei o Jas para o cinema.
+約束|友達と会う約束をしました。|Combinei de encontrar uma amiga.
+断る|忙しいので、誘いを断りました。|Estava ocupada, então recusei o convite.
+許す|遅れたことを許してください。|Me perdoe pelo atraso.
+謝る|間違えたら、すぐに謝ります。|Quando erro, peço desculpas logo.
+褒める|先生に日本語を褒められました。|A professora elogiou meu japonês.
+叱る|母に叱られました。|Levei bronca da minha mãe.
+信じる|あなたを信じています。|Eu confio em você.
+疑う|自分の目を疑いました。|Não acreditei no que vi.
+守る|ルールを守りましょう。|Vamos seguir as regras.
+助ける|困っている人を助けました。|Ajudei uma pessoa em apuros.
+生きる|祖父は九十歳まで生きました。|Meu avô viveu até os noventa anos.
+死ぬ|飼っていた金魚が死んでしまいました。|O peixinho que eu tinha morreu.
+育つ|私はサンパウロで育ちました。|Eu cresci em São Paulo.
+暮らす|二人で日本で暮らします。|Vamos viver nós dois no Japão.
+諦める|夢を諦めないで。|Não desista do seu sonho.
+間違える|電車を間違えて乗りました。|Peguei o trem errado.
+間違う|この答えは間違っています。|Esta resposta está errada.
+気がつく|財布がないことに気がつきました。|Percebi que estava sem a carteira.
+気にする|小さいことは気にしないで。|Não se importe com coisas pequenas.
+決心する|日本に住むことを決心しました。|Decidi morar no Japão.
+用意する|旅行の荷物を用意します。|Preparo a bagagem da viagem.
+利用する|図書館をよく利用します。|Uso bastante a biblioteca.
+紹介する|両親にジャスを紹介しました。|Apresentei o Jas aos meus pais.
+参加する|日本語のイベントに参加しました。|Participei de um evento de japonês.
+出席する|友達の結婚式に出席します。|Vou comparecer ao casamento de uma amiga.
+欠席する|熱があって、授業を欠席しました。|Estava com febre e faltei à aula.
+着く|東京駅に着いたら、電話してね。|Quando chegar na estação de Tóquio, me ligue.
+向かう|今、駅に向かっています。|Estou indo para a estação agora.
+通う|週に二回、ジムに通っています。|Vou à academia duas vezes por semana.
+過ごす|週末は家族と過ごします。|Passo o fim de semana com a família.
+泊まる|京都の旅館に泊まりました。|Nos hospedamos numa pousada em Kyoto.
+待たせる|待たせて、ごめんね。|Desculpa por te fazer esperar.
+話し合う|二人で将来について話し合いました。|Conversamos nós dois sobre o futuro.
+しゃべる|友達と夜遅くまでしゃべりました。|Conversei com a amiga até tarde da noite.
+伝える|田中さんによろしく伝えてください。|Mande lembranças ao Sr. Tanaka.
+叫ぶ|「助けて！」と叫びました。|Gritei “socorro!”.
+黙る|先生が来たら、みんな黙りました。|Quando a professora chegou, todos ficaram calados.
+頷く|ジャスは笑って頷きました。|O Jas sorriu e acenou com a cabeça.
+眺める|窓から海を眺めます。|Contemplo o mar pela janela.
+覗く|店の中を覗いてみました。|Dei uma espiada dentro da loja.
+気づく|髪を切ったことに気づいてくれた？|Você percebeu que cortei o cabelo?
+感じる|日本の冬は寒く感じます。|Sinto o inverno japonês frio.
+味がする|このお茶は花の味がします。|Este chá tem gosto de flor.
+音がする|外で変な音がします。|Tem um barulho estranho lá fora.
+においがする|台所からいいにおいがします。|Vem um cheiro bom da cozinha.
+寝かせる|赤ちゃんを寝かせます。|Ponho o bebê para dormir.
+起こす|明日の朝、六時に起こしてください。|Me acorde às seis amanhã, por favor.
+起こる|昨日、駅で事故が起こりました。|Ontem aconteceu um acidente na estação.
+過ぎる|約束の時間を過ぎました。|Passou do horário combinado.
+込む|朝の電車はとても込みます。|O trem da manhã fica muito lotado.
+空く|お腹が空きました。|Fiquei com fome.
+片付く|部屋がやっと片付きました。|O quarto finalmente ficou arrumado.
+沸く|お湯が沸きました。|A água ferveu.
+沸かす|お風呂を沸かします。|Esquento a água do banho.
+焦げる|パンが焦げてしまいました。|O pão queimou.
+腐る|牛乳が腐っています。|O leite estragou.
+溶ける|アイスが溶けました。|O sorvete derreteu.
+凍る|冬は道が凍ります。|No inverno a rua congela.
+冷める|ご飯が冷めないうちに食べよう。|Vamos comer antes que esfrie.
+温まる|お風呂に入って、体が温まりました。|Tomei banho e o corpo esquentou.
+光る|夜、星が光っています。|À noite as estrelas brilham.
+鳴る|電話が鳴っています。|O telefone está tocando.
+鳴く|朝、鳥が鳴いています。|De manhã os pássaros cantam.
+飛ぶ|鳥が空を飛んでいます。|Os pássaros estão voando no céu.
+浮かぶ|いいアイデアが浮かびました。|Me veio uma boa ideia.
+沈む|夕日が海に沈みます。|O sol se põe no mar.
+流れる|この町には大きな川が流れています。|Um grande rio corre por esta cidade.
+流す|トイレの水を流します。|Dou descarga.
+揺れる|地震で家が揺れました。|A casa tremeu com o terremoto.
+燃える|紙はよく燃えます。|Papel queima fácil.
+燃やす|日本では庭でゴミを燃やしてはいけません。|No Japão não pode queimar lixo no quintal.
+建てる|将来、家を建てたいです。|No futuro quero construir uma casa.
+支払う|代金はカードで支払います。|Pago o valor no cartão.
+稼ぐ|バイトでお金を稼ぎます。|Ganho dinheiro com bico.
+もうかる|この店はもうかっているそうです。|Dizem que esta loja está dando lucro.
+節約する|食費を節約しています。|Estou economizando na comida.
+無駄にする|時間を無駄にしないようにします。|Procuro não desperdiçar tempo.
+足す|スープに水を足します。|Acrescento água à sopa.
+引き受ける|新しい仕事を引き受けました。|Aceitei um trabalho novo.
+受ける|来月、日本語の試験を受けます。|Mês que vem vou fazer a prova de japonês.
+受かる|大学に受かりました！|Passei na faculdade!
+落ち着く|お茶を飲むと、落ち着きます。|Tomando chá eu me acalmo.
+楽しみにする|週末のデートを楽しみにしています。|Estou ansiosa pelo encontro do fim de semana.
+願う|みんなの幸せを願っています。|Desejo a felicidade de todos.
+祈る|神社で家族の健康を祈りました。|Rezei pela saúde da família no santuário.
+憧れる|日本の生活に憧れていました。|Eu sonhava com a vida no Japão.
+付き合う|ジャスと付き合って三年になります。|Faz três anos que namoro o Jas.
+別れる|駅で友達と別れました。|Me despedi da amiga na estação.
+離れる|家族と離れて暮らすのは寂しいです。|Viver longe da família é triste.
+近づく|日本に行く日が近づいています。|O dia de ir ao Japão está chegando.
+寄る|帰りにスーパーに寄ります。|Na volta passo no supermercado.
+立ち寄る|カフェに立ち寄って、休みました。|Dei uma passada num café e descansei.
+戻す|使ったら、元の場所に戻してね。|Depois de usar, coloque de volta no lugar.
+隠す|プレゼントを押し入れに隠しました。|Escondi o presente no armário.
+隠れる|猫がベッドの下に隠れています。|O gato está escondido embaixo da cama.
+現れる|空に虹が現れました。|Apareceu um arco-íris no céu.
+表す|気持ちを言葉で表すのは難しいです。|É difícil expressar sentimentos em palavras.
+示す|地図で場所を示してください。|Mostre o lugar no mapa, por favor.
+写す|友達のノートを写しました。|Copiei o caderno da amiga.
+映る|湖に山が映っています。|A montanha está refletida no lago.
+撮る|一緒に写真を撮りましょう。|Vamos tirar uma foto juntos.
+録画する|ドラマを録画しました。|Gravei a novela.
+貯まる|ポイントがたくさん貯まりました。|Juntei muitos pontos.
+磨く|靴を磨きます。|Engraxo os sapatos.
+剃る|ジャスは毎朝ひげを剃ります。|O Jas faz a barba toda manhã.
+塗る|壁を白く塗りました。|Pintei a parede de branco.
+外れる|ボタンが外れました。|O botão se soltou.
+当たる|くじで旅行が当たりました！|Ganhei uma viagem no sorteio!
+当てる|答えを当ててみて。|Tente adivinhar a resposta.
+慌てる|慌てないで、ゆっくりでいいよ。|Não se afobe, pode ser devagar.
+焦る|時間がなくて、焦りました。|Não tinha tempo e fiquei aflita.
+ほっとする|試験が終わって、ほっとしました。|A prova acabou e fiquei aliviada.
+がっかりする|店が休みで、がっかりしました。|A loja estava fechada e fiquei decepcionada.
+どきどきする|初めて会うとき、どきどきしました。|Quando nos encontramos pela primeira vez, meu coração disparou.
+わくわくする|新しい生活にわくわくしています。|Estou empolgada com a vida nova.
+いらいらする|電車が遅れて、いらいらしました。|O trem atrasou e fiquei irritada.
+にこにこする|赤ちゃんがにこにこしています。|O bebê está sorrindo.
+ぼーっとする|疲れて、ぼーっとしています。|Estou cansada e meio avoada.
+すっきりする|部屋を片付けて、すっきりしました。|Arrumei o quarto e me senti renovada.
+のんびりする|日曜日は家でのんびりします。|No domingo relaxo em casa.
+運動不足|最近、運動不足です。|Ultimamente estou sem fazer exercício.
+見学する|工場を見学しました。|Visitei uma fábrica.
+見物する|お祭りを見物しました。|Fomos ver o festival.
+外食する|週末は外食します。|No fim de semana comemos fora.
+自炊する|お金を節約するために自炊しています。|Cozinho em casa para economizar.
+留守番する|子供が一人で留守番しています。|A criança está tomando conta da casa sozinha.
+留守|今日は一日中留守にします。|Hoje vou ficar fora o dia todo.
+世話をする|妹が犬の世話をしています。|Minha irmã cuida do cachorro.
+看病する|風邪のとき、ジャスが看病してくれました。|Quando fiquei resfriada, o Jas cuidou de mim.
+介護|祖母の介護を手伝っています。|Ajudo a cuidar da minha avó.
+子育て|子育ては大変ですが、楽しいです。|Criar filhos é trabalhoso, mas divertido.
+出産|姉は来月、出産します。|Minha irmã vai dar à luz mês que vem.
+連絡を取る|ブラジルの友達と連絡を取っています。|Mantenho contato com os amigos do Brasil.
+開店|このお店は十時に開店します。|Esta loja abre às dez.
+閉店|閉店の時間は九時です。|A loja fecha às nove.
+営業する|この店は年中無休で営業しています。|Esta loja funciona o ano todo sem folga.
+譲る|お年寄りに席を譲りました。|Cedi o lugar para um idoso.
+降ろす|駅の前で降ろしてください。|Me deixe em frente à estação, por favor.
+振り込む|家賃を銀行で振り込みました。|Transferi o aluguel no banco.
+払い込む|コンビニで料金を払い込みます。|Pago a taxa na loja de conveniência.
+済ませる|朝ご飯を済ませてから出かけます。|Saio depois de terminar o café da manhã.
+済む|手続きはすぐに済みました。|O trâmite terminou rapidinho.
+起き上がる|ベッドから起き上がりました。|Levantei da cama.
+立ち上がる|名前を呼ばれて、立ち上がりました。|Chamaram meu nome e me levantei.
+飛び出す|猫が急に飛び出しました。|O gato saiu correndo de repente.
+走り出す|信号が青になって、車が走り出しました。|O sinal abriu e o carro começou a andar.
+泣き出す|赤ちゃんが急に泣き出しました。|O bebê começou a chorar de repente.
+思い出す|この写真を見ると、旅行を思い出します。|Vendo esta foto, me lembro da viagem.
+言い出す|ジャスが急に旅行に行こうと言い出しました。|O Jas de repente propôs uma viagem.
+取り出す|かばんから財布を取り出しました。|Tirei a carteira da bolsa.
+見つめる|ジャスは私の目を見つめました。|O Jas olhou nos meus olhos.
+見直す|テストの答えを見直します。|Reviso as respostas da prova.
+書き直す|間違えたので、書き直しました。|Errei, então reescrevi.
+やり直す|最初からやり直します。|Vou refazer do começo.
+言い直す|もう一度、ゆっくり言い直してください。|Diga de novo, devagar, por favor.
+聞き取る|早い日本語は聞き取れません。|Não consigo entender japonês rápido.
+聞き返す|分からなかったので、聞き返しました。|Não entendi, então perguntei de novo.
+話しかける|隣の人に日本語で話しかけました。|Puxei conversa em japonês com a pessoa ao lado.
+呼びかける|駅で募金を呼びかけています。|Estão pedindo doações na estação.
+出会う|ジャスとはネットで出会いました。|Conheci o Jas pela internet.
+待ち合わせる|駅の前で七時に待ち合わせました。|Marcamos às sete em frente à estação.
+待ち合わせ|待ち合わせの場所はどこにする？|Onde vamos nos encontrar?
+乗り遅れる|バスに乗り遅れました。|Perdi o ônibus.
+乗り過ごす|寝てしまって、駅を乗り過ごしました。|Peguei no sono e passei da estação.
+寝過ごす|寝過ごして、遅刻しました。|Dormi demais e me atrasei.
+食べ過ぎる|お正月に食べ過ぎました。|Comi demais no Ano-Novo.
+飲み過ぎる|昨日、お酒を飲み過ぎました。|Bebi demais ontem.
+取り替える|電池を取り替えました。|Troquei a pilha.
+入れ替える|部屋の空気を入れ替えます。|Troco o ar do quarto.
+付け加える|最後に一つ付け加えます。|Por fim, acrescento uma coisa.
+加える|砂糖を少し加えます。|Acrescento um pouco de açúcar.
+含む|値段には税金が含まれています。|O preço inclui imposto.
+除く|日曜日を除いて、毎日営業しています。|Funciona todos os dias, exceto domingo.
+確かめる|出かける前に、鍵を確かめます。|Antes de sair, confiro a chave.
+認める|自分の間違いを認めました。|Admiti o meu erro.
+勧める|店員さんにこのお茶を勧められました。|O atendente me recomendou este chá.
+求める|この仕事は経験を求めています。|Este trabalho pede experiência.
+与える|植物に水を与えます。|Dou água para as plantas.
+得る|日本で多くの経験を得ました。|Ganhei muita experiência no Japão.
+失う|自信を失わないで。|Não perca a confiança.
+防ぐ|風邪を防ぐために、手を洗います。|Lavo as mãos para prevenir resfriado.
+避ける|混んでいる時間を避けて出かけます。|Saio evitando o horário de pico.
+離す|子供の手を離さないでください。|Não solte a mão da criança, por favor.
+引っ張る|犬がひもを引っ張ります。|O cachorro puxa a coleira.
+支える|家族がいつも支えてくれます。|Minha família sempre me apoia.
+頼る|困ったときは、私に頼ってね。|Quando estiver em apuros, conte comigo.
+従う|地図に従って歩きました。|Andei seguindo o mapa.
+迷惑をかける|近所の人に迷惑をかけないようにします。|Procuro não incomodar os vizinhos.
+迷惑|電車の中で大きな声で話すのは迷惑です。|Falar alto no trem incomoda os outros.
+邪魔|邪魔にならないように、端に寄ります。|Vou para o canto para não atrapalhar.
+怒られる|遅刻して、上司に怒られました。|Cheguei atrasada e levei bronca do chefe.
+褒められる|料理が上手だと褒められました。|Me elogiaram por cozinhar bem.
+頼まれる|母に買い物を頼まれました。|Minha mãe me pediu para fazer compras.
+誘われる|同僚に飲み会に誘われました。|Fui convidada pelos colegas para um happy hour.
+言われる|日本語が上手だと言われました。|Me disseram que meu japonês é bom.
+生まれ育つ|私はブラジルで生まれ育ちました。|Nasci e cresci no Brasil.
+成長する|子供はすぐに成長します。|As crianças crescem rápido.
+上達する|毎日練習して、日本語が上達しました。|Pratiquei todo dia e meu japonês melhorou.
+発表する|クラスの前で発表しました。|Fiz uma apresentação para a turma.
+表現する|日本語で気持ちを表現したいです。|Quero expressar meus sentimentos em japonês.
+想像する|日本での生活を想像しています。|Fico imaginando a vida no Japão.
+理解する|先生の説明を理解しました。|Entendi a explicação da professora.
+賛成する|その意見に賛成します。|Concordo com essa opinião.
+反対する|両親は最初、反対しました。|Meus pais foram contra no começo.
+比較する|二つの国の文化を比較します。|Comparo a cultura dos dois países.
+計算する|毎月の生活費を計算します。|Calculo o custo de vida de cada mês.
+記録する|毎日の勉強を記録しています。|Registro o estudo de cada dia.
+保存する|写真をパソコンに保存しました。|Salvei as fotos no computador.
+削除する|古いメールを削除しました。|Apaguei e-mails antigos.
+変更する|予約の時間を変更しました。|Mudei o horário da reserva.
+中止する|雨で試合が中止になりました。|O jogo foi cancelado por causa da chuva.
+延期する|旅行を来月に延期しました。|Adiei a viagem para o mês que vem.
+すべる|雪の道はすべりやすいです。|A rua com neve é escorregadia.
+こぼす|コーヒーをこぼしてしまいました。|Derramei o café.
+こぼれる|コップから水がこぼれました。|A água transbordou do copo.
+こする|目をこすらないでください。|Não esfregue os olhos.
+しぼる|レモンをしぼります。|Espremo o limão.
+ほどく|靴のひもをほどきます。|Desamarro o cadarço.
+はがす|シールをはがしました。|Tirei o adesivo.
+むく|りんごの皮をむきます。|Descasco a maçã.
+刻む|ねぎを細かく刻みます。|Pico a cebolinha bem miúda.
+注ぐ|お茶をカップに注ぎます。|Sirvo o chá na xícara.
+盛る|ご飯をお皿に盛ります。|Sirvo o arroz no prato.
+詰める|お弁当にご飯を詰めます。|Coloco arroz na marmita.
+詰まる|トイレが詰まりました。|O vaso entupiu.
+漏れる|水が漏れています。|Está vazando água.
+冷える|夜は冷えるので、上着を持っていって。|À noite esfria, leve um casaco.
+効く|この薬はよく効きます。|Este remédio faz efeito.
+寝つく|疲れて、すぐに寝つきました。|Estava cansada e peguei no sono logo.
+眠る|赤ちゃんがぐっすり眠っています。|O bebê está dormindo profundamente.
+夢を見る|日本にいる夢を見ました。|Sonhei que estava no Japão.
+暮らし|日本の暮らしに慣れてきました。|Estou me acostumando com a vida no Japão.
+住まい|新しい住まいは駅に近いです。|A nova moradia fica perto da estação.
+荷造り|引っ越しの荷造りをしています。|Estou empacotando as coisas para a mudança.
+まとめる|ゴミをまとめて出します。|Junto o lixo e coloco para fora.
+預ける|ホテルに荷物を預けました。|Deixei a bagagem guardada no hotel.
+預かる|荷物をお預かりします。|Vou guardar sua bagagem.
+受け付ける|申し込みは五時まで受け付けています。|As inscrições são aceitas até as cinco.
+問い合わせる|お店に電話で問い合わせました。|Liguei para a loja para perguntar.
+問い合わせ|問い合わせはこちらの番号へどうぞ。|Para dúvidas, ligue para este número.
+申し訳ない|何度も聞いて、申し訳ないです。|Sinto muito por perguntar tantas vezes.
+ご馳走|今日は私がご馳走します。|Hoje eu pago a refeição.
+本当に|本当にありがとう。|Muito obrigada mesmo.
+かなり|今日はかなり寒いです。|Hoje está bastante frio.
+結構|このお店は結構おいしいです。|Este restaurante é bem gostoso.
+よく|ジャスとよく電話します。|Falo bastante com o Jas por telefone.
+全然|全然大丈夫です。|Está tudo bem, de verdade.
+全く|日本語が全く分かりませんでした。|Eu não entendia nada de japonês.
+たまに|たまに外で食べます。|De vez em quando como fora.
+時々|時々、ブラジルの料理を作ります。|Às vezes faço comida brasileira.
+いつか|いつか一緒に北海道に行こう。|Algum dia vamos juntos a Hokkaido.
+いつでも|困ったら、いつでも電話してね。|Se tiver problema, me ligue a qualquer hora.
+どこでも|コンビニはどこでもあります。|Tem loja de conveniência em todo lugar.
+何でも|何でも聞いてください。|Pergunte qualquer coisa.
+誰でも|このイベントは誰でも参加できます。|Qualquer pessoa pode participar deste evento.
+すぐに|家に着いたら、すぐに連絡します。|Quando chegar em casa, aviso imediatamente.
+今すぐ|今すぐ来てください！|Venha agora mesmo!
+やっと|やっと日本に着きました。|Finalmente cheguei ao Japão.
+ついに|ついに結婚の日が来ました。|Enfim chegou o dia do casamento.
+とうとう|とうとう試験に合格しました。|Por fim passei na prova.
+初めて|初めて富士山を見ました。|Vi o Monte Fuji pela primeira vez.
+最初に|最初に名前を書いてください。|Primeiro escreva o nome, por favor.
+まず|まず手を洗いましょう。|Antes de tudo, vamos lavar as mãos.
+次に|次に野菜を切ります。|Em seguida, corto os legumes.
+最後に|最後に塩を入れます。|Por último, coloco sal.
+また|また明日ね。|Até amanhã.
+もう一回|もう一回やってみます。|Vou tentar mais uma vez.
+自分で|自分で料理を作ります。|Eu mesma cozinho.
+きっと|きっと日本の生活は楽しいよ。|Com certeza a vida no Japão vai ser divertida.
+たぶん|たぶん明日は雨です。|Provavelmente amanhã vai chover.
+もしかしたら|もしかしたら遅れるかもしれません。|Talvez eu me atrase.
+必ず|必ず連絡してください。|Avise sem falta, por favor.
+絶対|絶対に忘れないよ。|Nunca vou esquecer.
+ぜひ|ぜひ家に遊びに来てください。|Venha nos visitar sem falta.
+なるべく|なるべく早く帰ります。|Volto o mais cedo possível.
+できるだけ|できるだけ日本語で話します。|Falo em japonês o máximo possível.
+ちゃんと|ちゃんとご飯を食べてね。|Coma direitinho, viu.
+しっかり|しっかり休んでください。|Descanse bem, por favor.
+はっきり|はっきり言ってください。|Diga claramente, por favor.
+きちんと|部屋をきちんと片付けます。|Arrumo o quarto direitinho.
+だんだん|だんだん寒くなってきました。|Aos poucos foi esfriando.
+どんどん|日本語がどんどん上手になっています。|Seu japonês está melhorando cada vez mais.
+少しずつ|少しずつ漢字を覚えています。|Estou aprendendo kanji pouco a pouco.
+ずっと|ずっと会いたかった。|Eu queria te ver fazia tempo.
+しばらく|しばらく待ってください。|Espere um pouco, por favor.
+そろそろ|そろそろ帰りましょう。|Já está na hora de ir embora.
+ちょうど|ちょうど今、駅に着きました。|Acabei de chegar na estação.
+ほとんど|宿題はほとんど終わりました。|A lição está quase toda pronta.
+ほぼ|準備はほぼできました。|A preparação está quase pronta.
+特に|日本の料理では、特にラーメンが好きです。|Da comida japonesa, gosto especialmente de lámen.
+例えば|例えば、寿司や天ぷらが好きです。|Por exemplo, gosto de sushi e tempurá.
+実は|実は、来月日本に行きます。|Na verdade, vou ao Japão mês que vem.
+やはり|やはり日本の電車は時間が正確です。|Como esperado, os trens japoneses são pontuais.
+やっぱり|やっぱり家が一番だね。|Afinal, casa é o melhor lugar.
+もし|もし雨が降ったら、家で映画を見よう。|Se chover, vamos ver filme em casa.
+どうして|どうして日本語を勉強していますか。|Por que você estuda japonês?
+なぜ|なぜ遅れたのですか。|Por que você se atrasou?
+どのくらい|駅までどのくらいかかりますか。|Quanto tempo leva até a estação?
+こう|この漢字はこう書きます。|Este kanji se escreve assim.
+ああ|ああ、そういうことですか。|Ah, então é isso.
+なかなか|バスがなかなか来ません。|O ônibus não vem nunca.
+さすが|さすがジャス、何でも知ってるね。|Como esperado do Jas, você sabe de tudo.
+わざわざ|わざわざ空港まで来てくれて、ありがとう。|Obrigada por se dar ao trabalho de vir até o aeroporto.
+せっかく|せっかく日本に来たから、色々な所に行きたい。|Já que vim ao Japão, quero ir a vários lugares.
+うっかり|うっかり傘を電車に忘れました。|Sem querer esqueci o guarda-chuva no trem.
+こっそり|こっそりプレゼントを用意しました。|Preparei um presente escondido.
+ぴったり|このドレスはサイズがぴったりです。|Este vestido serviu certinho.
+ばっちり|準備はばっちりです。|A preparação está perfeita.
+ぐっすり|昨日はぐっすり眠れました。|Ontem dormi profundamente.
+にっこり|店員さんがにっこり笑いました。|A atendente sorriu.
+ぺこぺこ|お腹がぺこぺこです。|Estou morrendo de fome.
+へとへと|一日中歩いて、へとへとです。|Andei o dia todo e estou exausta.
+ぎりぎり|ぎりぎり電車に間に合いました。|Peguei o trem por pouco.
+ばらばら|みんな、ばらばらに帰りました。|Cada um foi embora separado.
+さっぱり|この問題はさっぱり分かりません。|Não entendo nada desta questão.
+びしょびしょ|雨で服がびしょびしょになりました。|A roupa ficou encharcada com a chuva.
+ふわふわ|このパンケーキはふわふわです。|Esta panqueca é fofinha.
+つるつる|雪の道がつるつるです。|A rua com neve está escorregadia.
+ぺらぺら|ジャスは英語がぺらぺらです。|O Jas fala inglês fluentemente.
+急に|急に雨が降ってきました。|De repente começou a chover.
+突然|突然、電気が消えました。|De repente a luz apagou.
+偶然|駅で偶然、友達に会いました。|Encontrei uma amiga por acaso na estação.
+相変わらず|ジャスは相変わらず優しいです。|O Jas continua gentil como sempre.
+改めて|改めて、よろしくお願いします。|Novamente, conto com você.
+代わりに|コーヒーの代わりにお茶をください。|Em vez de café, chá, por favor.
+先に|先に行っててね。|Vá na frente, viu.
+直接|直接会って話したいです。|Quero conversar pessoalmente.
+そして|朝ご飯を食べました。そして、仕事に行きました。|Tomei café da manhã. E então fui trabalhar.
+それから|買い物をして、それから家に帰りました。|Fiz compras e depois voltei para casa.
+しかし|日本語は難しい。しかし、楽しいです。|Japonês é difícil. Porém, é divertido.
+だから|雨が降っています。だから、傘を持っていきます。|Está chovendo. Por isso vou levar o guarda-chuva.
+それで|電車が遅れました。それで、遅刻しました。|O trem atrasou. Então, cheguei atrasada.
+ですから|明日は休みです。ですから、ゆっくり寝ます。|Amanhã é folga. Portanto, vou dormir bastante.
+なので|今日は寒いです。なので、コートを着ます。|Hoje está frio. Por isso vou de casaco.
+けど|高いけど、おいしいです。|É caro, mas é gostoso.
+けれども|疲れていますけれども、頑張ります。|Estou cansada, porém vou me esforçar.
+それに|この部屋は広いです。それに、駅に近いです。|Este apartamento é espaçoso. Além disso, é perto da estação.
+または|電話またはメールで連絡してください。|Entre em contato por telefone ou e-mail.
+それとも|コーヒーにしますか、それともお茶にしますか。|Vai querer café ou chá?
+つまり|つまり、明日は行けないということですね。|Ou seja, você não pode ir amanhã, né.
+ところで|ところで、週末は何をしますか。|A propósito, o que vai fazer no fim de semana?
+じゃあ|じゃあ、また明日。|Então, até amanhã.
+その|その本はおもしろいですか。|Esse livro é interessante?
+どの|どの電車に乗ればいいですか。|Em qual trem eu devo entrar?
+こんな|こんなにきれいな海は初めてです。|É a primeira vez que vejo um mar tão bonito.
+そんな|そんなに心配しないで。|Não se preocupe tanto.
+あんな|あんな大きい家に住みたい。|Queria morar numa casa grande assim.
+どんな|どんな音楽が好きですか。|De que tipo de música você gosta?
+何か|何か飲みますか。|Vai beber alguma coisa?
+誰か|誰か手伝ってください。|Alguém me ajude, por favor.
+どこか|週末、どこか行きたいね。|No fim de semana quero ir a algum lugar.
+誰も|部屋には誰もいません。|Não tem ninguém no quarto.
+どこにも|今日はどこにも行きません。|Hoje não vou a lugar nenhum.
+みなさん|みなさん、こんにちは。|Olá a todos.
+ほか|ほかに質問はありますか。|Tem mais alguma pergunta?
+他の|他の色はありますか。|Tem outra cor?
+別|これは別の袋に入れてください。|Coloque isto numa sacola separada, por favor.
+それぞれ|それぞれの国に、いい所があります。|Cada país tem seus lados bons.
+両方|両方とも好きです。|Gosto dos dois.
+片方|靴下が片方なくなりました。|Um pé de meia sumiu.
+ばかり|ジャスはゲームばかりしています。|O Jas só fica jogando videogame.
+くらい|駅まで十分くらいです。|Até a estação são uns dez minutos.
+ほど|三十分ほど待ちました。|Esperei cerca de trinta minutos.
+のに|たくさん勉強したのに、試験に落ちました。|Estudei muito, mas mesmo assim reprovei.
+ため|健康のため、毎日歩きます。|Ando todo dia pela saúde.
+ように|忘れないように、メモします。|Anoto para não esquecer.
+らしい|明日は雪が降るらしいです。|Parece que amanhã vai nevar.
+はず|ジャスはもう家に着いたはずです。|O Jas já deve ter chegado em casa.
+つもり|来年、日本で働くつもりです。|Pretendo trabalhar no Japão no ano que vem.
+かもしれない|明日は雨かもしれない。|Talvez chova amanhã.
+でしょう|明日は晴れるでしょう。|Amanhã provavelmente vai fazer sol.
+そうだ|天気予報によると、明日は雨だそうだ。|Segundo a previsão, dizem que amanhã chove.
+物|この物はどこに置きますか。|Onde coloco esta coisa?
+事|大事な事を忘れていました。|Eu tinha esquecido uma coisa importante.
+話|ジャスの話はいつもおもしろいです。|As histórias do Jas são sempre divertidas.
+用事|今日はちょっと用事があります。|Hoje tenho um compromisso.
+理由|日本に来た理由は何ですか。|Qual é o motivo de ter vindo ao Japão?
+原因|事故の原因を調べています。|Estão investigando a causa do acidente.
+結果|試験の結果が出ました。|Saiu o resultado da prova.
+目的|旅行の目的は観光です。|O objetivo da viagem é turismo.
+目標|今年の目標は日本語の試験に合格することです。|Minha meta deste ano é passar na prova de japonês.
+方法|いい勉強の方法を教えてください。|Me ensine um bom método de estudo, por favor.
+やり方|このゲームのやり方が分かりません。|Não sei como jogar este jogo.
+意見|あなたの意見を聞かせてください。|Me diga a sua opinião, por favor.
+考え|いい考えですね。|Boa ideia, né.
+気|気をつけて帰ってね。|Volte com cuidado, viu.
+関係|二人の関係はとてもいいです。|A relação dos dois é muito boa.
+違い|日本とブラジルの違いは何ですか。|Qual é a diferença entre Japão e Brasil?
+特徴|この町の特徴は古いお寺です。|A característica desta cidade são os templos antigos.
+種類|この店にはパンの種類がたくさんあります。|Esta loja tem muitos tipos de pão.
+部分|この部分が分かりません。|Não entendo esta parte.
+全体|クラス全体で旅行に行きました。|A turma toda foi viajar.
+中心|ここは町の中心です。|Aqui é o centro da cidade.
+周り|家の周りは静かです。|Os arredores da casa são tranquilos.
+側|道の右側を歩きます。|Ando do lado direito da rua.
+表|紙の表に名前を書いてください。|Escreva o nome na frente do papel, por favor.
+裏|紙の裏も見てください。|Veja o verso do papel também.
+方|この方が田中さんです。|Esta pessoa é o Sr. Tanaka.
+形|ハートの形のクッキーを作りました。|Fiz biscoitos em forma de coração.
+音|この音楽はいい音ですね。|Esta música tem um som bonito, né.
+におい|カレーのいいにおいがします。|Tem um cheiro bom de curry.
+様子|赤ちゃんの様子を見てきます。|Vou ver como está o bebê.
+状態|この車はまだいい状態です。|Este carro ainda está em bom estado.
+場合|雨の場合は、中止です。|Em caso de chuva, será cancelado.
+機会|日本語を話す機会が増えました。|Aumentaram as oportunidades de falar japonês.
+問題ない|それで問題ないです。|Assim não tem problema.
+都合|明日の都合はどうですか。|Você tem disponibilidade amanhã?
+予算|旅行の予算は十万円です。|O orçamento da viagem é de cem mil ienes.
+計画|二人で旅行の計画を立てました。|Fizemos o plano da viagem juntos.
+準備中|お店は今、準備中です。|A loja está em preparação agora.
+営業中|このカフェは営業中です。|Este café está aberto.
+休業|今日は休業です。|Hoje está fechado.
+定休日|月曜日は定休日です。|Segunda-feira é o dia de folga da loja.
+営業時間|営業時間は十時から八時までです。|O horário de funcionamento é das dez às oito.
+注意|足元に注意してください。|Cuidado onde pisa.
+規則|会社の規則を守ります。|Sigo as regras da empresa.
+マナー|電車ではマナーを守りましょう。|Vamos respeitar as boas maneiras no trem.
+習慣|毎朝散歩するのが習慣です。|Passear toda manhã é meu hábito.
+文化|日本の文化に興味があります。|Tenho interesse na cultura japonesa.
+歴史|京都は歴史がある町です。|Kyoto é uma cidade com história.
+社会|社会のルールを学びます。|Aprendo as regras da sociedade.
+生活|日本での生活に慣れました。|Me acostumei com a vida no Japão.
+人生|人生は一度だけです。|A vida é uma só.
+命|命は大切です。|A vida é preciosa.
+経済|日本の経済について勉強しています。|Estou estudando a economia do Japão.
+政治|政治のニュースはよく分かりません。|Não entendo bem as notícias de política.
+法律|日本の法律を守ります。|Sigo as leis do Japão.
+戦争|戦争のない世界がいいです。|Um mundo sem guerra seria bom.
+平和|平和な毎日が一番です。|Dias tranquilos são o melhor.
+環境|環境のために、ゴミを分けます。|Separo o lixo pelo meio ambiente.
+情報|ネットで情報を集めます。|Junto informações na internet.
+技術|日本の技術はすごいです。|A tecnologia japonesa é incrível.
+科学|科学の博物館に行きました。|Fui ao museu de ciências.
+宗教|宗教の違いを大切にします。|Respeito as diferenças de religião.
+言語|日本語は難しい言語です。|O japonês é uma língua difícil.
+方言|大阪の方言はおもしろいです。|O dialeto de Osaka é engraçado.
+敬語|仕事では敬語を使います。|No trabalho uso linguagem formal.
+冗談|それは冗談です。|Isso é brincadeira.
+嘘|嘘をつかないでください。|Não minta, por favor.
+秘密|これは二人だけの秘密です。|Isto é um segredo só nosso.
+噂|あの店の噂を聞きました。|Ouvi um boato sobre aquela loja.
+自信|日本語に少し自信がつきました。|Ganhei um pouco de confiança no japonês.
+勇気|勇気を出して話しかけました。|Criei coragem e puxei conversa.
+努力|毎日の努力が大切です。|O esforço diário é importante.
+成功|パーティーは大成功でした。|A festa foi um grande sucesso.
+失敗|失敗しても大丈夫です。|Tudo bem errar.
+間違い|この文には間違いがあります。|Esta frase tem um erro.
+変化|日本の生活で、大きな変化がありました。|Teve uma grande mudança com a vida no Japão.
+差|東京と大阪では言葉に少し差があります。|Tem uma pequena diferença na fala entre Tóquio e Osaka.
+力|この荷物は力がいります。|Esta bagagem exige força.
+元|使ったら、元の場所に戻してください。|Depois de usar, coloque no lugar original.
+半年|日本に来て半年になります。|Faz meio ano que vim para o Japão.
+一生|この日は一生忘れません。|Nunca vou esquecer este dia.
+思い出|二人の思い出の写真です。|É uma foto de recordação nossa.
+記憶|子供の時の記憶はあまりありません。|Não tenho muitas memórias da infância.
+お礼|手伝ってくれたお礼に、ケーキを作りました。|Fiz um bolo em agradecimento pela ajuda.
+お詫び|お詫びの手紙を書きました。|Escrevi uma carta de desculpas.
+自己紹介|まず自己紹介をします。|Primeiro vou me apresentar.
+会話|日本語の会話を練習します。|Pratico conversação em japonês.
+声をかける|困っている人に声をかけました。|Falei com uma pessoa que precisava de ajuda.
+トラブル|パソコンのトラブルで困っています。|Estou com problema no computador.
+故障|エアコンが故障しました。|O ar-condicionado quebrou.
+修理|自転車を修理に出しました。|Levei a bicicleta para consertar.
+工事|家の前で工事をしています。|Estão fazendo obra em frente de casa.
+工事中|この道は工事中です。|Esta rua está em obras.
+騒音|工事の騒音がうるさいです。|O barulho da obra está alto.
+騒ぐ|夜遅くに騒がないでください。|Não faça barulho tarde da noite, por favor.
+苦情|近所から苦情が来ました。|Veio uma reclamação dos vizinhos.
+文句|ジャスは文句を言いません。|O Jas não reclama.
+お知らせ|マンションのお知らせを読みます。|Leio os avisos do prédio.
+案内|駅員さんが案内してくれました。|O funcionário da estação me orientou.
+説明書|説明書を読んでから使います。|Leio o manual antes de usar.
+表示|画面に日本語の表示が出ます。|Aparece uma indicação em japonês na tela.
+人数|何人ですか。人数を教えてください。|Quantas pessoas? Me diga o número, por favor.
+空席|空席はありますか。|Tem lugar vago?
+満席|今日は満席です。|Hoje está lotado.
+指定席|新幹線の指定席を予約しました。|Reservei assento no trem-bala.
+自由席|自由席は三号車です。|O assento livre é no vagão três.
+窓側|窓側の席がいいです。|Prefiro o lado da janela.
+通路側|通路側の席をお願いします。|Assento do lado do corredor, por favor.
+行き先|バスの行き先を確認します。|Confiro o destino do ônibus.
+～方面|新宿方面の電車に乗ります。|Pego o trem sentido Shinjuku.
+～番線|電車は二番線から出ます。|O trem sai da plataforma dois.
+～号車|私たちの席は五号車です。|Nossos lugares são no vagão cinco.
+近道|この道は駅への近道です。|Esta rua é um atalho para a estação.
+遠回り|道を間違えて、遠回りしました。|Errei o caminho e dei uma volta maior.
+徒歩|駅から徒歩五分です。|São cinco minutos a pé da estação.
+目の前|ホテルは駅の目の前です。|O hotel fica bem em frente à estação.
+すぐそこ|コンビニはすぐそこです。|A loja de conveniência é logo ali.
+向かい|銀行の向かいにカフェがあります。|Tem um café em frente ao banco.
+突き当たり|トイレは廊下の突き当たりです。|O banheiro fica no fim do corredor.
+一つ目|一つ目の角を曲がってください。|Vire na primeira esquina, por favor.
+二つ目|二つ目の駅で降ります。|Desço na segunda estação.
+半日|半日、京都を観光しました。|Passei meio dia passeando por Kyoto.
+一晩中|赤ちゃんが一晩中泣いていました。|O bebê chorou a noite toda.
+年中|この店は年中無休です。|Esta loja abre o ano todo.
+朝早く|朝早く起きて、お弁当を作ります。|Acordo de manhã cedo e faço a marmita.
+夜遅く|夜遅くまで勉強しました。|Estudei até tarde da noite.
+深夜|深夜にラーメンを食べました。|Comi lámen de madrugada.
+早朝|早朝の空気は気持ちいいです。|O ar de manhã bem cedo é agradável.
+昼間|昼間は暖かいです。|Durante o dia está quente.
+その日|その日はとても寒かったです。|Nesse dia estava muito frio.
+次の日|次の日、ジャスから手紙が届きました。|No dia seguinte chegou uma carta do Jas.
+前の日|旅行の前の日は眠れませんでした。|No dia anterior à viagem não consegui dormir.
+この前|この前はありがとう。|Obrigada pelo outro dia.
+今度|今度、一緒に映画を見ましょう。|Da próxima vez, vamos ver um filme juntos.
+今回|今回の旅行は最高でした。|A viagem desta vez foi incrível.
+前回|前回の試験より点数が上がりました。|Minha nota subiu em relação à última prova.
+毎回|毎回、同じ間違いをしてしまいます。|Toda vez cometo o mesmo erro.
+年末年始|年末年始は家族と過ごします。|Passo o fim e o começo do ano com a família.
+来日|来日の日が近づいています。|O dia da vinda ao Japão está chegando.
+帰国|夏に一度帰国します。|Volto ao meu país uma vez no verão.
+一時帰国|一時帰国して、家族に会いました。|Visitei meu país e vi minha família.
+意外|意外に簡単でした。|Foi mais fácil do que eu esperava.
+当然|約束を守るのは当然です。|Cumprir promessas é natural.
+当たり前|日本では靴を脱ぐのが当たり前です。|No Japão é normal tirar os sapatos.
+普段|普段は八時に起きます。|Normalmente acordo às oito.
+日常|日本語の日常会話を練習します。|Pratico conversas do dia a dia em japonês.
+一般|このお寺は一般の人も入れます。|O público em geral pode entrar neste templo.
+基本|まず基本の文法を覚えましょう。|Primeiro vamos aprender a gramática básica.
+初心者|私はまだ初心者です。|Eu ainda sou iniciante.
+上級|上級のクラスに入りたいです。|Quero entrar na turma avançada.
+中級|今は中級の日本語を勉強しています。|Agora estou estudando japonês intermediário.
+初級|初級の教科書を終えました。|Terminei o livro de nível básico.
+最高|今日は最高の一日でした。|Hoje foi o melhor dia.
+最低|最低でも一日十分は勉強します。|Estudo no mínimo dez minutos por dia.
+最大|この店は最大五十パーセント引きです。|Nesta loja o desconto é de até 50%.
+最小|最小の荷物で旅行します。|Viajo com o mínimo de bagagem.
+最新|最新のスマホを買いました。|Comprei o smartphone mais novo.
+一部|この情報は一部だけ正しいです。|Esta informação está só em parte correta.
+全国|このお店は全国にあります。|Esta loja tem no país todo.
+地方|地方の町はのんびりしています。|As cidades do interior são tranquilas.
+県|ジャスの実家は何県ですか。|Em que província fica a casa dos pais do Jas?
+都道府県|日本には四十七の都道府県があります。|O Japão tem 47 províncias.
+首都|日本の首都は東京です。|A capital do Japão é Tóquio.
+人口|東京は人口が多いです。|Tóquio tem uma população grande.
+大阪|大阪でたこ焼きを食べたいです。|Quero comer takoyaki em Osaka.
+北海道|冬の北海道に行ってみたいです。|Quero conhecer Hokkaido no inverno.
+沖縄|沖縄の海はとてもきれいです。|O mar de Okinawa é muito bonito.
+中国|中国の料理も好きです。|Também gosto de comida chinesa.
+韓国|韓国のドラマを見ています。|Estou vendo novelas coreanas.
+都市|大阪は大きな都市です。|Osaka é uma cidade grande.
+郊外|郊外に住むと、家賃が安いです。|Morando no subúrbio, o aluguel é barato.
+駅前|駅前で待ち合わせしましょう。|Vamos nos encontrar em frente à estação.
 `;
