@@ -322,11 +322,11 @@ button rt{color:inherit;opacity:.85}
   <button class="bigbtn" onclick="go('practice');startWriting()">
     <span class="ic lv"><img src="images/icon-writing.webp" alt="" onerror="imgFail(this)"></span><span class="txt" id="b-write"></span><span class="go">›</span>
   </button>
-  <button class="bigbtn" onclick="go('practice');startToday()">
-    <span class="ic pk">🌱</span><span class="txt" id="b-vocab"></span><span class="go">›</span>
-  </button>
   <button class="bigbtn" onclick="go('diary')">
     <span class="ic mt"><img src="images/icon-diary.webp" alt="" onerror="imgFail(this)"></span><span class="txt" id="b-diary"></span><span class="go">›</span>
+  </button>
+  <button class="bigbtn" onclick="go('practice');startToday()">
+    <span class="ic pk">🌱</span><span class="txt" id="b-vocab"></span><span class="go">›</span>
   </button>
   <button class="bigbtn" onclick="openMailbox()">
     <span class="ic pk"><img src="images/icon-letter.webp" alt="" onerror="imgFail(this)"></span><span class="txt" id="b-mail"></span><span class="go">›</span>
@@ -440,7 +440,8 @@ const CONFIG = {
   studentEmail: "",               // 彼女のメール。index.html は公開されるので、ここには書かない（gas/Code.gs の STUDENT_EMAIL に書く）
   replyByMail: true,              // true：日記メールに返信すると彼女に届く（宛先は gas/Code.gs の STUDENT_EMAIL）
   // 1日の日課（これを全部やると「きょうの もくひょう たっせい」）。0 にすると、その練習は日課から外れます。
-  daily: { particles: 10, writing: 3, diary: 1, vocab: 10 },   // vocab：1日の新しい言葉の数
+  daily: { particles: 10, writing: 3, diary: 1 },
+  vocabNew: 10,   // 言葉：1日の新しい言葉の数（日課・目標には入れない。別枠）
   weeklyGoalDays: 5,
   weeklyBonus: 30,
   dayStartHour: 3,                // 1日の区切り。夜中の0時〜3時の練習は「前の日」に数える
@@ -1095,8 +1096,7 @@ function quest(d){
   const items = [
     {k:"p", n:Math.min(d.pc + d.pw, q.particles), of:q.particles},
     {k:"w", n:Math.min(d.tr.length, q.writing), of:q.writing},
-    {k:"d", n:Math.min(d.diary, q.diary), of:q.diary},
-    {k:"v", n:Math.min(d.vn || 0, vTarget(d)), of:vTarget(d)}
+    {k:"d", n:Math.min(d.diary, q.diary), of:q.diary}
   ].filter(x => x.of > 0);
   const done = items.filter(x => x.n >= x.of).length;
   return {items, done, total:items.length, all:items.length > 0 && done === items.length,
@@ -1622,7 +1622,7 @@ function refresh(){
   const prog = (x, ptName) => x ? (x.n >= x.of ? `<span class="cnt done">✓</span>` : `<span class="cnt">${x.n} / ${x.of}</span>`) : "";
   $("b-part").innerHTML = `<b>${furi("助詞")}</b>` + T("", "Partículas") + prog(pq);
   $("b-write").innerHTML = `<b>${furi("作文")}</b>` + T("", "Escrita") + prog(wq);
-  $("b-vocab").innerHTML = `<b>${furi("言葉")}</b>` + T("", "Vocabulário") + prog(qs.by("v"));
+  { const tg = vTarget(d), n = Math.min(d.vn || 0, tg); $("b-vocab").innerHTML = `<b>${furi("言葉")}</b>` + T("", "Vocabulário") + (tg ? prog({n, of:tg}) : ""); }
   $("streak-line").innerHTML = T(`${ICO("flame")} ${dayR(st)} 連続`, `${st} dias seguidos`);
   renderDeadline();
   $("rest-status").innerHTML = `<button class="tkbtn" onclick="ticketInfo()" aria-label="Cupons">${ICO("ticket")} × ${S.tickets || 0}</button>`;
@@ -1713,7 +1713,7 @@ function answerP(btn, o){
 /* 練習の結果画面に出す「次の練習」ボタン（日課でまだ終わっていないもの） */
 function nextStep(from){
   const q = quest(day()), need = k => { const x = q.by(k); return !!(x && x.n < x.of); };
-  const order = {p:["w","v","d"], w:["v","d","p"], v:["p","w","d"]}[from] || [];
+  const order = {p:["w","d"], w:["d","p"], v:["p","w","d"]}[from] || [];
   const S2 = {p:[`go('practice',true);startParticles()`, "次は助詞 🎀 →", "Próximo: partículas →"],
               w:[`go('practice',true);startWriting()`, `次は作文 ${ICO("pencil")} →`, "Próximo: escrita →"],
               d:[`go('diary',true)`, "次は日記 📔 →", "Próximo: diário →"],
@@ -2128,7 +2128,7 @@ function openNote(tab){
 }
 
 /* ---------- ことば（単語のリストは vocab.js）----------
-   日課「今日の言葉」：① 復習（出す日が来た単語）→ ② 新しい言葉（1日 CONFIG.daily.vocab 語）→ ③ 確認（今日の新しい言葉を、意味→日本語の4択でもう一度）
+   「今日の言葉」（日課・目標とは別枠）：① 復習（出す日が来た単語）→ ② 新しい言葉（1日 CONFIG.vocabNew 語）→ ③ 確認（今日の新しい言葉を、意味→日本語の4択でもう一度）
    - 新しい言葉は、まず4択（日本語→意味。「分からない」もある）。正解なら「知ってる」で、つぎの単語に入れかえる（数に入れない）。
      まちがい・分からない → 覚える単語（S.vsort[w] = 0）になり、意味を見せて1語と数える（day.vn）。
    - 知ってる（S.vsort[w] = 1）も、あとで1回「意味 → 日本語を打つ」で確かめる（box 4、20〜60日あと）。まちがえたら覚える単語にもどる。
@@ -2157,7 +2157,7 @@ function vCands(){
   const a = f != null && VCATS[f] ? VCATS[f].words.filter(ok) : [];
   return a.concat(VOCAB.filter(v => ok(v) && !(f != null && v.c === f)));
 }
-function vTarget(d){ const q = CONFIG.daily.vocab || 0; if(!q) return 0; const n = d.vn || 0; return n >= q ? q : Math.min(q, n + VOCAB.filter(v => !S.vstats[v.w] && S.vsort[v.w] !== 1).length); }
+function vTarget(d){ const q = CONFIG.vocabNew || 0; if(!q) return 0; const n = d.vn || 0; return n >= q ? q : Math.min(q, n + VOCAB.filter(v => !S.vstats[v.w] && S.vsort[v.w] !== 1).length); }
 
 /* 4つの選択肢：同じカテゴリー・同じ品詞から（足りなければ同じ品詞、それでも足りなければ全部）。
    「～」の語は「～」の語どうし。意味が同じ語は入れない。 */
@@ -2560,14 +2560,14 @@ function tutSteps(){
       [`${ICO("flag-br")}：ポルトガル語の訳を出す・消す`,"🇧🇷: mostra ou esconde a tradução em português."],
       ["文を押すと、その文だけ訳が出ることもあるよ","Em algumas frases, é só tocar para ver a tradução."]]},
     {ic:"🎯", h:["毎日の目標","A meta de cada dia"], b:[
-      ["助詞10問・作文3文・新しい言葉10語・日記1件。四つ全部やったら目標達成！","10 partículas, 3 frases, 10 palavras novas e 1 diário. Fez os quatro? Meta concluída!"],
+      ["助詞10問・作文3文・日記1件。三つ全部やったら目標達成！","10 partículas, 3 frases e 1 diário. Fez os três? Meta concluída!"],
       [`毎日続けると ${ICO("flame")} 連続記録がのびるよ`,"Praticando todo dia, a sua sequência 🔥 vai crescendo."],
       [`${ICO("ticket")} ストリーク復活券：目標に届かなかった次の日、ホームの「復活券を使う」で連続が元に戻るよ（毎週月曜日に1枚）`,"🎫 Cupom de sequência: no dia seguinte a um dia sem meta, toque em “Usar cupom” na tela inicial para recuperar a sequência (1 cupom toda segunda-feira)."],
       ["🌙 1日の区切りは朝3時。0時をすぎても3時までなら前の日の練習になるよ","🌙 O dia só vira às 3h da manhã. Até as 3h, conta para o dia anterior."]]},
     {ic:`${ICO("icon-particles")} ${ICO("pencil")}`, h:["練習","Os exercícios"], b:[
       ["🎀 助詞：＿に入る助詞を選ぶ。間違えた問題は、覚えるまでまた出るよ","🎀 Partículas: escolha a partícula certa. As que você errar voltam até você aprender."],
       ["✏️ 作文：ポルトガル語の文を日本語で書く。答えの例と比べて、自分で ◎○△ をつけてね。分からないときは「分からない」を押してもいいよ","✏️ Escrita: escreva a frase em japonês, compare com o exemplo e se avalie com ◎ ○ △. Se não souber, pode tocar em “Não sei”."],
-      ["🌱 言葉：まず復習、そのあと新しい言葉。知っている言葉は4択で正解すると飛ばせるよ。知らない言葉は「分からない」を押してね","🌱 Vocabulário: primeiro a revisão, depois palavras novas. Se acertar o teste, a palavra que você já sabe é pulada. Se não souber, toque em “Não sei”."],
+      ["🌱 言葉（目標とは別）：まず復習、そのあと新しい言葉10語。知っている言葉は4択で正解すると飛ばせるよ。知らない言葉は「分からない」を押してね","🌱 Vocabulário (separado da meta): primeiro a revisão, depois 10 palavras novas. Se acertar o teste, a palavra que você já sabe é pulada. Se não souber, toque em “Não sei”."],
       ["📒 ノート：間違えた問題・覚えている単語・書いた文・助詞のルールを見返せるよ","📒 Caderno: reveja seus erros, as palavras que está aprendendo, as frases que escreveu e as regras das partículas."]]},
     {ic:"📔", h:["日記","O diário"], b:[
       ["今日のことを日本語で1〜3文書いてね。お題もあるよ","Escreva de 1 a 3 frases em japonês sobre o seu dia. Tem sugestão de tema também."],
