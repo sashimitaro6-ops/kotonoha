@@ -263,17 +263,8 @@ button rt{color:inherit;opacity:.85}
 .vnum b{display:block;font-size:24px;font-weight:900}
 .vnum .k b{color:var(--mint-t)}.vnum .u b{color:var(--pink-t)}.vnum .r b{color:var(--muted)}
 .vs-scene{font-size:13px;color:var(--muted);text-align:center}
-.vs-word{font-size:40px;font-weight:900;text-align:center;margin:26px 0 30px;line-height:1.5;word-break:keep-all}
+.vs-word{font-size:40px;font-weight:900;text-align:center;margin:20px 0 8px;line-height:1.5;word-break:keep-all}
 .vs-word rt{font-size:.4em}
-.vs-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.vs-btns button{padding:18px 10px;font-size:18px}
-.vs-btns .no{background:#fff;color:var(--pink-t);border:2px solid var(--pink);box-shadow:0 3px 0 var(--pink-s)}
-.vs-btns .yes{background:linear-gradient(135deg,#3f9e83 0%,#5b7fd0 100%)}
-.vs-prev{display:flex;align-items:center;gap:8px;margin-top:14px;padding:10px 12px;border-radius:16px;background:var(--lav-s);font-size:15px}
-.vs-prev .m{flex:1;min-width:0}
-.vs-prev .tag{font-size:12px;font-weight:900;padding:2px 8px;border-radius:999px;background:#fff;flex:none}
-.vs-prev .tag.k{color:var(--mint-t)}.vs-prev .tag.u{color:var(--pink-t)}
-.vs-prev button{padding:6px 12px;font-size:13px;flex:none}
 .vbar.sm{height:6px;margin:6px 0 2px}
 .vcnt{font-size:13px;color:var(--muted);font-weight:700;flex:none}
 .vs-mean{font-size:20px;font-weight:700;text-align:center;margin:22px 0 18px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -2105,7 +2096,7 @@ function openNote(tab){
 }
 
 /* ---------- ことば（単語のリストは vocab.js）----------
-   ふるい分け：カテゴリーを選んで、1回50語ずつ「知ってる／知らない」。S.vsort[w] = 1（知ってる）/ 0（覚える）
+   ふるい分け：カテゴリーを選んで、1回50語ずつ 4択（意味を選ぶ）。正解 → S.vsort[w] = 1（知ってる）、まちがい・分からない → 0（覚える）
    復習：「覚える」に分けた単語だけ。S.vstats[w] = {c, w, box, due}（助詞と同じ間隔 GAPS）。
      box 0 … 日本語 → 意味を4つから選ぶ / box 1 … 意味 → 日本語を4つから選ぶ / box 2〜 … 意味 → 日本語を打つ */
 const VCATS = [], VOCAB = [];
@@ -2170,28 +2161,36 @@ function startSort(ci){
 }
 function renderSort(){
   if(VS.i >= VS.list.length){ sortResult(); return; }
-  const v = VS.list[VS.i], g = VCATS[VS.ci], pv = VS.i ? VS.list[VS.i - 1] : null;
+  const v = VS.list[VS.i], g = VCATS[VS.ci];
+  VS.opts = vOpts(v); VS.done = false;
   $("practice-run").innerHTML = `<div class="top"><button class="ghost" onclick="openVocab()">✕</button><span class="muted">${VS.i + 1} / ${VS.list.length}</span>${topBtns()}</div>
     <div class="card" id="vs-card">
       <div class="vbar sm"><i class="u" style="width:${100 * VS.i / VS.list.length}%"></i></div>
       <div class="vs-scene">${T(esc(g.jp), esc(g.pt))}</div>
       <div class="vs-word">${vWord(v)}</div>
-      <div class="vs-btns">
-        <button class="no" onclick="sortAns(0)">${T("知らない","Não sei")}</button>
-        <button class="yes" onclick="sortAns(1)">${T("知ってる","Sei")}</button>
-      </div>
-      ${pv ? `<div class="vs-prev"><span class="tag ${S.vsort[pv.w] ? "k" : "u"}">${S.vsort[pv.w] ? "✓" : "🌱"}</span><span class="m"><b>${vWord(pv)}</b> ＝ ${esc(pv.pt)}</span>${spkBtn(`speak('${esc(vSay(pv))}')`)}<button class="ghost" onclick="sortUndo()">${T("戻す","Desfazer")}</button></div>` : ""}
+      <div class="opts vopts">${VS.opts.map((o, j) => `<button onclick="sortAns(${j})">${esc(o.pt)}</button>`).join("")}</div>
+      <button class="ghost block" style="margin-top:12px" onclick="sortAns(-1)">${T("🤔 分からない","Não sei")}</button>
+      <div id="vs-after"></div>
     </div>`;
   applyPt();
 }
-function sortAns(a){
-  if(!VS || VS.i >= VS.list.length) return;
-  S.vsort[VS.list[VS.i].w] = a; VS.i++; save(); renderSort();
+/* 4択：正解なら「知ってる」、まちがい・分からないなら「覚える」 */
+function sortAns(j){
+  if(!VS || VS.done || VS.i >= VS.list.length) return;
+  VS.done = true;
+  const v = VS.list[VS.i], ok = j >= 0 && VS.opts[j] === v, bs = document.querySelectorAll("#vs-card .vopts button");
+  bs.forEach((b, k) => { b.disabled = true; if(VS.opts[k] === v) b.classList.add("right"); });
+  document.querySelectorAll("#vs-card > button").forEach(b => b.disabled = true);
+  if(j >= 0 && !ok) bs[j].classList.add("wrong");
+  if(ok) Party.correct(bs[j], 0);
+  S.vsort[v.w] = ok ? 1 : 0; save();
+  $("vs-after").innerHTML = ok ? "" : `<div class="explain row" style="gap:8px"><b style="font-size:20px">${vWord(v)}</b><span style="flex:1">${esc(v.pt)}</span>${spkBtn(`speak('${esc(vSay(v))}')`)}</div>
+    <button class="block" style="margin-top:10px" onclick="sortNext()">${T("次へ →","Próxima")}</button>`;
+  applyPt();
+  if(ok) VS.t = setTimeout(sortNext, 650);
+  else scrollToAction(document.querySelector("#vs-after button.block"));
 }
-function sortUndo(){
-  if(!VS || !VS.i) return;
-  VS.i--; delete S.vsort[VS.list[VS.i].w]; save(); renderSort();
-}
+function sortNext(){ if(!VS || !VS.done) return; clearTimeout(VS.t); VS.i++; renderSort(); }
 function sortResult(){
   const g = VCATS[VS.ci], un = VS.list.filter(v => S.vsort[v.w] === 0), kn = VS.list.length - un.length, left = vocabCounts(g.words).r;
   setTimeout(() => { FX.rain(PETALS, 30); stamp(`${VS.list.length}語 おわり！`, `${VS.list.length} palavras!`); }, 200);
@@ -2207,8 +2206,8 @@ function sortResult(){
 }
 document.addEventListener("keydown", e => {
   if(!$("vs-card") || $("overlay").classList.contains("on")) return;
-  if(e.key === "ArrowLeft") sortAns(0); else if(e.key === "ArrowRight") sortAns(1);
-  else if(e.key === "Backspace" || (e.key === "z" && (e.metaKey || e.ctrlKey))){ e.preventDefault(); sortUndo(); }
+  if(VS && VS.done){ if(e.key === "Enter" || e.key === " "){ e.preventDefault(); sortNext(); } return; }
+  if(/^[1-4]$/.test(e.key)) sortAns(+e.key - 1); else if(e.key === "0" || e.key === "?") sortAns(-1);
 });
 
 /* 復習（覚える に分けた単語だけ） */
