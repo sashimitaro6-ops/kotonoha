@@ -332,4 +332,438 @@ const EXAMPLES_TXT = `
 カラー|髪のカラーを明るくしました。|Clareei a cor do cabelo.
 髪を染める|髪を茶色に染めました。|Pintei o cabelo de castanho.
 乾かす|ドライヤーで髪を乾かします。|Seco o cabelo com o secador.
+朝ご飯|朝ご飯はいつもパンとコーヒーです。|No café da manhã sempre como pão e tomo café.
+昼ご飯|昼ご飯を一緒に食べませんか。|Vamos almoçar juntos?
+晩ご飯|今日の晩ご飯はカレーです。|O jantar de hoje é curry.
+夕飯|夕飯の準備を手伝います。|Ajudo a preparar o jantar.
+食事|仕事のあとで食事に行きましょう。|Vamos comer algo depois do trabalho.
+お弁当|毎朝、ジャスのお弁当を作ります。|Toda manhã faço a marmita do Jas.
+米|スーパーで米を五キロ買いました。|Comprei cinco quilos de arroz no supermercado.
+麺|この店の麺はとても細いです。|O macarrão deste restaurante é bem fino.
+うどん|寒い日は温かいうどんが食べたいです。|Em dia frio dá vontade de comer udon quente.
+そば|大晦日にそばを食べます。|Na véspera de Ano-Novo comemos soba.
+刺身|刺身は醤油をつけて食べます。|Sashimi se come com shoyu.
+おにぎり|コンビニでおにぎりを二つ買いました。|Comprei dois onigiris na loja de conveniência.
+味噌汁|毎朝、味噌汁を作ります。|Toda manhã faço sopa de missô.
+味噌|味噌は体にいいです。|Missô faz bem para o corpo.
+納豆|納豆はまだ少し苦手です。|Ainda não gosto muito de natto.
+豆腐|豆腐を味噌汁に入れます。|Coloco tofu na sopa de missô.
+天ぷら|エビの天ぷらが好きです。|Gosto de tempurá de camarão.
+焼き肉|週末に焼き肉を食べに行きました。|No fim de semana fomos comer churrasco japonês.
+焼き鳥|居酒屋で焼き鳥を注文しました。|Pedi espetinho de frango no izakaya.
+鍋|冬は家族で鍋を食べます。|No inverno comemos nabe em família.
+丼|この丼は大きくて安いです。|Esta tigela é grande e barata.
+定食|昼は魚の定食にしました。|No almoço escolhi o prato feito de peixe.
+牛肉|牛肉は少し高いです。|Carne bovina é um pouco cara.
+豚肉|豚肉と野菜を炒めました。|Refoguei carne de porco com legumes.
+鶏肉|鶏肉でカレーを作ります。|Faço curry com frango.
+ひき肉|ひき肉でハンバーグを作りました。|Fiz hambúrguer com carne moída.
+ハム|サンドイッチにハムを入れます。|Coloco presunto no sanduíche.
+ソーセージ|朝ご飯にソーセージを焼きました。|Fritei salsicha no café da manhã.
+鮭|お弁当に焼いた鮭を入れました。|Coloquei salmão grelhado na marmita.
+マグロ|マグロのお寿司が一番好きです。|Sushi de atum é o meu favorito.
+エビ|エビフライを作りました。|Fiz camarão empanado.
+イカ|イカは少しかたいです。|A lula é um pouco dura.
+タコ|タコが入っているから、たこ焼きです。|Chama takoyaki porque tem polvo dentro.
+貝|海で貝を拾いました。|Peguei conchas na praia.
+キャベツ|とんかつにはキャベツがつきます。|O tonkatsu vem com repolho.
+レタス|サラダにレタスとトマトを入れます。|Coloco alface e tomate na salada.
+きゅうり|夏はきゅうりが安いです。|No verão o pepino é barato.
+玉ねぎ|玉ねぎを切ると、涙が出ます。|Quando corto cebola, saem lágrimas.
+ねぎ|うどんにねぎをのせます。|Coloco cebolinha no udon.
+にんじん|カレーににんじんを入れます。|Coloco cenoura no curry.
+じゃがいも|じゃがいもをゆでました。|Cozinhei batatas.
+さつまいも|焼いたさつまいもは甘いです。|Batata-doce assada é doce.
+大根|大根を煮ました。|Cozinhei nabo japonês.
+白菜|鍋に白菜をたくさん入れます。|Coloco bastante acelga chinesa no nabe.
+ほうれん草|ほうれん草は体にいいです。|Espinafre faz bem para a saúde.
+なす|なすを焼いて、醤油をかけました。|Assei a berinjela e coloquei shoyu.
+ピーマン|子供はピーマンが嫌いです。|As crianças não gostam de pimentão.
+かぼちゃ|かぼちゃのスープを作りました。|Fiz sopa de abóbora.
+きのこ|秋はきのこがおいしいです。|No outono os cogumelos são gostosos.
+にんにく|にんにくを少し入れると、おいしくなります。|Com um pouco de alho fica gostoso.
+しょうが|風邪のときは、しょうがのお茶を飲みます。|Quando estou resfriada, tomo chá de gengibre.
+豆|ブラジルでは毎日豆を食べます。|No Brasil comemos feijão todos os dias.
+みかん|冬はこたつでみかんを食べます。|No inverno comemos tangerina no kotatsu.
+いちご|いちごのケーキを買いました。|Comprei um bolo de morango.
+ぶどう|このぶどうはとても甘いです。|Esta uva é muito doce.
+桃|夏は桃がおいしいです。|No verão o pêssego é gostoso.
+梨|日本の梨は大きくて、みずみずしいです。|A pera japonesa é grande e suculenta.
+すいか|夏休みにすいかを食べました。|Comi melancia nas férias de verão.
+パイナップル|パイナップルを切ってください。|Corte o abacaxi, por favor.
+柿|秋になると、柿が安くなります。|No outono o caqui fica barato.
+お菓子|子供にお菓子をあげました。|Dei doces para as crianças.
+アイス|暑いから、アイスを食べよう。|Está quente, vamos tomar sorvete.
+クッキー|手作りのクッキーをもらいました。|Ganhei biscoitos caseiros.
+あめ|のどが痛いので、あめをなめます。|Estou com dor de garganta, então chupo uma bala.
+ガム|電車の中でガムをかみます。|Masco chiclete no trem.
+和菓子|お茶と一緒に和菓子を食べます。|Como doce japonês com chá.
+もち|お正月にもちを食べます。|No Ano-Novo comemos mochi.
+デザート|デザートにケーキはいかがですか。|Que tal bolo de sobremesa?
+お湯|お湯をわかして、お茶を入れます。|Fervo água e preparo o chá.
+緑茶|日本ではよく緑茶を飲みます。|No Japão se toma muito chá verde.
+麦茶|夏は冷たい麦茶がおいしいです。|No verão o chá de cevada gelado é gostoso.
+お酒|私はお酒をあまり飲みません。|Eu quase não bebo álcool.
+氷|ジュースに氷を入れてください。|Coloque gelo no suco, por favor.
+砂糖|コーヒーに砂糖を入れますか。|Você coloca açúcar no café?
+塩|塩を少し入れてください。|Coloque um pouco de sal, por favor.
+こしょう|塩とこしょうで味をつけます。|Tempero com sal e pimenta.
+醤油|醤油を取ってください。|Me passa o shoyu, por favor.
+酢|酢を入れると、さっぱりします。|Com vinagre fica mais leve.
+油|フライパンに油をひきます。|Coloco óleo na frigideira.
+バター|パンにバターをぬります。|Passo manteiga no pão.
+チーズ|ピザにチーズをたくさんのせます。|Coloco bastante queijo na pizza.
+ソース|お好み焼きにソースをかけます。|Coloco molho no okonomiyaki.
+調味料|日本の調味料を集めています。|Estou juntando temperos japoneses.
+味|この料理は優しい味がします。|Esta comida tem um sabor suave.
+まずい|このコーヒーはちょっとまずいです。|Este café está um pouco ruim.
+甘い|このケーキは甘すぎます。|Este bolo é doce demais.
+辛い|このカレーは少し辛いです。|Este curry é um pouco apimentado.
+しょっぱい|このスープはしょっぱいです。|Esta sopa está salgada.
+苦い|この薬は苦いです。|Este remédio é amargo.
+酸っぱい|レモンは酸っぱいです。|O limão é azedo.
+熱い|熱いので、気をつけて飲んでね。|Está quente, beba com cuidado.
+冷たい|冷たい水をください。|Água gelada, por favor.
+柔らかい|このお肉は柔らかいです。|Esta carne é macia.
+硬い|このパンは硬いです。|Este pão está duro.
+新鮮|この魚は新鮮です。|Este peixe é fresco.
+作る|日曜日に一緒に料理を作りましょう。|Vamos cozinhar juntos no domingo.
+焼く|魚をグリルで焼きます。|Asso o peixe na grelha.
+煮る|野菜を三十分煮ます。|Cozinho os legumes por trinta minutos.
+炒める|玉ねぎを炒めます。|Refogo a cebola.
+揚げる|鶏肉を揚げて、唐揚げを作ります。|Frito o frango e faço karaage.
+ゆでる|卵を十分ゆでます。|Cozinho o ovo por dez minutos.
+蒸す|野菜を蒸すと、甘くなります。|Legume cozido no vapor fica doce.
+切る|にんじんを小さく切ってください。|Corte a cenoura em pedaços pequenos.
+混ぜる|卵と砂糖をよく混ぜます。|Misturo bem o ovo e o açúcar.
+温める|お弁当を電子レンジで温めます。|Esquento a marmita no micro-ondas.
+冷やす|ビールを冷蔵庫で冷やします。|Gelo a cerveja na geladeira.
+味見|ちょっと味見してくれる？|Pode provar um pouquinho?
+材料|カレーの材料を買いに行きます。|Vou comprar os ingredientes do curry.
+お腹がすく|お腹がすいたね。何か食べよう。|Estou com fome. Vamos comer algo.
+のどが渇く|のどが渇いたので、水を飲みます。|Estou com sede, então vou beber água.
+お腹いっぱい|もうお腹いっぱいです。|Já estou satisfeita.
+おかわり|ご飯のおかわりをください。|Mais arroz, por favor.
+大盛り|ラーメンを大盛りにしてください。|Uma porção grande de lámen, por favor.
+お好み焼き|大阪でお好み焼きを食べたいです。|Quero comer okonomiyaki em Osaka.
+たこ焼き|お祭りでたこ焼きを買いました。|Comprei takoyaki no festival.
+すき焼き|特別な日にすき焼きを作ります。|Em dia especial faço sukiyaki.
+しゃぶしゃぶ|しゃぶしゃぶはお肉を少しだけ煮ます。|No shabu-shabu a carne é cozida só um pouquinho.
+とんかつ|試験の前にとんかつを食べます。|Antes da prova comemos tonkatsu.
+唐揚げ|唐揚げはジャスの好きな料理です。|Karaage é o prato favorito do Jas.
+餃子|みんなで餃子を作りました。|Fizemos guioza todos juntos.
+焼きそば|お祭りで焼きそばを食べました。|Comi yakisoba no festival.
+牛丼|牛丼は早くて安いです。|O gyudon é rápido e barato.
+親子丼|親子丼は鶏肉と卵の料理です。|Oyakodon é um prato de frango e ovo.
+カツ丼|カツ丼を注文しました。|Pedi katsudon.
+オムライス|オムライスにケチャップで絵を描きました。|Desenhei no omurice com ketchup.
+ハンバーグ|ハンバーグは子供に人気があります。|O hambúrguer é popular entre as crianças.
+ポテト|ハンバーガーとポテトを注文しました。|Pedi hambúrguer e batata frita.
+漬物|ご飯と漬物はよく合います。|Arroz combina bem com conserva.
+梅干し|梅干しはとても酸っぱいです。|Umeboshi é muito azedo.
+のり巻き|節分にのり巻きを食べます。|No Setsubun comemos sushi enrolado.
+海苔|おにぎりに海苔をまきます。|Enrolo o onigiri com alga.
+わかめ|味噌汁にわかめを入れます。|Coloco wakame na sopa de missô.
+わさび|わさびが多すぎて、鼻が痛い！|Muito wasabi, meu nariz está doendo!
+ごま|サラダにごまをかけます。|Coloco gergelim na salada.
+小麦粉|小麦粉でパンを作ります。|Faço pão com farinha de trigo.
+パン粉|とんかつにパン粉をつけます。|Passo o porco na farinha de rosca.
+片栗粉|片栗粉でスープを少し固くします。|Engrosso a sopa com amido.
+だし|日本料理はだしが大切です。|Na culinária japonesa o caldo é importante.
+みりん|醤油とみりんで味をつけます。|Tempero com shoyu e mirin.
+ドレッシング|ごまのドレッシングが好きです。|Gosto de molho de gergelim.
+ジャム|パンにいちごのジャムをぬります。|Passo geleia de morango no pão.
+はちみつ|紅茶にはちみつを入れます。|Coloco mel no chá.
+おやつ|三時におやつを食べます。|Às três horas como um lanchinho.
+ポテトチップス|ポテトチップスを食べすぎました。|Comi batata chips demais.
+せんべい|おばあちゃんはせんべいが好きです。|A vovó gosta de biscoito de arroz.
+とうもろこし|夏祭りで焼いたとうもろこしを食べました。|Comi milho assado no festival de verão.
+もやし|もやしは安くて便利です。|Broto de feijão é barato e prático.
+セロリ|セロリは少し苦手です。|Não gosto muito de salsão.
+香辛料|カレーには香辛料がたくさん入っています。|O curry leva muitas especiarias.
+唐辛子|唐辛子を入れると、辛くなります。|Com pimenta fica apimentado.
+冷凍食品|忙しい日は冷凍食品を使います。|Em dia corrido uso comida congelada.
+インスタントラーメン|夜中にインスタントラーメンを食べました。|Comi miojo de madrugada.
+カップ麺|カップ麺はお湯を入れて三分です。|O lámen de copo fica pronto em três minutos com água quente.
+お惣菜|スーパーのお惣菜を買って帰ります。|Compro comida pronta no supermercado e volto para casa.
+生|日本では卵を生で食べます。|No Japão se come ovo cru.
+焼き魚|朝ご飯は焼き魚とご飯です。|O café da manhã é peixe grelhado e arroz.
+煮物|母の煮物はおいしいです。|O cozido da minha mãe é gostoso.
+炒め物|今日は簡単な炒め物にします。|Hoje vou fazer um refogado simples.
+揚げ物|揚げ物は食べすぎないようにしています。|Tento não comer fritura demais.
+炊く|炊飯器でご飯を炊きます。|Cozinho o arroz na panela elétrica.
+キッチン|新しい家のキッチンは広いです。|A cozinha da casa nova é espaçosa.
+冷凍庫|アイスは冷凍庫に入れてね。|Coloque o sorvete no freezer.
+電子レンジ|電子レンジで牛乳を温めます。|Esquento o leite no micro-ondas.
+炊飯器|炊飯器のスイッチを押してください。|Aperte o botão da panela de arroz, por favor.
+コンロ|コンロの火を消してください。|Apague o fogo do fogão, por favor.
+オーブン|オーブンでケーキを焼きます。|Asso o bolo no forno.
+やかん|やかんでお湯をわかします。|Fervo água na chaleira.
+フライパン|フライパンで卵を焼きます。|Frito o ovo na frigideira.
+包丁|包丁で野菜を切ります。|Corto os legumes com a faca.
+まな板|まな板を洗ってください。|Lave a tábua de corte, por favor.
+皿|この皿は割れやすいです。|Este prato quebra fácil.
+お皿|お皿を並べてくれる？|Pode arrumar os pratos?
+茶碗|茶碗にご飯をよそいます。|Sirvo arroz na tigela.
+お椀|お椀に味噌汁を入れます。|Coloco a sopa de missô na tigela.
+コップ|コップに水を入れてください。|Coloque água no copo, por favor.
+グラス|ワインをグラスに注ぎます。|Sirvo o vinho na taça.
+カップ|コーヒーのカップを二つ出します。|Pego duas xícaras de café.
+箸|日本では箸でご飯を食べます。|No Japão se come com hashi.
+お箸|お箸を使うのが上手になりました。|Fiquei boa em usar hashi.
+スプーン|カレーはスプーンで食べます。|Curry se come com colher.
+フォーク|フォークとナイフをください。|Garfo e faca, por favor.
+ナイフ|ナイフでケーキを切ります。|Corto o bolo com a faca.
+ストロー|ストローはいりません。|Não preciso de canudo.
+蓋|鍋の蓋を閉めてください。|Feche a tampa da panela, por favor.
+瓶|瓶はほかのゴミと分けて出します。|As garrafas de vidro vão separadas do outro lixo.
+缶|缶のジュースを買いました。|Comprei um suco em lata.
+ペットボトル|ペットボトルのお茶を買いました。|Comprei chá em garrafa PET.
+ラップ|残ったご飯にラップをかけます。|Cubro o arroz que sobrou com filme plástico.
+アルミホイル|アルミホイルで魚を包んで焼きます。|Embrulho o peixe em papel alumínio e asso.
+食堂|会社の食堂は安いです。|O refeitório da empresa é barato.
+居酒屋|仕事のあと、居酒屋に行きました。|Depois do trabalho fomos ao izakaya.
+喫茶店|駅前の喫茶店で待っています。|Estou esperando no café em frente à estação.
+注文|注文はお決まりですか。|Já escolheram o pedido?
+席|窓の近くの席がいいです。|Prefiro um lugar perto da janela.
+お会計|すみません、お会計をお願いします。|Com licença, a conta, por favor.
+おしぼり|お店でおしぼりをもらいました。|Recebi uma toalhinha úmida no restaurante.
+持ち帰り|持ち帰りでお願いします。|Para viagem, por favor.
+店内|店内で食べます。|Vou comer aqui.
+食べ放題|食べ放題のお店に行きました。|Fomos a um restaurante de rodízio.
+飲み放題|飲み放題は二時間です。|A bebida à vontade é por duas horas.
+おすすめ|おすすめは何ですか。|O que você recomenda?
+禁煙|この店は全席禁煙です。|Neste restaurante é proibido fumar em todos os lugares.
+喫煙|喫煙は外でお願いします。|Fumar, só do lado de fora, por favor.
+うち|今日はうちでゆっくりします。|Hoje vou descansar em casa.
+マンション|駅の近くのマンションに住んでいます。|Moro num prédio perto da estação.
+一軒家|将来は一軒家に住みたいです。|No futuro quero morar numa casa.
+寮|会社の寮に住んでいます。|Moro no alojamento da empresa.
+玄関|玄関で靴を脱いでください。|Tire os sapatos na entrada, por favor.
+戸|戸を閉めてください。|Feche a porta, por favor.
+壁|壁に写真を飾りました。|Pendurei fotos na parede.
+床|床が冷たいです。|O chão está frio.
+天井|この部屋は天井が高いです。|Este quarto tem o teto alto.
+屋根|屋根に雪が積もっています。|Tem neve acumulada no telhado.
+階段|階段で三階まで上がります。|Subo de escada até o terceiro andar.
+廊下|廊下を走らないでください。|Não corra no corredor, por favor.
+居間|家族は居間でテレビを見ています。|A família está vendo TV na sala.
+リビング|リビングにソファーを置きたいです。|Quero colocar um sofá na sala.
+寝室|寝室は二階にあります。|O quarto fica no segundo andar.
+和室|和室で布団を敷いて寝ます。|Durmo no quarto japonês estendendo o futon.
+畳|畳の上に座ります。|Sento em cima do tatame.
+押し入れ|布団を押し入れにしまいます。|Guardo o futon no armário embutido.
+風呂場|風呂場を掃除しました。|Limpei o banheiro.
+洗面所|洗面所で手を洗います。|Lavo as mãos no lavabo.
+ベランダ|ベランダで洗濯物を干します。|Estendo a roupa na varanda.
+庭|庭に花を植えました。|Plantei flores no jardim.
+駐車場|駐車場はどこですか。|Onde fica o estacionamento?
+鍵|鍵をかけるのを忘れました。|Esqueci de trancar a porta.
+家賃|家賃は毎月二十五日に払います。|Pago o aluguel todo dia 25.
+大家さん|大家さんはとても親切です。|O proprietário é muito gentil.
+不動産屋|不動産屋で部屋を探しました。|Procurei apartamento na imobiliária.
+住む|私たちは東京に住む予定です。|Planejamos morar em Tóquio.
+間取り|この部屋の間取りはいいですね。|A planta deste apartamento é boa, né.
+家具|新しい家具を買いました。|Comprei móveis novos.
+テーブル|テーブルの上にお皿を置きます。|Coloco os pratos na mesa.
+布団|天気がいいので、布団を干します。|O tempo está bom, então vou estender o futon.
+枕|この枕はとても柔らかいです。|Este travesseiro é bem macio.
+毛布|寒いので、毛布をもう一枚ください。|Está frio, me dê mais um cobertor, por favor.
+シーツ|シーツを洗いました。|Lavei o lençol.
+棚|棚の上に置いてください。|Coloque em cima da prateleira, por favor.
+本棚|本棚に日本語の本が並んでいます。|Livros de japonês estão enfileirados na estante.
+タンス|服をタンスにしまいます。|Guardo as roupas na cômoda.
+クローゼット|コートはクローゼットにかけます。|Penduro o casaco no closet.
+引き出し|はさみは引き出しの中です。|A tesoura está dentro da gaveta.
+鏡|鏡を見て、髪を直します。|Olho no espelho e arrumo o cabelo.
+カーテン|朝、カーテンを開けます。|De manhã abro a cortina.
+カーペット|リビングにカーペットを敷きました。|Coloquei um tapete na sala.
+電球|トイレの電球が切れました。|A lâmpada do banheiro queimou.
+コンセント|コンセントはどこですか。|Onde fica a tomada?
+電池|リモコンの電池がなくなりました。|A pilha do controle acabou.
+エアコン|暑いので、エアコンをつけます。|Está quente, então vou ligar o ar-condicionado.
+暖房|寒いから、暖房をつけよう。|Está frio, vamos ligar o aquecedor.
+冷房|冷房が強すぎて寒いです。|O ar frio está forte demais e estou com frio.
+ストーブ|ストーブの近くは暖かいです。|Perto do aquecedor está quentinho.
+こたつ|冬はこたつから出たくないです。|No inverno não dá vontade de sair do kotatsu.
+扇風機|夏は扇風機を使います。|No verão uso ventilador.
+洗濯機|洗濯機が止まりました。|A máquina de lavar parou.
+掃除機|週末に掃除機をかけます。|No fim de semana passo o aspirador.
+リモコン|テレビのリモコンはどこ？|Cadê o controle da TV?
+時計|あの時計は五分進んでいます。|Aquele relógio está cinco minutos adiantado.
+目覚まし時計|目覚まし時計を六時にセットしました。|Coloquei o despertador para as seis.
+ドライヤー|ドライヤーはどこにありますか。|Onde está o secador de cabelo?
+アイロン|シャツにアイロンをかけます。|Passo a camisa com o ferro.
+ゴミ箱|ゴミはゴミ箱に捨ててください。|Jogue o lixo na lixeira, por favor.
+家事|家事は二人で分けてやります。|Dividimos as tarefas de casa entre nós dois.
+洗濯物|雨が降ってきたから、洗濯物を入れて！|Começou a chover, recolha a roupa!
+干す|天気がいいので、洗濯物を外に干します。|O tempo está bom, então estendo a roupa lá fora.
+たたむ|乾いた服をたたみます。|Dobro as roupas secas.
+片付ける|部屋を片付けてから出かけます。|Arrumo o quarto antes de sair.
+洗う|ご飯の前に手を洗います。|Lavo as mãos antes de comer.
+拭く|テーブルを拭いてください。|Limpe a mesa, por favor.
+燃えるゴミ|燃えるゴミは月曜日と木曜日です。|O lixo queimável é segunda e quinta.
+燃えないゴミ|燃えないゴミは月に二回です。|O lixo não queimável é duas vezes por mês.
+資源ゴミ|ペットボトルは資源ゴミです。|Garrafa PET é lixo reciclável.
+粗大ゴミ|古いソファーを粗大ゴミに出します。|Vou jogar o sofá velho como lixo grande.
+ゴミを出す|朝、ゴミを出してから仕事に行きます。|De manhã coloco o lixo para fora e vou trabalhar.
+分別|日本ではゴミの分別が大切です。|No Japão é importante separar o lixo.
+捨てる|古い服を捨てました。|Joguei fora as roupas velhas.
+目が覚める|朝五時に目が覚めました。|Acordei às cinco da manhã.
+寝坊|寝坊して、電車に乗り遅れました。|Perdi a hora e perdi o trem.
+昼寝|日曜日は昼寝をします。|No domingo tiro um cochilo.
+着替える|家に帰ったら、すぐ着替えます。|Quando chego em casa, troco de roupa logo.
+化粧|朝、化粧に二十分かかります。|De manhã levo vinte minutos para me maquiar.
+タオル|お風呂のタオルを替えました。|Troquei a toalha do banheiro.
+石けん|石けんで手を洗いましょう。|Vamos lavar as mãos com sabonete.
+リンス|シャンプーのあとにリンスをします。|Depois do xampu uso condicionador.
+歯ブラシ|新しい歯ブラシを買いました。|Comprei uma escova de dentes nova.
+歯磨き粉|歯磨き粉がもうありません。|A pasta de dente acabou.
+トイレットペーパー|トイレットペーパーを買っておいてね。|Compre papel higiênico, viu.
+ティッシュ|ティッシュを取ってください。|Me passa o lenço de papel, por favor.
+洗剤|洗剤を少しだけ使います。|Uso só um pouco de detergente.
+ハンガー|コートをハンガーにかけます。|Penduro o casaco no cabide.
+ほうき|ほうきで玄関を掃きます。|Varro a entrada com a vassoura.
+雑巾|雑巾で床を拭きます。|Limpo o chão com o pano.
+袋|袋を一つください。|Uma sacola, por favor.
+ビニール袋|ゴミをビニール袋に入れます。|Coloco o lixo na sacola plástica.
+紙|この紙に名前を書いてください。|Escreva seu nome neste papel, por favor.
+箱|プレゼントを箱に入れました。|Coloquei o presente na caixa.
+はさみ|はさみを貸してください。|Me empresta a tesoura, por favor.
+テープ|箱をテープで止めます。|Fecho a caixa com fita adesiva.
+のり|写真をのりで貼りました。|Colei a foto com cola.
+消しゴム|消しゴムで字を消します。|Apago a letra com a borracha.
+ノート|新しい単語をノートに書きます。|Escrevo as palavras novas no caderno.
+手帳|予定を手帳に書きます。|Escrevo os compromissos na agenda.
+封筒|手紙を封筒に入れます。|Coloco a carta no envelope.
+切手|切手を貼るのを忘れました。|Esqueci de colar o selo.
+はがき|旅行先からはがきを送りました。|Mandei um cartão-postal da viagem.
+傘|雨が降りそうなので、傘を持っていきます。|Parece que vai chover, então vou levar o guarda-chuva.
+かばん|かばんの中に財布があります。|A carteira está dentro da bolsa.
+リュック|リュックを背負って山に登りました。|Subi a montanha com a mochila nas costas.
+スーツケース|スーツケースが重すぎます。|A mala está pesada demais.
+眼鏡|眼鏡をかけないと、よく見えません。|Sem óculos não enxergo bem.
+窓ガラス|窓ガラスを拭きました。|Limpei o vidro da janela.
+網戸|夏は網戸にして寝ます。|No verão durmo com a tela fechada e a janela aberta.
+蛇口|蛇口をしっかり閉めてください。|Feche bem a torneira, por favor.
+流し|お皿を流しに置いてください。|Coloque os pratos na pia, por favor.
+排水口|排水口が詰まりました。|O ralo entupiu.
+換気扇|料理のときは換気扇を回します。|Quando cozinho, ligo o exaustor.
+給湯器|給湯器のボタンを押すと、お湯が出ます。|Apertando o botão do aquecedor, sai água quente.
+湯船|日本人は毎日湯船に入ります。|Os japoneses entram na banheira todos os dias.
+便器|便器をブラシで掃除します。|Limpo o vaso com a escova.
+ウォシュレット|日本のトイレにはウォシュレットがあります。|Os banheiros no Japão têm vaso com ducha.
+スイッチ|電気のスイッチはドアの横です。|O interruptor da luz fica ao lado da porta.
+ブレーカー|ブレーカーが落ちて、電気が消えました。|O disjuntor caiu e a luz apagou.
+インターホン|インターホンが鳴りました。|O interfone tocou.
+郵便受け|郵便受けに手紙が入っていました。|Tinha uma carta na caixa de correio.
+物干し|ベランダに物干しがあります。|Tem um varal na varanda.
+洗濯ばさみ|洗濯ばさみで靴下を止めます。|Prendo as meias com prendedor.
+植木鉢|植木鉢に花の種をまきました。|Plantei sementes de flor no vaso.
+はしご|はしごに上って、電球を替えます。|Subo na escada e troco a lâmpada.
+工具|工具を使って、棚を作りました。|Fiz uma prateleira usando ferramentas.
+ドライバー|ドライバーでねじを回します。|Giro o parafuso com a chave de fenda.
+くぎ|壁にくぎを打ちます。|Prego um prego na parede.
+ひも|段ボールをひもで結びます。|Amarro o papelão com barbante.
+ロープ|ロープで荷物を止めます。|Prendo a carga com corda.
+バケツ|バケツに水を入れます。|Coloco água no balde.
+スポンジ|スポンジでお皿を洗います。|Lavo os pratos com a esponja.
+ブラシ|ブラシで靴をきれいにします。|Limpo os sapatos com a escova.
+マット|玄関にマットを置きました。|Coloquei um capacho na entrada.
+クッション|ソファーにクッションを置きます。|Coloco almofadas no sofá.
+座布団|お客さんに座布団を出します。|Ofereço uma almofada para a visita sentar.
+ふすま|ふすまを開けると、和室があります。|Abrindo a porta de correr, tem um quarto japonês.
+障子|猫が障子を破りました。|O gato rasgou a porta de papel.
+ろうそく|ケーキにろうそくを立てます。|Coloco velas no bolo.
+花瓶|花瓶に花を飾ります。|Arrumo as flores no vaso.
+写真立て|二人の写真を写真立てに入れました。|Coloquei a foto de nós dois no porta-retrato.
+ぬいぐるみ|ジャスがくまのぬいぐるみをくれました。|O Jas me deu um ursinho de pelúcia.
+おもちゃ|子供がおもちゃで遊んでいます。|A criança está brincando com o brinquedo.
+人形|祖母から人形をもらいました。|Ganhei uma boneca da minha avó.
+一人暮らし|兄は一人暮らしをしています。|Meu irmão mora sozinho.
+二人暮らし|二人暮らしが始まります。|Vamos começar a morar a dois.
+新居|新居にカーテンをつけました。|Coloquei cortinas na casa nova.
+家事分担|家事分担を決めましょう。|Vamos decidir a divisão das tarefas.
+献立|明日の献立を考えます。|Penso no cardápio de amanhã.
+作り置き|週末に作り置きをします。|No fim de semana deixo comida pronta.
+残り物|昨日の残り物を食べます。|Vou comer as sobras de ontem.
+お皿洗い|お皿洗いは私がやるね。|Eu lavo a louça, tá.
+食器|食器を棚にしまいます。|Guardo a louça no armário.
+食器棚|食器棚にコップがあります。|Tem copos no armário de louça.
+洗い物|洗い物がたくさんあります。|Tem muita louça para lavar.
+ふきん|ふきんでお皿を拭きます。|Seco os pratos com o pano de prato.
+エプロン|エプロンをつけて料理します。|Cozinho usando avental.
+買い置き|トイレットペーパーの買い置きがあります。|Tem papel higiênico estocado em casa.
+日用品|ドラッグストアで日用品を買います。|Compro itens do dia a dia na drogaria.
+生ゴミ|生ゴミは袋に入れて出します。|O lixo orgânico vai num saco.
+空き缶|空き缶を洗ってから捨てます。|Lavo as latas vazias antes de jogar fora.
+古紙|古紙は水曜日に出します。|O papel velho sai na quarta-feira.
+段ボール|段ボールをたたんで出します。|Dobro o papelão e coloco para fora.
+収集日|ゴミの収集日を確認しました。|Conferi os dias de coleta do lixo.
+自治体|ゴミのルールは自治体によって違います。|As regras do lixo mudam conforme o município.
+地域|この地域は静かで安全です。|Esta região é tranquila e segura.
+近所付き合い|近所付き合いを大切にしています。|Dou valor à convivência com os vizinhos.
+回収|古い電池はお店で回収しています。|As lojas recolhem pilhas velhas.
+節電|夏は節電しましょう。|Vamos economizar energia no verão.
+節水|お皿を洗うとき、節水します。|Economizo água ao lavar a louça.
+水道|水道の水は飲めます。|Dá para beber a água da torneira.
+ガス|ガスの火を止めてください。|Desligue o fogo do gás, por favor.
+電気屋|電気屋でドライヤーを買いました。|Comprei um secador na loja de eletrônicos.
+家電量販店|家電量販店で冷蔵庫を見ました。|Vi geladeiras na loja grande de eletrônicos.
+ホームセンター|ホームセンターで棚を買いました。|Comprei uma prateleira na loja de materiais.
+ショッピングモール|週末はショッピングモールに行きます。|No fim de semana vamos ao shopping.
+商店街|商店街のパン屋さんはおいしいです。|A padaria da rua comercial é gostosa.
+市場|朝の市場で魚を買いました。|Comprei peixe no mercado da manhã.
+屋台|お祭りに屋台がたくさん出ています。|Tem muitas barracas no festival.
+服|この服はどこで買いましたか。|Onde você comprou esta roupa?
+洋服|洋服をたくさん持っています。|Tenho muita roupa.
+着物|成人式で着物を着ました。|Usei quimono na cerimônia da maioridade.
+浴衣|花火大会に浴衣で行きます。|Vou de yukata ao festival de fogos.
+シャツ|白いシャツを着ます。|Visto uma camisa branca.
+セーター|寒いので、セーターを着ます。|Está frio, então vou vestir um suéter.
+パーカー|パーカーを着て散歩します。|Passeio de moletom com capuz.
+上着|上着を持っていったほうがいいよ。|É melhor levar um casaco.
+コート|冬のコートを買いました。|Comprei um casaco de inverno.
+スーツ|面接にスーツを着ていきます。|Vou de terno à entrevista.
+ズボン|このズボンは少し長いです。|Esta calça está um pouco comprida.
+スカート|長いスカートが好きです。|Gosto de saia longa.
+ワンピース|デートにワンピースを着ていきます。|Vou de vestido ao encontro.
+下着|旅行に下着を三枚持っていきます。|Levo três peças de roupa íntima para a viagem.
+靴下|靴下に穴があいています。|A meia está furada.
+靴|新しい靴で足が痛いです。|Estou com dor no pé por causa do sapato novo.
+スニーカー|歩くときはスニーカーがいいです。|Para andar, tênis é melhor.
+スリッパ|家の中ではスリッパをはきます。|Dentro de casa uso chinelo.
+帽子|夏は帽子をかぶります。|No verão uso chapéu.
+手袋|手が冷たいので、手袋をします。|Minhas mãos estão frias, então coloco luvas.
+マフラー|ジャスにマフラーをあげました。|Dei um cachecol para o Jas.
+ネクタイ|父の日にネクタイを贈ります。|No Dia dos Pais vou dar uma gravata.
+ベルト|ベルトが少しきついです。|O cinto está um pouco apertado.
+水着|海に行くので、水着を買いました。|Vou à praia, então comprei um maiô.
+ポケット|鍵をポケットに入れました。|Coloquei a chave no bolso.
+ネックレス|誕生日にネックレスをもらいました。|Ganhei um colar de aniversário.
+ピアス|かわいいピアスですね。|Que brinco bonito.
+腕時計|腕時計を見たら、もう七時でした。|Olhei o relógio e já eram sete horas.
+着る|今日は何を着ようかな。|O que será que eu visto hoje?
+はく|寒いから、長いズボンをはきます。|Está frio, então vou de calça comprida.
+かぶる|帽子をかぶって出かけます。|Saio de chapéu.
+脱ぐ|日本の家では靴を脱ぎます。|Nas casas japonesas se tiram os sapatos.
+外す|写真を撮るとき、眼鏡を外します。|Tiro os óculos para a foto.
+似合う|その色、よく似合うね。|Essa cor fica muito bem em você.
+地味|この服はちょっと地味かな。|Esta roupa é meio sem graça?
+派手|派手な色の服は着ません。|Não uso roupa de cor chamativa.
+おしゃれ|東京の人はおしゃれです。|As pessoas de Tóquio são estilosas.
+道具|料理の道具をそろえました。|Juntei os utensílios de cozinha.
+機械|この機械の使い方を教えてください。|Me ensine a usar esta máquina, por favor.
+電気製品|日本の電気製品は便利です。|Os aparelhos elétricos japoneses são práticos.
+ライター|ライターで火をつけます。|Acendo o fogo com o isqueiro.
+マッチ|ろうそくにマッチで火をつけます。|Acendo a vela com fósforo.
+カバー|スマホのカバーを替えました。|Troquei a capa do celular.
+ケース|眼鏡をケースに入れます。|Coloco os óculos no estojo.
+シール|ノートにかわいいシールを貼りました。|Colei adesivos fofos no caderno.
+ラベル|瓶にラベルを貼ります。|Colo uma etiqueta no pote.
+リボン|プレゼントにリボンをつけました。|Coloquei uma fita no presente.
+地球|地球を大切にしましょう。|Vamos cuidar da Terra.
+旗|オリンピックでブラジルの旗を見ました。|Vi a bandeira do Brasil nas Olimpíadas.
+看板|あの赤い看板の店です。|É a loja com aquela placa vermelha.
+標識|この標識は「止まれ」という意味です。|Esta placa quer dizer “pare”.
 `;
