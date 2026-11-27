@@ -267,6 +267,8 @@ button rt{color:inherit;opacity:.85}
 .vs-word rt{font-size:.4em}
 .vbar.sm{height:6px;margin:6px 0 2px}
 .vcnt{font-size:13px;color:var(--muted);font-weight:700;flex:none}
+.vex{display:flex;align-items:flex-start;gap:6px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:16px;line-height:1.9}
+.vex .tr{flex:1}.vex b.hl{color:var(--pink-t)}
 .vtag{flex:none;width:22px;text-align:center;font-size:13px;font-weight:900;color:var(--muted)}.vtag.k{color:var(--mint-t)}.vtag.u{color:var(--pink-t)}
 .vs-mean{font-size:20px;font-weight:700;text-align:center;margin:22px 0 18px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 .vopts button{font-size:15px;padding:12px 8px;line-height:1.3;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -426,6 +428,7 @@ button rt{color:inherit;opacity:.85}
 <div class="toast" id="toast"></div>
 
 <script src="vocab.js"></script>
+<script src="examples.js"></script>
 <script>
 /* =========================================================
    設定
@@ -788,16 +791,28 @@ const TR = [
    まちがった読みになるのをふせぐ）。上の辞書が先に当たる。数字・「何」のある語は、読みが文で変わるので入れない。
    - 漢字だけの語（健康）→ そのまま。漢字＋かなの語（後ろ・熱い・大家さん）→ つぎの文字の条件つき（後＋ろ → うし）。 */
 function vocabFuri(){
-  if(typeof VOCAB_TXT !== "string") return {pre:[], post:[]};
-  const pre = [], post = [];
+  if(typeof VOCAB_TXT !== "string") return {pre:[], post:[], solo:[]};
+  const pre = [], post = [], solo = [], K = /^[一-龯々]+$/, DAK = /^[がぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽ]/;
   VOCAB_TXT.split("\n").map(l => l.split("|")).forEach(p => {
     const w = (p[0] || "").replace(/～/g, ""), r = (p[1] || "").replace(/～/g, "");
-    if(p.length < 4 || !r || /[一二三四五六七八九十百千万何]/.test(w)) return;
-    if(/^[一-龯々]{2,}$/.test(w)){ post.push([w, r]); return; }
-    const m = w.match(/^([一-龯々]+)([ぁ-ん]+)$/);
-    if(m && r.length > m[2].length && r.endsWith(m[2])) pre.push([m[1], r.slice(0, r.length - m[2].length), m[2][0]]);
+    if(p.length < 4 || !r || !/[一-龯々]/.test(w) || /[一二三四五六七八九十百千万何]/.test(w)) return;
+    // 漢字のかたまりと かなのかたまりに分けて、よみを当てる（お揃い → お＋揃＋い、贈り物 → 贈＋り＋物）
+    const seg = w.match(/[一-龯々]+|[^一-龯々]+/g), ks = seg.map((x, i) => K.test(x) ? i : -1).filter(i => i >= 0);
+    const re = new RegExp("^" + seg.map((x, i) => K.test(x) ? (i === ks[ks.length - 1] ? "(.+)" : "(.+?)") : x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("") + "$");
+    const m = r.match(re); if(!m) return;
+    ks.forEach((i, j) => {
+      const b = seg[i], rd = m[j + 1], nx = seg[i + 1] ? seg[i + 1][0] : "", pv = seg[i - 1] ? seg[i - 1].slice(-1) : "";
+      if(i > 0 && DAK.test(rd)) return;   // 連濁（時計 → どけい）かもしれないので入れない
+      if(b.length >= 2){ if(!nx || nx === "す" || seg.length === 1) post.push([b, rd]); else pre.push([b, rd, nx]); return; }
+      // 2つめ以降の漢字（恐れ入ります の 入）は、前と後ろの両方の文字が合うときだけ（入ります を いります にしない）
+      if(nx && pv && j > 0) pre.push([b, rd, nx, pv]); else if(nx) pre.push([b, rd, nx]); else if(pv) pre.push([b, rd, "", pv]); else solo.push([b, rd]);
+    });
   });
-  return {pre, post};
+  // 同じ字・同じ条件で読みがちがうもの（入る：はいる／いる）は、どちらも入れない
+  const key = e => e[0] + "|" + (e[2] || "") + "|" + (e[3] || ""), rd = {};
+  pre.concat(solo).forEach(e => { const k = key(e); rd[k] = rd[k] && rd[k] !== e[1] ? "×" : e[1]; });
+  const ok = e => rd[key(e)] !== "×";
+  return {pre:pre.filter(ok), post, solo:solo.filter(ok)};
 }
 const VFURI = vocabFuri();
 const FURI = [
@@ -813,6 +828,12 @@ const FURI = [
   ["金曜日","きんようび"],["東京","とうきょう"],["空港","くうこう"],["会社","かいしゃ"],["電話","でんわ"],["三番","さんばん"],["十時","じゅうじ"],["百円","ひゃくえん"],
   ["一つ","ひとつ"],["一度","いちど"],["意味","いみ"],["音楽","おんがく"],
   ["復習","ふくしゅう"],["単語","たんご"],["恋愛","れんあい"],["交通","こうつう"],["形容詞","けいようし"],["副詞","ふくし"],["解除","かいじょ"],["四つ","よっつ"],["択","たく"],["全","ぜん"],
+  ["悪","わる","くい"],["二月","にがつ"],["二十五日","にじゅうごにち"],["子供","こども"],["第一歩","だいいっぽ"],["何歳","なんさい"],["何人","なんにん"],["九十歳","きゅうじゅっさい"],
+  ["譲","ゆず","り"],["五人","ごにん"],["田中","たなか"],["釣","つ","り"],["失礼","しつれい"],["浅草","あさくさ"],["一目惚","ひとめぼ"],["温","あたた","か"],["黒","くろ","い"],
+  ["盆","ぼん","","お"],["姿","すがた"],["若","わか","く"],["太","ふと","り"],["茶色","ちゃいろ"],["乾","かわ","き"],["乾燥","かんそう"],["机","つくえ"],["走","はし","っ"],
+  ["細","ほそ","く"],["剃","そ","り"],["測","はか","っり"],["三十八度","さんじゅうはちど"],["料理中","りょうりちゅう"],["刺","さ","さ"],["貼","は","り"],["治","なお","り"],
+  ["通","かよ","い"],["二日酔","ふつかよ"],["手","て"],["転","ころ","ん"],["深","ふか","く"],["苦","くる","し"],["口","くち"],["眠","ねむ","く"],["振","ふ","りっ"],["噛","か","ん"],
+  ["似合","にあ"],["短","みじか","く"],["手動","しゅどう"],["込","こ","み"],["染","そ","め"],["年","とし","が"],["茶","ちゃ","","お"],
   ["母","かあ","さ","お"],["着","つ","いきくけこ"],["着","き"],
   ["紙","かみ"],["休","やす"],["高","たか"],["肉","にく"],["魚","さかな"],["友","とも"],["会","あ"],["店","みせ"],["大","おお"],["願","ねが"],["近","ちか"],
   ["熱","ねつ"],["薬","くすり"],["使","つか"],["方","かた"],["教","おし"],["本","ほん"],["読","よ"],["聞","き"],["家","いえ"],["安","やす"],
@@ -861,9 +882,10 @@ const FURI = [
   ["良","よ"],["様","さま"],["申","もう"],["夕","ゆう"],["貰","もら"],["頂","いただ"],["為","ため"],["是非","ぜひ"],["又","また"],["迄","まで"],
   ["復活券","ふっかつけん"],["途中","とちゅう"],["夜中","よなか"],["毎週","まいしゅう"],["最大","さいだい"],["区切","くぎ"],["残","のこ"],["元","もと"],["個","こ"]
 ].map((e, i) => ({b:e[0], r:e[1], next:e[2] || "", prev:e[3] || "", g:e[2] || e[3] ? 0 : 2, i}))
-  .concat(VFURI.pre.map((e, i) => ({b:e[0], r:e[1], next:e[2], prev:"", g:1, i})), VFURI.post.map((e, i) => ({b:e[0], r:e[1], next:"", prev:"", g:3, i})))
+  .concat(VFURI.pre.map((e, i) => ({b:e[0], r:e[1], next:e[2] || "", prev:e[3] || "", g:1, i})), VFURI.post.map((e, i) => ({b:e[0], r:e[1], next:"", prev:"", g:3, i})),
+    VFURI.solo.map((e, i) => ({b:e[0], r:e[1], next:"", prev:"", g:4, solo:true, i})))
   .sort((x, y) => y.b.length - x.b.length || x.g - y.g || x.i - y.i);
-/* 並び：長いことばが先。同じ長さなら ①上の辞書の条件つき ②単語リストの条件つき ③上の辞書 ④単語リストの熟語 */
+/* 並び：長いことばが先。同じ長さなら ①上の辞書の条件つき ②単語リストの条件つき ③上の辞書 ④単語リストの熟語 ⑤単語リストの一字（まわりに漢字がないときだけ） */
 const isKanji = c => c >= "一" && c <= "鿿";
 /* ふりがなを つける。タグと、すでに ふりがなが ついた ところは そのまま。 */
 function furi(s){ return String(s).split(/(<ruby>.*?<\/ruby>|<[^>]*>)/).map((p, i) => i % 2 ? p : furiTokens(p).map(([b, r]) => r ? `<ruby>${b}<rt>${r}</rt></ruby>` : b).join("")).join(""); }
@@ -932,6 +954,7 @@ function furiTokens(s){
       if(/^（[ぁ-んー]+）/.test(s.slice(i + e.b.length, i + e.b.length + 10))) continue;   // 文の中に読みが書いてある
       if(e.next && !(nx && e.next.includes(nx))) continue;
       if(e.prev && !(pv && e.prev.includes(pv))) continue;
+      if(e.solo && (isKanji(pv || "") || isKanji(nx || ""))) continue;   // 一字の読み（単語リストから）は、まわりに漢字がないときだけ
       hit = e; break;
     }
     if(hit){ out.push([hit.b, hit.r]); i += hit.b.length; }
@@ -2303,7 +2326,7 @@ function afterV(ok, el){
   save();
   const fix = !ok && V.typed && q.t === "r" ? `<button class="linkbtn" onclick="fixV()">${T("✓ 合ってた","Eu acertei")}</button>` : "";
   $("v-after").innerHTML = `<div class="explain"><div class="hd">${msg}</div>
-      <div class="row" style="gap:8px"><b style="font-size:22px">${vWord(v)}</b><span style="flex:1">${esc(v.pt)}</span>${spkBtn(`speak('${esc(vSay(v))}')`)}</div>${fix}</div>
+      <div class="row" style="gap:8px"><b style="font-size:22px">${vWord(v)}</b><span style="flex:1">${esc(v.pt)}</span>${spkBtn(`speak('${esc(vSay(v))}')`)}</div>${vExHtml(v)}${fix}</div>
     <button class="block" style="margin-top:12px" onclick="nextV()">${T("次へ →","Próxima")}</button>`;
   applyPt();
   if(auto){ const me = V, i = V.i; V.t = setTimeout(() => { if(V === me && V.i === i && V.done && curRun === "v") nextV(); }, 800); }
@@ -2347,11 +2370,40 @@ function nextV(){
     </div>`;
   applyPt();
 }
+/* 例文：examples.js にあればそれ、なければ助詞・作文の問題から その単語をふくむ一番短い文（なければ null） */
+const VEX = {};
+(function(){
+  const txt = typeof EXAMPLES_TXT === "string" ? EXAMPLES_TXT : "";
+  txt.split("\n").forEach(l => { const p = l.split("|"); if(p.length >= 3 && p[0]) VEX[p[0]] = {jp:p[1], pt:p[2]}; });
+})();
+/* 文の中で探すときの形（動詞・い形容詞は 活用するので 最後の1字を外す。短すぎるときは そのまま） */
+function vStem(v){
+  const w = v.w.replace(/～/g, "");
+  if(v.pos === "v" && /[うくぐすつぬぶむる]$/.test(w) && w.length >= 3) return w.slice(0, -1);
+  if(v.pos === "i" && w.endsWith("い") && w.length >= 3) return w.slice(0, -1);
+  return w;
+}
+let VSENT = null;
+function vExample(v){
+  if(VEX[v.w]) return VEX[v.w];
+  if(!VSENT) VSENT = PQ.map(q => ({jp:q.jp.replace("＿", q.a), pt:q.pt})).concat(TR.map(q => ({jp:q.a[0], pt:q.pt}))).sort((a, b) => a.jp.length - b.jp.length);
+  const st = vStem(v); if(st.length < 2) return null;
+  return VSENT.find(x => x.jp.includes(st)) || null;
+}
+/* 例文の表示：その単語のところを色で示す。🔊（答えのあとだけ）・タップでポルトガル語 */
+function vExHtml(v){
+  const ex = vExample(v); if(!ex) return "";
+  const st = [v.w.replace(/～/g, ""), vStem(v)].find(x => x.length >= 1 && ex.jp.includes(x));
+  let jp;
+  if(st){ const i = ex.jp.indexOf(st); jp = furi(esc(ex.jp.slice(0, i))) + `<b class="hl">${furi(esc(st))}</b>` + furi(esc(ex.jp.slice(i + st.length))); }
+  else jp = furi(esc(ex.jp));
+  return `<div class="vex">${T(jp, esc(ex.pt), true)}${spkBtn(`speak('${esc(ex.jp).replace(/'/g, "")}')`)}</div>`;
+}
 /* ノートの「単語」：覚え中の単語を、まだ弱いものから */
 function vocabNote(){
   const st = S.vstats, ws = VOCAB.filter(v => S.vsort[v.w] === 0 && st[v.w])
     .sort((a, b) => (st[a.w].box || 0) - (st[b.w].box || 0) || st[b.w].w - st[a.w].w).slice(0, 80);
-  return `<div class="card">` + (ws.length ? ws.map(v => `<div class="item row"><span class="vtag u">${vLearned(v) ? "🌸" : "🌱"}</span><b style="flex:none">${vWord(v)}</b><span class="muted" style="flex:1">${esc(v.pt)}</span>${spkBtn(`speak('${esc(vSay(v))}')`)}</div>`).join("")
+  return `<div class="card">` + (ws.length ? ws.map(v => `<div class="item"><div class="row"><span class="vtag u">${vLearned(v) ? "🌸" : "🌱"}</span><b style="flex:none">${vWord(v)}</b><span class="muted" style="flex:1">${esc(v.pt)}</span>${spkBtn(`speak('${esc(vSay(v))}')`)}</div>${vExHtml(v)}</div>`).join("")
     : `<div class="empty">${T("「今日の言葉」をすると、ここに出るよ","Faça o vocabulário de hoje para ver aqui.")}</div>`) + `</div>`;
 }
 
