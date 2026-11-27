@@ -255,6 +255,25 @@ button rt{color:inherit;opacity:.85}
 .tdots{display:flex;justify-content:center;gap:6px;margin:12px 0 4px}
 .tdots span{width:8px;height:8px;border-radius:50%;background:var(--line)}
 .tdots span.on{background:var(--pink);width:20px;border-radius:5px}
+/* ことば（ふるい分け） */
+.vbar{height:12px;border-radius:8px;background:var(--line);overflow:hidden;display:flex;margin:6px 0 12px}
+.vbar i{display:block;height:100%}
+.vbar .k{background:var(--mint)}.vbar .u{background:var(--pink)}
+.vnum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+.vnum b{display:block;font-size:24px;font-weight:900}
+.vnum .k b{color:var(--mint-t)}.vnum .u b{color:var(--pink-t)}.vnum .r b{color:var(--muted)}
+.vs-scene{font-size:13px;color:var(--muted);text-align:center}
+.vs-word{font-size:40px;font-weight:900;text-align:center;margin:26px 0 30px;line-height:1.5;word-break:keep-all}
+.vs-word rt{font-size:.4em}
+.vs-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.vs-btns button{padding:18px 10px;font-size:18px}
+.vs-btns .no{background:#fff;color:var(--pink-t);border:2px solid var(--pink);box-shadow:0 3px 0 var(--pink-s)}
+.vs-btns .yes{background:linear-gradient(135deg,#3f9e83 0%,#5b7fd0 100%)}
+.vs-prev{display:flex;align-items:center;gap:8px;margin-top:14px;padding:10px 12px;border-radius:16px;background:var(--lav-s);font-size:15px}
+.vs-prev .m{flex:1;min-width:0}
+.vs-prev .tag{font-size:12px;font-weight:900;padding:2px 8px;border-radius:999px;background:#fff;flex:none}
+.vs-prev .tag.k{color:var(--mint-t)}.vs-prev .tag.u{color:var(--pink-t)}
+.vs-prev button{padding:6px 12px;font-size:13px;flex:none}
 </style>
 </head>
 <body>
@@ -321,6 +340,9 @@ button rt{color:inherit;opacity:.85}
     </button>
     <button class="bigbtn" onclick="startWriting()">
       <span class="ic lv"><img src="images/icon-writing.webp" alt="" onerror="imgFail(this)"></span><span class="txt" id="m-write"></span><span class="go">›</span>
+    </button>
+    <button class="bigbtn" onclick="openVocab()">
+      <span class="ic pk">🌱</span><span class="txt" id="m-vocab"></span><span class="go">›</span>
     </button>
     <button class="bigbtn" onclick="openNote()">
       <span class="ic mt"><img src="images/icon-note.webp" alt="" onerror="imgFail(this)"></span><span class="txt" id="m-note"></span><span class="go">›</span>
@@ -399,6 +421,7 @@ button rt{color:inherit;opacity:.85}
 <div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
 <div class="toast" id="toast"></div>
 
+<script src="vocab.js"></script>
 <script>
 /* =========================================================
    設定
@@ -759,7 +782,7 @@ const TR = [
 const FURI = [
   ["方","ほう","が","のだた"],["遅","おく","れ"],["来","こ","らよ"],["美味","おい","し"],["飯","はん","","ご"],
   ["話","はなし","をかは。"],["金","かね","","お"],
-  ["消","き","え"],["分","わ","か"],["分","ぶん","","日"],["月","げつ","","か"],["通","つう","","0123456789０１２３４５６７８９"],["生","う","ま"],["数","かぞ","え"],["少","すく","な"],["腹","なか","","お"],["中","ちゅう","","問"],["分","ぷん","","0０"],["何","なん","でとのて"],["降","お","り"],["日","にち","","0123456789０１２３４５６７８９"],
+  ["消","き","え"],["分","わ","か"],["分","わ","け"],["分","ぶん","","日"],["月","げつ","","か"],["通","つう","","0123456789０１２３４５６７８９"],["生","う","ま"],["数","かぞ","え"],["少","すく","な"],["腹","なか","","お"],["中","ちゅう","","問"],["分","ぷん","","0０"],["何","なん","でとのて"],["降","お","り"],["日","にち","","0123456789０１２３４５６７８９"],
   ["日本料理","にほんりょうり"],["新幹線","しんかんせん"],["図書館","としょかん"],["日本語","にほんご"],["日曜日","にちようび"],["月曜日","げつようび"],
   ["日本","にほん"],["勉強","べんきょう"],["公園","こうえん"],["大学","だいがく"],["電車","でんしゃ"],["映画","えいが"],["京都","きょうと"],["広島","ひろしま"],
   ["七月","しちがつ"],["七時","しちじ"],["九時","くじ"],["五時","ごじ"],["時間","じかん"],["場所","ばしょ"],["主語","しゅご"],["上手","じょうず"],
@@ -987,7 +1010,7 @@ const now0 = () => new Date(Date.now() - (CONFIG.dayStartHour || 0) * 36e5);
 const todayKey = () => ymd(now0());
 const parseKey = k => new Date(k+"T00:00:00");
 const KEY = "kotonoha-v1";
-function blank(){ return {total:0,balance:0,days:{},rest:{},restWeeks:{},weeklyBonus:{},pstats:{},partStats:{},tstats:{},writings:[],diaries:[],redemptions:[],bestStreak:0,outbox:[],showPt:false,furi:false}; }
+function blank(){ return {total:0,balance:0,days:{},rest:{},restWeeks:{},weeklyBonus:{},pstats:{},partStats:{},tstats:{},writings:[],diaries:[],redemptions:[],vsort:{},bestStreak:0,outbox:[],showPt:false,furi:false}; }
 /* 読みこみ。こわれていたら、こわれたデータを別のキーに残して、予備（1日1回の控え）から戻す。
    キー kotonoha-v1 の形は変えない。予備は別のキーに置く。 */
 const BAK = KEY + "-bak";
@@ -1271,6 +1294,8 @@ function dailyReport(title, k){
     if(t.re) L.push("    書き直し：✓ 模範解答を見ないで打ち直した"); });
   L.push("", `■ 日記：${d.diary}件`);
   S.diaries.filter(x => x.date === k).forEach(x => { L.push(`  ${x.jp}`); if(x.pt) L.push(`  （${x.pt}）`); });
+  const vs = vocabCounts();
+  if(vs.k + vs.u) L.push("", `■ ことばのふるい分け：知ってる ${vs.k}語・覚える ${vs.u}語・まだ ${vs.r}語（全${VOCAB.length}語）`);
   const pend = S.redemptions.filter(x => !x.got);
   if(pend.length) L.push("", "■ まだあげていないご褒美（彼女が「もらった」を押していないもの）", ...pend.map(x => `  ${x.icon} ${x.name}（${ymd(new Date(x.ts))} に交換）`));
   const cf = confusions().filter(x => x.n >= 2).slice(0, 5);
@@ -1502,6 +1527,7 @@ function staticTexts(){
   setT("pr-title","練習","Praticar");
   $("m-part").innerHTML = `<b>${furi("助詞")}</b>` + T("", "Partículas");
   $("m-write").innerHTML = `<b>${furi("作文")}</b>` + T("", "Escrita");
+  $("m-vocab").innerHTML = `<b>${furi("言葉")}</b>` + T("", "Vocabulário");
   $("m-note").innerHTML = `<b>ノート</b>` + T("", "Caderno: erros, frases e regras");
   // 日記
   setT("d-title","日記 📔","Diário");
@@ -2048,6 +2074,83 @@ function openNote(tab){
     <div class="tabs">${tabs.map(t => `<button class="${t[0] === noteTab ? "on" : ""}" onclick="openNote('${t[0]}')">${T(t[1], t[2])}</button>`).join("")}</div>${body}${tipLine()}`;
   applyPt();
 }
+
+/* ---------- ことば（3000語のリストは vocab.js）---------- */
+/* VOCAB_TXT を読む：{w ことば, r よみ, pt 意味, pos 品詞, sc 場面の番号}。記録は w にひもづく。 */
+const VSCENES = [], VOCAB = [];
+(function(){
+  const txt = typeof VOCAB_TXT === "string" ? VOCAB_TXT : "";
+  txt.split("\n").forEach(l => {
+    if(!l.trim()) return;
+    const p = l.split("|");
+    if(l[0] === "#"){ VSCENES.push([p[0].slice(1), p[1] || ""]); return; }
+    VOCAB.push({w:p[0], r:p[1] || "", pt:p[2] || "", pos:p[3] || "", sc:VSCENES.length - 1});
+  });
+})();
+/* ふるい分けの記録：S.vsort[w] = 1（知ってる）/ 0（覚える） */
+function vocabCounts(){
+  const vs = S.vsort || {}; let k = 0, u = 0;
+  VOCAB.forEach(v => { if(vs[v.w] === 1) k++; else if(vs[v.w] === 0) u++; });
+  return {k, u, r:VOCAB.length - k - u};
+}
+const hasKanji = s => /[一-龯々〆A-Za-z0-9]/.test(s);
+const vWord = v => v.r && hasKanji(v.w) ? `<ruby>${esc(v.w)}<rt>${esc(v.r)}</rt></ruby>` : esc(v.w);
+function openVocab(){
+  curRun = null; VS = null;
+  if(!S.vsort) S.vsort = {};
+  $("practice-menu").style.display = "none"; $("practice-run").style.display = "";
+  const c = vocabCounts(), n = VOCAB.length || 1, pc = x => (100 * x / n).toFixed(2) + "%";
+  $("practice-run").innerHTML = `<div class="top"><button class="ghost" onclick="go('practice')">✕</button><b>🌱 ${furi("言葉")}</b>${topBtns()}</div>
+    <div class="card">
+      <div class="vbar"><i class="k" style="width:${pc(c.k)}"></i><i class="u" style="width:${pc(c.u)}"></i></div>
+      <div class="vnum">
+        <div class="k"><b>${c.k}</b>${T("知ってる","Sei")}</div>
+        <div class="u"><b>${c.u}</b>${T("覚える","Vou aprender")}</div>
+        <div class="r"><b>${c.r}</b>${T("まだ","Falta separar")}</div>
+      </div>
+    </div>
+    ${c.r ? `<button class="block" onclick="startSort()">${T("ふるい分け 🌱","Separar: sei / não sei")}</button>`
+      : `<div class="card empty">${IMG("bunny-joy", "bimg", "width:90px;height:90px")}${T("全部 分けたよ！","Você separou todas!")}</div>`}`;
+  applyPt();
+}
+let VS = null;   // ふるい分けの途中：{done このときに分けた数, hist 戻す用の記録}
+function startSort(){ VS = {done:0, hist:[]}; renderSort(); }
+const nextUnsorted = () => VOCAB.find(v => !(v.w in S.vsort));
+function renderSort(){
+  const v = nextUnsorted();
+  if(!v){ openVocab(); stamp("全部 分けたよ！", "Terminou!"); return; }
+  const c = vocabCounts(), sc = VSCENES[v.sc] || ["",""], last = VS.hist[VS.hist.length - 1];
+  const lv = last && VOCAB.find(x => x.w === last.w);
+  $("practice-run").innerHTML = `<div class="top"><button class="ghost" onclick="openVocab()">✕</button><span class="muted">${T(`残り ${c.r}`, `Faltam ${c.r}`)}</span>${topBtns()}</div>
+    <div class="card" id="vs-card">
+      <div class="vs-scene">${T(esc(sc[0]), esc(sc[1]))}</div>
+      <div class="vs-word">${vWord(v)}</div>
+      <div class="vs-btns">
+        <button class="no" onclick="sortAns(0)">${T("知らない","Não sei")}</button>
+        <button class="yes" onclick="sortAns(1)">${T("知ってる","Sei")}</button>
+      </div>
+      ${lv ? `<div class="vs-prev"><span class="tag ${last.a ? "k" : "u"}">${last.a ? "✓" : "🌱"}</span><span class="m"><b>${vWord(lv)}</b> ＝ ${esc(lv.pt)}</span>${spkBtn(`speak('${esc(lv.r || lv.w).replace(/～/g, "")}')`)}<button class="ghost" onclick="sortUndo()">${T("戻す","Desfazer")}</button></div>` : ""}
+    </div>`;
+  applyPt();
+}
+function sortAns(a){
+  const v = nextUnsorted(); if(!v || !VS) return;
+  S.vsort[v.w] = a; VS.hist.push({w:v.w, a}); if(VS.hist.length > 30) VS.hist.shift();
+  VS.done++; save();
+  if(VS.done % 50 === 0) stamp(`${VS.done}語！`, `${VS.done} palavras!`);
+  renderSort();
+}
+function sortUndo(){
+  const h = VS && VS.hist.pop(); if(!h) return;
+  delete S.vsort[h.w]; VS.done = Math.max(0, VS.done - 1); save();
+  // 戻したことばを、次にもう一度出す（リストの順で先にあるので、そのまま次に出る）
+  renderSort();
+}
+document.addEventListener("keydown", e => {
+  if(!$("vs-card") || $("overlay").classList.contains("on")) return;
+  if(e.key === "ArrowLeft") sortAns(0); else if(e.key === "ArrowRight") sortAns(1);
+  else if(e.key === "Backspace" || (e.key === "z" && (e.metaKey || e.ctrlKey))){ e.preventDefault(); sortUndo(); }
+});
 
 /* ---------- バックアップ ---------- */
 async function exportData(){
