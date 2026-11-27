@@ -1111,4 +1111,311 @@ ICカード|ICカードで電車に乗ります。|Pego o trem com o cartão de 
 衣替え|六月に衣替えをします。|Em junho troco as roupas da estação.
 雪だるま|公園で雪だるまを作りました。|Fizemos um boneco de neve no parque.
 カイロ|寒い日はカイロを持っていきます。|Em dia frio levo um aquecedor de bolso.
+数|参加する人の数を数えます。|Conto o número de participantes.
+数字|この数字は何と読みますか。|Como se lê este número?
+万|この時計は三万円でした。|Este relógio custou trinta mil ienes.
+億|東京には一千万人以上が住んでいます。日本は一億人以上です。|Em Tóquio moram mais de dez milhões de pessoas. No Japão, mais de cem milhões.
+二つ|りんごを二つください。|Duas maçãs, por favor.
+四つ|椅子が四つあります。|Tem quatro cadeiras.
+五つ|おにぎりを五つ作りました。|Fiz cinco onigiris.
+六つ|卵を六つ買います。|Vou comprar seis ovos.
+七つ|この町には駅が七つあります。|Esta cidade tem sete estações.
+八つ|ケーキを八つに切りました。|Cortei o bolo em oito pedaços.
+九つ|箱の中にボールが九つあります。|Tem nove bolas dentro da caixa.
+二人|二人で旅行に行きます。|Vamos viajar a dois.
+～人|クラスには学生が十五人います。|Tem quinze alunos na turma.
+～個|りんごを三個ください。|Três maçãs, por favor.
+～枚|切手を二枚ください。|Dois selos, por favor.
+～本|ペンを一本貸してください。|Me empresta uma caneta, por favor.
+～匹|猫を二匹飼っています。|Tenho dois gatos.
+～台|家に車が一台あります。|Tem um carro em casa.
+～冊|本を三冊借りました。|Peguei três livros emprestados.
+～杯|コーヒーを一杯飲みました。|Tomei uma xícara de café.
+～回|一日に三回、歯を磨きます。|Escovo os dentes três vezes por dia.
+～番|三番の窓口へどうぞ。|Dirija-se ao guichê número três.
+～階|トイレは二階にあります。|O banheiro fica no segundo andar.
+～歳|弟は二十五歳です。|Meu irmão mais novo tem 25 anos.
+～円|このパンは百五十円です。|Este pão custa 150 ienes.
+～つ目|二つ目の信号を右です。|É à direita no segundo semáforo.
+いくつ|りんごはいくつありますか。|Quantas maçãs tem?
+何個|卵は何個いりますか。|Quantos ovos precisa?
+何人|家族は何人ですか。|Quantas pessoas tem na sua família?
+半分|ケーキを半分ずつ食べましょう。|Vamos comer metade do bolo cada um.
+全員|全員そろいましたか。|Estão todos aqui?
+ちょっと|ちょっと待ってください。|Espere um pouco, por favor.
+たくさん|今日はたくさん歩きました。|Hoje andei bastante.
+多い|東京は人が多いです。|Tóquio tem muita gente.
+少ない|この道は車が少ないです。|Esta rua tem poucos carros.
+大体|駅まで大体十分です。|Até a estação são mais ou menos dez minutos.
+約|空港まで約一時間かかります。|Leva aproximadamente uma hora até o aeroporto.
+以上|二十歳以上はお酒が飲めます。|Quem tem 20 anos ou mais pode beber álcool.
+以下|六歳以下の子供は無料です。|Crianças de seis anos ou menos não pagam.
+以内|三日以内に返事をください。|Responda dentro de três dias, por favor.
+番号|電話番号を教えてください。|Me passa seu número de telefone, por favor.
+順番|順番に並んでください。|Faça fila por ordem, por favor.
+倍|日本の夏はブラジルの二倍暑く感じます。|O verão japonês parece duas vezes mais quente que o do Brasil.
+重さ|荷物の重さは二十キロまでです。|O peso da bagagem é de até 20 quilos.
+長さ|このズボンの長さを直してください。|Ajuste o comprimento desta calça, por favor.
+大きさ|この箱の大きさはちょうどいいです。|O tamanho desta caixa está certinho.
+量|この店はご飯の量が多いです。|Este restaurante serve bastante arroz.
+キロ|毎日五キロ歩きます。|Ando cinco quilômetros por dia.
+センチ|ジャスは私より二十センチ高いです。|O Jas é vinte centímetros mais alto que eu.
+何日|今日は何日ですか。|Que dia é hoje?
+何月|誕生日は何月ですか。|Em que mês é o seu aniversário?
+何歳|お子さんは何歳ですか。|Quantos anos tem seu filho?
+一回|もう一回言ってください。|Fale mais uma vez, por favor.
+一年|日本に来て一年になりました。|Já faz um ano que vim para o Japão.
+一か月|一か月に一回、映画を見ます。|Vejo um filme uma vez por mês.
+三十分|三十分だけ昼寝をします。|Vou cochilar só trinta minutos.
+午前中|荷物は午前中に届きます。|A encomenda chega de manhã.
+今日中|今日中にこの仕事を終わらせます。|Vou terminar este trabalho ainda hoje.
+年上|ジャスは私より三つ年上です。|O Jas é três anos mais velho que eu.
+年下|妹は私より五つ年下です。|Minha irmã é cinco anos mais nova que eu.
+同い年|私たちは同い年です。|Nós temos a mesma idade.
+働く|兄は銀行で働いています。|Meu irmão trabalha num banco.
+会社員|父は会社員です。|Meu pai é funcionário de empresa.
+社員|この会社には社員が百人います。|Esta empresa tem cem funcionários.
+社長|社長にあいさつをしました。|Cumprimentei o presidente da empresa.
+部下|課長は部下にとても優しいです。|O chefe é muito gentil com os subordinados.
+同僚|同僚とお昼を食べます。|Almoço com os colegas de trabalho.
+先輩|先輩に仕事を教えてもらいました。|Um colega mais antigo me ensinou o trabalho.
+後輩|後輩の仕事を手伝いました。|Ajudei no trabalho de um colega mais novo.
+店長|店長にシフトを相談しました。|Conversei com o gerente sobre a escala.
+課長|課長は今、会議中です。|O chefe de seção está em reunião agora.
+バイト|週に三回、カフェでバイトをしています。|Faço bico num café três vezes por semana.
+アルバイト|アルバイトを探しています。|Estou procurando um trabalho de meio período.
+パート|母はスーパーでパートをしています。|Minha mãe trabalha meio período no supermercado.
+正社員|来年、正社員になりたいです。|Quero virar funcionária efetiva no ano que vem.
+派遣|派遣の仕事を始めました。|Comecei um trabalho temporário.
+面接|明日、会社の面接があります。|Amanhã tenho entrevista numa empresa.
+履歴書|履歴書に写真を貼ります。|Colo a foto no currículo.
+応募|ホテルの仕事に応募しました。|Me candidatei a um trabalho num hotel.
+採用|面接のあと、採用の電話がありました。|Depois da entrevista, me ligaram dizendo que fui contratada.
+求人|ネットで求人を見ています。|Estou vendo vagas na internet.
+就職|日本で就職したいです。|Quero arrumar emprego no Japão.
+転職|兄は去年、転職しました。|Meu irmão mudou de emprego no ano passado.
+退職|父は来年、退職します。|Meu pai vai se aposentar no ano que vem.
+辞める|バイトを辞めることにしました。|Decidi largar o bico.
+休憩|十二時から一時まで休憩です。|O intervalo é do meio-dia à uma.
+残業|今日は残業で遅くなります。|Hoje vou chegar tarde por causa de hora extra.
+出勤|毎朝八時に出勤します。|Chego ao trabalho às oito toda manhã.
+退勤|退勤の時間は六時です。|O horário de saída é às seis.
+通勤|通勤に一時間かかります。|Levo uma hora para ir ao trabalho.
+遅刻|電車が遅れて、遅刻しました。|O trem atrasou e eu cheguei atrasada.
+早退|熱があって、早退しました。|Estava com febre e saí mais cedo.
+欠勤|病気で欠勤の連絡をしました。|Avisei que ia faltar por estar doente.
+有給休暇|有給休暇を取って、旅行に行きます。|Vou tirar férias remuneradas e viajar.
+シフト|来週のシフトが出ました。|Saiu a escala da semana que vem.
+時給|このバイトは時給千二百円です。|Este bico paga 1.200 ienes por hora.
+月給|月給は二十五万円です。|O salário mensal é de 250 mil ienes.
+契約|一年の契約で働きます。|Vou trabalhar com contrato de um ano.
+打ち合わせ|午後に打ち合わせがあります。|Tem uma reunião à tarde.
+報告|仕事が終わったら、課長に報告します。|Quando terminar o trabalho, informo o chefe.
+連絡|遅れるときは、必ず連絡してください。|Quando for se atrasar, avise sem falta.
+相談|困ったことがあったら、相談してね。|Se tiver algum problema, fale comigo.
+確認|もう一度、確認してください。|Confira mais uma vez, por favor.
+準備|会議の準備をします。|Preparo a reunião.
+担当|この仕事の担当は私です。|Eu sou a responsável por este trabalho.
+責任|大切な仕事なので、責任があります。|É um trabalho importante, então tenho responsabilidade.
+経験|接客の経験があります。|Tenho experiência em atendimento.
+能力|日本語の能力試験を受けます。|Vou fazer o exame de proficiência em japonês.
+制服|この店では制服を着ます。|Nesta loja se usa uniforme.
+名刺|初めて会った人と名刺を交換しました。|Troquei cartão de visita com quem conheci.
+職場|職場の人はみんな親切です。|O pessoal do trabalho é todo gentil.
+接客|ホテルで接客の仕事をしています。|Trabalho com atendimento num hotel.
+通訳|病院で通訳をお願いしました。|Pedi um intérprete no hospital.
+翻訳|ポルトガル語の翻訳の仕事がしたいです。|Quero trabalhar com tradução de português.
+任せる|この仕事はあなたに任せます。|Deixo este trabalho com você.
+頼む|ジャスに買い物を頼みました。|Pedi para o Jas fazer as compras.
+職業|ご職業は何ですか。|Qual é a sua profissão?
+料理人|兄は料理人です。|Meu irmão é cozinheiro.
+美容師|美容師さんに髪を切ってもらいました。|A cabeleireira cortou meu cabelo.
+保育士|保育士は子供が好きな人の仕事です。|Educador de creche é trabalho para quem gosta de criança.
+介護士|日本では介護士が足りません。|No Japão faltam cuidadores de idosos.
+弁護士|弁護士に相談しました。|Consultei um advogado.
+公務員|姉は市役所の公務員です。|Minha irmã é funcionária pública da prefeitura.
+主婦|母は主婦です。|Minha mãe é dona de casa.
+作業|この作業は二人でします。|Este trabalho é feito a dois.
+製品|この工場では車の製品を作っています。|Esta fábrica faz peças de carro.
+品質|この会社は品質を大切にしています。|Esta empresa valoriza a qualidade.
+検品|商品を一つずつ検品します。|Inspeciono os produtos um por um.
+梱包|商品を箱に梱包します。|Embalo os produtos em caixas.
+倉庫|荷物を倉庫に運びます。|Levo a carga para o depósito.
+ライン|工場のラインで働いています。|Trabalho na linha de produção da fábrica.
+安全第一|工場では安全第一です。|Na fábrica, segurança em primeiro lugar.
+指示|上司の指示に従います。|Sigo as instruções do chefe.
+目上|目上の人には敬語を使います。|Com pessoas superiores usa-se linguagem formal.
+ミス|小さいミスをしてしまいました。|Cometi um pequeno erro.
+予定表|来月の予定表を作りました。|Fiz o cronograma do mês que vem.
+会議室|会議室は三階です。|A sala de reunião fica no terceiro andar.
+事務|会社で事務の仕事をしています。|Trabalho no escritório de uma empresa.
+電話に出る|会社の電話に出るのは緊張します。|Atender o telefone da empresa me deixa nervosa.
+折り返し|あとで折り返し電話します。|Retorno a ligação depois.
+伝言|田中さんに伝言をお願いします。|Por favor, deixe um recado para o Sr. Tanaka.
+メモ|大事なことはメモします。|Anoto as coisas importantes.
+印刷|資料を十部印刷してください。|Imprima dez cópias do material, por favor.
+プリンター|プリンターの紙がなくなりました。|Acabou o papel da impressora.
+ファイル|書類をファイルに入れます。|Coloco os documentos na pasta.
+完成|新しいビルが完成しました。|O prédio novo ficou pronto.
+進む|仕事が順調に進んでいます。|O trabalho está avançando bem.
+進める|この計画を進めましょう。|Vamos levar este plano adiante.
+習う|ピアノを習っています。|Faço aula de piano.
+学ぶ|日本の文化を学びたいです。|Quero aprender sobre a cultura japonesa.
+覚える|毎日、新しい言葉を十個覚えます。|Todo dia aprendo dez palavras novas.
+練習|毎日、日本語の練習をします。|Pratico japonês todos os dias.
+復習|寝る前に、今日の単語を復習します。|Antes de dormir, reviso as palavras do dia.
+予習|授業の前に予習をします。|Estudo antes da aula.
+宿題|宿題を忘れました。|Esqueci a lição de casa.
+授業|授業は九時に始まります。|A aula começa às nove.
+教室|教室に学生が十人います。|Tem dez alunos na sala de aula.
+日本語学校|日本語学校に通う予定です。|Planejo frequentar uma escola de japonês.
+試験|来月、日本語の試験があります。|Mês que vem tem prova de japonês.
+合格|試験に合格しました！|Passei na prova!
+問題|この問題は難しいです。|Esta questão é difícil.
+答え|答えが分かりません。|Não sei a resposta.
+答える|先生の質問に答えました。|Respondi à pergunta do professor.
+言葉|日本語の言葉はおもしろいです。|As palavras em japonês são interessantes.
+単語|この単語の意味は何ですか。|Qual é o significado desta palavra?
+文|短い文を作ってください。|Faça uma frase curta, por favor.
+文法|日本語の文法は少し難しいです。|A gramática japonesa é um pouco difícil.
+発音|発音を練習します。|Pratico a pronúncia.
+ポルトガル語|ジャスはポルトガル語が少し話せます。|O Jas fala um pouco de português.
+英語|英語も少し話せます。|Também falo um pouco de inglês.
+外国語|外国語を勉強するのは楽しいです。|Estudar língua estrangeira é divertido.
+辞書|分からない言葉は辞書で調べます。|Procuro no dicionário as palavras que não sei.
+教科書|教科書の十ページを開いてください。|Abram o livro na página dez, por favor.
+例|例を見せてください。|Me mostre um exemplo, por favor.
+例文|例文を読んで、使い方を覚えます。|Leio as frases de exemplo e aprendo como usar.
+言う|日本語で何と言いますか。|Como se diz em japonês?
+説明|先生の説明はとても分かりやすいです。|A explicação da professora é muito fácil de entender.
+作文|日本語で作文を書きました。|Escrevi uma redação em japonês.
+成績|今学期は成績がよかったです。|Minhas notas foram boas neste semestre.
+点数|テストの点数は八十点でした。|A nota da prova foi oitenta.
+卒業|姉は今年、大学を卒業しました。|Minha irmã se formou na faculdade este ano.
+入学|弟は四月に高校に入学します。|Meu irmão entra no ensino médio em abril.
+留学|日本に留学したいです。|Quero fazer intercâmbio no Japão.
+留学生|この学校には留学生が多いです。|Esta escola tem muitos estudantes estrangeiros.
+資格|仕事のために資格を取りたいです。|Quero tirar um certificado para o trabalho.
+小学校|小学校は家から近いです。|A escola primária é perto de casa.
+中学校|中学校で英語を習いました。|Aprendi inglês no ginásio.
+高校|高校のとき、バレーボールをしていました。|No ensino médio eu jogava vôlei.
+小学生|小学生が元気に走っています。|As crianças do primário estão correndo animadas.
+中学生|中学生の弟は毎日部活をしています。|Meu irmão, que está no ginásio, faz atividade de clube todo dia.
+高校生|高校生のとき、日本のアニメを見始めました。|Comecei a ver anime japonês quando estava no ensino médio.
+大学生|妹は大学生です。|Minha irmã mais nova é universitária.
+給食|日本の小学校には給食があります。|As escolas primárias japonesas têm merenda.
+運動会|秋に運動会があります。|No outono tem a gincana esportiva.
+遠足|子供たちは遠足で動物園に行きました。|As crianças foram ao zoológico na excursão.
+入学式|入学式は桜の季節です。|A cerimônia de ingresso é na época das cerejeiras.
+卒業式|卒業式で泣きました。|Chorei na formatura.
+部活|部活でサッカーをしています。|Jogo futebol no clube da escola.
+塾|子供は放課後に塾に行きます。|As crianças vão ao cursinho depois da aula.
+ランドセル|小学生はランドセルを背負っています。|As crianças do primário usam mochila escolar.
+黒板|先生が黒板に字を書きます。|A professora escreve na lousa.
+同級生|同級生と久しぶりに会いました。|Encontrei um colega de classe depois de muito tempo.
+申請|ビザの申請をしました。|Fiz o pedido de visto.
+申し込み|申し込みは明日までです。|A inscrição é até amanhã.
+申し込む|日本語の授業に申し込みました。|Me inscrevi na aula de japonês.
+届け出|引っ越したら、届け出が必要です。|Quando se muda, é preciso fazer a notificação.
+転入届|市役所に転入届を出しました。|Entreguei o registro de mudança na prefeitura.
+住民票|住民票を一枚ください。|Um certificado de residência, por favor.
+マイナンバー|マイナンバーのカードを作りました。|Fiz o cartão do My Number.
+印鑑|ここに印鑑を押してください。|Carimbe aqui, por favor.
+署名|書類に署名してください。|Assine o documento, por favor.
+身分証明書|身分証明書を見せてください。|Mostre um documento de identidade, por favor.
+証明書|会社に証明書を出します。|Entrego o certificado para a empresa.
+用紙|この用紙に住所を書いてください。|Escreva o endereço neste formulário, por favor.
+記入|名前と住所を記入してください。|Preencha nome e endereço, por favor.
+提出|書類は窓口に提出してください。|Entregue os documentos no guichê, por favor.
+必要|手続きにはパスポートが必要です。|Para o trâmite é preciso o passaporte.
+整理券|整理券を取って、待ってください。|Pegue a senha e aguarde, por favor.
+呼ぶ|番号を呼ばれたら、窓口へ行きます。|Quando chamam meu número, vou ao guichê.
+待つ|三十分も待ちました。|Esperei uns bons trinta minutos.
+並ぶ|人気の店の前に人が並んでいます。|Tem gente fazendo fila na frente da loja famosa.
+列|この列に並んでください。|Entre nesta fila, por favor.
+番号札|番号札は十五番です。|A senha é número quinze.
+国籍|国籍はブラジルです。|Minha nacionalidade é brasileira.
+生年月日|生年月日を書いてください。|Escreva sua data de nascimento, por favor.
+性別|用紙に性別を書きます。|Escrevo o sexo no formulário.
+年齢|年齢を教えてください。|Me diga a sua idade, por favor.
+電話番号|電話番号が変わりました。|Meu número de telefone mudou.
+配偶者|配偶者の名前を書いてください。|Escreva o nome do cônjuge, por favor.
+配偶者ビザ|配偶者ビザで日本に住みます。|Vou morar no Japão com visto de cônjuge.
+婚姻届|二人で婚姻届を出しに行きました。|Fomos juntos entregar o registro de casamento.
+入国管理局|入国管理局でビザを更新します。|Renovo o visto na imigração.
+更新|在留カードの更新を忘れないでね。|Não esqueça de renovar o cartão de residente.
+税金|毎年、税金を払います。|Todo ano pago impostos.
+年金|日本では年金を払います。|No Japão se paga a previdência.
+保険|車の保険に入りました。|Fiz seguro do carro.
+電話する|家に着いたら電話するね。|Te ligo quando chegar em casa.
+携帯|携帯を家に忘れました。|Esqueci o celular em casa.
+スマホ|新しいスマホを買いました。|Comprei um smartphone novo.
+返事|メールの返事が来ました。|Chegou a resposta do e-mail.
+返信|すぐに返信してくれてありがとう。|Obrigada por responder logo.
+送る|ジャスに写真を送りました。|Mandei uma foto para o Jas.
+届く|ブラジルから荷物が届きました。|Chegou uma encomenda do Brasil.
+受け取る|郵便局で荷物を受け取りました。|Retirei a encomenda no correio.
+ネット|ネットで電車の時間を調べます。|Vejo o horário do trem na internet.
+パソコン|パソコンで書類を作ります。|Faço os documentos no computador.
+アプリ|日本語のアプリで勉強しています。|Estudo com um aplicativo de japonês.
+パスワード|パスワードを忘れてしまいました。|Esqueci a senha.
+アカウント|新しいアカウントを作りました。|Criei uma conta nova.
+登録|アプリに名前を登録します。|Cadastro meu nome no aplicativo.
+検索|分からないことはネットで検索します。|Pesquiso na internet o que não sei.
+画面|スマホの画面が割れました。|A tela do celular rachou.
+充電|スマホの充電がなくなりそうです。|A bateria do celular está quase acabando.
+充電器|充電器を貸してくれる？|Pode me emprestar o carregador?
+電源|電源を切ってください。|Desligue, por favor.
+通知|アプリの通知が来ました。|Chegou uma notificação do aplicativo.
+設定|スマホの言葉の設定を日本語にしました。|Coloquei o idioma do celular em japonês.
+宅配便|宅配便で荷物を送ります。|Mando a encomenda pela transportadora.
+不在票|郵便受けに不在票が入っていました。|Tinha um aviso de entrega na caixa de correio.
+再配達|不在票を見て、再配達を頼みました。|Vi o aviso e pedi a reentrega.
+お辞儀|日本ではあいさつのときにお辞儀をします。|No Japão a gente se curva ao cumprimentar.
+自動販売機|自動販売機で温かいお茶を買いました。|Comprei chá quente na máquina de venda.
+自販機|駅の自販機でジュースを買います。|Compro suco na máquina da estação.
+コンビニ弁当|忙しい日はコンビニ弁当を食べます。|Nos dias corridos como marmita de conveniência.
+レジ袋|レジ袋は三円です。|A sacola plástica custa três ienes.
+マイバッグ|買い物にはマイバッグを持っていきます。|Levo minha sacola para as compras.
+回覧板|回覧板を隣の家に回します。|Passo o aviso do bairro para a casa ao lado.
+町内会|町内会のお祭りに参加しました。|Participei do festival da associação do bairro.
+ゴミ出しの日|明日はゴミ出しの日です。|Amanhã é dia de coleta de lixo.
+年賀状|お正月に年賀状が届きます。|No Ano-Novo chegam os cartões de Ano-Novo.
+お年玉|子供たちはお年玉をもらって喜びました。|As crianças ficaram felizes com o dinheiro de Ano-Novo.
+初詣|お正月に初詣に行きます。|No Ano-Novo fazemos a primeira visita ao santuário.
+おみくじ|おみくじで「大吉」が出ました。|Tirei “muita sorte” no papel da sorte.
+お守り|神社でお守りを買いました。|Comprei um amuleto no santuário.
+お参り|お寺にお参りに行きました。|Fui rezar no templo.
+お通し|居酒屋ではお通しが出ます。|No izakaya servem um petisco cobrado.
+割り勘|今日は割り勘にしましょう。|Hoje vamos dividir a conta.
+おごる|今日は私がおごるね。|Hoje eu pago, tá.
+空気を読む|日本では空気を読むことが大切です。|No Japão é importante ler o ambiente.
+遠慮|遠慮しないで、たくさん食べてね。|Não faça cerimônia, coma bastante.
+気を使う|ジャスの家族はいつも気を使ってくれます。|A família do Jas sempre é atenciosa comigo.
+お世話になる|日本でいろいろな人にお世話になりました。|No Japão fui ajudada por muitas pessoas.
+お邪魔します|「お邪魔します」と言って、家に入りました。|Disse “com licença” e entrei na casa.
+つまらないものですが|つまらないものですが、どうぞ。|É só uma lembrancinha, mas aceite, por favor.
+お先にどうぞ|エレベーターで「お先にどうぞ」と言いました。|No elevador eu disse “pode ir na frente”.
+お疲れ様でした|今日もお疲れ様でした。|Bom trabalho hoje também.
+緊急|緊急のときは、この番号に電話してください。|Em emergência, ligue para este número.
+助けて|助けて！誰か来てください！|Socorro! Alguém venha, por favor!
+火事|近所で火事がありました。|Teve um incêndio na vizinhança.
+避難|地震のあと、公園に避難しました。|Depois do terremoto, nos refugiamos no parque.
+避難所|近くの避難所は小学校です。|O abrigo mais perto é a escola primária.
+防災|防災のために水を買っておきます。|Compro água para prevenção de desastres.
+非常食|非常食を三日分用意しました。|Preparei comida de emergência para três dias.
+懐中電灯|停電のときのために懐中電灯を置いています。|Deixo uma lanterna para caso de queda de energia.
+停電|台風で停電しました。|Faltou luz por causa do tufão.
+断水|工事で明日は断水です。|Amanhã vai ter corte de água por causa da obra.
+泥棒|泥棒に気をつけてください。|Cuidado com ladrões.
+落とし物|駅で落とし物をしました。|Perdi uma coisa na estação.
+忘れ物|電車に忘れ物をしてしまいました。|Esqueci uma coisa no trem.
+迷子|デパートで子供が迷子になりました。|Uma criança se perdeu na loja de departamentos.
+盗む|自転車を盗まないでください。|Não roube bicicletas.
+盗まれる|自転車が盗まれました。|Roubaram minha bicicleta.
+怪我をする|転んで怪我をしました。|Caí e me machuquei.
+110番|泥棒を見たら、110番に電話します。|Se vir um ladrão, ligo para o 110.
+119番|火事のときは119番に電話します。|Em caso de incêndio, ligo para o 119.
+大使館|東京のブラジル大使館に行きました。|Fui à Embaixada do Brasil em Tóquio.
+領事館|パスポートの手続きは領事館でします。|O trâmite do passaporte é feito no consulado.
 `;
