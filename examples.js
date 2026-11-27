@@ -1418,4 +1418,291 @@ ICカード|ICカードで電車に乗ります。|Pego o trem com o cartão de 
 119番|火事のときは119番に電話します。|Em caso de incêndio, ligo para o 119.
 大使館|東京のブラジル大使館に行きました。|Fui à Embaixada do Brasil em Tóquio.
 領事館|パスポートの手続きは領事館でします。|O trâmite do passaporte é feito no consulado.
+自然|日本は自然がきれいです。|O Japão tem uma natureza bonita.
+山|週末に山に登ります。|No fim de semana vou subir a montanha.
+川|川の近くを散歩しました。|Passeei perto do rio.
+海|夏はいつも海に行きます。|No verão sempre vou à praia.
+湖|湖でボートに乗りました。|Andei de barco no lago.
+池|公園の池に魚がいます。|Tem peixes na lagoa do parque.
+島|日本にはたくさんの島があります。|O Japão tem muitas ilhas.
+森|森の中は涼しいです。|Dentro da floresta é fresco.
+林|家の裏に小さい林があります。|Tem um pequeno bosque atrás de casa.
+木|公園に大きな木があります。|Tem uma árvore grande no parque.
+花|ジャスに花をもらいました。|Ganhei flores do Jas.
+草|庭の草を取ります。|Tiro o mato do jardim.
+葉|秋は木の葉が赤くなります。|No outono as folhas das árvores ficam vermelhas.
+石|川で白い石を拾いました。|Peguei uma pedra branca no rio.
+砂|靴に砂が入りました。|Entrou areia no sapato.
+土|花を植えるために土を買いました。|Comprei terra para plantar flores.
+火|火を使うときは気をつけてください。|Tome cuidado ao usar fogo.
+光|窓から光が入ります。|Entra luz pela janela.
+景色|ここからの景色は最高です。|A vista daqui é maravilhosa.
+空気|山の空気はおいしいです。|O ar da montanha é gostoso.
+浜辺|浜辺を二人で歩きました。|Andamos nós dois pela beira-mar.
+波|今日は波が高いです。|Hoje as ondas estão altas.
+坂|家の前に長い坂があります。|Tem uma ladeira comprida na frente de casa.
+田んぼ|田舎には田んぼが広がっています。|No interior se estendem os arrozais.
+畑|祖父は畑で野菜を作っています。|Meu avô planta legumes na horta.
+動物|動物が好きです。|Gosto de animais.
+犬|毎朝、犬と散歩します。|Toda manhã passeio com o cachorro.
+猫|猫が窓の近くで寝ています。|O gato está dormindo perto da janela.
+鳥|朝、鳥の声で目が覚めます。|De manhã acordo com o canto dos pássaros.
+うさぎ|うさぎがにんじんを食べています。|O coelho está comendo cenoura.
+馬|牧場で馬に乗りました。|Andei a cavalo na fazenda.
+牛|北海道には牛がたくさんいます。|Em Hokkaido tem muitas vacas.
+豚|豚は頭がいい動物です。|O porco é um animal inteligente.
+羊|羊を見に牧場へ行きました。|Fomos à fazenda ver as ovelhas.
+猿|温泉に入る猿を見ました。|Vi macacos tomando banho na fonte termal.
+熊|山で熊に気をつけてください。|Cuidado com ursos na montanha.
+鹿|奈良には鹿がたくさんいます。|Em Nara tem muitos cervos.
+狐|神社に狐の像があります。|Tem uma estátua de raposa no santuário.
+ねずみ|台所でねずみを見ました。|Vi um rato na cozinha.
+虫|夏の夜は虫の声が聞こえます。|Nas noites de verão dá para ouvir os insetos.
+蚊|蚊に刺されました。|Fui picada por um mosquito.
+ゴキブリ|ゴキブリが出て、びっくりしました。|Apareceu uma barata e levei um susto.
+蝶|花に蝶がとまっています。|Tem uma borboleta pousada na flor.
+蜂|蜂に気をつけてね。|Cuidado com as abelhas.
+蛇|山道で蛇を見ました。|Vi uma cobra na trilha da montanha.
+カエル|雨の日はカエルが鳴きます。|Em dia de chuva os sapos coaxam.
+亀|池に亀がいます。|Tem uma tartaruga na lagoa.
+金魚|お祭りで金魚をもらいました。|Ganhei um peixinho dourado no festival.
+象|象は鼻が長いです。|O elefante tem a tromba comprida.
+咲く|庭にきれいな花が咲きました。|Floresceu uma flor bonita no jardim.
+散る|桜が散って、少し寂しいです。|As cerejeiras perderam as pétalas, fico um pouco triste.
+育てる|ベランダでトマトを育てています。|Estou plantando tomates na varanda.
+飼う|将来、犬を飼いたいです。|No futuro quero ter um cachorro.
+趣味|私の趣味は料理です。|Meu hobby é cozinhar.
+遊ぶ|週末は友達と遊びます。|No fim de semana saio com os amigos.
+歌|この歌が大好きです。|Eu adoro esta música.
+踊る|お祭りでみんなと踊りました。|Dancei com todo mundo no festival.
+絵|子供が上手な絵を描きました。|A criança fez um desenho bonito.
+絵を描く|休みの日に絵を描きます。|Nos dias de folga eu desenho.
+漫画|漫画で日本語を勉強しています。|Estudo japonês com mangá.
+雑誌|電車で雑誌を読みます。|Leio revista no trem.
+小説|日本の小説を読んでみたいです。|Quero tentar ler um romance japonês.
+新聞|父は毎朝、新聞を読みます。|Meu pai lê o jornal toda manhã.
+野球|日本では野球が人気です。|No Japão o beisebol é popular.
+水泳|水泳は体にいいです。|Natação faz bem para o corpo.
+泳ぐ|海で泳ぐのが好きです。|Gosto de nadar no mar.
+走る|毎朝、公園を走ります。|Corro no parque todas as manhãs.
+運動|健康のために運動しています。|Faço exercício pela saúde.
+試合|明日はサッカーの試合です。|Amanhã tem jogo de futebol.
+勝つ|ブラジルが試合に勝ちました！|O Brasil ganhou o jogo!
+負ける|一点差で負けました。|Perdemos por um ponto.
+選手|あの選手はとても有名です。|Aquele jogador é muito famoso.
+応援|試合でブラジルを応援しました。|Torci pelo Brasil no jogo.
+料理教室|料理教室で和食を習います。|Aprendo culinária japonesa numa aula de culinária.
+楽器|何か楽器ができますか。|Você toca algum instrumento?
+弾く|ジャスはギターが弾けます。|O Jas sabe tocar violão.
+ドライブ|週末に海までドライブしました。|No fim de semana fomos de carro até a praia.
+ライブ|好きな歌手のライブに行きました。|Fui ao show do meu cantor favorito.
+チケット|コンサートのチケットが取れました。|Consegui ingresso para o show.
+番組|この番組はおもしろいです。|Este programa é divertido.
+ニュース|毎朝ニュースを見ます。|Vejo o jornal toda manhã.
+動画|料理の動画を見ながら作ります。|Cozinho vendo vídeo de receita.
+出かける|雨なので、出かけたくないです。|Está chovendo, não quero sair.
+サービス|このホテルはサービスがいいです。|Este hotel tem um bom atendimento.
+スケジュール|来週のスケジュールを確認します。|Confiro a agenda da semana que vem.
+タイプ|ジャスは私のタイプです。|O Jas é o meu tipo.
+イメージ|日本のイメージが変わりました。|Minha imagem do Japão mudou.
+ペース|自分のペースで勉強しましょう。|Vamos estudar no próprio ritmo.
+ストレス解消|私のストレス解消は散歩です。|Meu jeito de aliviar o estresse é passear.
+マイペース|私はマイペースな人です。|Sou uma pessoa que faz as coisas no seu ritmo.
+チェック|もう一度、チェックしてください。|Cheque mais uma vez, por favor.
+キャンセル|予約をキャンセルしました。|Cancelei a reserva.
+トップ|彼はクラスでトップです。|Ele é o primeiro da turma.
+セット|ハンバーガーのセットを注文しました。|Pedi o combo de hambúrguer.
+オープン|駅前に新しいカフェがオープンしました。|Abriu um café novo em frente à estação.
+フロア|このフロアは服の売り場です。|Este andar é a seção de roupas.
+カウンター|カウンターの席でもいいですか。|Pode ser no balcão?
+ロッカー|荷物をロッカーに入れます。|Coloco a bagagem no armário.
+コインロッカー|駅のコインロッカーにスーツケースを預けました。|Deixei a mala no guarda-volumes da estação.
+トランク|荷物を車のトランクに入れます。|Coloco a bagagem no porta-malas.
+シートベルト|車に乗ったら、シートベルトをしてください。|Ao entrar no carro, coloque o cinto de segurança.
+タイヤ|自転車のタイヤに空気を入れます。|Encho o pneu da bicicleta.
+ハンドル|ハンドルをしっかり持ってください。|Segure firme o volante.
+ナビ|ナビを見ながら運転します。|Dirijo olhando o GPS.
+マンガ喫茶|終電がなくて、マンガ喫茶に泊まりました。|Perdi o último trem e dormi num café de mangá.
+ネットカフェ|ネットカフェでパソコンを使いました。|Usei o computador na lan house.
+気持ち|ジャスの気持ちがうれしいです。|Fico feliz com o carinho do Jas.
+気分|今日は気分がいいです。|Hoje estou de bom humor.
+心|心をこめて手紙を書きました。|Escrevi a carta de todo o coração.
+愛|二人の愛は遠くても変わりません。|Nosso amor não muda, mesmo de longe.
+恋|日本で恋をしました。|Me apaixonei no Japão.
+夢|日本に住むのが私の夢でした。|Morar no Japão era o meu sonho.
+悲しい|悲しい映画を見て、泣きました。|Vi um filme triste e chorei.
+寂しい|ジャスに会えなくて、寂しいです。|Sinto saudade por não poder ver o Jas.
+怖い|地震は怖いです。|Terremoto dá medo.
+恥ずかしい|日本語を間違えて、恥ずかしかったです。|Errei o japonês e fiquei com vergonha.
+懐かしい|この歌を聞くと、懐かしい気持ちになります。|Quando ouço esta música, fico nostálgica.
+羨ましい|日本に住んでいる友達が羨ましいです。|Tenho inveja dos amigos que moram no Japão.
+悔しい|試合に負けて、悔しいです。|Perdi o jogo e estou frustrada.
+つまらない|この映画はつまらないです。|Este filme é chato.
+面白い|日本語の勉強は面白いです。|Estudar japonês é interessante.
+うるさい|隣の部屋がうるさいです。|O quarto ao lado está barulhento.
+眠い|昨日遅く寝たので、眠いです。|Dormi tarde ontem, então estou com sono.
+安心|ジャスの声を聞いて、安心しました。|Fiquei aliviada ao ouvir a voz do Jas.
+不安|一人で日本に行くのは少し不安です。|Ir sozinha para o Japão me deixa um pouco insegura.
+緊張|面接でとても緊張しました。|Fiquei muito nervosa na entrevista.
+幸せ|あなたといると、幸せです。|Quando estou com você, sou feliz.
+大好き|日本の食べ物が大好きです。|Eu adoro comida japonesa.
+大嫌い|ゴキブリが大嫌いです。|Detesto baratas.
+嫌|雨の日は嫌です。|Não gosto de dia de chuva.
+平気|寒いのは平気です。|O frio não me incomoda.
+退屈|雨の日は退屈です。|Dia de chuva é entediante.
+びっくりする|地震があって、びっくりしました。|Teve um terremoto e levei um susto.
+驚く|日本の電車が時間通りで驚きました。|Me surpreendi com os trens japoneses no horário.
+笑う|ジャスはよく笑います。|O Jas ri bastante.
+泣く|空港で別れるとき、泣いてしまいました。|Chorei na despedida no aeroporto.
+怒る|母は怒るととても怖いです。|Minha mãe brava dá muito medo.
+喜ぶ|プレゼントをあげたら、とても喜びました。|Quando dei o presente, ficou muito feliz.
+困る|言葉が分からなくて、困りました。|Fiquei em apuros por não entender a língua.
+悩む|どの服を買うか悩んでいます。|Estou em dúvida sobre qual roupa comprar.
+感動|富士山を見て、感動しました。|Fiquei emocionada ao ver o Monte Fuji.
+感謝|いつも感謝しています。|Sou sempre grata.
+我慢|眠いけど、我慢して勉強します。|Estou com sono, mas vou aguentar e estudar.
+会いたい|早く会いたいね。|Quero te ver logo, viu.
+愛してる|ジャス、愛してるよ。|Jas, eu te amo.
+希望|日本で働くのが希望です。|Meu desejo é trabalhar no Japão.
+期待|新しい生活に期待しています。|Tenho expectativas pela vida nova.
+不満|今の仕事に不満はありません。|Não tenho reclamações do trabalho atual.
+満足|この部屋にとても満足しています。|Estou muito satisfeita com este apartamento.
+後悔|日本に来たことを後悔していません。|Não me arrependo de ter vindo ao Japão.
+反省|遅刻したことを反省しています。|Reconheço meu erro por ter chegado atrasada.
+感想|映画の感想を教えてください。|Me conte o que achou do filme.
+印象|日本の第一印象はどうですか。|Qual é a sua primeira impressão do Japão?
+気になる|あのお店がずっと気になっています。|Faz tempo que aquela loja me chama a atenção.
+気に入る|このかばん、とても気に入りました。|Gostei muito desta bolsa.
+気が合う|ジャスの妹とは気が合います。|Me dou bem com a irmã do Jas.
+気が楽|話したら、気が楽になりました。|Depois de conversar, fiquei mais tranquila.
+気が重い|明日の試験のことを考えると、気が重いです。|Pensar na prova de amanhã me deixa desanimada.
+気が短い|父は少し気が短いです。|Meu pai é um pouco impaciente.
+腹が立つ|約束を忘れられて、腹が立ちました。|Fiquei irritada porque esqueceram o combinado.
+頭にくる|あの人の言い方は頭にくる。|O jeito daquela pessoa falar me deixa furiosa.
+落ち込む|試験に落ちて、落ち込んでいます。|Reprovei na prova e estou para baixo.
+元気を出す|元気を出して！明日はいい日になるよ。|Anime-se! Amanhã vai ser um bom dia.
+元気になる|ゆっくり休んで、元気になりました。|Descansei bem e melhorei.
+涙が出る|うれしくて涙が出ました。|Fiquei tão feliz que chorei.
+ため息|疲れて、ため息が出ます。|Estou cansada e solto um suspiro.
+長い|日本までの飛行機は長いです。|O voo até o Japão é longo.
+短い|休みはいつも短く感じます。|As férias sempre parecem curtas.
+広い|新しい部屋は前より広いです。|O quarto novo é mais espaçoso que o anterior.
+狭い|この道は狭いです。|Esta rua é estreita.
+重い|このかばんは重いです。|Esta bolsa é pesada.
+軽い|このパソコンはとても軽いです。|Este computador é muito leve.
+低い|この机は少し低いです。|Esta mesa é um pouco baixa.
+太い|この木はとても太いです。|Esta árvore é muito grossa.
+細い|うどんよりそばのほうが細いです。|O soba é mais fino que o udon.
+厚い|冬は厚いコートを着ます。|No inverno uso casaco grosso.
+薄い|このスープは味が薄いです。|Esta sopa está sem sal.
+濃い|コーヒーは濃いのが好きです。|Gosto de café forte.
+深い|この川は深いので、気をつけて。|Este rio é fundo, tome cuidado.
+浅い|子供は浅いプールで遊びます。|As crianças brincam na piscina rasa.
+丸い|今夜は月が丸いです。|Hoje a lua está redonda.
+四角い|四角いお弁当箱を買いました。|Comprei uma marmita quadrada.
+早い|今日は早く起きました。|Hoje acordei cedo.
+速い|新幹線はとても速いです。|O trem-bala é muito rápido.
+遅い|もう遅いから、寝ましょう。|Já está tarde, vamos dormir.
+易しい|このテストは易しかったです。|Esta prova foi fácil.
+簡単|この料理は簡単に作れます。|Este prato é fácil de fazer.
+忙しい|今週は仕事が忙しいです。|Esta semana o trabalho está corrido.
+暇|暇なときは何をしますか。|O que você faz quando está livre?
+楽|電車で行くほうが楽です。|Ir de trem é mais cômodo.
+大変|一人で引っ越しするのは大変です。|Mudar sozinha é trabalhoso.
+強い|台風の風はとても強いです。|O vento do tufão é muito forte.
+弱い|私はお酒に弱いです。|Eu fico bêbada fácil.
+黄色い|秋になると、葉が黄色くなります。|No outono as folhas ficam amarelas.
+茶色い|茶色いかばんを持っています。|Tenho uma bolsa marrom.
+緑|日本の山は緑がきれいです。|O verde das montanhas japonesas é bonito.
+色|何色が好きですか。|De que cor você gosta?
+紫|紫の花が咲いています。|Tem flores roxas abertas.
+灰色|空が灰色で、雨が降りそうです。|O céu está cinza, parece que vai chover.
+金色|金色のお寺を見に行きました。|Fui ver o templo dourado.
+銀色|銀色の指輪がほしいです。|Quero um anel prateado.
+汚い|部屋が汚いので、掃除します。|O quarto está sujo, então vou limpar.
+臭い|この部屋はちょっと臭いです。|Este quarto está meio fedido.
+危ない|危ない！車が来ているよ！|Cuidado! Vem vindo um carro!
+危険|ここで泳ぐのは危険です。|É perigoso nadar aqui.
+安全|日本は安全な国です。|O Japão é um país seguro.
+にぎやか|お祭りはとてもにぎやかでした。|O festival estava muito animado.
+便利|コンビニは二十四時間開いていて便利です。|A loja de conveniência fica aberta 24 horas, é prática.
+不便|駅から遠くて不便です。|É longe da estação, é inconveniente.
+有名|京都はお寺で有名です。|Kyoto é famosa pelos templos.
+得意|料理が得意です。|Sou boa em cozinhar.
+苦手|朝早く起きるのが苦手です。|Não sou boa em acordar cedo.
+丈夫|このかばんは丈夫です。|Esta bolsa é resistente.
+大切|家族は一番大切です。|A família é o mais importante.
+大事|大事な書類なので、なくさないでね。|São documentos importantes, não perca, viu.
+重要|これは重要なお知らせです。|Este é um aviso importante.
+特別|今日は特別な日です。|Hoje é um dia especial.
+普通|普通の電車で行きます。|Vou no trem comum.
+同じ|私たちは同じ色の服を着ています。|Estamos usando roupas da mesma cor.
+違う|日本とブラジルは文化が違います。|Japão e Brasil têm culturas diferentes.
+色々|日本で色々な経験をしました。|Tive várias experiências no Japão.
+様々|この店には様々な国の料理があります。|Este restaurante tem comidas de vários países.
+自由|休みの日は自由に過ごします。|Nos dias de folga faço o que quero.
+無理|今日中に終わらせるのは無理です。|É impossível terminar ainda hoje.
+確か|確か、会議は三時からです。|Se não me engano, a reunião é às três.
+正しい|正しい答えを選んでください。|Escolha a resposta certa, por favor.
+詳しい|ジャスはパソコンに詳しいです。|O Jas entende bem de computador.
+珍しい|東京で雪が降るのは珍しいです。|É raro nevar em Tóquio.
+素晴らしい|素晴らしい景色ですね。|Que paisagem maravilhosa.
+素敵|素敵なワンピースですね。|Que vestido lindo.
+立派|立派なお城を見ました。|Vi um castelo esplêndido.
+完璧|今日の発音は完璧でした。|A pronúncia de hoje foi perfeita.
+変|この機械、ちょっと変な音がします。|Esta máquina está fazendo um barulho estranho.
+不思議|不思議な夢を見ました。|Tive um sonho estranho.
+複雑|この書類は複雑です。|Este documento é complicado.
+単純|これは単純なミスです。|Isto é um erro simples.
+適当|適当な大きさの箱を探しています。|Estou procurando uma caixa de tamanho adequado.
+真剣|ジャスは真剣な顔で話しました。|O Jas falou com uma cara séria.
+一生懸命|毎日一生懸命、日本語を勉強しています。|Estudo japonês com todo o esforço todos os dias.
+熱心|妹は熱心に勉強しています。|Minha irmã estuda com dedicação.
+上品|あの人は話し方が上品です。|Aquela pessoa fala de forma refinada.
+清潔|日本のトイレは清潔です。|Os banheiros no Japão são limpos.
+快適|新しい部屋はとても快適です。|O quarto novo é muito confortável.
+健康的|健康的な食事を心がけています。|Procuro ter uma alimentação saudável.
+有名人|駅で有名人を見ました。|Vi uma celebridade na estação.
+ひどい|今日はひどい雨ですね。|Hoje está uma chuva horrível, né.
+すごく|今日はすごく暑いです。|Hoje está muito quente.
+偉い|毎日勉強していて、偉いね。|Que admirável que você estuda todo dia.
+うまい|このラーメン、うまい！|Este lámen está gostoso!
+可愛らしい|可愛らしいお店を見つけました。|Encontrei uma lojinha graciosa.
+ありがたい|手伝ってくれて、ありがたいです。|Fico grata pela ajuda.
+もったいない|まだ食べられるのに、捨てるのはもったいない。|Jogar fora algo que ainda dá para comer é desperdício.
+しつこい|しつこい電話に困っています。|Estou incomodada com ligações insistentes.
+細かい|細かいことは気にしないで。|Não se preocupe com detalhes.
+緩い|このズボンは少し緩いです。|Esta calça está um pouco folgada.
+きつい|この靴はちょっときついです。|Este sapato está um pouco apertado.
+まぶしい|太陽がまぶしいです。|O sol está ofuscante.
+ぬるい|お茶がぬるくなりました。|O chá ficou morno.
+騒がしい|教室が騒がしいです。|A sala de aula está barulhenta.
+親しい|親しい友達に結婚のことを話しました。|Contei do casamento para uma amiga próxima.
+仲がいい|私たちはとても仲がいいです。|Nós nos damos muito bem.
+怪しい|怪しいメールは開かないでください。|Não abra e-mails suspeitos.
+惜しい|惜しい！もう少しで正解だったね。|Quase! Faltou pouco para acertar.
+激しい|昨日は激しい雨が降りました。|Ontem choveu forte.
+正確|日本の電車は時間が正確です。|Os trens japoneses são pontuais.
+かわいそう|雨の中の子猫がかわいそうです。|Dá pena do gatinho na chuva.
+おかしい|この時計、ちょっとおかしいです。|Este relógio está meio estranho.
+気持ちいい|温泉は気持ちいいです。|A fonte termal é gostosa.
+心地いい|春の風は心地いいです。|O vento da primavera é agradável.
+居心地がいい|このカフェは居心地がいいです。|Este café é aconchegante.
+不安定|最近、天気が不安定です。|Ultimamente o tempo está instável.
+面倒|手続きは少し面倒です。|O trâmite é um pouco trabalhoso.
+面倒くさい|料理するのが面倒くさい日もあります。|Tem dias em que dá preguiça de cozinhar.
+楽しそう|子供たちが楽しそうに遊んでいます。|As crianças estão brincando com cara de diversão.
+おいしそう|このケーキ、おいしそう！|Este bolo parece gostoso!
+元気そう|元気そうでよかった。|Que bom que você parece bem.
+嬉しそう|ジャスは嬉しそうに笑いました。|O Jas sorriu parecendo feliz.
+若々しい|祖母はいつも若々しいです。|Minha avó está sempre jovial.
+ずるい|自分だけ食べるのはずるいよ。|Comer sozinho não vale.
+ちょうどいい|このお湯はちょうどいい温度です。|Esta água está na temperatura certa.
+すばやい|猫はすばやく逃げました。|O gato fugiu rapidinho.
+のろい|このパソコンは動きがのろいです。|Este computador está lento.
+真っ白|雪で町が真っ白になりました。|A cidade ficou branquinha de neve.
+真っ黒|日に焼けて、真っ黒になりました。|Peguei sol e fiquei bem morena.
+真っ赤|恥ずかしくて、顔が真っ赤になりました。|Fiquei com vergonha e o rosto ficou vermelhíssimo.
+真っ青|海が真っ青できれいです。|O mar está azul intenso e lindo.
+真っ暗|停電で部屋が真っ暗になりました。|Com a queda de energia, o quarto ficou escuríssimo.
 `;
