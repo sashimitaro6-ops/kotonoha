@@ -1,4 +1,4 @@
-/* ことばのリスト（日常の単語 約2800語。あいさつ・数字などのやさしすぎる語は入れない）。
+/* ことばのリスト（日常の単語。やさしすぎる語・ポルトガル語や英語から分かるカタカナ語・やさしい語をつないだだけの句は入れない。「～する」の動詞は名詞の意味に入れる）。
    1行に1語：ことば|よみ（かなだけのことばは空）|ポルトガル語|品詞（n 名詞・v 動詞・i い形容詞・na な形容詞・adv 副詞・x その他）
    「#」の行はカテゴリーの見出し：#日本語|ポルトガル語（ふるい分けはカテゴリーごと、1回50語）
    - 記録は「ことば」（1列目）にひもづくので、ことばの書き方は変えない。意味・よみ・順番・カテゴリーは直してよい。
@@ -73,7 +73,6 @@ const VOCAB_TXT = `
 いいですか||pode? / tudo bem?|x
 わかった||entendi (informal)|x
 了解|りょうかい|entendido / ok|x
-オッケー||ok|x
 また今度|またこんど|fica para a próxima|x
 またあとで||até mais tarde|x
 すみませんが||desculpe, mas…|x
@@ -95,7 +94,6 @@ const VOCAB_TXT = `
 贈り物|おくりもの|presente|n
 花束|はなたば|buquê de flores|n
 手作り|てづくり|feito à mão|n
-サプライズ||surpresa|n
 お揃い|おそろい|combinando (iguais)|n
 記念写真|きねんしゃしん|foto de recordação|n
 思いやり|おもいやり|consideração / carinho|n
@@ -161,20 +159,17 @@ const VOCAB_TXT = `
 名字|みょうじ|sobrenome|n
 年|とし|idade / ano|n
 誕生日|たんじょうび|aniversário|n
-結婚|けっこん|casamento|n
+結婚|けっこん|casamento (～する: casar-se)|n
 結婚式|けっこんしき|cerimônia de casamento|n
 婚約|こんやく|noivado|n
 離婚|りこん|divórcio|n
 記念日|きねんび|aniversário (data comemorativa)|n
-プロポーズ||pedido de casamento|n
 デート||encontro (romântico)|n
 指輪|ゆびわ|anel|n
-ペット||animal de estimação|n
 仲間|なかま|companheiro / turma|n
 仲良し|なかよし|bons amigos|n
 仲直り|なかなおり|fazer as pazes|n
-喧嘩|けんか|briga|n
-喧嘩する|けんかする|brigar|v
+喧嘩|けんか|briga (～する: brigar)|n
 片思い|かたおもい|amor não correspondido|n
 両思い|りょうおもい|amor correspondido|n
 一目惚れ|ひとめぼれ|amor à primeira vista|n
@@ -184,7 +179,6 @@ const VOCAB_TXT = `
 新婚|しんこん|recém-casado|n
 新婚旅行|しんこんりょこう|lua de mel|n
 同棲|どうせい|morar junto|n
-一緒に住む|いっしょにすむ|morar juntos|v
 ずっと一緒|ずっといっしょ|juntos para sempre|x
 大切な人|たいせつなひと|pessoa querida|n
 相手|あいて|parceiro / o outro|n
@@ -275,7 +269,6 @@ const VOCAB_TXT = `
 腹痛|ふくつう|dor de barriga|n
 けが||ferimento / machucado|n
 やけど||queimadura|n
-アレルギー||alergia|n
 花粉症|かふんしょう|alergia a pólen|n
 痛い|いたい|dolorido / dói|i
 かゆい||coçar / coceira|i
@@ -292,7 +285,7 @@ const VOCAB_TXT = `
 保険証|ほけんしょう|cartão do seguro saúde|n
 健康保険|けんこうほけん|seguro saúde|n
 問診票|もんしんひょう|ficha de sintomas|n
-予約|よやく|reserva / agendamento|n
+予約|よやく|reserva / agendamento (～する: reservar / agendar)|n
 検査|けんさ|exame|n
 注射|ちゅうしゃ|injeção|n
 手術|しゅじゅつ|cirurgia|n
@@ -304,9 +297,8 @@ const VOCAB_TXT = `
 目薬|めぐすり|colírio|n
 湿布|しっぷ|emplastro|n
 絆創膏|ばんそうこう|band-aid / curativo|n
-マスク||máscara|n
 体温計|たいおんけい|termômetro|n
-妊娠|にんしん|gravidez|n
+妊娠|にんしん|gravidez (～する: engravidar)|n
 健康|けんこう|saúde|n
 健康診断|けんこうしんだん|check-up|n
 治る|なおる|sarar / se curar|v
@@ -327,9 +319,6 @@ const VOCAB_TXT = `
 体調が悪い|たいちょうがわるい|não estar bem de saúde|i
 風邪をひく|かぜをひく|pegar resfriado|v
 熱がある|ねつがある|estar com febre|v
-熱を測る|ねつをはかる|medir a febre|v
-薬を飲む|くすりをのむ|tomar remédio|v
-病院に行く|びょういんにいく|ir ao hospital|v
 診てもらう|みてもらう|ser examinado (pelo médico)|v
 治療|ちりょう|tratamento|n
 虫歯|むしば|cárie|n
@@ -351,7 +340,6 @@ const VOCAB_TXT = `
 くしゃみ||espirro|n
 あくび||bocejo|n
 寝返り|ねがえり|virar-se na cama|n
-手を上げる|てをあげる|levantar a mão|v
 手を振る|てをふる|acenar|v
 振る|ふる|balançar / dar o fora|v
 しゃがむ||agachar-se|v
@@ -381,26 +369,20 @@ const VOCAB_TXT = `
 髪型|かみがた|penteado / corte|n
 前髪|まえがみ|franja|n
 パーマ||permanente (cabelo)|n
-カット||corte|n
 カラー||coloração (cabelo)|n
 髪を染める|かみをそめる|pintar o cabelo|v
-髪を結ぶ|かみをむすぶ|prender o cabelo|v
-髪を乾かす|かみをかわかす|secar o cabelo|v
 乾かす|かわかす|secar (algo)|v
-ダイエット||dieta|n
 #食べ物・料理|Comida e cozinha
 朝ご飯|あさごはん|café da manhã|n
 昼ご飯|ひるごはん|almoço|n
 晩ご飯|ばんごはん|jantar|n
 夕飯|ゆうはん|jantar|n
-食事|しょくじ|refeição|n
+食事|しょくじ|refeição (～する: fazer refeição)|n
 お弁当|おべんとう|marmita / bentô|n
 米|こめ|arroz (cru)|n
 麺|めん|macarrão (massa)|n
-ラーメン||lámen|n
 うどん||udon|n
 そば||soba|n
-パスタ||massa / macarrão|n
 刺身|さしみ|sashimi|n
 おにぎり||bolinho de arroz|n
 味噌汁|みそしる|sopa de missô|n
@@ -411,7 +393,6 @@ const VOCAB_TXT = `
 焼き肉|やきにく|churrasco japonês|n
 焼き鳥|やきとり|espetinho de frango|n
 鍋|なべ|panela / prato de panela|n
-カレー||curry|n
 丼|どんぶり|tigela de arroz com cobertura|n
 定食|ていしょく|prato feito (set)|n
 牛肉|ぎゅうにく|carne bovina|n
@@ -420,7 +401,6 @@ const VOCAB_TXT = `
 ひき肉|ひきにく|carne moída|n
 ハム||presunto|n
 ソーセージ||salsicha|n
-ベーコン||bacon|n
 鮭|さけ|salmão|n
 マグロ||atum|n
 エビ||camarão|n
@@ -429,7 +409,6 @@ const VOCAB_TXT = `
 貝|かい|marisco / concha|n
 キャベツ||repolho|n
 レタス||alface|n
-トマト||tomate|n
 きゅうり||pepino|n
 玉ねぎ|たまねぎ|cebola|n
 ねぎ||cebolinha japonesa|n
@@ -452,10 +431,7 @@ const VOCAB_TXT = `
 桃|もも|pêssego|n
 梨|なし|pera japonesa|n
 すいか||melancia|n
-メロン||melão|n
-レモン||limão|n
 パイナップル||abacaxi|n
-マンゴー||manga|n
 柿|かき|caqui|n
 お菓子|おかし|doces / salgadinhos|n
 アイス||sorvete|n
@@ -470,7 +446,6 @@ const VOCAB_TXT = `
 麦茶|むぎちゃ|chá de cevada|n
 紅茶|こうちゃ|chá preto|n
 お酒|おさけ|bebida alcoólica / saquê|n
-ワイン||vinho|n
 氷|こおり|gelo|n
 砂糖|さとう|açúcar|n
 塩|しお|sal|n
@@ -480,8 +455,6 @@ const VOCAB_TXT = `
 油|あぶら|óleo|n
 バター||manteiga|n
 チーズ||queijo|n
-マヨネーズ||maionese|n
-ケチャップ||ketchup|n
 ソース||molho|n
 調味料|ちょうみりょう|tempero|n
 味|あじ|sabor|n
@@ -497,8 +470,7 @@ const VOCAB_TXT = `
 硬い|かたい|duro|i
 新鮮|しんせん|fresco|na
 作る|つくる|fazer / preparar|v
-料理|りょうり|cozinha / prato|n
-料理する|りょうりする|cozinhar|v
+料理|りょうり|cozinha / prato (～する: cozinhar)|n
 焼く|やく|assar / grelhar|v
 煮る|にる|cozinhar (cozido)|v
 炒める|いためる|refogar / fritar mexendo|v
@@ -509,9 +481,7 @@ const VOCAB_TXT = `
 混ぜる|まぜる|misturar|v
 温める|あたためる|esquentar|v
 冷やす|ひやす|esfriar / gelar|v
-皮をむく|かわをむく|descascar|v
 味見|あじみ|provar (o sabor)|n
-レシピ||receita (culinária)|n
 材料|ざいりょう|ingrediente / material|n
 お腹がすく|おなかがすく|ficar com fome|v
 のどが渇く|のどがかわく|ficar com sede|v
@@ -531,11 +501,6 @@ const VOCAB_TXT = `
 カツ丼|カツどん|tigela de arroz com porco empanado|n
 オムライス||omurice|n
 ハンバーグ||hambúrguer (bife)|n
-ハンバーガー||hambúrguer (sanduíche)|n
-サンドイッチ||sanduíche|n
-サラダ||salada|n
-スープ||sopa|n
-ピザ||pizza|n
 ポテト||batata frita|n
 漬物|つけもの|conserva japonesa|n
 梅干し|うめぼし|ameixa em conserva|n
@@ -552,18 +517,12 @@ const VOCAB_TXT = `
 ドレッシング||molho de salada|n
 ジャム||geleia|n
 はちみつ||mel|n
-ヨーグルト||iogurte|n
-シリアル||cereal|n
 おやつ||lanchinho|n
 ポテトチップス||batata chips|n
 せんべい||biscoito de arroz|n
-アボカド||abacate|n
 とうもろこし||milho|n
-ブロッコリー||brócolis|n
 もやし||broto de feijão|n
-アスパラガス||aspargo|n
 セロリ||salsão|n
-パセリ||salsinha|n
 香辛料|こうしんりょう|especiaria|n
 唐辛子|とうがらし|pimenta vermelha|n
 冷凍食品|れいとうしょくひん|comida congelada|n
@@ -575,9 +534,7 @@ const VOCAB_TXT = `
 煮物|にもの|cozido japonês|n
 炒め物|いためもの|refogado|n
 揚げ物|あげもの|fritura|n
-ご飯を炊く|ごはんをたく|cozinhar arroz|v
 炊く|たく|cozinhar (arroz)|v
-お茶を入れる|おちゃをいれる|preparar chá|v
 台所|だいどころ|cozinha|n
 キッチン||cozinha|n
 冷蔵庫|れいぞうこ|geladeira|n
@@ -612,10 +569,7 @@ const VOCAB_TXT = `
 食堂|しょくどう|refeitório / restaurante simples|n
 居酒屋|いざかや|bar japonês (izakaya)|n
 喫茶店|きっさてん|cafeteria|n
-カフェ||café (lugar)|n
-メニュー||cardápio|n
-注文|ちゅうもん|pedido|n
-注文する|ちゅうもんする|pedir (no restaurante)|v
+注文|ちゅうもん|pedido (～する: pedir (no restaurante))|n
 店員|てんいん|atendente|n
 席|せき|assento / lugar|n
 お会計|おかいけい|conta (pagar)|n
@@ -629,7 +583,6 @@ const VOCAB_TXT = `
 喫煙|きつえん|fumar|n
 #家・家事|Casa e tarefas
 うち||casa / minha casa|n
-アパート||apartamento|n
 マンション||prédio de apartamentos|n
 一軒家|いっけんや|casa térrea / casa própria|n
 寮|りょう|dormitório|n
@@ -665,7 +618,6 @@ const VOCAB_TXT = `
 間取り|まどり|planta (do imóvel)|n
 家具|かぐ|móveis|n
 テーブル||mesa|n
-ソファー||sofá|n
 布団|ふとん|futon|n
 枕|まくら|travesseiro|n
 毛布|もうふ|cobertor|n
@@ -697,10 +649,8 @@ const VOCAB_TXT = `
 アイロン||ferro de passar|n
 ゴミ箱|ごみばこ|lixeira|n
 家事|かじ|tarefas domésticas|n
-掃除|そうじ|limpeza|n
-掃除する|そうじする|limpar|v
-洗濯|せんたく|lavar roupa|n
-洗濯する|せんたくする|lavar roupa|v
+掃除|そうじ|limpeza (～する: limpar)|n
+洗濯|せんたく|lavar roupa (～する: lavar roupa)|n
 洗濯物|せんたくもの|roupa para lavar / roupa lavada|n
 干す|ほす|estender (para secar)|v
 たたむ||dobrar|v
@@ -715,23 +665,17 @@ const VOCAB_TXT = `
 ゴミを出す|ごみをだす|colocar o lixo para fora|v
 分別|ぶんべつ|separação (do lixo)|n
 捨てる|すてる|jogar fora|v
-買い物|かいもの|compras|n
+買い物|かいもの|compras (～する: fazer compras)|n
 目が覚める|めがさめる|acordar (despertar)|v
 寝坊|ねぼう|perder a hora (dormir demais)|n
 昼寝|ひるね|cochilo|n
-顔を洗う|かおをあらう|lavar o rosto|v
 歯を磨く|はをみがく|escovar os dentes|v
 お風呂に入る|おふろにはいる|tomar banho (de banheira)|v
 シャワーを浴びる|シャワーをあびる|tomar banho (de chuveiro)|v
 着替える|きがえる|trocar de roupa|v
-化粧|けしょう|maquiagem|n
-化粧する|けしょうする|maquiar-se|v
-髪を切る|かみをきる|cortar o cabelo|v
-電気をつける|でんきをつける|acender a luz|v
-電気を消す|でんきをけす|apagar a luz|v
+化粧|けしょう|maquiagem (～する: maquiar-se)|n
 タオル||toalha|n
 石けん|せっけん|sabonete|n
-シャンプー||xampu|n
 リンス||condicionador|n
 歯ブラシ|はブラシ|escova de dentes|n
 歯磨き粉|はみがきこ|pasta de dente|n
@@ -760,11 +704,9 @@ const VOCAB_TXT = `
 傘|かさ|guarda-chuva|n
 財布|さいふ|carteira|n
 かばん||bolsa / mochila|n
-バッグ||bolsa|n
 リュック||mochila|n
 スーツケース||mala|n
 眼鏡|めがね|óculos|n
-コンタクト||lente de contato|n
 窓ガラス|まどガラス|vidro da janela|n
 網戸|あみど|tela (de janela)|n
 蛇口|じゃぐち|torneira|n
@@ -782,7 +724,6 @@ const VOCAB_TXT = `
 物干し|ものほし|varal|n
 洗濯ばさみ|せんたくばさみ|prendedor de roupa|n
 植木鉢|うえきばち|vaso de planta|n
-カギをかける|かぎをかける|trancar|v
 はしご||escada (de mão)|n
 工具|こうぐ|ferramenta|n
 ドライバー||chave de fenda|n
@@ -811,7 +752,6 @@ const VOCAB_TXT = `
 作り置き|つくりおき|comida feita com antecedência|n
 残り物|のこりもの|sobras|n
 お皿洗い|おさらあらい|lavar a louça|n
-皿を洗う|さらをあらう|lavar a louça|v
 食器|しょっき|louça|n
 食器棚|しょっきだな|armário de louça|n
 洗い物|あらいもの|louça para lavar|n
@@ -845,26 +785,19 @@ const VOCAB_TXT = `
 着物|きもの|quimono|n
 浴衣|ゆかた|yukata (quimono leve)|n
 シャツ||camisa|n
-Tシャツ|ティーシャツ|camiseta|n
-ブラウス||blusa|n
 セーター||suéter|n
 パーカー||moletom com capuz|n
 上着|うわぎ|casaco / jaqueta|n
 コート||casaco (sobretudo)|n
-ジャケット||jaqueta|n
 スーツ||terno|n
 ズボン||calça|n
-ジーンズ||jeans|n
 スカート||saia|n
 ワンピース||vestido|n
 下着|したぎ|roupa íntima|n
-パジャマ||pijama|n
 靴下|くつした|meia|n
 靴|くつ|sapato|n
 スニーカー||tênis|n
-サンダル||sandália|n
 スリッパ||chinelo (de casa)|n
-ブーツ||bota|n
 帽子|ぼうし|chapéu / boné|n
 手袋|てぶくろ|luva|n
 マフラー||cachecol|n
@@ -872,8 +805,6 @@ Tシャツ|ティーシャツ|camiseta|n
 ベルト||cinto|n
 水着|みずぎ|maiô / sunga|n
 ポケット||bolso|n
-ボタン||botão|n
-アクセサリー||acessório / bijuteria|n
 ネックレス||colar|n
 ピアス||brinco|n
 腕時計|うでどけい|relógio de pulso|n
@@ -894,7 +825,6 @@ Tシャツ|ティーシャツ|camiseta|n
 電気製品|でんきせいひん|aparelho elétrico|n
 ライター||isqueiro|n
 マッチ||fósforo|n
-ポスター||pôster|n
 カバー||capa|n
 ケース||estojo / capa|n
 シール||adesivo|n
@@ -960,13 +890,10 @@ Tシャツ|ティーシャツ|camiseta|n
 会社|かいしゃ|empresa|n
 事務所|じむしょ|escritório|n
 ガソリンスタンド||posto de gasolina|n
-ATM|エーティーエム|caixa eletrônico|n
 入口|いりぐち|entrada|n
 出口|でぐち|saída|n
 受付窓口|うけつけまどぐち|guichê|n
 窓口|まどぐち|guichê / balcão|n
-エレベーター||elevador|n
-エスカレーター||escada rolante|n
 お手洗い|おてあらい|banheiro|n
 非常口|ひじょうぐち|saída de emergência|n
 道|みち|rua / caminho|n
@@ -1009,7 +936,6 @@ ATM|エーティーエム|caixa eletrônico|n
 渡る|わたる|atravessar|v
 通る|とおる|passar (por)|v
 迷う|まよう|perder-se / ficar em dúvida|v
-道に迷う|みちにまよう|perder-se no caminho|v
 地下鉄|ちかてつ|metrô|n
 新幹線|しんかんせん|trem-bala|n
 駅員|えきいん|funcionário da estação|n
@@ -1037,8 +963,7 @@ ICカード|アイシーカード|cartão de transporte|n
 バイク||moto|n
 飛行機|ひこうき|avião|n
 船|ふね|navio / barco|n
-運転|うんてん|direção (dirigir)|n
-運転する|うんてんする|dirigir|v
+運転|うんてん|direção (dirigir) (～する: dirigir)|n
 運転免許|うんてんめんきょ|carteira de motorista|n
 運転手|うんてんしゅ|motorista|n
 乗る|のる|pegar / subir (veículo)|v
@@ -1055,8 +980,6 @@ ICカード|アイシーカード|cartão de transporte|n
 空港|くうこう|aeroporto|n
 成田|なりた|Narita (aeroporto)|n
 羽田|はねだ|Haneda (aeroporto)|n
-パスポート||passaporte|n
-ビザ||visto|n
 在留カード|ざいりゅうカード|cartão de residente|n
 入国|にゅうこく|entrada no país|n
 出国|しゅっこく|saída do país|n
@@ -1064,25 +987,22 @@ ICカード|アイシーカード|cartão de transporte|n
 税関|ぜいかん|alfândega|n
 荷物|にもつ|bagagem|n
 手荷物|てにもつ|bagagem de mão|n
-チェックイン||check-in|n
 搭乗口|とうじょうぐち|portão de embarque|n
 搭乗券|とうじょうけん|cartão de embarque|n
 便|びん|voo|n
 国際線|こくさいせん|voo internacional|n
 国内線|こくないせん|voo doméstico|n
-到着|とうちゃく|chegada|n
-出発|しゅっぱつ|partida|n
-両替|りょうがえ|câmbio|n
+到着|とうちゃく|chegada (～する: chegar)|n
+出発|しゅっぱつ|partida (～する: partir)|n
+両替|りょうがえ|câmbio (～する: trocar dinheiro)|n
 時差|じさ|fuso horário (diferença)|n
 時差ぼけ|じさぼけ|jet lag|n
-旅行|りょこう|viagem|n
-旅行する|りょこうする|viajar|v
-観光|かんこう|turismo|n
+旅行|りょこう|viagem (～する: viajar)|n
+観光|かんこう|turismo (～する: fazer turismo)|n
 観光地|かんこうち|ponto turístico|n
 お土産|おみやげ|lembrancinha|n
 予定|よてい|plano / programação|n
 写真|しゃしん|foto|n
-写真を撮る|しゃしんをとる|tirar foto|v
 外国|がいこく|exterior / país estrangeiro|n
 海外|かいがい|exterior|n
 国|くに|país|n
@@ -1106,10 +1026,8 @@ ICカード|アイシーカード|cartão de transporte|n
 レシート||nota fiscal / recibo|n
 領収書|りょうしゅうしょ|recibo|n
 レジ||caixa (de loja)|n
-クレジットカード||cartão de crédito|n
 ポイントカード||cartão de pontos|n
 袋はいりますか|ふくろはいりますか|precisa de sacola?|x
-カード||cartão|n
 売る|うる|vender|v
 払う|はらう|pagar|v
 売り場|うりば|seção (da loja)|n
@@ -1120,7 +1038,7 @@ ICカード|アイシーカード|cartão de transporte|n
 新品|しんぴん|novo (produto)|n
 中古|ちゅうこ|usado / seminovo|n
 返品|へんぴん|devolução|n
-交換|こうかん|troca|n
+交換|こうかん|troca (～する: trocar)|n
 得|とく|vantajoso / economia|na
 損|そん|prejuízo|n
 貯金|ちょきん|poupança|n
@@ -1145,7 +1063,6 @@ ICカード|アイシーカード|cartão de transporte|n
 特売|とくばい|promoção|n
 期間限定|きかんげんてい|por tempo limitado|n
 人気|にんき|popularidade|n
-人気がある|にんきがある|ser popular|v
 新商品|しんしょうひん|produto novo|n
 おまけ||brinde / extra|n
 ポイント||pontos|n
@@ -1201,7 +1118,6 @@ ICカード|アイシーカード|cartão de transporte|n
 日曜日|にちようび|domingo|n
 曜日|ようび|dia da semana|n
 日付|ひづけ|data|n
-カレンダー||calendário|n
 一日|ついたち|dia 1 (do mês)|n
 二日|ふつか|dia 2 / dois dias|n
 三日|みっか|dia 3 / três dias|n
@@ -1271,13 +1187,9 @@ ICカード|アイシーカード|cartão de transporte|n
 花火|はなび|fogos de artifício|n
 祭り|まつり|festival|n
 紅葉|こうよう|folhas vermelhas de outono|n
-クリスマス||Natal|n
-バレンタインデー||Dia dos Namorados (14/2)|n
 ゴールデンウィーク||Golden Week (feriados de maio)|n
 連休|れんきゅう|feriado prolongado|n
 休み|やすみ|folga / férias|n
-パーティー||festa|n
-プレゼント||presente|n
 お祝い|おいわい|comemoração / presente|n
 天気|てんき|tempo (clima)|n
 天気予報|てんきよほう|previsão do tempo|n
@@ -1327,10 +1239,7 @@ ICカード|アイシーカード|cartão de transporte|n
 日焼け|ひやけ|bronzeado / queimadura de sol|n
 日焼け止め|ひやけどめ|protetor solar|n
 花粉|かふん|pólen|n
-雨が降る|あめがふる|chover|v
-雪が降る|ゆきがふる|nevar|v
 春らしい|はるらしい|típico da primavera|i
-桜が咲く|さくらがさく|as cerejeiras florescem|v
 蝉|せみ|cigarra|n
 かき氷|かきごおり|raspadinha de gelo|n
 冬服|ふゆふく|roupa de inverno|n
@@ -1341,7 +1250,6 @@ ICカード|アイシーカード|cartão de transporte|n
 #数・量|Números e quantidades
 数|かず|número / quantidade|n
 数字|すうじ|algarismo / número|n
-ゼロ||zero|n
 万|まん|dez mil|n
 億|おく|cem milhões|n
 一つ|ひとつ|um (objeto)|n
@@ -1394,11 +1302,7 @@ ICカード|アイシーカード|cartão de transporte|n
 大きさ|おおきさ|tamanho|n
 量|りょう|quantidade|n
 キロ||quilo / quilômetro|n
-グラム||grama|n
-メートル||metro|n
 センチ||centímetro|n
-リットル||litro|n
-パーセント||por cento|n
 何回|なんかい|quantas vezes|n
 何日|なんにち|quantos dias / que dia|n
 何月|なんがつ|que mês|n
@@ -1419,7 +1323,6 @@ ICカード|アイシーカード|cartão de transporte|n
 同い年|おないどし|mesma idade|n
 #仕事|Trabalho
 仕事|しごと|trabalho|n
-仕事をする|しごとをする|trabalhar|v
 働く|はたらく|trabalhar|v
 会社員|かいしゃいん|funcionário de empresa|n
 社員|しゃいん|funcionário|n
@@ -1439,46 +1342,38 @@ ICカード|アイシーカード|cartão de transporte|n
 派遣|はけん|trabalho temporário (agência)|n
 面接|めんせつ|entrevista|n
 履歴書|りれきしょ|currículo|n
-応募|おうぼ|candidatura|n
-応募する|おうぼする|candidatar-se|v
+応募|おうぼ|candidatura (～する: candidatar-se)|n
 採用|さいよう|contratação|n
 求人|きゅうじん|vaga de emprego|n
 就職|しゅうしょく|conseguir emprego|n
 転職|てんしょく|mudar de emprego|n
 退職|たいしょく|aposentadoria / sair do emprego|n
 辞める|やめる|largar / pedir demissão|v
-休憩|きゅうけい|intervalo|n
+休憩|きゅうけい|intervalo (～する: fazer intervalo)|n
 残業|ざんぎょう|hora extra|n
 出勤|しゅっきん|ir ao trabalho|n
 退勤|たいきん|sair do trabalho|n
 通勤|つうきん|deslocamento ao trabalho|n
-遅刻|ちこく|atraso (chegar tarde)|n
-遅刻する|ちこくする|chegar atrasado|v
+遅刻|ちこく|atraso (chegar tarde) (～する: chegar atrasado)|n
 早退|そうたい|sair mais cedo|n
 欠勤|けっきん|falta (no trabalho)|n
 有給休暇|ゆうきゅうきゅうか|férias remuneradas|n
 シフト||turno / escala|n
 時給|じきゅう|salário por hora|n
 月給|げっきゅう|salário mensal|n
-ボーナス||bônus|n
 契約|けいやく|contrato|n
 会議|かいぎ|reunião|n
 打ち合わせ|うちあわせ|reunião (de alinhamento)|n
 資料|しりょう|material / documento|n
 書類|しょるい|documentos|n
-報告|ほうこく|relatório / relato|n
-報告する|ほうこくする|relatar|v
-連絡|れんらく|contato / aviso|n
-連絡する|れんらくする|entrar em contato|v
-相談|そうだん|consulta / conversa|n
-相談する|そうだんする|consultar / pedir conselho|v
-確認|かくにん|confirmação|n
-確認する|かくにんする|confirmar / verificar|v
-準備|じゅんび|preparação|n
-準備する|じゅんびする|preparar|v
+報告|ほうこく|relatório / relato (～する: relatar)|n
+連絡|れんらく|contato / aviso (～する: entrar em contato)|n
+相談|そうだん|consulta / conversa (～する: consultar / pedir conselho)|n
+確認|かくにん|confirmação (～する: confirmar / verificar)|n
+準備|じゅんび|preparação (～する: preparar)|n
 担当|たんとう|responsável (por)|n
 責任|せきにん|responsabilidade|n
-経験|けいけん|experiência|n
+経験|けいけん|experiência (～する: experimentar / vivenciar)|n
 能力|のうりょく|capacidade|n
 制服|せいふく|uniforme|n
 名刺|めいし|cartão de visita|n
@@ -1496,12 +1391,10 @@ ICカード|アイシーカード|cartão de transporte|n
 美容師|びようし|cabeleireiro(a)|n
 保育士|ほいくし|educador(a) de creche|n
 介護士|かいごし|cuidador(a) de idosos|n
-エンジニア||engenheiro(a)|n
 弁護士|べんごし|advogado(a)|n
 公務員|こうむいん|funcionário público|n
 主婦|しゅふ|dona de casa|n
-作業|さぎょう|trabalho / tarefa|n
-作業する|さぎょうする|trabalhar (numa tarefa)|v
+作業|さぎょう|trabalho / tarefa (～する: trabalhar (numa tarefa))|n
 製品|せいひん|produto (fabricado)|n
 品質|ひんしつ|qualidade|n
 検品|けんぴん|inspeção (de produtos)|n
@@ -1509,8 +1402,7 @@ ICカード|アイシーカード|cartão de transporte|n
 倉庫|そうこ|depósito / armazém|n
 ライン||linha (de produção)|n
 安全第一|あんぜんだいいち|segurança em primeiro lugar|x
-指示|しじ|instrução / ordem|n
-指示する|しじする|instruir|v
+指示|しじ|instrução / ordem (～する: instruir)|n
 目上|めうえ|superior (pessoa)|n
 ミス||erro (no trabalho)|n
 予定表|よていひょう|cronograma|n
@@ -1520,27 +1412,19 @@ ICカード|アイシーカード|cartão de transporte|n
 折り返し|おりかえし|retornar (a ligação)|n
 伝言|でんごん|recado|n
 メモ||anotação|n
-メモする||anotar|v
-コピー||cópia|n
-コピーする||copiar|v
-印刷|いんさつ|impressão|n
-印刷する|いんさつする|imprimir|v
+印刷|いんさつ|impressão (～する: imprimir)|n
 プリンター||impressora|n
 ファイル||arquivo / pasta|n
-データ||dados|n
-完成|かんせい|conclusão (obra pronta)|n
-完成する|かんせいする|ficar pronto|v
+完成|かんせい|conclusão (obra pronta) (～する: ficar pronto)|n
 進む|すすむ|avançar|v
 進める|すすめる|avançar (algo)|v
 #学校・勉強|Escola e estudo
-勉強|べんきょう|estudo|n
-勉強する|べんきょうする|estudar|v
+勉強|べんきょう|estudo (～する: estudar)|n
 習う|ならう|aprender (com alguém)|v
 学ぶ|まなぶ|aprender|v
 覚える|おぼえる|memorizar / lembrar|v
 忘れる|わすれる|esquecer|v
-練習|れんしゅう|treino / prática|n
-練習する|れんしゅうする|praticar|v
+練習|れんしゅう|treino / prática (～する: praticar)|n
 復習|ふくしゅう|revisão|n
 予習|よしゅう|estudo prévio|n
 宿題|しゅくだい|lição de casa|n
@@ -1548,14 +1432,11 @@ ICカード|アイシーカード|cartão de transporte|n
 教室|きょうしつ|sala de aula|n
 日本語学校|にほんごがっこう|escola de japonês|n
 試験|しけん|prova / exame|n
-テスト||teste / prova|n
-合格|ごうかく|aprovação|n
-合格する|ごうかくする|passar (na prova)|v
+合格|ごうかく|aprovação (～する: passar (na prova))|n
 問題|もんだい|problema / questão|n
 答え|こたえ|resposta|n
 答える|こたえる|responder|v
-質問|しつもん|pergunta|n
-質問する|しつもんする|perguntar|v
+質問|しつもん|pergunta (～する: perguntar)|n
 意味|いみ|significado|n
 言葉|ことば|palavra / língua|n
 単語|たんご|vocábulo|n
@@ -1564,7 +1445,6 @@ ICカード|アイシーカード|cartão de transporte|n
 発音|はつおん|pronúncia|n
 漢字|かんじ|kanji|n
 ひらがな||hiragana|n
-カタカナ||katakana|n
 日本語|にほんご|japonês (língua)|n
 ポルトガル語|ポルトガルご|português (língua)|n
 英語|えいご|inglês|n
@@ -1574,8 +1454,7 @@ ICカード|アイシーカード|cartão de transporte|n
 例|れい|exemplo|n
 例文|れいぶん|frase de exemplo|n
 言う|いう|dizer|v
-説明|せつめい|explicação|n
-説明する|せつめいする|explicar|v
+説明|せつめい|explicação (～する: explicar)|n
 作文|さくぶん|redação|n
 日記|にっき|diário|n
 成績|せいせき|nota / desempenho|n
@@ -1601,11 +1480,10 @@ ICカード|アイシーカード|cartão de transporte|n
 塾|じゅく|cursinho|n
 ランドセル||mochila escolar|n
 黒板|こくばん|lousa|n
-クラス||turma|n
 同級生|どうきゅうせい|colega de classe|n
 #役所・電話・ネット|Repartição, telefone e internet
 手続き|てつづき|trâmite / procedimento|n
-申請|しんせい|solicitação|n
+申請|しんせい|solicitação (～する: solicitar (oficialmente))|n
 申し込み|もうしこみ|inscrição / pedido|n
 申し込む|もうしこむ|inscrever-se / solicitar|v
 届け出|とどけで|notificação (oficial)|n
@@ -1619,12 +1497,9 @@ ICカード|アイシーカード|cartão de transporte|n
 身分証明書|みぶんしょうめいしょ|documento de identidade|n
 証明書|しょうめいしょ|certificado|n
 用紙|ようし|formulário (papel)|n
-記入|きにゅう|preenchimento|n
-記入する|きにゅうする|preencher|v
-提出|ていしゅつ|entrega (de documento)|n
-提出する|ていしゅつする|entregar (documento)|v
+記入|きにゅう|preenchimento (～する: preencher)|n
+提出|ていしゅつ|entrega (de documento) (～する: entregar (documento))|n
 必要|ひつよう|necessário|na
-書類を出す|しょるいをだす|entregar documentos|v
 整理券|せいりけん|senha (de atendimento)|n
 呼ぶ|よぶ|chamar|v
 待つ|まつ|esperar|v
@@ -1640,7 +1515,7 @@ ICカード|アイシーカード|cartão de transporte|n
 配偶者ビザ|はいぐうしゃビザ|visto de cônjuge|n
 婚姻届|こんいんとどけ|registro de casamento|n
 入国管理局|にゅうこくかんりきょく|imigração (órgão)|n
-更新|こうしん|renovação|n
+更新|こうしん|renovação (～する: renovar)|n
 税金|ぜいきん|imposto|n
 年金|ねんきん|aposentadoria / pensão|n
 保険|ほけん|seguro|n
@@ -1648,40 +1523,31 @@ ICカード|アイシーカード|cartão de transporte|n
 携帯|けいたい|celular|n
 スマホ||smartphone|n
 メール||e-mail / mensagem|n
-メッセージ||mensagem|n
 返事|へんじ|resposta|n
 返信|へんしん|resposta (mensagem)|n
 送る|おくる|enviar / levar|v
 届く|とどく|chegar (entrega)|v
 受け取る|うけとる|receber|v
-インターネット||internet|n
 ネット||internet|n
-Wi-Fi|ワイファイ|Wi-Fi|n
 パソコン||computador|n
 アプリ||aplicativo|n
 パスワード||senha|n
 アカウント||conta (online)|n
-登録|とうろく|cadastro|n
-登録する|とうろくする|cadastrar-se|v
-ダウンロード||download|n
-検索|けんさく|pesquisa (busca)|n
-検索する|けんさくする|pesquisar|v
+登録|とうろく|cadastro (～する: cadastrar-se)|n
+検索|けんさく|pesquisa (busca) (～する: pesquisar)|n
 画面|がめん|tela|n
 充電|じゅうでん|carregar (bateria)|n
 充電器|じゅうでんき|carregador|n
 電源|でんげん|energia / botão de ligar|n
-写真を送る|しゃしんをおくる|enviar foto|v
 ビデオ通話|ビデオつうわ|videochamada|n
 通知|つうち|notificação|n
 設定|せってい|configuração|n
 宅配便|たくはいびん|entrega (encomenda)|n
-荷物が届く|にもつがとどく|a encomenda chega|v
 不在票|ふざいひょう|aviso de entrega (ausente)|n
 再配達|さいはいたつ|reentrega|n
 郵便|ゆうびん|correio (correspondência)|n
 #日本の生活・安全|Vida no Japão e segurança
 お辞儀|おじぎ|reverência (curvar-se)|n
-靴を脱ぐ|くつをぬぐ|tirar os sapatos|v
 自動販売機|じどうはんばいき|máquina de venda automática|n
 自販機|じはんき|máquina de venda (abrev.)|n
 コンビニ弁当|コンビニべんとう|marmita de conveniência|n
@@ -1700,8 +1566,7 @@ Wi-Fi|ワイファイ|Wi-Fi|n
 割り勘|わりかん|dividir a conta|n
 おごる||pagar para alguém|v
 空気を読む|くうきをよむ|ler o ambiente|v
-遠慮|えんりょ|cerimônia / reserva|n
-遠慮する|えんりょする|fazer cerimônia / abster-se|v
+遠慮|えんりょ|cerimônia / reserva (～する: fazer cerimônia / abster-se)|n
 気を使う|きをつかう|ser atencioso / se preocupar com os outros|v
 お世話になる|おせわになる|ser bem cuidado (por alguém)|v
 お邪魔します|おじゃまします|com licença (ao entrar na casa de alguém)|x
@@ -1712,9 +1577,8 @@ Wi-Fi|ワイファイ|Wi-Fi|n
 緊急|きんきゅう|emergência|n
 助けて|たすけて|socorro!|x
 火事|かじ|incêndio|n
-避難|ひなん|evacuação|n
+避難|ひなん|evacuação (～する: evacuar / refugiar-se)|n
 避難所|ひなんじょ|abrigo (refúgio)|n
-避難する|ひなんする|evacuar / refugiar-se|v
 防災|ぼうさい|prevenção de desastres|n
 非常食|ひじょうしょく|comida de emergência|n
 懐中電灯|かいちゅうでんとう|lanterna|n
@@ -1753,7 +1617,6 @@ Wi-Fi|ワイファイ|Wi-Fi|n
 景色|けしき|paisagem|n
 空気|くうき|ar|n
 浜辺|はまべ|praia (beira-mar)|n
-ビーチ||praia|n
 波|なみ|onda|n
 坂|さか|ladeira|n
 田んぼ|たんぼ|arrozal|n
@@ -1782,10 +1645,7 @@ Wi-Fi|ワイファイ|Wi-Fi|n
 カエル||sapo|n
 亀|かめ|tartaruga|n
 金魚|きんぎょ|peixe dourado|n
-パンダ||panda|n
-ライオン||leão|n
 象|ぞう|elefante|n
-花が咲く|はながさく|a flor desabrocha|v
 咲く|さく|florescer|v
 散る|ちる|cair (pétalas, folhas)|v
 育てる|そだてる|criar / cultivar|v
@@ -1797,88 +1657,47 @@ Wi-Fi|ワイファイ|Wi-Fi|n
 音楽|おんがく|música|n
 歌|うた|canção|n
 歌う|うたう|cantar|v
-カラオケ||karaokê|n
 踊る|おどる|dançar|v
-ダンス||dança|n
 絵|え|desenho / pintura|n
 絵を描く|えをかく|desenhar / pintar|v
 漫画|まんが|mangá / quadrinhos|n
-アニメ||anime|n
 雑誌|ざっし|revista|n
 小説|しょうせつ|romance (livro)|n
 新聞|しんぶん|jornal|n
-ゲーム||jogo / videogame|n
-スポーツ||esporte|n
 サッカー||futebol|n
 野球|やきゅう|beisebol|n
-バレーボール||vôlei|n
-テニス||tênis|n
 水泳|すいえい|natação|n
 泳ぐ|およぐ|nadar|v
 走る|はしる|correr|v
-散歩|さんぽ|passeio a pé|n
-散歩する|さんぽする|passear|v
-ジョギング||corrida (jogging)|n
-ヨガ||ioga|n
-運動|うんどう|exercício físico|n
-運動する|うんどうする|fazer exercício|v
+散歩|さんぽ|passeio a pé (～する: passear)|n
+運動|うんどう|exercício físico (～する: fazer exercício)|n
 試合|しあい|partida / jogo|n
 勝つ|かつ|ganhar / vencer|v
 負ける|まける|perder (jogo)|v
-チーム||time|n
 選手|せんしゅ|atleta / jogador|n
-応援|おうえん|torcida / apoio|n
-応援する|おうえんする|torcer / apoiar|v
+応援|おうえん|torcida / apoio (～する: torcer / apoiar)|n
 料理教室|りょうりきょうしつ|aula de culinária|n
-ピアノ||piano|n
-ギター||violão / guitarra|n
 楽器|がっき|instrumento musical|n
 弾く|ひく|tocar (instrumento)|v
-カメラ||câmera|n
-キャンプ||acampamento|n
 ドライブ||passeio de carro|n
-ショッピング||compras (passeio)|n
-コンサート||show / concerto|n
 ライブ||show ao vivo|n
 チケット||ingresso|n
 番組|ばんぐみ|programa (TV)|n
-ドラマ||novela / série|n
 ニュース||notícia / jornal (TV)|n
 動画|どうが|vídeo|n
 楽しむ|たのしむ|aproveitar / divertir-se|v
 出かける|でかける|sair (de casa)|v
-イベント||evento|n
 サービス||serviço / cortesia|n
-システム||sistema|n
 スケジュール||agenda / cronograma|n
-プラン||plano|n
-メンバー||membro|n
-グループ||grupo|n
-リスト||lista|n
-ページ||página|n
 タイプ||tipo|n
-スタイル||estilo|n
-デザイン||design|n
 イメージ||imagem / ideia|n
-アイデア||ideia|n
-テーマ||tema|n
-レベル||nível|n
 ペース||ritmo|n
-スピード||velocidade|n
-エネルギー||energia|n
-バランス||equilíbrio|n
 ストレス解消|ストレスかいしょう|alívio do estresse|n
-リラックス||relaxar|n
 マイペース||no seu ritmo|na
 チェック||checagem|n
-チェックする||checar|v
 キャンセル||cancelamento|n
-スタート||início|n
-ゴール||meta / gol|n
-ルールを守る|ルールをまもる|seguir as regras|v
 トップ||topo / primeiro|n
 セット||conjunto / combo|n
-サイズが合う|サイズがあう|o tamanho serve|v
 オープン||abertura / inauguração|n
 フロア||andar (piso)|n
 カウンター||balcão|n
@@ -1886,13 +1705,9 @@ Wi-Fi|ワイファイ|Wi-Fi|n
 コインロッカー||guarda-volumes|n
 トランク||porta-malas|n
 シートベルト||cinto de segurança|n
-ガソリン||gasolina|n
 タイヤ||pneu|n
 ハンドル||volante / maçaneta|n
 ナビ||GPS (navegador)|n
-ラジオ||rádio|n
-ビデオ||vídeo|n
-CD|シーディー|CD|n
 マンガ喫茶|マンガきっさ|café de mangá|n
 ネットカフェ||lan house|n
 #気持ち|Sentimentos
@@ -1900,7 +1715,7 @@ CD|シーディー|CD|n
 気分|きぶん|humor / disposição|n
 心|こころ|coração (sentimento)|n
 愛|あい|amor|n
-恋|こい|paixão / amor romântico|n
+恋|こい|paixão / amor romântico (～する: apaixonar-se)|n
 夢|ゆめ|sonho|n
 嬉しい|うれしい|feliz / contente|i
 楽しい|たのしい|divertido|i
@@ -1915,13 +1730,10 @@ CD|シーディー|CD|n
 面白い|おもしろい|interessante / engraçado|i
 うるさい||barulhento / chato|i
 眠い|ねむい|com sono|i
-心配|しんぱい|preocupação|na
-心配する|しんぱいする|preocupar-se|v
-安心|あんしん|alívio / tranquilidade|na
-安心する|あんしんする|ficar aliviado|v
+心配|しんぱい|preocupação (～する: preocupar-se)|na
+安心|あんしん|alívio / tranquilidade (～する: ficar aliviado)|na
 不安|ふあん|ansiedade / insegurança|na
-緊張|きんちょう|nervosismo|n
-緊張する|きんちょうする|ficar nervoso|v
+緊張|きんちょう|nervosismo (～する: ficar nervoso)|n
 幸せ|しあわせ|feliz / felicidade|na
 大好き|だいすき|adorar|na
 大嫌い|だいきらい|detestar|na
@@ -1936,24 +1748,17 @@ CD|シーディー|CD|n
 喜ぶ|よろこぶ|alegrar-se|v
 困る|こまる|ficar em apuros|v
 悩む|なやむ|ficar preocupado / em dúvida|v
-感動|かんどう|emoção (comoção)|n
-感動する|かんどうする|emocionar-se|v
-感謝|かんしゃ|gratidão|n
-感謝する|かんしゃする|agradecer|v
-我慢|がまん|paciência / aguentar|n
-我慢する|がまんする|aguentar / segurar|v
-ストレス||estresse|n
+感動|かんどう|emoção (comoção) (～する: emocionar-se)|n
+感謝|かんしゃ|gratidão (～する: agradecer)|n
+我慢|がまん|paciência / aguentar (～する: aguentar / segurar)|n
 会いたい|あいたい|quero te ver / saudade|x
 愛してる|あいしてる|eu te amo|x
 希望|きぼう|esperança / desejo|n
-期待|きたい|expectativa|n
+期待|きたい|expectativa (～する: ter expectativa)|n
 不満|ふまん|insatisfação|n
-満足|まんぞく|satisfação|na
-満足する|まんぞくする|ficar satisfeito|v
-後悔|こうかい|arrependimento|n
-後悔する|こうかいする|arrepender-se|v
-反省|はんせい|reflexão (autocrítica)|n
-反省する|はんせいする|refletir sobre o erro|v
+満足|まんぞく|satisfação (～する: ficar satisfeito)|na
+後悔|こうかい|arrependimento (～する: arrepender-se)|n
+反省|はんせい|reflexão (autocrítica) (～する: refletir sobre o erro)|n
 感想|かんそう|impressão / opinião|n
 印象|いんしょう|impressão|n
 気になる|きになる|ficar curioso / incomodar|v
@@ -1964,7 +1769,6 @@ CD|シーディー|CD|n
 気が短い|きがみじかい|impaciente|i
 腹が立つ|はらがたつ|ficar irritado|v
 頭にくる|あたまにくる|ficar furioso|v
-ショック||choque|n
 落ち込む|おちこむ|ficar para baixo|v
 元気を出す|げんきをだす|animar-se|v
 元気になる|げんきになる|melhorar / ficar animado|v
@@ -2086,13 +1890,11 @@ CD|シーディー|CD|n
 届ける|とどける|entregar|v
 配る|くばる|distribuir|v
 迎える|むかえる|receber (alguém) / buscar|v
-迎えに行く|むかえにいく|ir buscar (alguém)|v
 見送る|みおくる|despedir-se (acompanhar)|v
 訪ねる|たずねる|visitar|v
 招待する|しょうたいする|convidar|v
 誘う|さそう|convidar (chamar)|v
-約束|やくそく|promessa / compromisso|n
-約束する|やくそくする|prometer|v
+約束|やくそく|promessa / compromisso (～する: prometer)|n
 断る|ことわる|recusar|v
 許す|ゆるす|perdoar / permitir|v
 謝る|あやまる|pedir desculpas|v
@@ -2110,31 +1912,23 @@ CD|シーディー|CD|n
 慣れる|なれる|acostumar-se|v
 頑張る|がんばる|esforçar-se|v
 諦める|あきらめる|desistir|v
-失敗する|しっぱいする|errar / falhar|v
-成功する|せいこうする|ter sucesso|v
 間違える|まちがえる|errar|v
 間違う|まちがう|estar errado|v
 気をつける|きをつける|tomar cuidado|v
 気がつく|きがつく|perceber|v
 気にする|きにする|se importar / se preocupar|v
-注意する|ちゅういする|prestar atenção / advertir|v
 決心する|けっしんする|tomar uma decisão|v
 用意する|よういする|preparar / providenciar|v
-予約する|よやくする|reservar / agendar|v
 利用する|りようする|utilizar|v
-案内する|あんないする|guiar / mostrar o caminho|v
 紹介する|しょうかいする|apresentar|v
 参加する|さんかする|participar|v
 出席する|しゅっせきする|comparecer|v
 欠席する|けっせきする|faltar|v
-到着する|とうちゃくする|chegar|v
-出発する|しゅっぱつする|partir|v
 着く|つく|chegar|v
 向かう|むかう|dirigir-se a|v
 通う|かよう|frequentar (ir regularmente)|v
 過ごす|すごす|passar (o tempo)|v
 泊まる|とまる|hospedar-se|v
-休憩する|きゅうけいする|fazer intervalo|v
 待たせる|またせる|fazer esperar|v
 話し合う|はなしあう|conversar (discutir)|v
 しゃべる||conversar / tagarelar|v
@@ -2188,14 +1982,11 @@ CD|シーディー|CD|n
 受かる|うかる|passar (prova)|v
 落ち着く|おちつく|acalmar-se|v
 楽しみにする|たのしみにする|estar ansioso (positivo)|v
-期待する|きたいする|ter expectativa|v
 願う|ねがう|desejar|v
 祈る|いのる|rezar / desejar|v
 憧れる|あこがれる|admirar / sonhar com|v
-恋する|こいする|apaixonar-se|v
 付き合う|つきあう|namorar / acompanhar|v
 別れる|わかれる|separar-se / terminar|v
-結婚する|けっこんする|casar-se|v
 離れる|はなれる|afastar-se|v
 近づく|ちかづく|aproximar-se|v
 寄る|よる|passar (em algum lugar)|v
@@ -2232,9 +2023,6 @@ CD|シーディー|CD|n
 運動不足|うんどうぶそく|falta de exercício|n
 見学する|けんがくする|visitar (para conhecer)|v
 見物する|けんぶつする|passear vendo / turistar|v
-観光する|かんこうする|fazer turismo|v
-買い物する|かいものする|fazer compras|v
-食事する|しょくじする|fazer refeição|v
 外食する|がいしょくする|comer fora|v
 自炊する|じすいする|cozinhar em casa|v
 留守番する|るすばんする|ficar tomando conta da casa|v
@@ -2244,24 +2032,14 @@ CD|シーディー|CD|n
 介護|かいご|cuidado de idosos|n
 子育て|こそだて|criação dos filhos|n
 出産|しゅっさん|parto|n
-妊娠する|にんしんする|engravidar|v
-電話をかける|でんわをかける|fazer uma ligação|v
 連絡を取る|れんらくをとる|manter contato|v
-返事をする|へんじをする|responder|v
-道を聞く|みちをきく|perguntar o caminho|v
-道を教える|みちをおしえる|ensinar o caminho|v
 開店|かいてん|abertura (da loja)|n
 閉店|へいてん|fechamento (da loja)|n
 営業する|えいぎょうする|funcionar (comércio)|v
-席を譲る|せきをゆずる|ceder o lugar|v
 譲る|ゆずる|ceder|v
 降ろす|おろす|descarregar / sacar (dinheiro)|v
-お金を下ろす|おかねをおろす|sacar dinheiro|v
-両替する|りょうがえする|trocar dinheiro|v
 振り込む|ふりこむ|transferir (dinheiro)|v
 払い込む|はらいこむ|pagar (depositar)|v
-申請する|しんせいする|solicitar (oficialmente)|v
-更新する|こうしんする|renovar|v
 済ませる|すませる|concluir / dar conta de|v
 済む|すむ|terminar / resolver-se|v
 起き上がる|おきあがる|levantar-se|v
@@ -2311,8 +2089,7 @@ CD|シーディー|CD|n
 従う|したがう|seguir / obedecer|v
 迷惑をかける|めいわくをかける|causar incômodo|v
 迷惑|めいわく|incômodo|na
-邪魔|じゃま|atrapalho / estorvo|na
-邪魔する|じゃまする|atrapalhar|v
+邪魔|じゃま|atrapalho / estorvo (～する: atrapalhar)|na
 怒られる|おこられる|levar bronca|v
 褒められる|ほめられる|ser elogiado|v
 頼まれる|たのまれる|ser pedido (receber um pedido)|v
@@ -2334,7 +2111,6 @@ CD|シーディー|CD|n
 削除する|さくじょする|apagar (dados)|v
 変更する|へんこうする|alterar|v
 中止する|ちゅうしする|cancelar (evento)|v
-キャンセルする||cancelar|v
 延期する|えんきする|adiar|v
 はまる||ficar viciado / encaixar|v
 すべる||escorregar|v
@@ -2357,11 +2133,9 @@ CD|シーディー|CD|n
 寝つく|ねつく|pegar no sono|v
 眠る|ねむる|dormir|v
 夢を見る|ゆめをみる|sonhar|v
-目を覚ます|めをさます|despertar|v
 暮らし|くらし|vida / modo de vida|n
 住まい|すまい|moradia|n
 荷造り|にづくり|fazer as malas|n
-荷物をまとめる|にもつをまとめる|arrumar a bagagem|v
 まとめる||organizar / juntar|v
 預ける|あずける|deixar guardado / depositar|v
 預かる|あずかる|guardar (para alguém)|v
@@ -2369,11 +2143,7 @@ CD|シーディー|CD|n
 問い合わせる|といあわせる|fazer consulta / perguntar|v
 問い合わせ|といあわせ|consulta / contato|n
 申し訳ない|もうしわけない|sentir muito|i
-ご馳走する|ごちそうする|convidar (pagar a refeição)|v
-ご馳走|ごちそう|banquete / refeição especial|n
-空いている|あいている|estar vago / vazio|v
-混んでいる|こんでいる|estar lotado|v
-結婚している|けっこんしている|ser casado|v
+ご馳走|ごちそう|banquete / refeição especial (～する: convidar (pagar a refeição))|n
 #形容詞|Adjetivos
 長い|ながい|comprido / longo|i
 短い|みじかい|curto|i
@@ -2409,10 +2179,8 @@ CD|シーディー|CD|n
 茶色い|ちゃいろい|marrom|i
 緑|みどり|verde|n
 色|いろ|cor|n
-ピンク||rosa|n
 紫|むらさき|roxo|n
 灰色|はいいろ|cinza|n
-オレンジ||laranja (cor)|n
 金色|きんいろ|dourado|n
 銀色|ぎんいろ|prateado|n
 汚い|きたない|sujo|i
@@ -2699,7 +2467,6 @@ CD|シーディー|CD|n
 状態|じょうたい|estado / condição|n
 場合|ばあい|caso / situação|n
 機会|きかい|oportunidade|n
-チャンス||chance|n
 問題ない|もんだいない|sem problema|x
 都合|つごう|conveniência / disponibilidade|n
 予算|よさん|orçamento|n
@@ -2709,9 +2476,8 @@ CD|シーディー|CD|n
 休業|きゅうぎょう|fechado (não funciona)|n
 定休日|ていきゅうび|dia de folga fixo (loja)|n
 営業時間|えいぎょうじかん|horário de funcionamento|n
-注意|ちゅうい|atenção / cuidado|n
+注意|ちゅうい|atenção / cuidado (～する: prestar atenção / advertir)|n
 規則|きそく|regra|n
-ルール||regra|n
 マナー||boas maneiras|n
 習慣|しゅうかん|hábito / costume|n
 文化|ぶんか|cultura|n
@@ -2740,8 +2506,8 @@ CD|シーディー|CD|n
 自信|じしん|autoconfiança|n
 勇気|ゆうき|coragem|n
 努力|どりょく|esforço|n
-成功|せいこう|sucesso|n
-失敗|しっぱい|erro / fracasso|n
+成功|せいこう|sucesso (～する: ter sucesso)|n
+失敗|しっぱい|erro / fracasso (～する: errar / falhar)|n
 間違い|まちがい|erro|n
 変化|へんか|mudança|n
 差|さ|diferença|n
@@ -2751,7 +2517,6 @@ CD|シーディー|CD|n
 一生|いっしょう|a vida toda|n
 思い出|おもいで|lembrança|n
 記憶|きおく|memória|n
-経験する|けいけんする|experimentar / vivenciar|v
 お礼|おれい|agradecimento|n
 お願い|おねがい|pedido / favor|n
 お詫び|おわび|desculpas (formal)|n
@@ -2761,21 +2526,17 @@ CD|シーディー|CD|n
 声をかける|こえをかける|chamar / puxar conversa|v
 トラブル||problema / encrenca|n
 故障|こしょう|defeito / pane|n
-修理|しゅうり|conserto|n
-修理する|しゅうりする|consertar|v
-交換する|こうかんする|trocar|v
+修理|しゅうり|conserto (～する: consertar)|n
 工事|こうじ|obra|n
 工事中|こうじちゅう|em obras|n
 騒音|そうおん|barulho (ruído)|n
 騒ぐ|さわぐ|fazer barulho / bagunçar|v
 苦情|くじょう|reclamação|n
 文句|もんく|reclamação / queixa|n
-文句を言う|もんくをいう|reclamar|v
 お知らせ|おしらせ|aviso / comunicado|n
-案内|あんない|guia / informação|n
+案内|あんない|guia / informação (～する: guiar / mostrar o caminho)|n
 説明書|せつめいしょ|manual|n
 表示|ひょうじ|indicação / exibição|n
-ボタンを押す|ボタンをおす|apertar o botão|v
 人数|にんずう|número de pessoas|n
 空席|くうせき|lugar vago|n
 満席|まんせき|lotado (todos os lugares)|n
@@ -2818,8 +2579,7 @@ CD|シーディー|CD|n
 毎回|まいかい|toda vez|n
 年末年始|ねんまつねんし|fim e começo de ano|n
 来日|らいにち|vinda ao Japão|n
-帰国|きこく|volta ao país de origem|n
-帰国する|きこくする|voltar ao país|v
+帰国|きこく|volta ao país de origem (～する: voltar ao país)|n
 一時帰国|いちじきこく|visita temporária ao país|n
 意外|いがい|inesperado|na
 当然|とうぜん|natural / óbvio|na
@@ -2848,13 +2608,8 @@ CD|シーディー|CD|n
 京都|きょうと|Kyoto|n
 北海道|ほっかいどう|Hokkaido|n
 沖縄|おきなわ|Okinawa|n
-サンパウロ||São Paulo|n
-ポルトガル||Portugal|n
-アメリカ||Estados Unidos|n
 中国|ちゅうごく|China|n
 韓国|かんこく|Coreia do Sul|n
-ヨーロッパ||Europa|n
-アジア||Ásia|n
 都市|とし|cidade (metrópole)|n
 郊外|こうがい|subúrbio|n
 駅前|えきまえ|em frente à estação|n

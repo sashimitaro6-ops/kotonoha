@@ -267,6 +267,7 @@ button rt{color:inherit;opacity:.85}
 .vs-word rt{font-size:.4em}
 .vbar.sm{height:6px;margin:6px 0 2px}
 .vcnt{font-size:13px;color:var(--muted);font-weight:700;flex:none}
+.vtag{flex:none;width:22px;text-align:center;font-size:13px;font-weight:900;color:var(--muted)}.vtag.k{color:var(--mint-t)}.vtag.u{color:var(--pink-t)}
 .vs-mean{font-size:20px;font-weight:700;text-align:center;margin:22px 0 18px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 .vopts button{font-size:15px;padding:12px 8px;line-height:1.3;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 .vopts.jp button{font-size:20px;font-family:inherit}
@@ -320,6 +321,9 @@ button rt{color:inherit;opacity:.85}
   </button>
   <button class="bigbtn" onclick="go('practice');startWriting()">
     <span class="ic lv"><img src="images/icon-writing.webp" alt="" onerror="imgFail(this)"></span><span class="txt" id="b-write"></span><span class="go">›</span>
+  </button>
+  <button class="bigbtn" onclick="go('practice');startToday()">
+    <span class="ic pk">🌱</span><span class="txt" id="b-vocab"></span><span class="go">›</span>
   </button>
   <button class="bigbtn" onclick="go('diary')">
     <span class="ic mt"><img src="images/icon-diary.webp" alt="" onerror="imgFail(this)"></span><span class="txt" id="b-diary"></span><span class="go">›</span>
@@ -393,6 +397,8 @@ button rt{color:inherit;opacity:.85}
   <div class="card" id="pstats"></div>
   <h3 id="g-h-write"></h3>
   <div class="card" id="wstats"></div>
+  <h3 id="g-h-vocab"></h3>
+  <div class="card" id="vprog"></div>
   <h3 id="g-h-set"></h3>
   <div class="card">
     <button class="ghost block" onclick="tutorial(0)" id="g-tut" style="margin-bottom:12px"></button>
@@ -434,7 +440,7 @@ const CONFIG = {
   studentEmail: "",               // 彼女のメール。index.html は公開されるので、ここには書かない（gas/Code.gs の STUDENT_EMAIL に書く）
   replyByMail: true,              // true：日記メールに返信すると彼女に届く（宛先は gas/Code.gs の STUDENT_EMAIL）
   // 1日の日課（これを全部やると「きょうの もくひょう たっせい」）。0 にすると、その練習は日課から外れます。
-  daily: { particles: 10, writing: 3, diary: 1 },
+  daily: { particles: 10, writing: 3, diary: 1, vocab: 10 },   // vocab：1日の新しい言葉の数
   weeklyGoalDays: 5,
   weeklyBonus: 30,
   dayStartHour: 3,                // 1日の区切り。夜中の0時〜3時の練習は「前の日」に数える
@@ -796,7 +802,7 @@ const VFURI = vocabFuri();
 const FURI = [
   ["方","ほう","が","のだた"],["遅","おく","れ"],["来","こ","らよ"],["美味","おい","し"],["飯","はん","","ご"],
   ["話","はなし","をかは。"],["金","かね","","お"],
-  ["消","き","え"],["分","わ","か"],["分","わ","け"],["分","ぶん","","日"],["月","げつ","","か"],["通","つう","","0123456789０１２３４５６７８９"],["生","う","ま"],["数","かぞ","え"],["少","すく","な"],["腹","なか","","お"],["中","ちゅう","","問"],["中","ちゅう","","語"],["分","ぷん","","0０"],["何","なん","でとのて"],["降","お","り"],["日","にち","","0123456789０１２３４５６７８９"],
+  ["消","き","え"],["分","わ","か"],["分","わ","け"],["分","ぶん","","日"],["月","げつ","","か"],["通","つう","","0123456789０１２３４５６７８９"],["生","う","ま"],["数","かぞ","え"],["少","すく","な"],["腹","なか","","お"],["中","ちゅう","","問"],["中","ちゅう","","語"],["中","ちゅう","","え"],["分","ぷん","","0０"],["何","なん","でとのて"],["降","お","り"],["日","にち","","0123456789０１２３４５６７８９"],
   ["日本料理","にほんりょうり"],["新幹線","しんかんせん"],["図書館","としょかん"],["日本語","にほんご"],["日曜日","にちようび"],["月曜日","げつようび"],
   ["日本","にほん"],["勉強","べんきょう"],["公園","こうえん"],["大学","だいがく"],["電車","でんしゃ"],["映画","えいが"],["京都","きょうと"],["広島","ひろしま"],
   ["七月","しちがつ"],["七時","しちじ"],["九時","くじ"],["五時","ごじ"],["時間","じかん"],["場所","ばしょ"],["主語","しゅご"],["上手","じょうず"],
@@ -805,7 +811,7 @@ const FURI = [
   ["明日","あした"],["手伝","てつだ"],["手紙","てがみ"],
   ["金曜日","きんようび"],["東京","とうきょう"],["空港","くうこう"],["会社","かいしゃ"],["電話","でんわ"],["三番","さんばん"],["十時","じゅうじ"],["百円","ひゃくえん"],
   ["一つ","ひとつ"],["一度","いちど"],["意味","いみ"],["音楽","おんがく"],
-  ["復習","ふくしゅう"],["単語","たんご"],["恋愛","れんあい"],["交通","こうつう"],["形容詞","けいようし"],["副詞","ふくし"],
+  ["復習","ふくしゅう"],["単語","たんご"],["恋愛","れんあい"],["交通","こうつう"],["形容詞","けいようし"],["副詞","ふくし"],["解除","かいじょ"],["四つ","よっつ"],["択","たく"],["全","ぜん"],
   ["母","かあ","さ","お"],["着","つ","いきくけこ"],["着","き"],
   ["紙","かみ"],["休","やす"],["高","たか"],["肉","にく"],["魚","さかな"],["友","とも"],["会","あ"],["店","みせ"],["大","おお"],["願","ねが"],["近","ちか"],
   ["熱","ねつ"],["薬","くすり"],["使","つか"],["方","かた"],["教","おし"],["本","ほん"],["読","よ"],["聞","き"],["家","いえ"],["安","やす"],
@@ -1069,12 +1075,28 @@ function sessKey(k){
 }
 function day(k){ k = k || todayKey(); if(!S.days[k]) S.days[k] = {pts:0,pc:0,pw:0,pwq:[],tr:[],diary:0,goalMet:false}; return S.days[k]; }
 /* きょうの日課の進みぐあい（助詞・作文・日記） */
+/* 単語のリスト（vocab.js）を読む：{w ことば, r よみ, pt 意味, pos 品詞, c カテゴリーの番号}。記録は w にひもづく。
+   日課（quest）で使うので、ここで先に読む。 */
+const VCATS = [], VOCAB = [];
+(function(){
+  const txt = typeof VOCAB_TXT === "string" ? VOCAB_TXT : "";
+  txt.split("\n").forEach(l => {
+    if(!l.trim()) return;
+    const p = l.split("|");
+    if(l[0] === "#"){ VCATS.push({jp:p[0].slice(1), pt:p[1] || "", words:[]}); return; }
+    const v = {w:p[0], r:p[1] || "", pt:p[2] || "", pos:p[3] || "", c:VCATS.length - 1};
+    VOCAB.push(v); if(VCATS[v.c]) VCATS[v.c].words.push(v);
+  });
+})();
+const hasKanji = s => /[一-龯々〆A-Za-z0-9]/.test(s);
+const vWord = v => v.r && hasKanji(v.w) ? `<ruby>${esc(v.w)}<rt>${esc(v.r)}</rt></ruby>` : esc(v.w);
 function quest(d){
   const q = CONFIG.daily;
   const items = [
     {k:"p", n:Math.min(d.pc + d.pw, q.particles), of:q.particles},
     {k:"w", n:Math.min(d.tr.length, q.writing), of:q.writing},
-    {k:"d", n:Math.min(d.diary, q.diary), of:q.diary}
+    {k:"d", n:Math.min(d.diary, q.diary), of:q.diary},
+    {k:"v", n:Math.min(d.vn || 0, vTarget(d)), of:vTarget(d)}
   ].filter(x => x.of > 0);
   const done = items.filter(x => x.n >= x.of).length;
   return {items, done, total:items.length, all:items.length > 0 && done === items.length,
@@ -1300,7 +1322,7 @@ function dailyReport(title, k){
   k = k || todayKey();
   const past = k !== todayKey(), d = day(k);
   const L = [`${CONFIG.studentNameMail} の学習レポート（${k}）`, title, "",
-    `日課：${quest(d).items.map(x => `${{p:"助詞",w:"作文",d:"日記"}[x.k]} ${x.n}/${x.of}${x.n >= x.of ? "✓" : ""}`).join("・")}${d.goalMet ? "（達成）" : "（未達成）"}`,
+    `日課：${quest(d).items.map(x => `${{p:"助詞",w:"作文",d:"日記",v:"言葉"}[x.k]} ${x.n}/${x.of}${x.n >= x.of ? "✓" : ""}`).join("・")}${d.goalMet ? "（達成）" : "（未達成）"}`,
     `${past ? "この日" : "今日"}のポイント：${d.pts}`,
     `連続記録：${past ? streakAt(k) : streak()}日${past ? "（この日まで）" : ""}（最高 ${S.bestStreak}日）`,
     `累計：${S.total} pts／残高：${S.balance} pts`, "",
@@ -1312,9 +1334,12 @@ function dailyReport(title, k){
     if(t.re) L.push("    書き直し：✓ 模範解答を見ないで打ち直した"); });
   L.push("", `■ 日記：${d.diary}件`);
   S.diaries.filter(x => x.date === k).forEach(x => { L.push(`  ${x.jp}`); if(x.pt) L.push(`  （${x.pt}）`); });
-  const vs = vocabCounts();
-  if(d.vc || d.vw) L.push("", `■ 単語の復習：${d.vc || 0} / ${(d.vc || 0) + (d.vw || 0)} 正解`);
-  if(vs.k + vs.u) L.push("", `■ ことば：知ってる ${vs.k}語・覚える ${vs.u}語（そのうち覚えた ${VOCAB.filter(v => S.vsort[v.w] === 0 && vLearned(v)).length}語）・まだ分けていない ${vs.r}語（全${VOCAB.length}語）`);
+  { const pt = w => (VOCAB.find(v => v.w === w) || {}).pt || "";
+    if(d.vn || d.vc || d.vw) L.push("", `■ 言葉：新しい言葉 ${d.vn || 0}語・復習 ${d.vc || 0} / ${(d.vc || 0) + (d.vw || 0)} 正解`);
+    if(d.vnw && d.vnw.length) L.push("  新しく覚える言葉：", ...d.vnw.map(w => `    🌱 ${w}（${pt(w)}）`));
+    const mw = [...new Set(d.vwq || [])]; if(mw.length) L.push("  復習で間違えた言葉：", ...mw.map(w => `    ✕ ${w}（${pt(w)}）`));
+    const lr = VOCAB.filter(v => S.vsort[v.w] === 0), ln = lr.filter(vLearned).length;
+    if(lr.length || d.vn) L.push(`  これまで：覚えた ${ln}語・覚え中 ${lr.length - ln}語・知ってる ${VOCAB.filter(v => S.vsort[v.w] === 1).length}語（全${VOCAB.length}語）`); }
   const pend = S.redemptions.filter(x => !x.got);
   if(pend.length) L.push("", "■ まだあげていないご褒美（彼女が「もらった」を押していないもの）", ...pend.map(x => `  ${x.icon} ${x.name}（${ymd(new Date(x.ts))} に交換）`));
   const cf = confusions().filter(x => x.n >= 2).slice(0, 5);
@@ -1571,6 +1596,7 @@ function staticTexts(){
     .map(([c, j, p]) => `<span class="lg"><i class="sw ${c}"></i>${T(j, p)}</span>`).join("");
   setT("g-h-part","助詞の正解率","ACERTOS POR PARTÍCULA");
   setT("g-h-write","作文","ESCRITA");
+  setT("g-h-vocab","言葉","VOCABULÁRIO");
   setT("g-h-set","設定","CONFIGURAÇÕES");
   $("g-report").innerHTML = T("📧 今日のレポートをジャスに送る","Enviar o relatório de hoje para o Jas");
   $("g-backup").innerHTML = T("バックアップ","Backup");
@@ -1596,6 +1622,7 @@ function refresh(){
   const prog = (x, ptName) => x ? (x.n >= x.of ? `<span class="cnt done">✓</span>` : `<span class="cnt">${x.n} / ${x.of}</span>`) : "";
   $("b-part").innerHTML = `<b>${furi("助詞")}</b>` + T("", "Partículas") + prog(pq);
   $("b-write").innerHTML = `<b>${furi("作文")}</b>` + T("", "Escrita") + prog(wq);
+  $("b-vocab").innerHTML = `<b>${furi("言葉")}</b>` + T("", "Vocabulário") + prog(qs.by("v"));
   $("streak-line").innerHTML = T(`${ICO("flame")} ${dayR(st)} 連続`, `${st} dias seguidos`);
   renderDeadline();
   $("rest-status").innerHTML = `<button class="tkbtn" onclick="ticketInfo()" aria-label="Cupons">${ICO("ticket")} × ${S.tickets || 0}</button>`;
@@ -1686,10 +1713,11 @@ function answerP(btn, o){
 /* 練習の結果画面に出す「次の練習」ボタン（日課でまだ終わっていないもの） */
 function nextStep(from){
   const q = quest(day()), need = k => { const x = q.by(k); return !!(x && x.n < x.of); };
-  const order = {p:["w","d"], w:["d","p"]}[from] || [];
+  const order = {p:["w","v","d"], w:["v","d","p"], v:["p","w","d"]}[from] || [];
   const S2 = {p:[`go('practice',true);startParticles()`, "次は助詞 🎀 →", "Próximo: partículas →"],
               w:[`go('practice',true);startWriting()`, `次は作文 ${ICO("pencil")} →`, "Próximo: escrita →"],
-              d:[`go('diary',true)`, "次は日記 📔 →", "Próximo: diário →"]};
+              d:[`go('diary',true)`, "次は日記 📔 →", "Próximo: diário →"],
+              v:[`go('practice',true);startToday()`, "次は言葉 🌱 →", "Próximo: vocabulário →"]};
   const k = order.find(need);
   return k ? `<button class="block" style="margin-top:16px;font-size:18px;padding:14px 18px" onclick="${S2[k][0]}">${T(S2[k][1], S2[k][2])}</button>` : "";
 }
@@ -2009,6 +2037,8 @@ function heatTip(k){
   toast(""); $("toast").innerHTML = furi(`${mdJ(k)}：${p}ポイント${st}`);
 }
 function renderProgress(){
+  { const lr = VOCAB.filter(v => S.vsort[v.w] === 0), ln = lr.filter(vLearned).length, kn = VOCAB.filter(v => S.vsort[v.w] === 1).length;
+    $("vprog").innerHTML = `<div class="vnum"><div class="u"><b>${ln}</b>${T("覚えた","Aprendidas")}</div><div class="u"><b>${lr.length - ln}</b>${T("覚え中","Aprendendo")}</div><div class="k"><b>${kn}</b>${T("知ってる","Já sabia")}</div></div>`; }
   $("s-total").textContent = S.total;
   $("s-best").textContent = Math.max(S.bestStreak, streak());
   $("s-sent").textContent = S.writings.length + S.diaries.length;
@@ -2066,7 +2096,7 @@ let noteTab = "m";
 function openNote(tab){
   if(tab) noteTab = tab; curRun = null;
   $("practice-menu").style.display = "none"; $("practice-run").style.display = "";
-  const tabs = [["m","🌧️ 間違い","Erros"],["w",`${ICO("pencil")} 書いた文`,"Frases"],["r","🎀 ルール","Regras"]];
+  const tabs = [["m","🌧️ 間違い","Erros"],["v","🌱 単語","Palavras"],["w",`${ICO("pencil")} 書いた文`,"Frases"],["r","🎀 ルール","Regras"]];
   let body = "";
   if(noteTab === "m"){
     const bx = q => S.pstats[q.id].box || 0;
@@ -2085,237 +2115,244 @@ function openNote(tab){
         <div class="model">${furi(esc(q.a[0]))}${spkBtn(`speakT('${q.id}')`)}</div></div>`; }).join("");
     body = `<div class="card">` + (ws ? ws
       : `<div class="empty">${IMG("pencil", "bimg", "width:80px;height:80px")}${T("作文をするとここに出るよ","Faça um exercício de escrita para ver aqui.")}</div>`) + `</div>`;
+  } else if(noteTab === "v"){
+    body = vocabNote();
   } else {
     body = `<div class="card">` + RULES.map((r, i) => { const s = S.partStats[r[0]];
       return `<div class="item row" style="align-items:flex-start"><div class="rule-k">${r[0]}${s ? `<div class="muted small" style="font-weight:500">${Math.round(100*s.c/(s.c+s.w))}%</div>` : ""}</div><div style="flex:1">` + r[1].map((u, j) =>
         `<div style="margin-bottom:10px"><div style="font-size:14px">${T(furi(esc(u[0])), esc(u[1]), true)}</div><div class="jpx">${furi(esc(u[2])).replace(/\[(.+?)\]/g, '<b class="hl">$1</b>')}${spkBtn(`speakR(${i},${j})`)}</div></div>`).join("") + `</div></div>`; }).join("") + `</div>`;
   }
   $("practice-run").innerHTML = `<div class="top"><button class="ghost" onclick="go('practice')">✕</button><b>📒 ノート</b>${topBtns()}</div>
-    <div class="tabs">${tabs.map(t => `<button class="${t[0] === noteTab ? "on" : ""}" onclick="openNote('${t[0]}')">${T(t[1], t[2])}</button>`).join("")}</div>${body}${tipLine()}`;
+    <div class="tabs">${tabs.map(t => `<button class="${t[0] === noteTab ? "on" : ""}" onclick="openNote('${t[0]}')">${T(t[1], t[2])}</button>`).join("")}</div>${body}`;
   applyPt();
 }
 
 /* ---------- ことば（単語のリストは vocab.js）----------
-   ふるい分け：カテゴリーを選んで、1回50語ずつ 4択（意味を選ぶ）。正解 → S.vsort[w] = 1（知ってる）、まちがい・分からない → 0（覚える）
-   復習：「覚える」に分けた単語だけ。S.vstats[w] = {c, w, box, due}（助詞と同じ間隔 GAPS）。
-     box 0 … 日本語 → 意味を4つから選ぶ / box 1 … 意味 → 日本語を4つから選ぶ / box 2〜 … 意味 → 日本語を打つ */
-const VCATS = [], VOCAB = [];
-(function(){
-  const txt = typeof VOCAB_TXT === "string" ? VOCAB_TXT : "";
-  txt.split("\n").forEach(l => {
-    if(!l.trim()) return;
-    const p = l.split("|");
-    if(l[0] === "#"){ VCATS.push({jp:p[0].slice(1), pt:p[1] || "", words:[]}); return; }
-    const v = {w:p[0], r:p[1] || "", pt:p[2] || "", pos:p[3] || "", c:VCATS.length - 1};
-    VOCAB.push(v); if(VCATS[v.c]) VCATS[v.c].words.push(v);
-  });
-})();
-const VROUND = 50, VREVIEW = 20;
-function vocabCounts(list){
-  const vs = S.vsort || {}; let k = 0, u = 0; list = list || VOCAB;
-  list.forEach(v => { if(vs[v.w] === 1) k++; else if(vs[v.w] === 0) u++; });
-  return {k, u, r:list.length - k - u, n:list.length};
-}
-const hasKanji = s => /[一-龯々〆A-Za-z0-9]/.test(s);
-const vWord = v => v.r && hasKanji(v.w) ? `<ruby>${esc(v.w)}<rt>${esc(v.r)}</rt></ruby>` : esc(v.w);
+   日課「今日の言葉」：① 復習（出す日が来た単語）→ ② 新しい言葉（1日 CONFIG.daily.vocab 語）→ ③ 確認（今日の新しい言葉を、意味→日本語の4択でもう一度）
+   - 新しい言葉は、まず4択（日本語→意味。「分からない」もある）。正解なら「知ってる」で、つぎの単語に入れかえる（数に入れない）。
+     まちがい・分からない → 覚える単語（S.vsort[w] = 0）になり、意味を見せて1語と数える（day.vn）。
+   - 知ってる（S.vsort[w] = 1）も、あとで1回「意味 → 日本語を打つ」で確かめる（box 4、20〜60日あと）。まちがえたら覚える単語にもどる。
+   - 復習 S.vstats[w] = {c, w, box, due, d0 はじめて覚えた日, k 知ってるの確認}。box 0：日本語→意味の4択、1：意味→日本語の4択、2〜：意味→日本語を打つ。
+     はじめて覚えた日のうちは、正解しても box を上げない（見たばかりで覚えているだけなので）。
+   - 「覚えた」＝ 覚える単語のうち box 4 以上（打って答えるのに2回以上正解し、間隔が2週間になったもの）。 */
+const VREVIEW = 40, VEXTRA = 5;
 const vSay = v => (v.r || v.w).replace(/～/g, "");
-const vLearned = v => { const s = S.vstats && S.vstats[v.w]; return !!(s && s.box >= 3); };
-/* 今日 復習する単語（覚える に分けたもの）：出す日が来たもの → まだ1回も出していないもの の順 */
-function vDue(list){
-  const t = todayKey(), st = S.vstats || {};
-  const un = (list || VOCAB).filter(v => S.vsort[v.w] === 0);
-  return un.filter(v => st[v.w] && st[v.w].due <= t).concat(un.filter(v => !st[v.w]));
-}
-function openVocab(){
-  curRun = null; VS = null; V = null;
+const vLearned = v => { const s = S.vstats[v.w]; return S.vsort[v.w] === 0 && !!(s && s.box >= 4); };
+/* 「知ってる」の確かめを、あとの日にばらして入れる */
+function vKnown(v, s){ S.vsort[v.w] = 1; S.vstats[v.w] = Object.assign(s || {c:1, w:0}, {box:4, k:1, due:ymd(addDays(parseKey(todayKey()), 20 + Math.floor(Math.random() * 41)))}); }
+/* 前の版（ふるい分け）で「知ってる」にした単語にも、確かめる日を入れる */
+function vInit(){
   if(!S.vsort) S.vsort = {}; if(!S.vstats) S.vstats = {};
+  VOCAB.forEach(v => { if(S.vsort[v.w] === 1 && !S.vstats[v.w]) vKnown(v); });
+}
+/* 今日 復習する単語：覚える単語 → 知ってるの確かめ、それぞれ出す日が古い順 */
+function vDue(){
+  const t = todayKey(), st = S.vstats;
+  return VOCAB.filter(v => st[v.w] && st[v.w].due <= t && (S.vsort[v.w] === 0 || st[v.w].k))
+    .sort((a, b) => (S.vsort[a.w] === 1) - (S.vsort[b.w] === 1) || (st[a.w].due < st[b.w].due ? -1 : st[a.w].due > st[b.w].due ? 1 : 0));
+}
+/* つぎに出す新しい言葉（選んだカテゴリーが先、あとはリストの順） */
+function vCands(){
+  const f = S.vfocus, ok = v => !S.vstats[v.w] && S.vsort[v.w] !== 1;
+  const a = f != null && VCATS[f] ? VCATS[f].words.filter(ok) : [];
+  return a.concat(VOCAB.filter(v => ok(v) && !(f != null && v.c === f)));
+}
+function vTarget(d){ const q = CONFIG.daily.vocab || 0; if(!q) return 0; const n = d.vn || 0; return n >= q ? q : Math.min(q, n + VOCAB.filter(v => !S.vstats[v.w] && S.vsort[v.w] !== 1).length); }
+
+/* 4つの選択肢：同じカテゴリー・同じ品詞から（足りなければ同じ品詞、それでも足りなければ全部）。
+   「～」の語は「～」の語どうし。意味が同じ語は入れない。 */
+function vOpts(v){
+  const tl = v.w.includes("～"), base = x => x !== v && x.pt !== v.pt && x.w !== v.w && x.w.includes("～") === tl;
+  let pool = VOCAB.filter(x => base(x) && x.c === v.c && x.pos === v.pos);
+  if(pool.length < 3) pool = VOCAB.filter(x => base(x) && x.pos === v.pos);
+  if(pool.length < 3) pool = VOCAB.filter(base);
+  const out = [v];
+  for(let n = 0; out.length < 4 && n < 200; n++){ const x = pool[Math.floor(Math.random() * pool.length)]; if(!out.some(y => y === x || y.pt === x.pt || y.w === x.w)) out.push(x); }
+  return shuffle(out);
+}
+
+/* 言葉の画面 */
+function openVocab(){
+  curRun = null; if(V) clearTimeout(V.t); V = null; vInit();
   $("practice-menu").style.display = "none"; $("practice-run").style.display = "";
-  const c = vocabCounts(), pc = x => (100 * x / (c.n || 1)).toFixed(2) + "%", due = vDue().length;
-  const learned = VOCAB.filter(v => S.vsort[v.w] === 0 && vLearned(v)).length;
-  const rows = VCATS.map((g, i) => { const x = vocabCounts(g.words), done = !x.r;
-    return `<button class="mrow" onclick="${done ? `startReview(${i})` : `startSort(${i})`}">
-      <span style="flex:1;min-width:0"><b>${T(esc(g.jp), esc(g.pt))}</b><span class="vbar sm"><i class="k" style="width:${100*x.k/x.n}%"></i><i class="u" style="width:${100*x.u/x.n}%"></i></span></span>
-      <span class="vcnt">${done ? `✓` : `${x.n - x.r}/${x.n}`}</span></button>`; }).join("");
+  const d = day(), due = vDue().length, tg = vTarget(d), vn = d.vn || 0;
+  const learn = VOCAB.filter(v => S.vsort[v.w] === 0), learned = learn.filter(vLearned).length, known = VOCAB.filter(v => S.vsort[v.w] === 1).length;
+  const todo = due || vn < tg;
+  const rows = VCATS.map((g, i) => { const n = g.words.length, k = g.words.filter(v => S.vsort[v.w] === 1).length, l = g.words.filter(v => S.vsort[v.w] === 0).length;
+    return `<button class="mrow" onclick="vocabCat(${i})">
+      <span style="flex:1;min-width:0"><b>${T(esc(g.jp), esc(g.pt))}</b><span class="vbar sm"><i class="k" style="width:${100*k/n}%"></i><i class="u" style="width:${100*l/n}%"></i></span></span>
+      <span class="vcnt">${S.vfocus === i ? "⭐ " : ""}${k + l}/${n}</span></button>`; }).join("");
   $("practice-run").innerHTML = `<div class="top"><button class="ghost" onclick="go('practice')">✕</button><b>🌱 ${furi("言葉")}</b>${topBtns()}</div>
     <div class="card">
-      <div class="vbar"><i class="k" style="width:${pc(c.k)}"></i><i class="u" style="width:${pc(c.u)}"></i></div>
       <div class="vnum">
-        <div class="k"><b>${c.k}</b>${T("知ってる","Sei")}</div>
-        <div class="u"><b>${c.u}</b>${T("覚える","Vou aprender")}</div>
-        <div class="r"><b>${c.r}</b>${T("まだ","Falta separar")}</div>
+        <div class="u"><b>${learned}</b>${T("覚えた","Aprendidas")}</div>
+        <div class="u"><b>${learn.length - learned}</b>${T("覚え中","Aprendendo")}</div>
+        <div class="k"><b>${known}</b>${T("知ってる","Já sabia")}</div>
       </div>
-      ${c.u ? `<div class="muted small" style="text-align:center;margin-top:8px">${T(`覚えた ${learned} / ${c.u}`, `Já aprendeu ${learned} de ${c.u}`)}</div>` : ""}
+      <div class="muted small" style="text-align:center;margin-top:6px">${T(`全${VOCAB.length}語`, `${VOCAB.length} palavras`)}</div>
     </div>
-    <button class="block" onclick="startReview()" ${due ? "" : "disabled"}>${T(`🌱 復習 ${Math.min(due, VREVIEW)}語`, "Revisar as palavras que não sei")}</button>
-    <h3>${T("ふるい分け","Separar: sei / não sei")}</h3>
+    <button class="block" style="font-size:18px;padding:14px 18px" onclick="startToday()" ${todo ? "" : "disabled"}>${todo
+      ? T(`🌱 今日の言葉　${due ? `復習 ${Math.min(due, VREVIEW)}・` : ""}新しい言葉 ${Math.min(vn, tg)} / ${tg}`, "Vocabulário de hoje")
+      : T("🌱 今日の言葉 ✓", "Vocabulário de hoje ✓")}</button>
+    ${!todo && vCands().length ? `<button class="ghost block" style="margin-top:10px" onclick="startToday(${VEXTRA})">${T(`＋新しい言葉 ${VEXTRA}語`, `Mais ${VEXTRA} palavras novas`)}</button>` : ""}
+    <h3>${T("カテゴリー","Categorias")}</h3>
     ${rows}`;
   applyPt();
 }
+/* カテゴリーの単語の一覧。「このカテゴリーから覚える」で、新しい言葉をここから先に出す */
+function vocabCat(ci){
+  const g = VCATS[ci], st = S.vstats, on = S.vfocus === ci;
+  const mark = v => S.vsort[v.w] === 1 ? `<span class="vtag k">✓</span>` : S.vsort[v.w] === 0 ? `<span class="vtag u">${vLearned(v) ? "🌸" : "🌱"}</span>` : `<span class="vtag">・</span>`;
+  $("practice-run").innerHTML = `<div class="top"><button class="ghost" onclick="openVocab()">✕</button><b>${T(esc(g.jp), esc(g.pt))}</b>${topBtns()}</div>
+    <button class="${on ? "ghost " : ""}block" onclick="S.vfocus = ${on ? "null" : ci}; save(); vocabCat(${ci})">${on ? T("⭐ このカテゴリーから覚える（解除）","Prioridade: esta categoria (cancelar)") : T("⭐ このカテゴリーから覚える","Aprender esta categoria primeiro")}</button>
+    <div class="card" style="margin-top:12px">${g.words.map(v => `<div class="item row">${mark(v)}<b style="flex:none">${vWord(v)}</b><span class="muted" style="flex:1">${S.vsort[v.w] != null ? esc(v.pt) : ""}</span>${S.vsort[v.w] != null ? spkBtn(`speak('${esc(vSay(v))}')`) : ""}</div>`).join("")}</div>`;
+  applyPt();
+}
 
-/* ふるい分け（1回50語） */
-let VS = null;   // {ci カテゴリー, list この回の単語, i, k 知ってる数}
-function startSort(ci){
-  const list = VCATS[ci].words.filter(v => !(v.w in S.vsort)).slice(0, VROUND);
-  if(!list.length){ openVocab(); return; }
-  VS = {ci, list, i:0}; renderSort();
-}
-function renderSort(){
-  if(VS.i >= VS.list.length){ sortResult(); return; }
-  const v = VS.list[VS.i], g = VCATS[VS.ci];
-  VS.opts = vOpts(v); VS.done = false;
-  $("practice-run").innerHTML = `<div class="top"><button class="ghost" onclick="openVocab()">✕</button><span class="muted">${VS.i + 1} / ${VS.list.length}</span>${topBtns()}</div>
-    <div class="card" id="vs-card">
-      <div class="vbar sm"><i class="u" style="width:${100 * VS.i / VS.list.length}%"></i></div>
-      <div class="vs-scene">${T(esc(g.jp), esc(g.pt))}</div>
-      <div class="vs-word">${vWord(v)}</div>
-      <div class="opts vopts">${VS.opts.map((o, j) => `<button onclick="sortAns(${j})">${esc(o.pt)}</button>`).join("")}</div>
-      <button class="ghost block" style="margin-top:12px" onclick="sortAns(-1)">${T("🤔 分からない","Não sei")}</button>
-      <div id="vs-after"></div>
-    </div>`;
-  applyPt();
-}
-/* 4択：正解なら「知ってる」、まちがい・分からないなら「覚える」 */
-function sortAns(j){
-  if(!VS || VS.done || VS.i >= VS.list.length) return;
-  VS.done = true;
-  const v = VS.list[VS.i], ok = j >= 0 && VS.opts[j] === v, bs = document.querySelectorAll("#vs-card .vopts button");
-  bs.forEach((b, k) => { b.disabled = true; if(VS.opts[k] === v) b.classList.add("right"); });
-  document.querySelectorAll("#vs-card > button").forEach(b => b.disabled = true);
-  if(j >= 0 && !ok) bs[j].classList.add("wrong");
-  if(ok) Party.correct(bs[j], 0);
-  S.vsort[v.w] = ok ? 1 : 0; save();
-  $("vs-after").innerHTML = ok ? "" : `<div class="explain row" style="gap:8px"><b style="font-size:20px">${vWord(v)}</b><span style="flex:1">${esc(v.pt)}</span>${spkBtn(`speak('${esc(vSay(v))}')`)}</div>
-    <button class="block" style="margin-top:10px" onclick="sortNext()">${T("次へ →","Próxima")}</button>`;
-  applyPt();
-  if(ok) VS.t = setTimeout(sortNext, 650);
-  else scrollToAction(document.querySelector("#vs-after button.block"));
-}
-function sortNext(){ if(!VS || !VS.done) return; clearTimeout(VS.t); VS.i++; renderSort(); }
-function sortResult(){
-  const g = VCATS[VS.ci], un = VS.list.filter(v => S.vsort[v.w] === 0), kn = VS.list.length - un.length, left = vocabCounts(g.words).r;
-  setTimeout(() => { FX.rain(PETALS, 30); stamp(`${VS.list.length}語 おわり！`, `${VS.list.length} palavras!`); }, 200);
-  VS.un = un;
-  $("practice-run").innerHTML = `<div class="card" style="text-align:center">
-      ${IMG("bunny-joy")}
-      <div class="vnum" style="margin:6px 0 4px"><div class="k"><b>${kn}</b>${T("知ってる","Sei")}</div><div class="u"><b>${un.length}</b>${T("知らない","Não sei")}</div><div class="r"><b>${left}</b>${T("まだ","Falta")}</div></div>
-      ${un.length ? `<div style="text-align:left;margin-top:12px">${un.map(v => `<div class="item row"><b style="flex:none">${vWord(v)}</b><span class="muted" style="flex:1">${esc(v.pt)}</span>${spkBtn(`speak('${esc(vSay(v))}')`)}</div>`).join("")}</div>` : ""}
-      ${un.length ? `<button class="block" style="margin-top:14px;font-size:18px;padding:14px 18px" onclick="startReview(null, VS.un)">${T(`知らなかった ${un.length}語を復習 →`, `Revisar as ${un.length} que não sabia`)}</button>` : ""}
-      <div class="grid2" style="margin-top:12px"><button class="ghost" onclick="openVocab()">${T("戻る","Voltar")}</button><button class="${un.length ? "ghost" : ""}" onclick="startSort(${VS.ci})" ${left ? "" : "disabled"}>${T("次の50語","Mais 50")}</button></div>
-    </div>`;
-  applyPt();
-}
-document.addEventListener("keydown", e => {
-  if(!$("vs-card") || $("overlay").classList.contains("on")) return;
-  if(VS && VS.done){ if(e.key === "Enter" || e.key === " "){ e.preventDefault(); sortNext(); } return; }
-  if(/^[1-4]$/.test(e.key)) sortAns(+e.key - 1); else if(e.key === "0" || e.key === "?") sortAns(-1);
-});
-
-/* 復習（覚える に分けた単語だけ） */
+/* 今日の言葉（extra：今日の数のあとに、さらに新しい言葉を足す数） */
 let V = null;
-function startReview(ci, words){
-  if(!S.vstats) S.vstats = {};
-  const qs = (words && words.length ? words.slice() : vDue(ci != null ? VCATS[ci].words : null)).slice(0, words ? 60 : VREVIEW);
-  if(!qs.length){ openVocab(); toast("今日の復習は ないよ"); return; }
-  V = {qs:shuffle(qs), i:0, res:[], main:qs.length, wrong:[], retried:false, earned:0, k:todayKey()}; curRun = "v";
+function startToday(extra){
+  vInit();
+  const d = day(), revs = vDue().slice(0, VREVIEW).map(v => ({v, t:"r"}));
+  const tg = vTarget(d) + (extra || 0);
+  if(!revs.length && (d.vn || 0) >= tg){ openVocab(); return; }
+  V = {qs:shuffle(revs), i:0, res:[], wrong:[], news:[], nr:revs.length, tg, retried:false, checked:false, earned:0, k:todayKey()}; curRun = "v";
   $("practice-menu").style.display = "none"; $("practice-run").style.display = "";
-  renderV();
+  vFill(); renderV();
 }
-/* 4つの選択肢：同じ品詞から3つ（足りなければ全部から） */
-function vOpts(v){
-  const same = VOCAB.filter(x => x !== v && x.pos === v.pos && x.pt !== v.pt && x.w !== v.w), pool = same.length >= 3 ? same : VOCAB.filter(x => x !== v);
-  const out = [v]; while(out.length < 4){ const x = pool[Math.floor(Math.random() * pool.length)]; if(!out.includes(x) && !out.some(y => y.pt === x.pt || y.w === x.w)) out.push(x); }
-  return shuffle(out);
+/* 復習が終わったら新しい言葉を1語ずつ足す → 今日の数になったら確認 → 間違えた復習をもう一度 */
+function vFill(){
+  if(V.i < V.qs.length) return;
+  const d = day(V.k);
+  if((d.vn || 0) < V.tg){ const c = vCands().find(v => !V.qs.some(q => q.v === v)); if(c){ V.qs.push({v:c, t:"n"}); return; } }
+  if(!V.checked && V.news.length){ V.checked = true; shuffle(V.news).forEach(v => V.qs.push({v, t:"c"})); return; }
+  if(!V.retried && V.wrong.length){ V.retried = true; V.wrong.forEach(v => V.qs.push({v, t:"x"})); }
 }
-function vMode(v){ const s = S.vstats[v.w]; const b = s ? s.box : 0; return V.i >= V.main ? Math.min(b, 1) : b >= 2 ? 2 : b; }
+function vMode(q){
+  if(q.t === "n") return 0; if(q.t === "c") return 1;
+  const s = S.vstats[q.v.w], b = s ? s.box : 0;
+  return q.t === "x" ? Math.min(b, 1) : b >= 2 ? 2 : b;
+}
+function vLabel(){
+  const q = V.qs[V.i], cnt = t => V.qs.filter(x => x.t === t).length, pos = t => V.qs.slice(0, V.i + 1).filter(x => x.t === t).length;
+  if(q.t === "r") return T(`復習 ${pos("r")} / ${cnt("r")}`, "Revisão");
+  if(q.t === "n") return T(`新しい言葉 ${Math.min((day(V.k).vn || 0) + 1, V.tg)} / ${V.tg}`, "Palavras novas");
+  if(q.t === "c") return T(`確認 ${pos("c")} / ${cnt("c")}`, "Confirmação");
+  return T(`🔁 もう一度 ${pos("x")} / ${cnt("x")}`, "De novo");
+}
 function renderV(){
-  const v = V.qs[V.i], retry = V.i >= V.main, ri = V.i - V.main, rn = V.qs.length - V.main, m = vMode(v);
-  V.opts = m < 2 ? vOpts(v) : null; V.done = false;
-  const q = m === 0 ? `<div class="vs-word">${vWord(v)}</div>` : `<div class="vs-mean">${ICO("flag-br")} ${esc(v.pt)}</div>`;
-  const body = m === 0 ? `<div class="opts vopts">${V.opts.map((o, j) => `<button onclick="answerV(this,${j})">${esc(o.pt)}</button>`).join("")}</div>`
+  const q = V.qs[V.i], v = q.v, m = vMode(q);
+  V.opts = m < 2 ? vOpts(v) : null; V.done = false; V.typed = "";
+  const ask = m === 0 ? `<div class="vs-word">${vWord(v)}</div>` : `<div class="vs-mean">${ICO("flag-br")} ${esc(v.pt)}</div>`;
+  const body = m === 0 ? `<div class="opts vopts">${V.opts.map((o, j) => `<button onclick="answerV(this,${j})">${esc(o.pt)}</button>`).join("")}</div>
+       <button class="ghost block vidk" style="margin-top:12px" onclick="answerV(null,-1)">${T("🤔 分からない","Não sei")}</button>`
     : m === 1 ? `<div class="opts vopts jp">${V.opts.map((o, j) => `<button onclick="answerV(this,${j})">${vWord(o)}</button>`).join("")}</div>`
     : `<input type="text" id="v-ans" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="日本語で…" aria-label="日本語" onkeydown="if(event.key==='Enter'&&!event.isComposing){event.preventDefault();typeV()}">
        <div class="grid2" style="margin-top:10px"><button class="ghost" onclick="typeV(true)">${T("🤔 分からない","Não sei")}</button><button onclick="typeV()">${T("答える","Responder")}</button></div>`;
-  $("practice-run").innerHTML = `<div class="top"><button class="ghost" onclick="go('practice')">✕</button><span class="muted">${retry ? `🔁 ${ri+1} / ${rn}` : `${V.i+1} / ${V.main}`}</span>${topBtns()}</div>
-    <div class="card">${retry ? dots(V.res.slice(V.main), rn, ri) : dots(V.res, V.main, V.i)}
-      ${retry ? `<div class="explain" style="margin:0 0 10px">${T("🔁 もう一度","De novo (sem pontos)")}</div>` : ""}
-      ${q}${body}<div id="v-after"></div>
-    </div>`;
+  $("practice-run").innerHTML = `<div class="top"><button class="ghost" onclick="go('practice')">✕</button><span class="muted">${vLabel()}</span>${topBtns()}</div>
+    <div class="card" id="v-card">${ask}${body}<div id="v-after"></div></div>`;
   applyPt();
   if(m === 2){ const t = $("v-ans"); if(t) t.focus(); }
 }
 function answerV(btn, j){
   if(V.done) return;
-  const v = V.qs[V.i], ok = V.opts[j] === v;
-  document.querySelectorAll(".vopts button").forEach((b, k) => { b.disabled = true; if(V.opts[k] === v) b.classList.add("right"); });
-  if(!ok) btn.classList.add("wrong");
-  afterV(ok, btn);
+  const v = V.qs[V.i].v, ok = j >= 0 && V.opts[j] === v;
+  document.querySelectorAll("#v-card .vopts button").forEach((b, k) => { b.disabled = true; if(V.opts[k] === v) b.classList.add("right"); });
+  document.querySelectorAll("#v-card .vidk").forEach(b => b.disabled = true);
+  if(btn && !ok) btn.classList.add("wrong");
+  afterV(ok, btn || $("v-after"));
 }
-const vKey = s => norm(String(s).replace(/～/g, ""));
+/* 打った答え：よみ・漢字どちらでも。意味が同じ別の単語も正解。「～する」をつけてもよい */
+const vKey = s => norm(String(s).replace(/[～〜]/g, ""));
+function typedOk(v, a){
+  const alts = VOCAB.filter(x => x === v || x.pt === v.pt), raw = a.replace(/[\s　～〜]/g, "");
+  const tries = [raw]; if(/する$/.test(raw) && v.pt.includes("～する")) tries.push(raw.slice(0, -2));
+  return alts.some(x => tries.some(t => t === x.w.replace(/～/g, "") || vKey(t) === vKey(x.r || x.w) || vKey(t) === vKey(x.w)));
+}
 function typeV(idk){
   if(V.done) return;
-  const v = V.qs[V.i], t = $("v-ans"), a = t ? t.value.trim() : "";
+  const v = V.qs[V.i].v, t = $("v-ans"), a = t ? t.value.trim() : "";
   if(!idk && !a){ t && t.focus(); return; }
-  const ok = !idk && (a.replace(/[\s　～〜]/g, "") === v.w.replace(/～/g, "") || vKey(a) === vKey(v.r || v.w) || vKey(a) === vKey(v.w));
+  const ok = !idk && typedOk(v, a);
   if(t){ t.disabled = true; t.classList.add(ok ? "ok" : "ng"); }
-  document.querySelectorAll("#practice-run .grid2 button").forEach(b => b.disabled = true);
+  document.querySelectorAll("#v-card .grid2 button").forEach(b => b.disabled = true);
   V.typed = idk ? "" : a;
   afterV(ok, t || $("v-after"));
 }
 function afterV(ok, el){
   V.done = true;
-  const v = V.qs[V.i], retry = V.i >= V.main;
-  if(ok){ V.combo = (V.combo || 0) + 1; Party.correct(el, retry ? 0 : V.combo); } else { V.combo = 0; Party.wrong(el); }
+  const q = V.qs[V.i], v = q.v, t = todayKey();
+  V.k = sessKey(V.k); const d = day(V.k);
   V.res[V.i] = ok;
-  if(!retry){
-    const s = S.vstats[v.w] || (S.vstats[v.w] = {c:0,w:0,box:0}); ok ? s.c++ : s.w++;
-    V.pb = s.box || 0; srsSet(s, ok ? V.pb + 1 : 0);
-    V.k = sessKey(V.k); const d = day(V.k); ok ? d.vc = (d.vc || 0) + 1 : d.vw = (d.vw || 0) + 1;
-    if(!ok) V.wrong.push(v);
-    if(ok){ V.earned += CONFIG.points.vocabRight; addPoints(CONFIG.points.vocabRight, V.k); } else save();
-  } else save();
-  const willRetry = !retry && V.i + 1 === V.main && V.wrong.length && !V.retried;
-  const fix = !ok && V.typed ? `<button class="linkbtn" onclick="fixV()">${T("✓ 合ってた","Eu acertei")}</button>` : "";
-  $("v-after").innerHTML = `<div class="explain"><div class="hd">${ok ? T("🌸 正解！","Certo!") : T("🌧️ 答え","Resposta")}</div>
+  let msg = ok ? T("🌸 正解！","Certo!") : T("🌧️ 答え","Resposta"), auto = false;
+  if(q.t === "n"){
+    if(ok){ vKnown(v, S.vstats[v.w]); msg = T("✓ 知ってる！","Você já sabe!"); auto = true; Party.correct(el, 0); }
+    else {
+      S.vsort[v.w] = 0; S.vstats[v.w] = {c:0, w:0, box:0, d0:t, due:ymd(addDays(parseKey(t), 1))};
+      d.vn = (d.vn || 0) + 1; (d.vnw = d.vnw || []).push(v.w); V.news.push(v);
+      msg = T("🌱 新しい言葉","Palavra nova");
+      V.earned += CONFIG.points.vocabRight; addPoints(CONFIG.points.vocabRight, V.k);
+    }
+  } else if(q.t === "r"){
+    const s = S.vstats[v.w]; ok ? s.c++ : s.w++; V.pb = s.box || 0; V.wasK = !!s.k; V.d0 = s.d0;
+    if(!ok){ srsSet(s, 0); if(s.k){ delete s.k; S.vsort[v.w] = 0; s.d0 = t; } V.wrong.push(v); (d.vwq = d.vwq || []).push(v.w); d.vw = (d.vw || 0) + 1; }
+    else { d.vc = (d.vc || 0) + 1; if(s.d0 === t){ s.box = 0; s.due = ymd(addDays(parseKey(t), 1)); } else srsSet(s, V.pb + 1); }
+    if(ok){ V.combo = (V.combo || 0) + 1; Party.correct(el, V.combo); V.earned += CONFIG.points.vocabRight; addPoints(CONFIG.points.vocabRight, V.k); }
+    else { V.combo = 0; Party.wrong(el); }
+  } else { ok ? Party.correct(el, 0) : Party.wrong(el); }
+  save();
+  const fix = !ok && V.typed && q.t === "r" ? `<button class="linkbtn" onclick="fixV()">${T("✓ 合ってた","Eu acertei")}</button>` : "";
+  $("v-after").innerHTML = `<div class="explain"><div class="hd">${msg}</div>
       <div class="row" style="gap:8px"><b style="font-size:22px">${vWord(v)}</b><span style="flex:1">${esc(v.pt)}</span>${spkBtn(`speak('${esc(vSay(v))}')`)}</div>${fix}</div>
-    <button class="block" style="margin-top:12px" onclick="nextV()">${V.i+1 < V.qs.length ? T("次へ →","Próxima")
-      : willRetry ? T("間違えた単語をもう一度 →","De novo as que errei") : T("結果を見る","Ver resultado")}</button>`;
+    <button class="block" style="margin-top:12px" onclick="nextV()">${T("次へ →","Próxima")}</button>`;
   applyPt();
-  scrollToAction(document.querySelector("#v-after button.block"));
+  if(auto){ const me = V, i = V.i; V.t = setTimeout(() => { if(V === me && V.i === i && V.done && curRun === "v") nextV(); }, 800); }
+  else scrollToAction(document.querySelector("#v-after button.block"));
 }
 /* 打った答えが正しかったのに ちがう と出たとき（別の漢字・言い方など）：正解に直す */
 function fixV(){
-  const v = V.qs[V.i], s = S.vstats[v.w]; if(!s || V.res[V.i]) return;
-  s.w = Math.max(0, s.w - 1); s.c++; srsSet(s, (V.pb || 0) + 1);
+  const q = V.qs[V.i], v = q.v, s = S.vstats[v.w], t = todayKey(); if(!s || V.res[V.i]) return;
+  const d = day(V.k);
+  s.w = Math.max(0, s.w - 1); s.c++;
+  if(V.wasK){ s.k = 1; S.vsort[v.w] = 1; if(V.d0) s.d0 = V.d0; else delete s.d0; srsSet(s, V.pb + 1); }
+  else if(s.d0 === t){ s.box = 0; s.due = ymd(addDays(parseKey(t), 1)); } else srsSet(s, V.pb + 1);
   V.res[V.i] = true; V.wrong = V.wrong.filter(x => x !== v);
-  const d = day(V.k); d.vw = Math.max(0, (d.vw || 1) - 1); d.vc = (d.vc || 0) + 1;
+  d.vw = Math.max(0, (d.vw || 1) - 1); d.vc = (d.vc || 0) + 1;
+  if(d.vwq){ const j = d.vwq.lastIndexOf(v.w); if(j >= 0) d.vwq.splice(j, 1); }
   V.earned += CONFIG.points.vocabRight; addPoints(CONFIG.points.vocabRight, V.k);
-  const t = $("v-ans"); if(t){ t.classList.remove("ng"); t.classList.add("ok"); }
-  const nb = document.querySelector("#v-after button.block"), last = V.i + 1 >= V.qs.length;
-  document.querySelector("#v-after .linkbtn").remove();
-  if(nb && last && !V.wrong.length && !V.retried) nb.innerHTML = T("結果を見る","Ver resultado");
-  applyPt();
+  const tb = $("v-ans"); if(tb){ tb.classList.remove("ng"); tb.classList.add("ok"); }
+  const lb = document.querySelector("#v-after .linkbtn"); if(lb) lb.remove();
 }
 function nextV(){
-  V.i++;
-  if(V.i === V.main && V.wrong.length && !V.retried){ V.retried = true; V.qs = V.qs.concat(V.wrong); }
+  if(!V) return; clearTimeout(V.t);
+  V.i++; vFill();
   if(V.i < V.qs.length){ renderV(); return; }
   curRun = null;
-  const n = V.main, right = V.res.slice(0, n).filter(Boolean).length;
+  const rv = V.qs.filter(q => q.t === "r"), right = rv.filter(q => V.res[V.qs.indexOf(q)]).length, n = rv.length;
   setTimeout(() => {
-    if(right === n) Party.great("全問正解！🌟", "Acertou todas!");
-    else if(right >= n * 0.5){ FX.rain(PETALS, 40); stamp("よく頑張ったね 🌷", "Mandou bem!"); }
-    else { FX.rain(HEARTS, 30); stamp("練習あるのみ！💪", "Continue assim!"); }
+    if(n && right === n) Party.great("全問正解！🌟", "Acertou todas!");
+    else { FX.rain(PETALS, 40); FX.fireworks(2); stamp("よく頑張ったね 🌷", "Mandou bem!"); }
   }, 250);
-  const list = V.wrong.map(v => `<div class="item row"><b style="flex:none">${vWord(v)}</b><span class="muted" style="flex:1">${esc(v.pt)}</span>${spkBtn(`speak('${esc(vSay(v))}')`)}</div>`).join("");
+  const row = v => `<div class="item row"><b style="flex:none">${vWord(v)}</b><span class="muted" style="flex:1">${esc(v.pt)}</span>${spkBtn(`speak('${esc(vSay(v))}')`)}</div>`;
   const more = vDue().length;
   $("practice-run").innerHTML = `<div class="card" style="text-align:center">
-      ${IMG(right >= n * 0.8 ? "bunny-joy" : right >= n * 0.5 ? "bunny-cheer" : "bunny-gentle")}
-      <h2>${T(`${n}語中 ${right}語 正解`, `${right} de ${n} certas`)}</h2>
+      ${IMG(!n || right >= n * 0.8 ? "bunny-joy" : right >= n * 0.5 ? "bunny-cheer" : "bunny-gentle")}
+      ${n ? `<h2>${T(`復習 ${n}語中 ${right}語 正解`, `Revisão: ${right} de ${n} certas`)}</h2>` : ""}
+      ${V.news.length ? `<h2>${T(`新しい言葉 ${V.news.length}語`, `${V.news.length} palavras novas`)}</h2>` : ""}
       <p>${T(`<b>${V.earned}</b> ポイント ゲット！`, `Você ganhou ${V.earned} pontos.`)}</p>
-      ${list ? `<div style="text-align:left;margin-top:14px"><div class="muted small" style="font-weight:700">${T("間違えた単語","Erros")}</div>${list}</div>` : ""}
-      <div class="grid2" style="margin-top:14px"><button class="ghost" onclick="openVocab()">${T("戻る","Voltar")}</button><button onclick="startReview()" ${more ? "" : "disabled"}>${T(`もう${Math.min(more, VREVIEW)}語`, "Mais")}</button></div>
+      ${V.news.length ? `<div style="text-align:left;margin-top:14px"><div class="muted small" style="font-weight:700">${T("今日の新しい言葉","Palavras novas de hoje")}</div>${V.news.map(row).join("")}</div>` : ""}
+      ${V.wrong.length ? `<div style="text-align:left;margin-top:14px"><div class="muted small" style="font-weight:700">${T("間違えた単語","Erros")}</div>${V.wrong.map(row).join("")}</div>` : ""}
+      ${nextStep("v")}
+      <div class="grid2" style="margin-top:12px"><button class="ghost" onclick="openVocab()">${T("戻る","Voltar")}</button><button class="ghost" onclick="startToday()" ${more ? "" : "disabled"}>${T("続きの復習","Mais revisão")}</button></div>
     </div>`;
   applyPt();
+}
+/* ノートの「単語」：覚え中の単語を、まだ弱いものから */
+function vocabNote(){
+  const st = S.vstats, ws = VOCAB.filter(v => S.vsort[v.w] === 0 && st[v.w])
+    .sort((a, b) => (st[a.w].box || 0) - (st[b.w].box || 0) || st[b.w].w - st[a.w].w).slice(0, 80);
+  return `<div class="card">` + (ws.length ? ws.map(v => `<div class="item row"><span class="vtag u">${vLearned(v) ? "🌸" : "🌱"}</span><b style="flex:none">${vWord(v)}</b><span class="muted" style="flex:1">${esc(v.pt)}</span>${spkBtn(`speak('${esc(vSay(v))}')`)}</div>`).join("")
+    : `<div class="empty">${T("「今日の言葉」をすると、ここに出るよ","Faça o vocabulário de hoje para ver aqui.")}</div>`) + `</div>`;
 }
 
 /* ---------- バックアップ ---------- */
@@ -2523,14 +2560,15 @@ function tutSteps(){
       [`${ICO("flag-br")}：ポルトガル語の訳を出す・消す`,"🇧🇷: mostra ou esconde a tradução em português."],
       ["文を押すと、その文だけ訳が出ることもあるよ","Em algumas frases, é só tocar para ver a tradução."]]},
     {ic:"🎯", h:["毎日の目標","A meta de cada dia"], b:[
-      ["助詞10問・作文3文・日記1件。三つ全部やったら目標達成！","10 partículas, 3 frases e 1 diário. Fez os três? Meta concluída!"],
+      ["助詞10問・作文3文・新しい言葉10語・日記1件。四つ全部やったら目標達成！","10 partículas, 3 frases, 10 palavras novas e 1 diário. Fez os quatro? Meta concluída!"],
       [`毎日続けると ${ICO("flame")} 連続記録がのびるよ`,"Praticando todo dia, a sua sequência 🔥 vai crescendo."],
       [`${ICO("ticket")} ストリーク復活券：目標に届かなかった次の日、ホームの「復活券を使う」で連続が元に戻るよ（毎週月曜日に1枚）`,"🎫 Cupom de sequência: no dia seguinte a um dia sem meta, toque em “Usar cupom” na tela inicial para recuperar a sequência (1 cupom toda segunda-feira)."],
       ["🌙 1日の区切りは朝3時。0時をすぎても3時までなら前の日の練習になるよ","🌙 O dia só vira às 3h da manhã. Até as 3h, conta para o dia anterior."]]},
     {ic:`${ICO("icon-particles")} ${ICO("pencil")}`, h:["練習","Os exercícios"], b:[
       ["🎀 助詞：＿に入る助詞を選ぶ。間違えた問題は、覚えるまでまた出るよ","🎀 Partículas: escolha a partícula certa. As que você errar voltam até você aprender."],
       ["✏️ 作文：ポルトガル語の文を日本語で書く。答えの例と比べて、自分で ◎○△ をつけてね。分からないときは「分からない」を押してもいいよ","✏️ Escrita: escreva a frase em japonês, compare com o exemplo e se avalie com ◎ ○ △. Se não souber, pode tocar em “Não sei”."],
-      ["📒 ノート：間違えた問題・書いた文・助詞のルールを見返せるよ","📒 Caderno: reveja seus erros, as frases que escreveu e as regras das partículas."]]},
+      ["🌱 言葉：まず復習、そのあと新しい言葉。知っている言葉は4択で正解すると飛ばせるよ。知らない言葉は「分からない」を押してね","🌱 Vocabulário: primeiro a revisão, depois palavras novas. Se acertar o teste, a palavra que você já sabe é pulada. Se não souber, toque em “Não sei”."],
+      ["📒 ノート：間違えた問題・覚えている単語・書いた文・助詞のルールを見返せるよ","📒 Caderno: reveja seus erros, as palavras que está aprendendo, as frases que escreveu e as regras das partículas."]]},
     {ic:"📔", h:["日記","O diário"], b:[
       ["今日のことを日本語で1〜3文書いてね。お題もあるよ","Escreva de 1 a 3 frases em japonês sobre o seu dia. Tem sugestão de tema também."],
       mail ? ["ジャスが読んで、メールで直して返事するよ 💌","O Jas vai ler e responder por e-mail com as correções."] : ["ジャスが読んで、直して返事するよ 💌","O Jas vai ler e responder com as correções."],
