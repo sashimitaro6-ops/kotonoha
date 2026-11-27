@@ -766,4 +766,349 @@ const EXAMPLES_TXT = `
 旗|オリンピックでブラジルの旗を見ました。|Vi a bandeira do Brasil nas Olimpíadas.
 看板|あの赤い看板の店です。|É a loja com aquela placa vermelha.
 標識|この標識は「止まれ」という意味です。|Esta placa quer dizer “pare”.
+町|この町は静かで住みやすいです。|Esta cidade é tranquila e boa de morar.
+市|私たちは横浜市に住む予定です。|Planejamos morar na cidade de Yokohama.
+村|祖母は小さい村に住んでいます。|Minha avó mora numa vila pequena.
+都会|東京は大きな都会です。|Tóquio é uma cidade grande.
+田舎|ジャスの実家は田舎にあります。|A casa dos pais do Jas fica no interior.
+近所|近所にスーパーがあって便利です。|Tem um supermercado na vizinhança, é prático.
+場所|待ち合わせの場所はどこですか。|Onde é o lugar do encontro?
+所|ここは静かな所ですね。|Aqui é um lugar tranquilo, né.
+建物|あの高い建物は何ですか。|O que é aquele prédio alto?
+ビル|会社はあのビルの五階です。|A empresa fica no quinto andar daquele prédio.
+お店|このお店はいつも混んでいます。|Esta loja está sempre cheia.
+デパート|デパートでプレゼントを買いました。|Comprei o presente na loja de departamentos.
+ドラッグストア|ドラッグストアで薬とシャンプーを買います。|Compro remédio e xampu na drogaria.
+百円ショップ|百円ショップは何でもあります。|A loja de 100 ienes tem de tudo.
+本屋|本屋で日本語の本を探しました。|Procurei livros de japonês na livraria.
+花屋|花屋で花束を買いました。|Comprei um buquê na floricultura.
+パン屋|朝、パン屋でパンを買います。|De manhã compro pão na padaria.
+八百屋|八百屋の野菜は新鮮です。|Os legumes da quitanda são frescos.
+床屋|ジャスは床屋で髪を切ります。|O Jas corta o cabelo na barbearia.
+クリーニング屋|スーツをクリーニング屋に出しました。|Levei o terno à lavanderia.
+コインランドリー|布団はコインランドリーで洗います。|Lavo o futon na lavanderia self-service.
+区役所|区役所で住所の手続きをします。|Faço o registro de endereço na subprefeitura.
+交番|道が分からないときは、交番で聞きます。|Quando não sei o caminho, pergunto no posto policial.
+警察|財布を落としたので、警察に行きました。|Perdi a carteira, então fui à polícia.
+警察官|警察官が道を教えてくれました。|O policial me ensinou o caminho.
+消防署|家の近くに消防署があります。|Tem um corpo de bombeiros perto de casa.
+幼稚園|妹の子供は幼稚園に通っています。|O filho da minha irmã vai ao jardim de infância.
+保育園|保育園に子供を迎えに行きます。|Vou buscar a criança na creche.
+神社|お正月に神社に行きます。|No Ano-Novo vamos ao santuário.
+お寺|京都にはお寺がたくさんあります。|Kyoto tem muitos templos.
+教会|日曜日に教会に行きます。|Vou à igreja no domingo.
+映画館|映画館でアニメの映画を見ました。|Vimos um filme de anime no cinema.
+美術館|雨の日は美術館に行きましょう。|Em dia de chuva vamos ao museu de arte.
+博物館|博物館で日本の歴史を勉強しました。|Estudei a história do Japão no museu.
+動物園|動物園でパンダを見ました。|Vi o panda no zoológico.
+水族館|水族館のイルカがかわいかったです。|Os golfinhos do aquário eram fofos.
+遊園地|週末に遊園地に行きたいです。|Quero ir ao parque de diversões no fim de semana.
+旅館|旅館で浴衣を着ました。|Usei yukata na pousada japonesa.
+温泉|冬の温泉は最高です。|Fonte termal no inverno é maravilhosa.
+銭湯|近所の銭湯は四百円です。|O banho público do bairro custa 400 ienes.
+プール|夏は市のプールで泳ぎます。|No verão nado na piscina municipal.
+工場|父は車の工場で働いています。|Meu pai trabalha numa fábrica de carros.
+事務所|事務所は駅の近くにあります。|O escritório fica perto da estação.
+ガソリンスタンド|ガソリンスタンドでガソリンを入れます。|Coloco gasolina no posto.
+入口|入口はあちらです。|A entrada é por ali.
+出口|東口の出口で待っています。|Estou esperando na saída leste.
+受付窓口|受付窓口で番号札を取ります。|Pego a senha no guichê.
+お手洗い|すみません、お手洗いはどこですか。|Com licença, onde fica o banheiro?
+非常口|非常口の場所を確認してください。|Confira onde fica a saída de emergência.
+道|この道をまっすぐ行ってください。|Siga reto por esta rua, por favor.
+道路|道路を渡るときは気をつけて。|Tome cuidado ao atravessar a rua.
+通り|この通りにはカフェが多いです。|Esta avenida tem muitos cafés.
+交差点|次の交差点を右に曲がってください。|Vire à direita no próximo cruzamento.
+信号|信号が赤のときは止まります。|Quando o semáforo está vermelho, a gente para.
+横断歩道|横断歩道を渡ります。|Atravesso na faixa de pedestre.
+歩道|自転車は歩道を走らないでください。|Bicicletas não andem na calçada, por favor.
+角|あの角にコンビニがあります。|Tem uma loja de conveniência naquela esquina.
+橋|橋を渡ると、駅があります。|Atravessando a ponte, tem a estação.
+地図|スマホの地図を見ながら歩きます。|Ando olhando o mapa no celular.
+右|右に曲がると、銀行があります。|Virando à direita, tem um banco.
+左|左に見えるのが東京タワーです。|O que se vê à esquerda é a Torre de Tóquio.
+前|駅の前で待っています。|Estou esperando em frente à estação.
+後ろ|後ろの席に座ってください。|Sente no banco de trás, por favor.
+上|机の上に鍵があります。|A chave está em cima da mesa.
+下|猫がベッドの下にいます。|O gato está embaixo da cama.
+中|かばんの中に何がありますか。|O que tem dentro da bolsa?
+外|外は寒いですよ。|Lá fora está frio.
+横|銀行の横に郵便局があります。|O correio fica ao lado do banco.
+隣|隣の部屋から音がします。|Vem barulho do quarto ao lado.
+間|駅と公園の間に図書館があります。|A biblioteca fica entre a estação e o parque.
+向こう|川の向こうに山が見えます。|Do outro lado do rio dá para ver a montanha.
+真ん中|写真の真ん中にいるのがジャスです。|Quem está no meio da foto é o Jas.
+奥|トイレは店の奥にあります。|O banheiro fica no fundo da loja.
+手前|駅の手前で降ります。|Desço um pouco antes da estação.
+東|東京は日本の東にあります。|Tóquio fica no leste do Japão.
+西|夕日は西にしずみます。|O sol se põe no oeste.
+南|沖縄は日本の南にあります。|Okinawa fica no sul do Japão.
+北|北海道は冬がとても寒いです。|Em Hokkaido o inverno é muito frio.
+そちら|そちらの天気はどうですか。|Como está o tempo aí?
+あちら|お手洗いはあちらです。|O banheiro é por ali.
+曲がる|二つ目の角を左に曲がります。|Viro à esquerda na segunda esquina.
+渡る|信号を渡ると、駅です。|Atravessando o semáforo, é a estação.
+通る|毎日この公園を通って会社に行きます。|Todo dia passo por este parque para ir à empresa.
+迷う|駅で迷ってしまいました。|Me perdi na estação.
+地下鉄|地下鉄で行くと、十分です。|De metrô são dez minutos.
+駅員|分からないことは駅員さんに聞きます。|Pergunto ao funcionário da estação o que não sei.
+ホーム|三番線のホームで待っています。|Estou esperando na plataforma 3.
+線路|線路に入らないでください。|Não entre nos trilhos, por favor.
+改札|改札の前で会いましょう。|Vamos nos encontrar em frente à catraca.
+切符|切符を買うのは初めてです。|É a primeira vez que compro bilhete.
+定期券|会社の定期券を買いました。|Comprei o passe mensal da empresa.
+ICカード|ICカードで電車に乗ります。|Pego o trem com o cartão de transporte.
+チャージ|ICカードに千円チャージしました。|Recarreguei mil ienes no cartão.
+各駅停車|各駅停車は時間がかかります。|O trem parador demora.
+快速|快速に乗ると、早く着きます。|Pegando o trem rápido, chega mais cedo.
+急行|急行はこの駅に止まりません。|O expresso não para nesta estação.
+終電|終電に乗り遅れました。|Perdi o último trem.
+始発|始発の電車で空港に行きます。|Vou ao aeroporto no primeiro trem.
+満員電車|朝の満員電車は大変です。|O trem lotado de manhã é difícil.
+優先席|優先席では電話をしないでください。|Não fale ao telefone no assento preferencial.
+時刻表|時刻表を見て、電車の時間を調べます。|Vejo a tabela e confiro o horário do trem.
+遅れる|電車が十分遅れています。|O trem está dez minutos atrasado.
+遅延|事故で電車に遅延が出ています。|Por causa de um acidente, os trens estão atrasados.
+自転車|自転車で駅まで行きます。|Vou de bicicleta até a estação.
+バイク|兄はバイクが好きです。|Meu irmão gosta de moto.
+飛行機|飛行機で日本まで二十四時間かかります。|De avião leva 24 horas até o Japão.
+船|船で島に行きました。|Fomos à ilha de barco.
+運転免許|日本の運転免許を取りたいです。|Quero tirar a carteira de motorista japonesa.
+運転手|タクシーの運転手さんに住所を見せました。|Mostrei o endereço para o taxista.
+乗る|この電車は新宿に行きますか。乗ってもいいですか。|Este trem vai para Shinjuku? Posso entrar?
+止める|車をここに止めてもいいですか。|Posso estacionar o carro aqui?
+駐輪場|自転車は駐輪場に止めてください。|Deixe a bicicleta no bicicletário, por favor.
+渋滞|道路が渋滞しています。|A rua está engarrafada.
+事故|駅の近くで事故がありました。|Teve um acidente perto da estação.
+片道|片道の切符を一枚ください。|Um bilhete só de ida, por favor.
+往復|往復で二千円です。|Ida e volta custa dois mil ienes.
+運賃|バスの運賃はいくらですか。|Quanto é a passagem do ônibus?
+成田|成田空港から東京駅まで電車で行きます。|Do aeroporto de Narita até a estação de Tóquio vou de trem.
+羽田|羽田空港は都心に近いです。|O aeroporto de Haneda fica perto do centro.
+在留カード|在留カードはいつも持っていてください。|Ande sempre com o cartão de residente.
+入国|入国のとき、パスポートを見せます。|Na entrada do país, mostro o passaporte.
+出国|出国の手続きをしました。|Fiz os trâmites de saída do país.
+入国審査|入国審査は少し時間がかかりました。|A imigração demorou um pouco.
+税関|税関で荷物を見せました。|Mostrei a bagagem na alfândega.
+荷物|荷物が重いので、手伝ってください。|A bagagem está pesada, me ajude, por favor.
+手荷物|手荷物は一つまでです。|Só uma bagagem de mão.
+搭乗口|搭乗口は十番です。|O portão de embarque é o 10.
+搭乗券|搭乗券を見せてください。|Mostre o cartão de embarque, por favor.
+便|この便は十時に出発します。|Este voo parte às dez.
+国際線|国際線のターミナルはどこですか。|Onde fica o terminal internacional?
+国内線|国内線で沖縄に行きます。|Vou para Okinawa num voo doméstico.
+到着|飛行機は朝七時に到着します。|O avião chega às sete da manhã.
+出発|出発の二時間前に空港に着きました。|Cheguei ao aeroporto duas horas antes da partida.
+両替|空港でお金を両替しました。|Troquei dinheiro no aeroporto.
+時差|日本とブラジルの時差は十二時間です。|A diferença de fuso entre Japão e Brasil é de 12 horas.
+時差ぼけ|時差ぼけで夜眠れません。|Por causa do jet lag, não consigo dormir à noite.
+観光|週末は京都を観光します。|No fim de semana vou fazer turismo em Kyoto.
+観光地|ここは有名な観光地です。|Aqui é um ponto turístico famoso.
+予定|明日の予定は何ですか。|Qual é o plano para amanhã?
+海外|海外旅行は初めてです。|É minha primeira viagem ao exterior.
+国|あなたの国はどこですか。|De que país você é?
+世界|世界で一番好きな人はジャスです。|A pessoa de quem mais gosto no mundo é o Jas.
+円|このシャツは三千円でした。|Esta camisa custou três mil ienes.
+現金|この店は現金だけです。|Esta loja só aceita dinheiro.
+小銭|小銭がたくさんあります。|Tenho muitas moedas.
+お札|一万円札しかありません。|Só tenho nota de dez mil ienes.
+おつり|おつりは二百円です。|O troco é de 200 ienes.
+値段|この値段は税込ですか。|Este preço inclui imposto?
+税込|税込で千百円です。|Com imposto são 1.100 ienes.
+税抜|税抜の値段が書いてあります。|Está escrito o preço sem imposto.
+消費税|日本の消費税は十パーセントです。|O imposto sobre consumo no Japão é de 10%.
+割引|学生は割引があります。|Estudantes têm desconto.
+セール|デパートでセールをしています。|A loja de departamentos está em liquidação.
+半額|夜になると、お弁当が半額になります。|À noite as marmitas ficam pela metade do preço.
+無料|ここのお水は無料です。|A água aqui é grátis.
+領収書|領収書をお願いします。|O recibo, por favor.
+レジ|レジに並びます。|Entro na fila do caixa.
+袋はいりますか|「袋はいりますか。」「いいえ、大丈夫です。」|“Precisa de sacola?” “Não, obrigada.”
+売る|この店では古い本を売っています。|Esta loja vende livros usados.
+払う|カードで払えますか。|Posso pagar com cartão?
+売り場|靴の売り場は三階です。|A seção de sapatos fica no terceiro andar.
+売り切れ|人気のケーキは売り切れでした。|O bolo popular estava esgotado.
+在庫|このサイズの在庫はありますか。|Tem estoque deste tamanho?
+品物|品物はあした届きます。|A mercadoria chega amanhã.
+商品|この商品はどこにありますか。|Onde fica este produto?
+新品|新品のパソコンを買いました。|Comprei um computador novo.
+中古|中古の自転車を買いました。|Comprei uma bicicleta usada.
+返品|サイズが合わないので、返品したいです。|O tamanho não serve, então quero devolver.
+交換|小さいサイズに交換できますか。|Posso trocar por um tamanho menor?
+得|まとめて買うと得です。|Comprando junto sai mais em conta.
+損|安いものを買って、損をしました。|Comprei uma coisa barata e saí no prejuízo.
+貯金|旅行のために貯金しています。|Estou poupando para a viagem.
+貯める|ポイントを貯めて、ご褒美と交換します。|Junto pontos e troco por recompensas.
+貸す|ペンを貸してくれませんか。|Pode me emprestar uma caneta?
+返す|図書館に本を返します。|Devolvo o livro à biblioteca.
+給料|給料は毎月二十五日です。|O salário sai todo dia 25.
+振込|家賃は振込で払います。|Pago o aluguel por transferência.
+引き出す|ATMでお金を引き出します。|Saco dinheiro no caixa eletrônico.
+暗証番号|暗証番号を忘れました。|Esqueci a senha.
+通帳|通帳を見て、お金を確認します。|Confiro o dinheiro na caderneta.
+生活費|東京は生活費が高いです。|Em Tóquio o custo de vida é alto.
+光熱費|冬は光熱費が上がります。|No inverno as contas de luz e gás sobem.
+電気代|エアコンを使うと、電気代が高くなります。|Usando o ar-condicionado, a conta de luz fica cara.
+ガス代|ガス代はコンビニで払えます。|Dá para pagar a conta de gás na loja de conveniência.
+水道代|水道代は二か月に一回です。|A conta de água é a cada dois meses.
+請求書|請求書が郵便で届きました。|A fatura chegou pelo correio.
+試食|スーパーで試食をしました。|Provei uma degustação no supermercado.
+特売|今日は卵が特売です。|Hoje o ovo está em promoção.
+期間限定|期間限定のアイスを食べました。|Tomei um sorvete de tempo limitado.
+人気|このラーメン屋はとても人気です。|Este restaurante de lámen é muito popular.
+新商品|コンビニの新商品を買ってみました。|Experimentei um produto novo da loja de conveniência.
+おまけ|おまけでお菓子をもらいました。|Ganhei um doce de brinde.
+会員|会員になると、安くなります。|Virando membro, fica mais barato.
+お届け|お届けは明日の午前です。|A entrega é amanhã de manhã.
+配達|荷物の配達は何時ですか。|A que horas é a entrega da encomenda?
+送料|五千円以上は送料が無料です。|Acima de 5 mil ienes o frete é grátis.
+通販|通販で服を買いました。|Comprei roupa pela internet.
+温めますか|「お弁当は温めますか。」「はい、お願いします。」|“Quer que esquente a marmita?” “Sim, por favor.”
+お箸はご利用ですか|「お箸はご利用ですか。」「一つお願いします。」|“Vai querer hashi?” “Um, por favor.”
+ご一緒に|ご一緒にポテトはいかがですか。|Vai querer batata frita junto?
+少々|少々お待ちください。|Aguarde um momento, por favor.
+時|子供の時、海の近くに住んでいました。|Quando era criança, morava perto do mar.
+あさって|あさっては休みです。|Depois de amanhã é folga.
+おととい|おととい、ジャスと電話しました。|Anteontem falei com o Jas por telefone.
+毎週|毎週土曜日に日本語の授業があります。|Toda semana, no sábado, tenho aula de japonês.
+毎月|毎月、本を一冊読みます。|Todo mês leio um livro.
+毎年|毎年、誕生日にケーキを作ります。|Todo ano faço um bolo no aniversário.
+夕方|夕方になると、少し涼しくなります。|No fim da tarde fica um pouco mais fresco.
+晩|今晩は何を食べたい？|O que você quer comer hoje à noite?
+夜中|夜中に目が覚めました。|Acordei de madrugada.
+午前|午前中に買い物に行きます。|Vou fazer compras de manhã.
+午後|午後から雨が降るそうです。|Dizem que vai chover à tarde.
+今朝|今朝は早く起きました。|Hoje de manhã acordei cedo.
+今晩|今晩、電話してもいい？|Posso te ligar hoje à noite?
+今夜|今夜は星がきれいです。|Esta noite as estrelas estão lindas.
+週|一週間に三回、運動します。|Faço exercício três vezes por semana.
+今週|今週はとても忙しいです。|Esta semana estou muito ocupada.
+来週|来週、テストがあります。|Semana que vem tem prova.
+平日|平日は九時から五時まで働きます。|Nos dias úteis trabalho das nove às cinco.
+休日|休日は家でゆっくりします。|Nos dias de folga descanso em casa.
+祝日|月曜日は祝日なので、休みです。|Segunda é feriado, então é folga.
+月|月がとてもきれいですね。|A lua está muito bonita, né.
+今月|今月は誕生日があります。|Este mês tem meu aniversário.
+来月|来月、引っ越しをします。|Mês que vem vou me mudar.
+先月|先月、東京に行きました。|Mês passado fui a Tóquio.
+今年|今年はたくさん日本語を勉強しました。|Este ano estudei muito japonês.
+去年|去年の夏、ジャスがブラジルに来ました。|No verão do ano passado o Jas veio ao Brasil.
+火曜日|火曜日はゴミの日です。|Terça-feira é dia de lixo.
+水曜日|水曜日に病院の予約があります。|Tenho consulta marcada na quarta-feira.
+木曜日|木曜日の夜は空いていますか。|Você está livre na quinta à noite?
+日付|書類に今日の日付を書いてください。|Escreva a data de hoje no documento, por favor.
+二日|二日の朝に出発します。|Parto na manhã do dia 2.
+四日|旅行は四日間です。|A viagem é de quatro dias.
+五日|五日に家賃を払います。|Pago o aluguel no dia 5.
+六日|六日の夜は空いています。|Estou livre na noite do dia 6.
+七日|七日間、日本にいます。|Vou ficar sete dias no Japão.
+八日|八日に荷物が届きます。|A encomenda chega no dia 8.
+九日|九日は母の誕生日です。|Dia 9 é aniversário da minha mãe.
+十日|十日までに申し込んでください。|Inscreva-se até o dia 10, por favor.
+二十日|給料は二十日に入ります。|O salário cai no dia 20.
+一月|一月はとても寒いです。|Janeiro é muito frio.
+二月|二月二十二日に日本に着きます。|Chego ao Japão no dia 22 de fevereiro.
+三月|三月二十八日は私の誕生日です。|28 de março é o meu aniversário.
+四月|四月に桜が咲きます。|As cerejeiras florescem em abril.
+五月|五月は天気がいい日が多いです。|Em maio tem muitos dias de tempo bom.
+六月|六月は雨が多いです。|Junho tem muita chuva.
+八月|八月はとても暑いです。|Agosto é muito quente.
+九月|九月になっても、まだ暑いです。|Mesmo em setembro ainda está quente.
+十月|十月十三日はプロポーズの日です。|13 de outubro é o dia do pedido de casamento.
+十一月|十一月は紅葉がきれいです。|Em novembro as folhas vermelhas são lindas.
+十二月|十二月はクリスマスがあります。|Dezembro tem Natal.
+何曜日|今日は何曜日ですか。|Que dia da semana é hoje?
+～時|毎朝七時に起きます。|Acordo às sete todas as manhãs.
+～分|駅まで歩いて五分です。|Até a estação são cinco minutos a pé.
+半|九時半に会いましょう。|Vamos nos encontrar às nove e meia.
+～か月|日本に来て三か月です。|Faz três meses que vim para o Japão.
+～年|日本語を勉強して二年になります。|Faz dois anos que estudo japonês.
+秒|あと十秒で始まります。|Começa em dez segundos.
+最近|最近、日本語が上手になりました。|Ultimamente meu japonês melhorou.
+昔|昔、この町に住んでいました。|Antigamente eu morava nesta cidade.
+さっき|さっき、ジャスから電話がありました。|Agora há pouco o Jas ligou.
+これから|これから仕事に行きます。|Vou trabalhar agora.
+将来|将来、日本で先生になりたいです。|No futuro quero ser professora no Japão.
+未来|二人の未来が楽しみです。|Estou ansiosa pelo nosso futuro.
+過去|過去のことは気にしないで。|Não se preocupe com o passado.
+現在|現在、東京に住んでいます。|Atualmente moro em Tóquio.
+始め|月の始めは忙しいです。|O começo do mês é corrido.
+途中|仕事の途中で電話がありました。|Recebi uma ligação no meio do trabalho.
+最初|最初は日本語が全然分かりませんでした。|No começo eu não entendia nada de japonês.
+最後|最後まで頑張りましょう。|Vamos nos esforçar até o fim.
+次|次の駅で降ります。|Desço na próxima estação.
+締め切り|レポートの締め切りは金曜日です。|O prazo do relatório é sexta-feira.
+期限|この券の期限は今月までです。|Este cupom vale até este mês.
+賞味期限|牛乳の賞味期限を見ます。|Olho a validade do leite.
+間に合う|走ったので、電車に間に合いました。|Corri e consegui pegar o trem.
+季節|一番好きな季節は春です。|A estação de que mais gosto é a primavera.
+春|春になると、暖かくなります。|Na primavera fica mais quente.
+夏|日本の夏はとても蒸し暑いです。|O verão japonês é muito abafado.
+秋|秋は食べ物がおいしい季節です。|O outono é a estação em que a comida é gostosa.
+冬|冬は雪が降ります。|No inverno neva.
+お正月|お正月は家族とゆっくり過ごします。|No Ano-Novo passo o tempo com a família.
+大晦日|大晦日の夜にそばを食べます。|Na noite da véspera de Ano-Novo comemos soba.
+年末|年末は大掃除をします。|No fim do ano fazemos a grande faxina.
+花見|公園で花見をしました。|Fizemos piquenique sob as cerejeiras no parque.
+桜|桜が満開です。|As cerejeiras estão em plena floração.
+梅雨|梅雨は毎日雨が降ります。|Na estação das chuvas chove todo dia.
+お盆|お盆はジャスの実家に帰ります。|No Obon vamos para a casa dos pais do Jas.
+花火|夏の夜に花火を見ました。|Vimos fogos de artifício numa noite de verão.
+紅葉|京都に紅葉を見に行きます。|Vou a Kyoto ver as folhas vermelhas.
+ゴールデンウィーク|ゴールデンウィークはどこも混んでいます。|Na Golden Week todo lugar fica lotado.
+連休|三連休に旅行に行きます。|No feriado de três dias vamos viajar.
+お祝い|合格のお祝いに食事に行きました。|Fomos comer para comemorar a aprovação.
+天気予報|天気予報によると、明日は雨です。|Segundo a previsão do tempo, amanhã vai chover.
+晴れ|明日は晴れるといいですね。|Tomara que amanhã faça sol.
+曇り|今日は一日中曇りです。|Hoje fica nublado o dia todo.
+雨|雨が降っているので、傘を持っていきます。|Está chovendo, então vou levar o guarda-chuva.
+雪|東京で雪を見たいです。|Quero ver neve em Tóquio.
+風|今日は風が強いです。|Hoje o vento está forte.
+台風|台風が来るので、外に出ないでください。|Vem um tufão, não saia, por favor.
+雷|雷の音が怖いです。|Tenho medo do barulho do trovão.
+地震|地震のときは、机の下に入ります。|Quando tem terremoto, entro embaixo da mesa.
+津波|地震のあとは、津波に気をつけてください。|Depois de um terremoto, cuidado com tsunami.
+空|今日は空が青いです。|Hoje o céu está azul.
+雲|白い雲が浮かんでいます。|Nuvens brancas estão flutuando.
+太陽|太陽がまぶしいです。|O sol está ofuscante.
+星|田舎は星がよく見えます。|No interior dá para ver bem as estrelas.
+虹|雨のあとに虹が出ました。|Depois da chuva apareceu um arco-íris.
+気温|今日の気温は三十五度です。|A temperatura hoje é de 35 graus.
+温度|エアコンの温度を下げてください。|Abaixe a temperatura do ar-condicionado, por favor.
+湿気|日本の夏は湿気が多いです。|O verão japonês é muito úmido.
+～度|今日は十度しかありません。|Hoje só faz dez graus.
+暖かい|今日は暖かくて、気持ちがいいです。|Hoje está morno e agradável.
+蒸し暑い|七月は蒸し暑い日が続きます。|Em julho seguem os dias abafados.
+晴れる|午後から晴れるそうです。|Dizem que vai abrir o sol à tarde.
+曇る|空が曇ってきました。|O céu ficou nublado.
+吹く|冷たい風が吹いています。|Está soprando um vento frio.
+止む|雨が止んだら、出かけましょう。|Quando a chuva parar, vamos sair.
+傘をさす|雨なので、傘をさして歩きます。|Está chovendo, então ando com o guarda-chuva aberto.
+濡れる|傘を忘れて、濡れてしまいました。|Esqueci o guarda-chuva e me molhei.
+乾く|洗濯物がよく乾きました。|A roupa secou bem.
+朝日|海で朝日を見ました。|Vi o sol nascer no mar.
+夕日|夕日がとてもきれいでした。|O pôr do sol estava lindo.
+日の出|お正月に日の出を見に行きます。|No Ano-Novo vamos ver o nascer do sol.
+月見|秋に月見をします。|No outono contemplamos a lua.
+満月|今夜は満月です。|Hoje à noite é lua cheia.
+大雨|大雨で電車が止まりました。|O trem parou por causa da chuva forte.
+小雨|小雨なので、傘はいりません。|É só um chuvisco, não precisa de guarda-chuva.
+にわか雨|にわか雨に気をつけてください。|Cuidado com pancadas de chuva.
+霧|朝は霧で何も見えません。|De manhã não se vê nada por causa da neblina.
+霜|冬の朝は霜がおります。|Nas manhãs de inverno cai geada.
+氷点下|北海道は氷点下になります。|Em Hokkaido fica abaixo de zero.
+暑さ|この暑さはつらいです。|Este calor é difícil.
+寒さ|日本の冬の寒さに慣れました。|Me acostumei com o frio do inverno japonês.
+熱中症|熱中症に気をつけて、水を飲みましょう。|Cuidado com a insolação, vamos beber água.
+日焼け|海で日焼けしました。|Me queimei de sol na praia.
+日焼け止め|出かける前に日焼け止めを塗ります。|Passo protetor solar antes de sair.
+花粉|春は花粉がたくさん飛びます。|Na primavera voa muito pólen.
+春らしい|今日は春らしい天気ですね。|Hoje o tempo está bem de primavera, né.
+蝉|夏は蝉の声がうるさいです。|No verão o canto das cigarras é barulhento.
+かき氷|お祭りでかき氷を食べました。|Comi raspadinha de gelo no festival.
+冬服|そろそろ冬服を出します。|Já está na hora de tirar as roupas de inverno.
+夏服|夏服を買いに行きます。|Vou comprar roupas de verão.
+衣替え|六月に衣替えをします。|Em junho troco as roupas da estação.
+雪だるま|公園で雪だるまを作りました。|Fizemos um boneco de neve no parque.
+カイロ|寒い日はカイロを持っていきます。|Em dia frio levo um aquecedor de bolso.
 `;
